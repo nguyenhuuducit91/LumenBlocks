@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
+if ( ! function_exists( 'lumen_generate_render_item_from_posts_block' ) ) {
 	/**
 	 * Given a post array, attributes,
 	 * and a template, generate a post
@@ -17,7 +17,7 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 	 * @return string the generated markup
 	 */
 
-	function generate_render_item_from_lumen_posts_block( $post, $attributes, $template ) {
+	function lumen_generate_render_item_from_posts_block( $post, $attributes, $template ) {
 		$image_size = $attributes['imageSize'];
 		$excerpt_length = $attributes['excerptLength'];
 		// Missing means an older post saved before this setting existed. Those
@@ -112,7 +112,7 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 		if ( strpos( $new_template, '!#title!#' ) !== false ) {
 			$title = $post['post_title'];
 			if ( empty( $title ) ) {
-				$title = __( '(Untitled)', LUMEN_I18N );
+				$title = __( '(Untitled)', 'lumen-blocks' );
 			}
 
 			// Escape title output to prevent XSS
@@ -178,7 +178,8 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 		// Comments.
 		if ( strpos( $new_template, '!#commentsNum!#' ) !== false ) {
 			$num = get_comments_number( $post_id );
-			$num = sprintf( _n( '%d comment', '%d comments', $num, LUMEN_I18N ), $num );
+			/* translators: %d: number of comments on the post */
+			$num = sprintf( _n( '%d comment', '%d comments', $num, 'lumen-blocks' ), $num );
 			// Escape comments number output to prevent XSS
 			$num = esc_html( $num );
 			$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
@@ -276,7 +277,7 @@ if ( ! function_exists( 'lumen_posts_to_ids' ) ) {
 	}
 }
 
-if ( ! function_exists( 'generate_post_query_from_lumen_posts_block' ) ) {
+if ( ! function_exists( 'lumen_generate_post_query_from_posts_block' ) ) {
 	/**
 	 * Query generator for 'lumen/posts' block.
 	 *
@@ -286,7 +287,7 @@ if ( ! function_exists( 'generate_post_query_from_lumen_posts_block' ) ) {
 	 *
 	 * @return array post query which will be used for WP_Query.
 	 */
-	function generate_post_query_from_lumen_posts_block( $block_or_attribute, $query_string = '' ) {
+	function lumen_generate_post_query_from_posts_block( $block_or_attribute, $query_string = '' ) {
 		$is_wp_block = ! is_array( $block_or_attribute ) && get_class( $block_or_attribute ) === 'WP_Block';
 		/**
 		 * If the passed object is an instance of
@@ -334,6 +335,9 @@ if ( ! function_exists( 'generate_post_query_from_lumen_posts_block' ) ) {
 		}
 
 		if ( ! empty( $exclude ) ) {
+			// A handful of ids at most: the current post and anything the editor chose
+			// to leave out of this block.
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in
 			$post_query['post__not_in'] = array_values( array_unique( $exclude ) );
 		}
 
@@ -345,6 +349,9 @@ if ( ! function_exists( 'generate_post_query_from_lumen_posts_block' ) ) {
 			} else if ( $context['taxonomyType'] === 'post_tag' ) { $post_query[ 'tag' . $context['taxonomyFilterType'] ] = explode( ',', $context['taxonomy'] );
 			// Custom taxonomies.
 			} else {
+				// The taxonomy and terms are chosen by the editor in the block's own
+				// settings; there is no way to express that filter without tax_query.
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				$post_query['tax_query'] = array(
 					array(
 						'taxonomy' => $context['taxonomyType'],
@@ -433,7 +440,7 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 				'imageSize' => 'full',
 				'excerptLength' => 55,
 				'excerptStripHtml' => true,
-				'readmoreText' => __( 'Continue Reading', LUMEN_I18N ),
+				'readmoreText' => __( 'Continue Reading', 'lumen-blocks' ),
 				'metaSeparator' => 'dot',
 				'categoryHighlighted' => false,
 				'excludeCurrentPost' => false,
@@ -508,7 +515,7 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 		 * Render the post items
 		 */
 		public function render_post_items( $to_replace, $template, $content, $attributes, $query_string ) {
-			$post_query = generate_post_query_from_lumen_posts_block( $attributes, $query_string );
+			$post_query = lumen_generate_post_query_from_posts_block( $attributes, $query_string );
 			$recent_posts = wp_get_recent_posts( $post_query );
 
 			// Manually slice the array based on the number of posts per page.
@@ -518,7 +525,7 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 
 			$posts = array();
 			foreach ( $recent_posts as $post ) {
-				$posts[] = generate_render_item_from_lumen_posts_block( $post, $attributes, $template );
+				$posts[] = lumen_generate_render_item_from_posts_block( $post, $attributes, $template );
 			}
 
 			$new_content = str_replace( $to_replace, implode( '', $posts ), $content );
@@ -559,19 +566,23 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 			$excerpt = get_post_field( 'post_excerpt', $post_id, 'display' );
 			// We need to check before running the filters since some plugins override it.
 			if ( ! empty( $excerpt ) ) {
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 				$excerpt = apply_filters( 'the_excerpt', $excerpt );
 			}
 
 			if ( empty( $excerpt ) ) {
 				// If there's post content given to us, trim it and use that.
 				if ( ! empty( $post['post_content'] ) ) {
+					// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
 				} else {
 					// If there's no post content given to us, then get the content.
 					$post_content = get_post_field( 'post_content', $post_id );
 					if ( ! empty( $post_content ) ) {
 						// Remove the jetpack sharing button filter.
+						// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 						$post_content = apply_filters( 'the_content', $post_content );
+						// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 						$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
 					}
 				}
@@ -605,7 +616,7 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 		 */
 		public static function get_taxonomy_term_list_by_id( $post_id, $taxonomy ) {
 			if ( $taxonomy === 'category' ) {
-				return get_the_category_list( esc_html__( ', ', LUMEN_I18N ), '', $post_id );
+				return get_the_category_list( esc_html__( ', ', 'lumen-blocks' ), '', $post_id );
 			}
 
 			$terms = get_the_terms( $post_id, $taxonomy );
@@ -614,7 +625,7 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 				return '';
 			}
 			
-			$separator = esc_html__( ', ', LUMEN_I18N );
+			$separator = esc_html__( ', ', 'lumen-blocks' );
 			$term_links = array();
 			
 			foreach ( $terms as $term ) {
@@ -660,7 +671,8 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 			if ( isset( $object['comment_count'] ) ) {
 				$num = $object['comment_count'];
 			}
-			return sprintf( _n( '%d comment', '%d comments', $num, LUMEN_I18N ), $num );
+			/* translators: %d: number of comments on the post */
+			return sprintf( _n( '%d comment', '%d comments', $num, 'lumen-blocks' ), $num );
 		}
 
 		/**

@@ -19,14 +19,10 @@
 	<arg name="parallel" value="8"/>
 	<arg value="sp"/>
 
-	<config name="minimum_supported_wp_version" value="6.8.2"/>
+	<config name="minimum_supported_wp_version" value="6.8"/>
 	<config name="testVersion" value="7.4-"/>
 
 	<rule ref="WordPress">
-		<!-- Translator strings are emitted with the LUMEN_I18N constant and are
-		     rewritten to the literal 'lumen-blocks' domain by the gulp
-		     translation tasks, so the literal-domain sniff cannot see them. -->
-		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain"/>
 		<!-- Inherited formatting from the upstream source; not a correctness issue. -->
 		<exclude name="Squiz.Commenting.FileComment"/>
 		<exclude name="Squiz.Commenting.FunctionComment"/>

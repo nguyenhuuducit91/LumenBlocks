@@ -28,13 +28,13 @@ if ( ! function_exists( 'lumen_deprecated_global_colors_for_native_blocks_checke
 		return $block_content;
 	}
 
-	if ( is_frontend() ) {
+	if ( lumen_is_frontend() ) {
 		add_filter( 'render_block', 'lumen_deprecated_global_colors_for_native_blocks_checker', 10, 2 );
 	}
 }
 
-if ( ! function_exists( 'register_deprecated_global_colors_for_native_blocks_settings' ) ) {
-	function register_deprecated_global_colors_for_native_blocks_settings() {
+if ( ! function_exists( 'lumen_register_deprecated_global_colors_for_native_blocks_settings' ) ) {
+	function lumen_register_deprecated_global_colors_for_native_blocks_settings() {
 		register_setting(
 			'lumen_editor_settings',
 			'lumen_global_colors_native_compatibility',
@@ -46,8 +46,8 @@ if ( ! function_exists( 'register_deprecated_global_colors_for_native_blocks_set
 			)
 		);
 	}
-	add_action( 'admin_init', 'register_deprecated_global_colors_for_native_blocks_settings' );
-	add_action( 'rest_api_init', 'register_deprecated_global_colors_for_native_blocks_settings' );
+	add_action( 'admin_init', 'lumen_register_deprecated_global_colors_for_native_blocks_settings' );
+	add_action( 'rest_api_init', 'lumen_register_deprecated_global_colors_for_native_blocks_settings' );
 }
 
 if ( ! function_exists( 'lumen_deprecated_global_colors_for_native_blocks' ) ) {
@@ -107,7 +107,7 @@ if ( ! function_exists( 'lumen_deprecated_global_colors_for_native_blocks' ) ) {
 
 		if ( ! empty( $css ) ) {
 			// Register our dummy style so that the inline styles would get added.
-			wp_register_style( 'lmb-dep-native-global-style-css-nodep', false );
+			wp_register_style( 'lmb-dep-native-global-style-css-nodep', false, array(), LUMEN_VERSION );
 			wp_enqueue_style( 'lmb-dep-native-global-style-css-nodep' );
 			wp_add_inline_style( 'lmb-dep-native-global-style-css-nodep', $css );
 		}

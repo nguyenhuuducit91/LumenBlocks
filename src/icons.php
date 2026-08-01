@@ -37,7 +37,7 @@ if ( ! class_exists( 'Lumen_Icons' ) ) {
 				'lumen_icons_fa_free_version',
 				array(
 					'type' => 'string',
-					'description' => __( 'Select FontAwesome version', LUMEN_I18N ),
+					'description' => __( 'Select FontAwesome version', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',

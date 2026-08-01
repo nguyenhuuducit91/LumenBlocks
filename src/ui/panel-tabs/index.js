@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import './polyfill'
+import './browser-fallback'
 
 /**
  * WordPress dependencies

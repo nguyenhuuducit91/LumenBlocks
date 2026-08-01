@@ -35,7 +35,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_hide_cimo_notice',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Hides the Cimo download notice.', LUMEN_I18N ),
+					'description' => __( 'Hides the Cimo download notice.', 'lumen-blocks' ),
 					'sanitize_callback' => 'rest_sanitize_boolean',
 					'show_in_rest' => true,
 					'default' => false,
@@ -49,7 +49,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				// Enabled blocks are not stored in the object to save memory.
 				array(
 					'type' => 'object',
-					'description' => __( 'Blocks that should be hidden in the block editor', LUMEN_I18N ),
+					'description' => __( 'Blocks that should be hidden in the block editor', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_google_maps_api_key',
 				array(
 					'type' => 'string',
-					'description' => __( 'Enables additional customization options for the Map Block.', LUMEN_I18N ),
+					'description' => __( 'Enables additional customization options for the Map Block.', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -80,7 +80,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_design_library',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Hides the Lumen Design Library button on the top of the editor', LUMEN_I18N ),
+					'description' => __( 'Hides the Lumen Design Library button on the top of the editor', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -92,7 +92,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_optimize_inline_css',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Optimizes inlined CSS styles, combines together similar selectors', LUMEN_I18N ),
+					'description' => __( 'Optimizes inlined CSS styles, combines together similar selectors', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -104,7 +104,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_block_default_width',
 				array(
 					'type' => 'string',
-					'description' => __( 'The width used when a Columns block has its Content Width set to center.', LUMEN_I18N ),
+					'description' => __( 'The width used when a Columns block has its Content Width set to center.', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -116,7 +116,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_block_wide_width',
 				array(
 					'type' => 'string',
-					'description' => __( 'The width used when a Columns block has its Content Width set to wide.', LUMEN_I18N ),
+					'description' => __( 'The width used when a Columns block has its Content Width set to wide.', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -128,7 +128,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_auto_collapse_panels',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', LUMEN_I18N ),
+					'description' => __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -140,7 +140,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_global_settings',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Allow the configuration of global settings such as color palette, typography, and block defaults', LUMEN_I18N ),
+					'description' => __( 'Allow the configuration of global settings such as color palette, typography, and block defaults', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -152,7 +152,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_block_linking',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', LUMEN_I18N ),
+					'description' => __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => false,
@@ -175,7 +175,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_text_highlight',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Adds a toolbar button for highlighting text', LUMEN_I18N ),
+					'description' => __( 'Adds a toolbar button for highlighting text', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -187,7 +187,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_dynamic_content',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Adds a toolbar button for inserting dynamic content', LUMEN_I18N ),
+					'description' => __( 'Adds a toolbar button for inserting dynamic content', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -199,7 +199,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_copy_paste_styles',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Adds a toolbar button for copying and pasting block styles', LUMEN_I18N ),
+					'description' => __( 'Adds a toolbar button for copying and pasting block styles', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -211,7 +211,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_reset_layout',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Adds a toolbar button for resetting the layout of a block', LUMEN_I18N ),
+					'description' => __( 'Adds a toolbar button for resetting the layout of a block', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -223,7 +223,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_save_as_default_block',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Adds a toolbar button for saving the current block variation as the default block', LUMEN_I18N ),
+					'description' => __( 'Adds a toolbar button for saving the current block variation as the default block', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -235,7 +235,7 @@ if ( ! class_exists( 'Lumen_Editor_Settings' ) ) {
 				'lumen_enable_text_default_block',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'If this is enabled, the default block when adding a new block will be the Lumen Text block.', LUMEN_I18N ),
+					'description' => __( 'If this is enabled, the default block when adding a new block will be the Lumen Text block.', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => false,

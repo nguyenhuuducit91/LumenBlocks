@@ -48,6 +48,7 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 
 			// This will trigger the editor to redirect to the editor for a
 			// default block.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only decides whether to hook the handler, which checks the capability itself.
 			if ( isset( $_REQUEST['lmn_edit_block_style'] ) && isset( $_REQUEST['lmn_edit_block'] ) && isset( $_REQUEST['lmn_edit_block_title'] ) ) {
 				add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
 			}
@@ -71,7 +72,7 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 				'lumen_block_styles',
 				array(
 					'type' => 'array',
-					'description' => __( 'Lumen User Block Styles', LUMEN_I18N ),
+					'description' => __( 'Lumen User Block Styles', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -444,14 +445,16 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 
 		public static function validate_string( $value, $request, $param ) {
 			if ( ! is_string( $value ) ) {
-				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', LUMEN_I18N ), $param ) );
+				/* translators: %s: name of the REST parameter that failed validation */
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', 'lumen-blocks' ), $param ) );
 			}
 			return true;
 		}
 
 		public static function validate_boolean( $value, $request, $param ) {
 			if ( ! is_bool( $value ) ) {
-				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a boolean.', LUMEN_I18N ), $param ) );
+				/* translators: %s: name of the REST parameter that failed validation */
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a boolean.', 'lumen-blocks' ), $param ) );
 			}
 			return true;
 		}
@@ -473,7 +476,7 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 			if ( empty( $block ) || empty( $slug ) ) {
 				return new WP_Error(
 					'invalid_block_style',
-					__( 'Invalid block or style slug.', LUMEN_I18N ),
+					__( 'Invalid block or style slug.', 'lumen-blocks' ),
 					array( 'status' => 400 )
 				);
 			}
@@ -537,7 +540,7 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 			if ( empty( $block ) || empty( $slug ) ) {
 				return new WP_Error(
 					'invalid_block_style',
-					__( 'Invalid block or style slug.', LUMEN_I18N ),
+					__( 'Invalid block or style slug.', 'lumen-blocks' ),
 					array( 'status' => 400 )
 				);
 			}
@@ -586,9 +589,9 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 			register_post_type( 'lumen_temp_post',
 				array(
 					'labels' => array(
-						'name' => __( 'Default Blocks', LUMEN_I18N ),
-						'singular_name' => __( 'Default Block', LUMEN_I18N ),
-						'item_updated' => __( 'Saving, please wait...', LUMEN_I18N ), // We use a please wait message, JS will replace it with the real message.
+						'name' => __( 'Default Blocks', 'lumen-blocks' ),
+						'singular_name' => __( 'Default Block', 'lumen-blocks' ),
+						'item_updated' => __( 'Saving, please wait...', 'lumen-blocks' ), // We use a please wait message, JS will replace it with the real message.
 					),
 					'public'                => false, // Only for editing purposes.
 					'has_archive'           => false,
@@ -648,7 +651,7 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 		public function temp_block_editor_list_disallow() {
 			$screen = get_current_screen();
 			if ( ! empty( $screen ) && $screen->base === 'edit' && $screen->id === 'edit-lumen_temp_post' ) {
-				wp_redirect( admin_url() );
+				wp_safe_redirect( admin_url() );
 				die();
 			}
 		}
@@ -660,15 +663,23 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 		 */
 		public function edit_default_block_redirect() {
 			if ( ! self::can_manage_block_styles() ) {
-				wp_die( esc_html__( 'You do not have permission to edit block default styles.', LUMEN_I18N ) );
+				wp_die( esc_html__( 'You do not have permission to edit block default styles.', 'lumen-blocks' ) );
 			}
 
-			$block_name = $this->sanitize_block_name( sanitize_text_field( wp_unslash( $_REQUEST['lmn_edit_block'] ) ) );
-			$style_slug = $this->sanitize_style_slug( sanitize_text_field( wp_unslash( $_REQUEST['lmn_edit_block_style'] ) ) );
-			$block_title = sanitize_text_field( wp_unslash( $_REQUEST['lmn_edit_block_title'] ) );
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- The link is built by the editor and the capability is checked above; the values are sanitized here.
+			$block_name = isset( $_REQUEST['lmn_edit_block'] )
+				? $this->sanitize_block_name( sanitize_text_field( wp_unslash( $_REQUEST['lmn_edit_block'] ) ) )
+				: '';
+			$style_slug = isset( $_REQUEST['lmn_edit_block_style'] )
+				? $this->sanitize_style_slug( sanitize_text_field( wp_unslash( $_REQUEST['lmn_edit_block_style'] ) ) )
+				: '';
+			$block_title = isset( $_REQUEST['lmn_edit_block_title'] )
+				? sanitize_text_field( wp_unslash( $_REQUEST['lmn_edit_block_title'] ) )
+				: '';
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 			if ( empty( $block_name ) || empty( $style_slug ) ) {
-				wp_die( esc_html__( 'Invalid block default style.', LUMEN_I18N ) );
+				wp_die( esc_html__( 'Invalid block default style.', 'lumen-blocks' ) );
 			}
 
 			$this->redirect_to_block_style_editor( $block_name, $style_slug, $block_title );
@@ -751,7 +762,8 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 				'post_status' => 'publish',
 				'post_title' => $style_slug !== 'default'
 					? $style->name
-					: sprintf( __( 'Default %s Block', LUMEN_I18N ), $block_title ),
+					/* translators: %s: title of the block whose default style is being edited */
+					: sprintf( __( 'Default %s Block', 'lumen-blocks' ), $block_title ),
 				'post_content' => $post_content,
 			) );
 
@@ -768,7 +780,7 @@ if ( ! class_exists( 'Lumen_Custom_Block_Styles' ) ) {
 			$url = get_edit_post_link( $style_post_id, 'url' );
 			// When the Classic Editor plugin is enabled, force it to use the classic editor.
 			$url = add_query_arg( 'classic-editor__forget', '', $url );
-			wp_redirect( $url );
+			wp_safe_redirect( $url );
 			die();
 		}
 	}

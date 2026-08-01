@@ -17,7 +17,7 @@ if ( ! function_exists( 'lumen_load_map_frontend_script' ) ) {
 			);
 			wp_localize_script( 'lmn-frontend-map', 'lumenMapVars', array(
 				'googleApiKey' => get_option( 'lumen_google_maps_api_key', '' ),
-				'labelMissingMapApiKey' =>  __( 'This map block uses settings that require a Google Maps API key, but it is missing. Please enter your Google Maps API key in the Lumen settings, or edit this map block.', LUMEN_I18N ),
+				'labelMissingMapApiKey' =>  __( 'This map block uses settings that require a Google Maps API key, but it is missing. Please enter your Google Maps API key in the Lumen settings, or edit this map block.', 'lumen-blocks' ),
 			) );
 		}
 	}

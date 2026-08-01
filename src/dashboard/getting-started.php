@@ -30,7 +30,7 @@ if ( ! class_exists( 'Lumen_Getting_Started_Screen' ) ) {
 				'lumen_guided_tour_states',
 				array(
 					'type' => 'array',
-					'description' => __( 'An array of strings representing completed block tours.', LUMEN_I18N ),
+					'description' => __( 'An array of strings representing completed block tours.', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
                     'show_in_rest' => array(
 						'schema' => array(

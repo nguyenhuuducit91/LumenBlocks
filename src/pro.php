@@ -44,7 +44,7 @@ if ( ! function_exists( 'lumen_register_show_pro_notice_option' ) ) {
 			'lumen_show_pro_notices',
 			array(
 				'type' => 'string',
-				'description' => __( 'Hide "Go Premium" notices', LUMEN_I18N ),
+				'description' => __( 'Hide "Go Premium" notices', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '1',

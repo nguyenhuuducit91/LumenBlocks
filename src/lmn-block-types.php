@@ -12,8 +12,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/accordion' => [
 				'api_version' => '3',
 				'name' => 'lumen/accordion',
-				'title' => __( 'Accordion', LUMEN_I18N ),
-				'description' => __( 'A title that your visitors can toggle to view more text.', LUMEN_I18N ),
+				'title' => __( 'Accordion', 'lumen-blocks' ),
+				'description' => __( 'A title that your visitors can toggle to view more text.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -22,8 +22,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Toggle', LUMEN_I18N ),
-					__( 'Faq', LUMEN_I18N )
+					__( 'Toggle', 'lumen-blocks' ),
+					__( 'Faq', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',
@@ -39,8 +39,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/blockquote' => [
 				'api_version' => '3',
 				'name' => 'lumen/blockquote',
-				'title' => __( 'Blockquote', LUMEN_I18N ),
-				'description' => __( 'Display a quote in style', LUMEN_I18N ),
+				'title' => __( 'Blockquote', 'lumen-blocks' ),
+				'description' => __( 'Display a quote in style', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -60,8 +60,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/button' => [
 				'api_version' => '3',
 				'name' => 'lumen/button',
-				'title' => __( 'Button', LUMEN_I18N ),
-				'description' => __( 'Add a customizable button.', LUMEN_I18N ),
+				'title' => __( 'Button', 'lumen-blocks' ),
+				'description' => __( 'Add a customizable button.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -73,7 +73,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/button-group'
 				],
 				'keywords' => [
-					__( 'Link', LUMEN_I18N )
+					__( 'Link', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'hidden',
@@ -82,8 +82,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/button-group' => [
 				'api_version' => '3',
 				'name' => 'lumen/button-group',
-				'title' => __( 'Button Group', LUMEN_I18N ),
-				'description' => __( 'Add a customizable button.', LUMEN_I18N ),
+				'title' => __( 'Button Group', 'lumen-blocks' ),
+				'description' => __( 'Add a customizable button.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -92,27 +92,27 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Link', LUMEN_I18N )
+					__( 'Link', 'lumen-blocks' )
 				],
 				'lmn-variants' => [
 					[
 						'name' => 'icon-button',
-						'title' => __( 'Icon Button', LUMEN_I18N ),
-						'description' => __( 'Add a customizable button.', LUMEN_I18N ),
+						'title' => __( 'Icon Button', 'lumen-blocks' ),
+						'description' => __( 'Add a customizable button.', 'lumen-blocks' ),
 						'category' => 'lumen',
 						'lmn-type' => 'essential'
 					],
 					[
 						'name' => 'button',
-						'title' => __( 'Button', LUMEN_I18N ),
-						'description' => __( 'Add a customizable button.', LUMEN_I18N ),
+						'title' => __( 'Button', 'lumen-blocks' ),
+						'description' => __( 'Add a customizable button.', 'lumen-blocks' ),
 						'category' => 'lumen',
 						'lmn-type' => 'essential'
 					],
 					[
 						'name' => 'social-buttons',
-						'title' => __( 'Social Buttons', LUMEN_I18N ),
-						'description' => __( 'Add social buttons.', LUMEN_I18N ),
+						'title' => __( 'Social Buttons', 'lumen-blocks' ),
+						'description' => __( 'Add social buttons.', 'lumen-blocks' ),
 						'category' => 'lumen',
 						'lmn-type' => 'special',
 						'lmn-required-blocks' => [
@@ -126,8 +126,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/call-to-action' => [
 				'api_version' => '3',
 				'name' => 'lumen/call-to-action',
-				'title' => __( 'Call to Action', LUMEN_I18N ),
-				'description' => __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', LUMEN_I18N ),
+				'title' => __( 'Call to Action', 'lumen-blocks' ),
+				'description' => __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -139,7 +139,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation' => 'innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'CTA', LUMEN_I18N )
+					__( 'CTA', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'section',
@@ -153,8 +153,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/card' => [
 				'api_version' => '3',
 				'name' => 'lumen/card',
-				'title' => __( 'Card', LUMEN_I18N ),
-				'description' => __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', LUMEN_I18N ),
+				'title' => __( 'Card', 'lumen-blocks' ),
+				'description' => __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -178,8 +178,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/carousel' => [
 				'api_version' => '3',
 				'name' => 'lumen/carousel',
-				'title' => __( 'Carousel', LUMEN_I18N ),
-				'description' => __( 'A carousel slider.', LUMEN_I18N ),
+				'title' => __( 'Carousel', 'lumen-blocks' ),
+				'description' => __( 'A carousel slider.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -188,7 +188,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Slider', LUMEN_I18N )
+					__( 'Slider', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -196,8 +196,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/column' => [
 				'api_version' => '3',
 				'name' => 'lumen/column',
-				'title' => __( 'Inner Column', LUMEN_I18N ),
-				'description' => __( 'A single column with advanced layout options.', LUMEN_I18N ),
+				'title' => __( 'Inner Column', 'lumen-blocks' ),
+				'description' => __( 'A single column with advanced layout options.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -210,7 +210,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation' => 'innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Section rows', LUMEN_I18N )
+					__( 'Section rows', 'lumen-blocks' )
 				],
 				'parent' => [
 					'lumen/columns',
@@ -230,8 +230,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/columns' => [
 				'api_version' => '3',
 				'name' => 'lumen/columns',
-				'title' => __( 'Columns', LUMEN_I18N ),
-				'description' => __( 'Multiple columns with advanced layout options.', LUMEN_I18N ),
+				'title' => __( 'Columns', 'lumen-blocks' ),
+				'description' => __( 'Multiple columns with advanced layout options.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -239,8 +239,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'queryId'
 				],
 				'keywords' => [
-					__( 'Section rows', LUMEN_I18N ),
-					__( 'Container', LUMEN_I18N )
+					__( 'Section rows', 'lumen-blocks' ),
+					__( 'Container', 'lumen-blocks' )
 				],
 				'provides_context' => [
 					'lumen/innerBlockOrientation' => 'columnJustify',
@@ -256,8 +256,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/count-up' => [
 				'api_version' => '3',
 				'name' => 'lumen/count-up',
-				'title' => __( 'Count Up', LUMEN_I18N ),
-				'description' => __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', LUMEN_I18N ),
+				'title' => __( 'Count Up', 'lumen-blocks' ),
+				'description' => __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -266,7 +266,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Number', LUMEN_I18N )
+					__( 'Number', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -274,8 +274,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/countdown' => [
 				'api_version' => '3',
 				'name' => 'lumen/countdown',
-				'title' => __( 'Countdown', LUMEN_I18N ),
-				'description' => __( 'Display a countdown timer on your website.', LUMEN_I18N ),
+				'title' => __( 'Countdown', 'lumen-blocks' ),
+				'description' => __( 'Display a countdown timer on your website.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -284,7 +284,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Timer', LUMEN_I18N )
+					__( 'Timer', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -292,8 +292,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/design-library' => [
 				'api_version' => '3',
 				'name' => 'lumen/design-library',
-				'title' => __( 'Design Library', LUMEN_I18N ),
-				'description' => __( 'Choose a layout or block from the Lumen Design Library.', LUMEN_I18N ),
+				'title' => __( 'Design Library', 'lumen-blocks' ),
+				'description' => __( 'Choose a layout or block from the Lumen Design Library.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -302,7 +302,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Template', LUMEN_I18N )
+					__( 'Template', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',
@@ -314,8 +314,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/divider' => [
 				'api_version' => '3',
 				'name' => 'lumen/divider',
-				'title' => __( 'Divider', LUMEN_I18N ),
-				'description' => __( 'Add a pause between your content.', LUMEN_I18N ),
+				'title' => __( 'Divider', 'lumen-blocks' ),
+				'description' => __( 'Add a pause between your content.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -324,8 +324,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Horizontal Rule', LUMEN_I18N ),
-					__( 'HR', LUMEN_I18N )
+					__( 'Horizontal Rule', 'lumen-blocks' ),
+					__( 'HR', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -333,8 +333,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/expand' => [
 				'api_version' => '3',
 				'name' => 'lumen/expand',
-				'title' => __( 'Expand / Show More', LUMEN_I18N ),
-				'description' => __( 'Display a small snippet of text. Your readers can toggle it to show more information.', LUMEN_I18N ),
+				'title' => __( 'Expand / Show More', 'lumen-blocks' ),
+				'description' => __( 'Display a small snippet of text. Your readers can toggle it to show more information.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -343,8 +343,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Hide', LUMEN_I18N ),
-					__( 'Less', LUMEN_I18N )
+					__( 'Hide', 'lumen-blocks' ),
+					__( 'Less', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',
@@ -356,8 +356,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/feature' => [
 				'api_version' => '3',
 				'name' => 'lumen/feature',
-				'title' => __( 'Feature', LUMEN_I18N ),
-				'description' => __( 'Display a product feature or a service in a large area.', LUMEN_I18N ),
+				'title' => __( 'Feature', 'lumen-blocks' ),
+				'description' => __( 'Display a product feature or a service in a large area.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -383,8 +383,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/feature-grid' => [
 				'api_version' => '3',
 				'name' => 'lumen/feature-grid',
-				'title' => __( 'Feature Grid', LUMEN_I18N ),
-				'description' => __( 'Display multiple product features or services. You can use Feature Grids one after another.', LUMEN_I18N ),
+				'title' => __( 'Feature Grid', 'lumen-blocks' ),
+				'description' => __( 'Display multiple product features or services. You can use Feature Grids one after another.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -408,8 +408,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/heading' => [
 				'api_version' => '3',
 				'name' => 'lumen/heading',
-				'title' => __( 'Heading', LUMEN_I18N ),
-				'description' => __( 'Introduce new sections of your content in style.', LUMEN_I18N ),
+				'title' => __( 'Heading', 'lumen-blocks' ),
+				'description' => __( 'Introduce new sections of your content in style.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -418,7 +418,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Title', LUMEN_I18N )
+					__( 'Title', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'essential'
@@ -426,8 +426,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/hero' => [
 				'api_version' => '3',
 				'name' => 'lumen/hero',
-				'title' => __( 'Hero', LUMEN_I18N ),
-				'description' => __( 'A large hero area. Typically used at the very top of a page.', LUMEN_I18N ),
+				'title' => __( 'Hero', 'lumen-blocks' ),
+				'description' => __( 'A large hero area. Typically used at the very top of a page.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -439,7 +439,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation' => 'innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Header', LUMEN_I18N )
+					__( 'Header', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'section',
@@ -453,8 +453,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/horizontal-scroller' => [
 				'api_version' => '3',
 				'name' => 'lumen/horizontal-scroller',
-				'title' => __( 'Horizontal Scroller', LUMEN_I18N ),
-				'description' => __( 'A slider that scrolls horizontally.', LUMEN_I18N ),
+				'title' => __( 'Horizontal Scroller', 'lumen-blocks' ),
+				'description' => __( 'A slider that scrolls horizontally.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -463,8 +463,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Slider', LUMEN_I18N ),
-					__( 'Carousel', LUMEN_I18N )
+					__( 'Slider', 'lumen-blocks' ),
+					__( 'Carousel', 'lumen-blocks' )
 				],
 				'provides_context' => [
 					'lumen/columnFit' => 'columnFit'
@@ -475,8 +475,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/icon' => [
 				'api_version' => '3',
 				'name' => 'lumen/icon',
-				'title' => __( 'Icon', LUMEN_I18N ),
-				'description' => __( 'Pick an icon or upload your own SVG icon to decorate your content.', LUMEN_I18N ),
+				'title' => __( 'Icon', 'lumen-blocks' ),
+				'description' => __( 'Pick an icon or upload your own SVG icon to decorate your content.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -485,7 +485,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'SVG', LUMEN_I18N )
+					__( 'SVG', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'essential'
@@ -493,8 +493,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/icon-box' => [
 				'api_version' => '3',
 				'name' => 'lumen/icon-box',
-				'title' => __( 'Icon Box', LUMEN_I18N ),
-				'description' => __( 'A small text area with an icon that can be used to summarize features or services', LUMEN_I18N ),
+				'title' => __( 'Icon Box', 'lumen-blocks' ),
+				'description' => __( 'A small text area with an icon that can be used to summarize features or services', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -513,8 +513,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/icon-button' => [
 				'api_version' => '3',
 				'name' => 'lumen/icon-button',
-				'title' => __( 'Icon Button', LUMEN_I18N ),
-				'description' => __( 'Add a customizable button.', LUMEN_I18N ),
+				'title' => __( 'Icon Button', 'lumen-blocks' ),
+				'description' => __( 'Add a customizable button.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -526,7 +526,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/button-group'
 				],
 				'keywords' => [
-					__( 'Link', LUMEN_I18N )
+					__( 'Link', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'hidden',
@@ -535,8 +535,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/icon-label' => [
 				'api_version' => '3',
 				'name' => 'lumen/icon-label',
-				'title' => __( 'Icon Label', LUMEN_I18N ),
-				'description' => __( 'An Icon and Heading paired together.', LUMEN_I18N ),
+				'title' => __( 'Icon Label', 'lumen-blocks' ),
+				'description' => __( 'An Icon and Heading paired together.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -545,7 +545,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'SVG', LUMEN_I18N )
+					__( 'SVG', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',
@@ -557,8 +557,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/icon-list' => [
 				'api_version' => '3',
 				'name' => 'lumen/icon-list',
-				'title' => __( 'Icon List', LUMEN_I18N ),
-				'description' => __( 'An unordered list with icons. You can use this as a list of features or benefits.', LUMEN_I18N ),
+				'title' => __( 'Icon List', 'lumen-blocks' ),
+				'description' => __( 'An unordered list with icons. You can use this as a list of features or benefits.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -567,9 +567,9 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Checklist', LUMEN_I18N ),
-					__( 'Bullets', LUMEN_I18N ),
-					__( 'Number list', LUMEN_I18N )
+					__( 'Checklist', 'lumen-blocks' ),
+					__( 'Bullets', 'lumen-blocks' ),
+					__( 'Number list', 'lumen-blocks' )
 				],
 				'provides_context' => [
 					'lumen/ordered' => 'ordered',
@@ -581,8 +581,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/icon-list-item' => [
 				'api_version' => '3',
 				'name' => 'lumen/icon-list-item',
-				'title' => __( 'Icon List Item', LUMEN_I18N ),
-				'description' => __( 'A single list entry in the Icon List block', LUMEN_I18N ),
+				'title' => __( 'Icon List Item', 'lumen-blocks' ),
+				'description' => __( 'A single list entry in the Icon List block', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -604,8 +604,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/image' => [
 				'api_version' => '3',
 				'name' => 'lumen/image',
-				'title' => __( 'Image', LUMEN_I18N ),
-				'description' => __( 'An image with advanced controls to make a visual statement.', LUMEN_I18N ),
+				'title' => __( 'Image', 'lumen-blocks' ),
+				'description' => __( 'An image with advanced controls to make a visual statement.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -619,8 +619,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/image-box' => [
 				'api_version' => '3',
 				'name' => 'lumen/image-box',
-				'title' => __( 'Image Box', LUMEN_I18N ),
-				'description' => __( 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.', LUMEN_I18N ),
+				'title' => __( 'Image Box', 'lumen-blocks' ),
+				'description' => __( 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -643,8 +643,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/map' => [
 				'api_version' => '3',
 				'name' => 'lumen/map',
-				'title' => __( 'Map', LUMEN_I18N ),
-				'description' => __( 'Embedded Google Map with advanced controls.', LUMEN_I18N ),
+				'title' => __( 'Map', 'lumen-blocks' ),
+				'description' => __( 'Embedded Google Map with advanced controls.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -654,16 +654,16 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 				],
 				'textdomain' => 'lumen-blocks',
 				'keywords' => [
-					__( 'location', LUMEN_I18N ),
-					__( 'address', LUMEN_I18N )
+					__( 'location', 'lumen-blocks' ),
+					__( 'address', 'lumen-blocks' )
 				],
 				'lmn-type' => 'special'
 			],
 			'lumen/notification' => [
 				'api_version' => '3',
 				'name' => 'lumen/notification',
-				'title' => __( 'Notification', LUMEN_I18N ),
-				'description' => __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.', LUMEN_I18N ),
+				'title' => __( 'Notification', 'lumen-blocks' ),
+				'description' => __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -675,8 +675,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation' => 'innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Notice', LUMEN_I18N ),
-					__( 'Alert', LUMEN_I18N )
+					__( 'Notice', 'lumen-blocks' ),
+					__( 'Alert', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',
@@ -693,8 +693,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/number-box' => [
 				'api_version' => '3',
 				'name' => 'lumen/number-box',
-				'title' => __( 'Number Box', LUMEN_I18N ),
-				'description' => __( 'Display steps or methods that your users will do in your service.', LUMEN_I18N ),
+				'title' => __( 'Number Box', 'lumen-blocks' ),
+				'description' => __( 'Display steps or methods that your users will do in your service.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -703,7 +703,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Steps', LUMEN_I18N )
+					__( 'Steps', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -711,8 +711,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/posts' => [
 				'api_version' => '3',
 				'name' => 'lumen/posts',
-				'title' => __( 'Posts', LUMEN_I18N ),
-				'description' => __( 'Your latest blog posts. Use this to showcase a few of your posts in your landing pages.', LUMEN_I18N ),
+				'title' => __( 'Posts', 'lumen-blocks' ),
+				'description' => __( 'Your latest blog posts. Use this to showcase a few of your posts in your landing pages.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -721,9 +721,9 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Blog Posts', LUMEN_I18N ),
-					__( 'Lastest Posts', LUMEN_I18N ),
-					__( 'Query Loop', LUMEN_I18N )
+					__( 'Blog Posts', 'lumen-blocks' ),
+					__( 'Lastest Posts', 'lumen-blocks' ),
+					__( 'Query Loop', 'lumen-blocks' )
 				],
 				'provides_context' => [
 					'type' => 'type',
@@ -744,8 +744,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/price' => [
 				'api_version' => '3',
 				'name' => 'lumen/price',
-				'title' => __( 'Price', LUMEN_I18N ),
-				'description' => __( 'Show a price of a product or service with currency and a suffix styled with different weights', LUMEN_I18N ),
+				'title' => __( 'Price', 'lumen-blocks' ),
+				'description' => __( 'Show a price of a product or service with currency and a suffix styled with different weights', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -754,9 +754,9 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Currency', LUMEN_I18N ),
-					__( 'Pricing', LUMEN_I18N ),
-					__( 'Number', LUMEN_I18N )
+					__( 'Currency', 'lumen-blocks' ),
+					__( 'Pricing', 'lumen-blocks' ),
+					__( 'Number', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',
@@ -767,8 +767,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/pricing-box' => [
 				'api_version' => '3',
 				'name' => 'lumen/pricing-box',
-				'title' => __( 'Pricing Box', LUMEN_I18N ),
-				'description' => __( 'Display the different pricing tiers of your business.', LUMEN_I18N ),
+				'title' => __( 'Pricing Box', 'lumen-blocks' ),
+				'description' => __( 'Display the different pricing tiers of your business.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -780,9 +780,9 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation' => 'innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Currency', LUMEN_I18N ),
-					__( 'Price', LUMEN_I18N ),
-					__( 'Pricing Table', LUMEN_I18N )
+					__( 'Currency', 'lumen-blocks' ),
+					__( 'Price', 'lumen-blocks' ),
+					__( 'Pricing Table', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'section',
@@ -801,8 +801,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/progress-bar' => [
 				'api_version' => '3',
 				'name' => 'lumen/progress-bar',
-				'title' => __( 'Progress Bar', LUMEN_I18N ),
-				'description' => __( 'Visualize a progress value or percentage in a bar.', LUMEN_I18N ),
+				'title' => __( 'Progress Bar', 'lumen-blocks' ),
+				'description' => __( 'Visualize a progress value or percentage in a bar.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -811,7 +811,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'percentage status', LUMEN_I18N )
+					__( 'percentage status', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -819,8 +819,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/progress-circle' => [
 				'api_version' => '3',
 				'name' => 'lumen/progress-circle',
-				'title' => __( 'Progress Circle', LUMEN_I18N ),
-				'description' => __( 'Visualize a progress value or percentage in a circle.', LUMEN_I18N ),
+				'title' => __( 'Progress Circle', 'lumen-blocks' ),
+				'description' => __( 'Visualize a progress value or percentage in a circle.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -829,7 +829,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'percentage status', LUMEN_I18N )
+					__( 'percentage status', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -837,8 +837,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/separator' => [
 				'api_version' => '3',
 				'name' => 'lumen/separator',
-				'title' => __( 'Separator', LUMEN_I18N ),
-				'description' => __( 'A fancy separator to be placed between content.', LUMEN_I18N ),
+				'title' => __( 'Separator', 'lumen-blocks' ),
+				'description' => __( 'A fancy separator to be placed between content.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -847,7 +847,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Svg Divider', LUMEN_I18N )
+					__( 'Svg Divider', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -855,8 +855,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/spacer' => [
 				'api_version' => '3',
 				'name' => 'lumen/spacer',
-				'title' => __( 'Spacer', LUMEN_I18N ),
-				'description' => __( 'Sometimes you just need some space.', LUMEN_I18N ),
+				'title' => __( 'Spacer', 'lumen-blocks' ),
+				'description' => __( 'Sometimes you just need some space.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -870,8 +870,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/subtitle' => [
 				'api_version' => '3',
 				'name' => 'lumen/subtitle',
-				'title' => __( 'Subtitle', LUMEN_I18N ),
-				'description' => __( 'Subtitle text that you can add custom styling to from the global settings.', LUMEN_I18N ),
+				'title' => __( 'Subtitle', 'lumen-blocks' ),
+				'description' => __( 'Subtitle text that you can add custom styling to from the global settings.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -885,8 +885,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/tab-content' => [
 				'api_version' => '3',
 				'name' => 'lumen/tab-content',
-				'title' => __( 'Tab Content', LUMEN_I18N ),
-				'description' => __( 'A wrapper for tab panels.', LUMEN_I18N ),
+				'title' => __( 'Tab Content', 'lumen-blocks' ),
+				'description' => __( 'A wrapper for tab panels.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -908,8 +908,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/tab-labels' => [
 				'api_version' => '3',
 				'name' => 'lumen/tab-labels',
-				'title' => __( 'Tab Labels', LUMEN_I18N ),
-				'description' => __( 'Create interactive navigation within tabs.', LUMEN_I18N ),
+				'title' => __( 'Tab Labels', 'lumen-blocks' ),
+				'description' => __( 'Create interactive navigation within tabs.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -931,8 +931,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/table-of-contents' => [
 				'api_version' => '3',
 				'name' => 'lumen/table-of-contents',
-				'title' => __( 'Table of Contents', LUMEN_I18N ),
-				'description' => __( 'Automatically generated table of contents based on Heading blocks.', LUMEN_I18N ),
+				'title' => __( 'Table of Contents', 'lumen-blocks' ),
+				'description' => __( 'Automatically generated table of contents based on Heading blocks.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -941,9 +941,9 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'ToC', LUMEN_I18N ),
-					__( 'Index', LUMEN_I18N ),
-					__( 'Outline', LUMEN_I18N )
+					__( 'ToC', 'lumen-blocks' ),
+					__( 'Index', 'lumen-blocks' ),
+					__( 'Outline', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -951,8 +951,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/tabs' => [
 				'api_version' => '3',
 				'name' => 'lumen/tabs',
-				'title' => __( 'Tabs', LUMEN_I18N ),
-				'description' => __( 'Organize and display content in multiple tabs.', LUMEN_I18N ),
+				'title' => __( 'Tabs', 'lumen-blocks' ),
+				'description' => __( 'Organize and display content in multiple tabs.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -961,7 +961,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'toggle', LUMEN_I18N )
+					__( 'toggle', 'lumen-blocks' )
 				],
 				'provides_context' => [
 					'lumen/initialTabOpen' => 'initialTabOpen',
@@ -975,8 +975,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/team-member' => [
 				'api_version' => '3',
 				'name' => 'lumen/team-member',
-				'title' => __( 'Team Member', LUMEN_I18N ),
-				'description' => __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.', LUMEN_I18N ),
+				'title' => __( 'Team Member', 'lumen-blocks' ),
+				'description' => __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -1001,8 +1001,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/testimonial' => [
 				'api_version' => '3',
 				'name' => 'lumen/testimonial',
-				'title' => __( 'Testimonial', LUMEN_I18N ),
-				'description' => __( 'Showcase what your users say about your product or service.', LUMEN_I18N ),
+				'title' => __( 'Testimonial', 'lumen-blocks' ),
+				'description' => __( 'Showcase what your users say about your product or service.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -1028,8 +1028,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/text' => [
 				'api_version' => '3',
 				'name' => 'lumen/text',
-				'title' => __( 'Text', LUMEN_I18N ),
-				'description' => __( 'Start with the building block of all page layouts.', LUMEN_I18N ),
+				'title' => __( 'Text', 'lumen-blocks' ),
+				'description' => __( 'Start with the building block of all page layouts.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -1038,7 +1038,7 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'Paragraph', LUMEN_I18N )
+					__( 'Paragraph', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'essential'
@@ -1046,8 +1046,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/timeline' => [
 				'api_version' => '3',
 				'name' => 'lumen/timeline',
-				'title' => __( 'Timeline', LUMEN_I18N ),
-				'description' => __( 'Show events in chronological order', LUMEN_I18N ),
+				'title' => __( 'Timeline', 'lumen-blocks' ),
+				'description' => __( 'Show events in chronological order', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -1056,8 +1056,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'history', LUMEN_I18N ),
-					__( 'milestone', LUMEN_I18N )
+					__( 'history', 'lumen-blocks' ),
+					__( 'milestone', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special'
@@ -1065,8 +1065,8 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 			'lumen/video-popup' => [
 				'api_version' => '3',
 				'name' => 'lumen/video-popup',
-				'title' => __( 'Video Popup', LUMEN_I18N ),
-				'description' => __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.', LUMEN_I18N ),
+				'title' => __( 'Video Popup', 'lumen-blocks' ),
+				'description' => __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.', 'lumen-blocks' ),
 				'category' => 'lumen',
 				'uses_context' => [
 					'postId',
@@ -1075,9 +1075,9 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'lumen/innerBlockOrientation'
 				],
 				'keywords' => [
-					__( 'YouTube', LUMEN_I18N ),
-					__( 'Vimeo', LUMEN_I18N ),
-					__( 'Embed Mp4', LUMEN_I18N )
+					__( 'YouTube', 'lumen-blocks' ),
+					__( 'Vimeo', 'lumen-blocks' ),
+					__( 'Embed Mp4', 'lumen-blocks' )
 				],
 				'textdomain' => 'lumen-blocks',
 				'lmn-type' => 'special',

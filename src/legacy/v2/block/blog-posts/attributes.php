@@ -1842,11 +1842,11 @@ if ( ! function_exists( 'lumen_blog_posts_attributes_v2' ) ) {
 			),
 			'nextLabel' => array(
 				'type' => 'string',
-				'default' => __( 'Next »', LUMEN_I18N ),
+				'default' => __( 'Next »', 'lumen-blocks' ),
 			),
 			'previousLabel' => array(
 				'type' => 'string',
-				'default' => __( '« Previous', LUMEN_I18N ),
+				'default' => __( '« Previous', 'lumen-blocks' ),
 			),
 			'showNextPrevious' => array(
 				'type' => 'boolean',

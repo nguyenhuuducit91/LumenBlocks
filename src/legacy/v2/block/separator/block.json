@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "lmb/separator",
 	"title": "Separator",
 	"description": "A fancy separator to be placed between content.",

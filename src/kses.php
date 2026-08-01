@@ -132,30 +132,30 @@ if ( ! function_exists( 'lumen_allow_wp_kses_allowed_html' ) ) {
 			'datetime' => true,
 		);
 
-		_lumen_svg_attributes( $tags, 'path' );
-		_lumen_svg_attributes( $tags, 'circle' );
-		_lumen_svg_attributes( $tags, 'polygon' );
-		_lumen_svg_attributes( $tags, 'polyline' );
-		_lumen_svg_attributes( $tags, 'line' );
-		_lumen_svg_attributes( $tags, 'rect' );
-		_lumen_svg_attributes( $tags, 'g' );
-		_lumen_svg_attributes( $tags, 'clippath' );
-		_lumen_svg_attributes( $tags, 'filter' );
-		_lumen_svg_attributes( $tags, 'text' );
+		lumen_kses_svg_attributes( $tags, 'path' );
+		lumen_kses_svg_attributes( $tags, 'circle' );
+		lumen_kses_svg_attributes( $tags, 'polygon' );
+		lumen_kses_svg_attributes( $tags, 'polyline' );
+		lumen_kses_svg_attributes( $tags, 'line' );
+		lumen_kses_svg_attributes( $tags, 'rect' );
+		lumen_kses_svg_attributes( $tags, 'g' );
+		lumen_kses_svg_attributes( $tags, 'clippath' );
+		lumen_kses_svg_attributes( $tags, 'filter' );
+		lumen_kses_svg_attributes( $tags, 'text' );
 
-		_lumen_common_attributes( $tags, 'div' );
-		_lumen_common_attributes( $tags, 'h1' );
-		_lumen_common_attributes( $tags, 'h2' );
-		_lumen_common_attributes( $tags, 'h3' );
-		_lumen_common_attributes( $tags, 'h4' );
-		_lumen_common_attributes( $tags, 'h5' );
-		_lumen_common_attributes( $tags, 'h6' );
-		_lumen_common_attributes( $tags, 'svg' );
+		lumen_kses_common_attributes( $tags, 'div' );
+		lumen_kses_common_attributes( $tags, 'h1' );
+		lumen_kses_common_attributes( $tags, 'h2' );
+		lumen_kses_common_attributes( $tags, 'h3' );
+		lumen_kses_common_attributes( $tags, 'h4' );
+		lumen_kses_common_attributes( $tags, 'h5' );
+		lumen_kses_common_attributes( $tags, 'h6' );
+		lumen_kses_common_attributes( $tags, 'svg' );
 
 		return $tags;
 	}
 
-	function _lumen_svg_attributes( &$tags, $tag ) {
+	function lumen_kses_svg_attributes( &$tags, $tag ) {
 		$tags[ $tag ]['id'] = true;
 		$tags[ $tag ]['class'] = true;
 		$tags[ $tag ]['style'] = true;
@@ -173,7 +173,7 @@ if ( ! function_exists( 'lumen_allow_wp_kses_allowed_html' ) ) {
 		$tags[ $tag ]['opacity'] = true;
 	}
 
-	function _lumen_common_attributes( &$tags, $tag ) {
+	function lumen_kses_common_attributes( &$tags, $tag ) {
 		$tags[ $tag ]['aria-hidden'] = true; // Used by Separators & Icons
 		$tags[ $tag ]['aria-expanded'] = true; // Used by Expand block.
 		$tags[ $tag ]['aria-level'] = true; // Used by Accordion block.

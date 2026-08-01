@@ -21,13 +21,13 @@ if ( ! class_exists( 'Lumen_Optimization_Settings_V2' ) ) {
 		 * Initialize
 		 */
         function __construct() {
-			if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+			if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 				// Register our setting.
 				add_action( 'admin_init', array( $this, 'register_optimization_settings' ) );
 				add_action( 'rest_api_init', array( $this, 'register_optimization_settings' ) );
 
 				// Prevent the scripts from loading normally. Low priority so we can remove the assets.
-				if ( is_frontend() ) {
+				if ( lumen_is_frontend() ) {
 					add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
 
 					// Load the scripts only when Lumen blocks are detected.
@@ -47,7 +47,7 @@ if ( ! class_exists( 'Lumen_Optimization_Settings_V2' ) ) {
 				'lumen_optimize_script_load',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Lumen optimization setting, only load scripts when there are Lumen blocks in the page', LUMEN_I18N ),
+					'description' => __( 'Lumen optimization setting, only load scripts when there are Lumen blocks in the page', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',

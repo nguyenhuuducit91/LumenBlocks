@@ -9,36 +9,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
-$load_polyfill = false;
+$lumen_user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+$lumen_load_fallback = false;
 
 // Safari <= 15.3
-if ( stripos( $user_agent, 'Version/' ) !== false && stripos( $user_agent, 'Safari/' ) !== false ) {
-	$start = stripos( $user_agent, 'Version/' ) + 8;
-	$end = strpos( $user_agent, ' ', $start );
-	$safari_version = substr( $user_agent, $start, $end - $start );
+if ( stripos( $lumen_user_agent, 'Version/' ) !== false && stripos( $lumen_user_agent, 'Safari/' ) !== false ) {
+	$lumen_version_start = stripos( $lumen_user_agent, 'Version/' ) + 8;
+	$lumen_version_end = strpos( $lumen_user_agent, ' ', $lumen_version_start );
+	$lumen_safari_version = substr( $lumen_user_agent, $lumen_version_start, $lumen_version_end - $lumen_version_start );
 
 	// Convert version string to an array of parts
-	$version_parts = explode( '.', $safari_version );
+	$lumen_version_parts = explode( '.', $lumen_safari_version );
 
 	if (
 		// Safari < 15
-		( isset( $version_parts[ 0 ] ) && intval( $version_parts[ 0 ] ) < 15 ) ||
+		( isset( $lumen_version_parts[ 0 ] ) && intval( $lumen_version_parts[ 0 ] ) < 15 ) ||
 		// Safari <= 15.3
-		( isset( $version_parts[ 0 ] ) && intval( $version_parts[ 0 ] ) == 15 &&
+		( isset( $lumen_version_parts[ 0 ] ) && intval( $lumen_version_parts[ 0 ] ) == 15 &&
 			(
-				( isset( $version_parts[ 1 ] ) && intval( $version_parts[ 1 ] ) <= 3 ) ||
-				! isset( $version_parts[ 1 ] )
+				( isset( $lumen_version_parts[ 1 ] ) && intval( $lumen_version_parts[ 1 ] ) <= 3 ) ||
+				! isset( $lumen_version_parts[ 1 ] )
 			)
 		)
 	) {
-		$load_polyfill = true;
+		$lumen_load_fallback = true;
 	}
-} else if ( stripos( $user_agent, 'Firefox/' ) !== false ) {
-	$load_polyfill = true;
+} else if ( stripos( $lumen_user_agent, 'Firefox/' ) !== false ) {
+	$lumen_load_fallback = true;
 }
 
-if ( ! empty( $user_agent ) && $load_polyfill ) {
+if ( ! empty( $lumen_user_agent ) && $lumen_load_fallback ) {
 	if ( ! function_exists( 'lumen_render_block_alignment_frontend_polyfill' ) ) {
 
 		function lumen_render_block_alignment_flex_frontend_polyfill ( $block_content, $block ) {
@@ -62,7 +62,7 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 			return preg_replace( '/lmn-container\s(.*?<.*?lmn--column-flex)/i', 'lmn-container lmn-container--has-child-column-flex-polyfill $1', $block_content );
 		}
 
-		if ( is_frontend() ) {
+		if ( lumen_is_frontend() ) {
 			add_filter( 'render_block', 'lumen_render_block_alignment_flex_frontend_polyfill', 10, 2 );
 		}
 
@@ -143,7 +143,7 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 			return $block_content;
 		}
 
-		if ( is_frontend() ) {
+		if ( lumen_is_frontend() ) {
 			add_filter( 'render_block', 'lumen_render_block_alignment_frontend_polyfill', 10, 2 );
 		}
 	}

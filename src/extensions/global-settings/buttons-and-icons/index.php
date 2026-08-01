@@ -20,13 +20,13 @@ if ( ! class_exists( 'Lumen_Global_Buttons_And_Icons' ) ) {
 		 */
   		function __construct() {
 			// Register our settings.
-			add_action( 'register_lumen_global_settings', array( $this, 'register_buttons_and_icons' ) );
+			add_action( 'lumen_register_global_settings', array( $this, 'register_buttons_and_icons' ) );
 			// Unhooked in Lumen: migrated sites upgrading from an upstream release older
 			// than 3.16.0. Lumen's version line starts at 1.0.0, so this guard would compare
 			// 1.x against 3.16.0 and wrongly re-run on every update.
 			// add_action( 'lumen_early_version_upgraded',  array( $this, 'migrate_buttons_and_icons_schema_changes' ), 10, 2 );
 
-			if ( is_frontend() ) {
+			if ( lumen_is_frontend() ) {
 
 				/**
 				 * Global Spacing and Borders hooks
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Lumen_Global_Buttons_And_Icons' ) ) {
 				'lumen_global_buttons_and_icons',
 				array(
 					'type' => 'object',
-					'description' => __( 'Lumen global buttons and icons', LUMEN_I18N ),
+					'description' => __( 'Lumen global buttons and icons', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(

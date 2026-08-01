@@ -3,7 +3,7 @@
  * Plugin Name:       Lumen Blocks
  * Description:       The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
  * Version:           1.0.0
- * Requires at least: 6.8.2
+ * Requires at least: 6.8
  * Requires PHP:      7.4
  * Author:            Lumen Blocks
  * License:           GPL-3.0-or-later
@@ -14,7 +14,7 @@
  * @package Lumen
  *
  * Lumen Blocks is a fork of Stackable by Gambit Technologies, Inc.,
- * distributed under GPL-3.0-or-later. See NOTICE.md for the list of changes.
+ * distributed under GPL-3.0-or-later. See NOTICE.txt for the list of changes.
  */
 
 // Exit if accessed directly.
@@ -25,16 +25,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'lumen_multiple_plugins_check' ) ) {
 	// Prevent multiple Lumen plugin versions from being active simultaneously.
 	function lumen_multiple_plugins_check() {
-		if ( is_plugin_active( $GLOBALS['OTHER_LUMEN_FILE'] ) ) {
-			deactivate_plugins( $GLOBALS['OTHER_LUMEN_FILE'] );
+		if ( is_plugin_active( $GLOBALS['lumen_other_plugin_file'] ) ) {
+			deactivate_plugins( $GLOBALS['lumen_other_plugin_file'] );
 		}
 	}
 }
 
-if ( defined( 'LUMEN_FILE' ) && LUMEN_FILE !== __FILE__ && ! isset( $GLOBALS['OTHER_LUMEN_FILE'] ) &&
+if ( defined( 'LUMEN_FILE' ) && LUMEN_FILE !== __FILE__ && ! isset( $GLOBALS['lumen_other_plugin_file'] ) &&
 	defined( 'LUMEN_BUILD' ) && defined( 'LUMEN_VERSION' ) ) {
 	// Get relative file path of the other Lumen version.
-	$GLOBALS['OTHER_LUMEN_FILE'] = plugin_basename( LUMEN_FILE );
+	$GLOBALS['lumen_other_plugin_file'] = plugin_basename( LUMEN_FILE );
 
 	// Use a temporary option to store the other Lumen Plugin info needed for the admin notice. This will be deleted later.
 	// Note: We cannot use add_action in the register_activation_hook callback so we use this temporary option.
@@ -75,7 +75,8 @@ if ( ! function_exists( 'lumen_php_requirement_activation_check' ) ) {
 			deactivate_plugins( basename( __FILE__ ) );
 			wp_die(
 				sprintf(
-					esc_html__( '%s"Lumen" can not be activated. %s It requires PHP version 7.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', LUMEN_I18N ),
+					/* translators: 1: opening strong tag, 2: closing strong tag with line breaks, 3: the PHP version running on the site, 4: opening link tag back to the plugins screen, 5: closing link tag */
+					esc_html__( '%1$s"Lumen" can not be activated. %2$s It requires PHP version 7.3.0 or higher, but PHP version %3$s is used on the site. Please upgrade your PHP version first ✌️ %4$s Back %5$s', 'lumen-blocks' ),
 					'<strong>',
 					'</strong><br><br>',
 					PHP_VERSION,
@@ -99,7 +100,8 @@ if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
 		function lumen_php_requirement_notice() {
 	        printf(
 	            '<div class="notice notice-error"><p>%s</p></div>',
-	            sprintf( esc_html__( '"Lumen" requires PHP version 7.3.0 or higher, but PHP version %s is used on the site.', LUMEN_I18N ), PHP_VERSION )
+	            /* translators: %s: the PHP version running on the site */
+	            sprintf( esc_html__( '"Lumen" requires PHP version 7.3.0 or higher, but PHP version %s is used on the site.', 'lumen-blocks' ), PHP_VERSION )
 	        );
 		}
 	}
@@ -160,7 +162,8 @@ if ( ! function_exists( 'lumen_notice_gutenberg_plugin_activated' ) ) {
 			if ( ! $ignore ) {
 				printf(
 					'<div class="notice notice-warning is-dismissible lumen_notice_gutenberg_plugin"><p>%s</p>%s</div>',
-					sprintf( esc_html__( '%sLumen Notice%s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Lumen might not be compatible with it. Click the close button on the side to dismiss this notice.', LUMEN_I18N ), '<strong>', '</strong>' ),
+					/* translators: 1: opening strong tag, 2: closing strong tag */
+					sprintf( esc_html__( '%1$sLumen Notice%2$s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Lumen might not be compatible with it. Click the close button on the side to dismiss this notice.', 'lumen-blocks' ), '<strong>', '</strong>' ),
 					'<script>( function() {
 						document.body.addEventListener( "click", function( event ) {
 							if( event.target.matches( ".notice.lumen_notice_gutenberg_plugin button.notice-dismiss" ) ) {
@@ -197,7 +200,8 @@ if ( ! function_exists( 'lumen_notice_other_lumen_plugin_deactivated' ) ) {
         if ( $OTHER_LUMEN_INFO ) {
             printf(
                 '<div class="notice notice-info is-dismissible lumen_notice_gutenberg_plugin"><p>%s</p></div>',
-                sprintf( esc_html__( '%sLumen Notice%s: The Lumen plugin (%s version %s) has been deactivated. Only one active Lumen plugin is needed.', LUMEN_I18N ), '<strong>', '</strong>', $OTHER_LUMEN_INFO['BUILD'], $OTHER_LUMEN_INFO['VERSION'] )
+                /* translators: 1: opening strong tag, 2: closing strong tag, 3: the build of the other Lumen plugin, 4: its version number */
+                sprintf( esc_html__( '%1$sLumen Notice%2$s: The Lumen plugin (%3$s version %4$s) has been deactivated. Only one active Lumen plugin is needed.', 'lumen-blocks' ), '<strong>', '</strong>', esc_html( $OTHER_LUMEN_INFO['BUILD'] ), esc_html( $OTHER_LUMEN_INFO['VERSION'] ) )
             );
             delete_option( 'lumen_other_lumen_plugin_info' );
         }
@@ -244,7 +248,7 @@ if ( ! function_exists( 'lumen_notice_other_lumen_plugin_deactivated' ) ) {
  * END Deactivation & cleanup
  ********************************************************************************************/
 
-if ( ! function_exists( 'is_frontend' ) ) {
+if ( ! function_exists( 'lumen_is_frontend' ) ) {
 	/**
 	 * Check if we are in the frontend.
 	 *
@@ -252,7 +256,7 @@ if ( ! function_exists( 'is_frontend' ) ) {
 	 *
 	 * @return bool
 	 */
-	function is_frontend() {
+	function lumen_is_frontend() {
 		return ! is_admin() && ! wp_is_json_request();
 	}
 }

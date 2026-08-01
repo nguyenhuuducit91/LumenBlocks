@@ -108,8 +108,8 @@ if ( ! function_exists( 'lumen_block_blog_posts_migrate_attributes_v2' ) ) {
 
 if ( ! function_exists( 'lumen_block_blog_posts_migrate_output_v2' ) ) {
 	// We use this for old < v2 blocks as unique IDs.
-	global $lmnbp_unique_id;
-	$lmnbp_unique_id = 0;
+	global $lumen_bp_unique_id;
+	$lumen_bp_unique_id = 0;
 
 	/**
 	 * Creates a fake wrapper around the deprecated blog posts block to make it look like the new blocks.
@@ -129,22 +129,22 @@ if ( ! function_exists( 'lumen_block_blog_posts_migrate_output_v2' ) ) {
 			return $output;
 		}
 
-		global $lmnbp_unique_id;
-		$lmnbp_unique_id++;
+		global $lumen_bp_unique_id;
+		$lumen_bp_unique_id++;
 
 		$border_radius = '';
 		if ( isset( $attributes['borderRadius'] ) && $attributes['borderRadius'] !== 12 ) {
 			if ( $attributes['design'] === '' || $attributes['design'] === 'basic' || $attributes['design'] === 'list' ) {
-				$border_radius = '<style>.lmb-blog-posts-old-' . $lmnbp_unique_id . ' .lmb-blog-posts__featured-image { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
+				$border_radius = '<style>.lmb-blog-posts-old-' . $lumen_bp_unique_id . ' .lmb-blog-posts__featured-image { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
 			} else if ( $attributes['design'] === 'vertical-card2' ) {
-				$border_radius = '<style>.lmb-blog-posts-old-' . $lmnbp_unique_id . ' .lmb-blog-posts__item, .lmb-blog-posts-old-' . $lmnbp_unique_id . ' .lmb-blog-posts__featured-image { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
+				$border_radius = '<style>.lmb-blog-posts-old-' . $lumen_bp_unique_id . ' .lmb-blog-posts__item, .lmb-blog-posts-old-' . $lumen_bp_unique_id . ' .lmb-blog-posts__featured-image { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
 			} else {
-				$border_radius = '<style>.lmb-blog-posts-old-' . $lmnbp_unique_id . ' .lmb-blog-posts__item { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
+				$border_radius = '<style>.lmb-blog-posts-old-' . $lumen_bp_unique_id . ' .lmb-blog-posts__item { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
 			}
 		}
 
 		return sprintf( '<div class="lmb-blog-posts lmb-blog-posts-old-%s lmb-blog-posts--columns-%s lmb-blog-posts--v2 lmb-main-block lmb-blog-posts--design-%s %s %s" style="%s%s"><div class="lmb-inner-block">%s<div class="lmb-block-content">%s</div></div></div>',
-			$lmnbp_unique_id,
+			$lumen_bp_unique_id,
 			$attributes['columns'],
 			$attributes['design'],
 			$attributes['align'] ? 'align' . $attributes['align'] . '' : '',

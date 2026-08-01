@@ -85,7 +85,7 @@ if ( ! class_exists( 'Lumen_CSS_Optimize' ) ) {
 				add_action( 'wp', array( $this, 'load_cached_css_for_post' ) );
 
 				// If the optimized CSS was loaded, then strip out the styles which were in the CSS.
-				if ( is_frontend() ) {
+				if ( lumen_is_frontend() ) {
 					add_filter( 'render_block', array( $this, 'strip_optimized_block_styles' ), 10, 2 );
 				}
 			}
@@ -234,6 +234,10 @@ if ( ! class_exists( 'Lumen_CSS_Optimize' ) ) {
 			if ( ! empty( $this->optimized_css ) ) {
 				echo "\n";
 				echo '<style class="lmn-block-styles">';
+				// The value is stylesheet text this plugin generated, printed inside a
+				// <style> tag. Escaping it would corrupt selectors and data URIs, so it
+				// is emitted as-is.
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo apply_filters( 'lumen_frontend_css', $this->optimized_css );
 				echo '</style>';
 			}

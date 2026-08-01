@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "lmb/spacer",
 	"title": "Spacer",
 	"description": "Sometimes you just need some space.",

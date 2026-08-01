@@ -16,7 +16,7 @@ if ( ! class_exists( 'Lumen_Block_Style_Inheritance' ) ) {
 		 * Initialize
 		 */
   		function __construct() {
-			add_action( 'register_lumen_global_settings', array( $this, 'register_block_style_inheritance' ) );
+			add_action( 'lumen_register_global_settings', array( $this, 'register_block_style_inheritance' ) );
 			// Unhooked in Lumen: migrated sites upgrading from an upstream release older
 			// than 3.16.0. Lumen's version line starts at 1.0.0, so this guard would compare
 			// 1.x against 3.16.0 and wrongly re-run on every update.
@@ -37,7 +37,7 @@ if ( ! class_exists( 'Lumen_Block_Style_Inheritance' ) ) {
 				'lumen_disable_block_style_inheritance',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Inherit block style from theme.json', LUMEN_I18N ),
+					'description' => __( 'Inherit block style from theme.json', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',

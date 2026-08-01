@@ -115,6 +115,49 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			topLineBorderStyle: {
+				type: 'string',
+				default: '',
+			},
+			topLineBorderWidth: {
+				type: 'number',
+				default: '',
+				lmnResponsive: true,
+			},
+			topLineBorderColor: {
+				type: 'string',
+				default: '',
+				lmnHover: true,
+			},
+			topLineBorderRadius: {
+				type: 'object',
+				lmnResponsive: true,
+			},
+			bottomLineBorderStyle: {
+				type: 'string',
+				default: '',
+			},
+			bottomLineBorderWidth: {
+				type: 'number',
+				default: '',
+				lmnResponsive: true,
+			},
+			bottomLineBorderColor: {
+				type: 'string',
+				default: '',
+				lmnHover: true,
+			},
+			bottomLineBorderRadius: {
+				type: 'object',
+				lmnResponsive: true,
+			},
+		},
+		versionAdded: '3.19.10',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
 			textRemoveTextMargins: {
 				type: 'boolean',
 				default: '',

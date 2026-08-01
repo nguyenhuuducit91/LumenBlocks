@@ -3,7 +3,7 @@ import { addAttributes } from './attributes'
 import { createUniqueClass, useUniqueId } from './use-unique-id'
 import { addStyles } from './style'
 import { Edit } from './edit'
-import { firefoxHasPolyfill } from './firefox-has-polyfill'
+import { firefoxHasPolyfill } from './firefox-has-fallback'
 
 import classnames from 'classnames/dedupe'
 import { Div } from '~lumen/ui'

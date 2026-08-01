@@ -17,7 +17,7 @@ if ( ! class_exists( 'Lumen_Design_Library_V2' ) ) {
 		 * Add our hooks.
 		 */
 		function __construct() {
-			if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+			if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 				// Check whether we need to clear the design library cache.
 				$this->reset_design_library_cache();
 
@@ -88,7 +88,9 @@ if ( ! class_exists( 'Lumen_Design_Library_V2' ) ) {
 		 */
 		public function delete_design_library_cache() {
 			global $wpdb;
-			// This should be okay without using caching since function is used to clear cache.
+			// The transients being deleted are the cache, so there is nothing to read
+			// a cached list of them from, and no core API lists transients by prefix.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_lumen_get_block_designs_v2_%'" );
 
 			if ( $transients ) {

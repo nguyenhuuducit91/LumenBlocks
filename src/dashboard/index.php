@@ -16,7 +16,6 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_dashboard_script' ) );
 
 			add_action( 'admin_init', array( $this, 'redirect_to_welcome_page' ) );
-			add_action('admin_init', array( $this, 'redirect_submenus' ) );
 
 			add_action('admin_head', array( $this, 'redirect_submenus_newtab' ) );
 
@@ -29,8 +28,8 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			$icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjMyLjAiIGZpbGw9IiNmZmYiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTQ2LjAgMTEwLjAgTDE5MC4wIDEwNC41IEwxOTAuMCA5NS41IEwxNDYuMCA5MC4wIFogTTEyNi45IDEzOC4yIEwxNTEuMyAxNTYuMiBMMTU2LjIgMTUxLjMgTDEzOC4yIDEyNi45IFogTTkwLjAgMTQ2LjAgTDk1LjUgMTkwLjAgTDEwNC41IDE5MC4wIEwxMTAuMCAxNDYuMCBaIE02MS44IDEyNi45IEw0My44IDE1MS4zIEw0OC43IDE1Ni4yIEw3My4xIDEzOC4yIFogTTU0LjAgOTAuMCBMMTAuMCA5NS41IEwxMC4wIDEwNC41IEw1NC4wIDExMC4wIFogTTczLjEgNjEuOCBMNDguNyA0My44IEw0My44IDQ4LjcgTDYxLjggNzMuMSBaIE0xMTAuMCA1NC4wIEwxMDQuNSAxMC4wIEw5NS41IDEwLjAgTDkwLjAgNTQuMCBaIE0xMzguMiA3My4xIEwxNTYuMiA0OC43IEwxNTEuMyA0My44IEwxMjYuOSA2MS44IFoiLz48L3N2Zz4=';
 
 			add_menu_page(
-				__( 'Lumen', LUMEN_I18N ), // Page title.
-				__( 'Lumen', LUMEN_I18N ) . ' ' . lumen_notification_count(), // Menu title.
+				__( 'Lumen', 'lumen-blocks' ), // Page title.
+				__( 'Lumen', 'lumen-blocks' ) . ' ' . lumen_notification_count(), // Menu title.
 				'manage_options', // Capability.
 				'lumen', // Menu slug.
 				array( $this, 'lumen_getting_started_content' ), // Callback function.
@@ -41,8 +40,8 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			// Our getting started page.
 			add_submenu_page(
 				'lumen', // Parent slug.
-				__( 'Getting Started', LUMEN_I18N ), // Page title.
-				__( 'Getting Started', LUMEN_I18N ), // Menu title.
+				__( 'Getting Started', 'lumen-blocks' ), // Page title.
+				__( 'Getting Started', 'lumen-blocks' ), // Menu title.
 				'manage_options', // Capability.
 				'lumen', // Menu slug.
 				array( $this, 'lumen_getting_started_content' ), // Callback function.
@@ -51,8 +50,8 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			// Our settings page.
 			add_submenu_page(
 				'lumen', // Parent slug.
-				__( 'Lumen', LUMEN_I18N ), // Page title.
-				__( 'Settings', LUMEN_I18N ) . ' ' . lumen_notification_count(), // Menu title.
+				__( 'Lumen', 'lumen-blocks' ), // Page title.
+				__( 'Settings', 'lumen-blocks' ) . ' ' . lumen_notification_count(), // Menu title.
 				'manage_options', // Capability.
 				'lumen-settings', // Menu slug.
 				array( $this, 'lumen_settings_content' ), // Callback function.
@@ -81,16 +80,16 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 
 				do_action( 'lumen_settings_admin_enqueue_scripts' );
 
-				wp_enqueue_script( 'lumen-welcome', plugins_url( 'dist/admin_welcome.js', LUMEN_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ), LUMEN_VERSION );
+				wp_enqueue_script( 'lumen-welcome', plugins_url( 'dist/admin_welcome.js', LUMEN_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ), LUMEN_VERSION, true );
 
 				// Add translations.
-				wp_set_script_translations( 'lumen-welcome', LUMEN_I18N );
+				wp_set_script_translations( 'lumen-welcome', 'lumen-blocks' );
 				lumen_load_js_translations(); // This is needed for the translation strings to be loaded.
 
 				$args = apply_filters( 'lumen_localize_settings_script', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', LUMEN_FILE ) ),
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
-					'i18n' => LUMEN_I18N,
+					'i18n' => 'lumen-blocks',
 					'cdnUrl' => LUMEN_DESIGN_LIBRARY_URL,
 					'isPro' => apply_filters( 'lumen_is_pro', false ),
 					'showProNotice' => lumen_should_show_pro_notices(),
@@ -118,48 +117,48 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 
 			?>
 			<div class="s-body s-tabs">
-				<a class="s-tab <?php echo $screen->base === 'toplevel_page_lumen' ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'admin.php?page=lumen' ) ?>">
-					<span><?php _e( 'Getting Started', LUMEN_I18N ) ?></span>
+				<a class="s-tab <?php echo esc_attr( $screen->base === 'toplevel_page_lumen' ? 's-active' : '' ) ?>"
+					href="<?php echo esc_url( admin_url( 'admin.php?page=lumen' ) ) ?>">
+					<span><?php esc_html_e( 'Getting Started', 'lumen-blocks' ) ?></span>
 				</a>
 
-				<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-settings' ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'admin.php?page=lumen-settings' ) ?>">
-					<span><?php _e( 'Settings', LUMEN_I18N ) ?></span>
+				<a class="s-tab <?php echo esc_attr( $screen->base === 'lumen_page_lumen-settings' ? 's-active' : '' ) ?>"
+					href="<?php echo esc_url( admin_url( 'admin.php?page=lumen-settings' ) ) ?>">
+					<span><?php esc_html_e( 'Settings', 'lumen-blocks' ) ?></span>
 				</a>
 
 				<?php if ( $display_account_tab && LUMEN_BUILD !== 'free' ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-account' ? 's-active' : '' ?>"
-						href="<?php echo $account_url ?>">
-						<span><?php _e( 'Account', LUMEN_I18N ) ?></span>
+					<a class="s-tab <?php echo esc_attr( $screen->base === 'lumen_page_lumen-account' ? 's-active' : '' ) ?>"
+						href="<?php echo esc_url( $account_url ) ?>">
+						<span><?php esc_html_e( 'Account', 'lumen-blocks' ) ?></span>
 					</a>
 				<?php } ?>
 
 				<?php if ( false ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-affiliation' ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'options-general.php?page=lumen-affiliation' ) ?>">
-						<span><?php _e( 'Affiliation', LUMEN_I18N ) ?></span>
+					<a class="s-tab <?php echo esc_attr( $screen->base === 'lumen_page_lumen-affiliation' ? 's-active' : '' ) ?>"
+						href="<?php echo esc_url( admin_url( 'options-general.php?page=lumen-affiliation' ) ) ?>">
+						<span><?php esc_html_e( 'Affiliation', 'lumen-blocks' ) ?></span>
 					</a>
 				<?php } ?>
 
 				<?php if ( function_exists( 'lumen_is_custom_fields_enabled' ) ) { ?>
 					<?php if ( lumen_is_custom_fields_enabled() && current_user_can( 'manage_lumen_custom_fields' ) ) { ?>
-						<a class="s-tab <?php echo $screen->base === 'lumen_page_lmn-custom-fields' ? 's-active' : '' ?>"
-							href="<?php echo admin_url( 'admin.php?page=lmn-custom-fields' ) ?>">
-							<span><?php _e( 'Custom Fields', LUMEN_I18N ) ?></span>
+						<a class="s-tab <?php echo esc_attr( $screen->base === 'lumen_page_lmn-custom-fields' ? 's-active' : '' ) ?>"
+							href="<?php echo esc_url( admin_url( 'admin.php?page=lmn-custom-fields' ) ) ?>">
+							<span><?php esc_html_e( 'Custom Fields', 'lumen-blocks' ) ?></span>
 						</a>
 					<?php } ?>
 				<?php } ?>
 
-				<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-about' ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'admin.php?page=lumen-about' ) ?>">
-					<span><?php _e( 'About', LUMEN_I18N ) ?></span>
+				<a class="s-tab <?php echo esc_attr( $screen->base === 'lumen_page_lumen-about' ? 's-active' : '' ) ?>"
+					href="<?php echo esc_url( admin_url( 'admin.php?page=lumen-about' ) ) ?>">
+					<span><?php esc_html_e( 'About', 'lumen-blocks' ) ?></span>
 				</a>
 
 				<?php if ( $display_contact_tab && LUMEN_BUILD !== 'free' ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-contact' ? 's-active' : '' ?>"
-						href="<?php echo $contact_url ?>">
-						<span><?php _e( 'Contact Us', LUMEN_I18N ) ?></span>
+					<a class="s-tab <?php echo esc_attr( $screen->base === 'lumen_page_lumen-contact' ? 's-active' : '' ) ?>"
+						href="<?php echo esc_url( $contact_url ) ?>">
+						<span><?php esc_html_e( 'Contact Us', 'lumen-blocks' ) ?></span>
 					</a>
 				<?php } ?>
 
@@ -169,9 +168,9 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 
 		public static function print_header( $title = '', $image = 'logo' ) {
 			?>
-			<header class="s-header s-heading-1 <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>" role="heading" aria-level="1" aria-labelledby="s-heading-<?php echo empty( $title ) ? 'logo' : 'title' ?>">
-				<img id="s-heading-logo" src="<?php echo esc_url( plugins_url( 'images/lumen-' . $image . '.svg', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Lumen', LUMEN_I18N ) ?>"/>
-				<span id="s-heading-title"><?php echo $title ?></span>
+			<header class="s-header s-heading-1 <?php echo esc_attr( ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ) ?> s-logo-<?php echo esc_attr( $image ) ?>" role="heading" aria-level="1" aria-labelledby="s-heading-<?php echo esc_attr( empty( $title ) ? 'logo' : 'title' ) ?>">
+				<img id="s-heading-logo" src="<?php echo esc_url( plugins_url( 'images/lumen-' . $image . '.svg', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Lumen', 'lumen-blocks' ) ?>"/>
+				<span id="s-heading-title"><?php echo esc_html( $title ) ?></span>
 			</header>
 			<?php
 		}
@@ -181,7 +180,7 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			<div class="wrap wrap-settings">
 				<div class="s-header-wrap s-header-settings">
 					<?php $this->print_header() ?>
-					<?php echo $this->print_tabs() ?>
+					<?php $this->print_tabs() ?>
 				</div>
 				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 				<section id="settings-notice">
@@ -206,7 +205,7 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			<div class="wrap wrap-settings">
 				<div class="s-header-wrap s-header-settings">
 					<?php $this->print_header() ?>
-					<?php echo $this->print_tabs() ?>
+					<?php $this->print_tabs() ?>
 				</div>
 				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 				<section id="settings-notice">
@@ -240,22 +239,13 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			<div class="wrap s-getting-started">
 			<div class="s-header-wrap">
 					<?php $this->print_header() ?>
-					<?php echo $this->print_tabs() ?>
+					<?php $this->print_tabs() ?>
 				</div>
 				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 				<section class="s-body-container s-body-container-center s-getting-started__body">
 				</section>
 			</div>
 			<?php
-		}
-
-		/**
-		 * Redirect to the Lumen Documentation/Premium page.
-		*/
-		public function redirect_submenus() {
-			if ( empty( $_GET['page'] ) ) {
-				return;
-			}
 		}
 
 		public function redirect_submenus_newtab() {
@@ -289,7 +279,7 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 			if ( current_user_can( 'manage_options' ) ) {
 				$settings_link = sprintf( '<a href="%s">%s</a>',
 					admin_url( 'admin.php?page=lumen-settings' ),
-					__( 'Settings', LUMEN_I18N )
+					__( 'Settings', 'lumen-blocks' )
 				);
 
 				// Prevent warnings in PHP 7.0+ when a plugin uses this filter incorrectly.
@@ -328,7 +318,7 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 				}
 
 				// Or go to the getting started page.
-				wp_redirect( esc_url( admin_url( 'admin.php?page=lumen' ) ) );
+				wp_safe_redirect( esc_url( admin_url( 'admin.php?page=lumen' ) ) );
 
 				die();
 			}

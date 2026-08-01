@@ -36,21 +36,24 @@ if ( ! class_exists( 'Lumen_Design_Library' ) ) {
 
 		public static function validate_string( $value, $request, $param ) {
 			if ( ! is_string( $value ) ) {
-				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', LUMEN_I18N ), $param ) );
+				/* translators: %s: name of the REST parameter that failed validation */
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', 'lumen-blocks' ), $param ) );
 			}
 			return true;
 		}
 
 		public static function validate_boolean( $value, $request, $param ) {
 			if ( ! is_bool( $value ) ) {
-				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a boolean.', LUMEN_I18N ), $param ) );
+				/* translators: %s: name of the REST parameter that failed validation */
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a boolean.', 'lumen-blocks' ), $param ) );
 			}
 			return true;
 		}
 
 		public static function validate_url( $value, $request, $param ) {
 			if ( ! filter_var( $value, FILTER_VALIDATE_URL ) || ! wp_http_validate_url( $value ) ) {
-				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a valid URL.', LUMEN_I18N ), $param ) );
+				/* translators: %s: name of the REST parameter that failed validation */
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a valid URL.', 'lumen-blocks' ), $param ) );
 			}
 			return true;
 		}
@@ -100,7 +103,9 @@ if ( ! class_exists( 'Lumen_Design_Library' ) ) {
 
 			// Delete designs.
 			global $wpdb;
-			// This should be okay without using caching since function is used to clear cache.
+			// The transients being deleted are the cache, so there is nothing to read
+			// a cached list of them from, and no core API lists transients by prefix.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_lumen_get_design_%'" );
 
 			if ( $transients ) {
@@ -132,12 +137,15 @@ if ( ! class_exists( 'Lumen_Design_Library' ) ) {
 
 			$url = $request->get_param( 'image_url' );
 
-			$basename = sanitize_file_name( wp_basename( parse_url( $url, PHP_URL_PATH ) ) );
+			$basename = sanitize_file_name( wp_basename( wp_parse_url( $url, PHP_URL_PATH ) ) );
 
 			$args = array(
 				'post_type' 		=> 'attachment',
 				'post_status'		=> 'inherit',
 				'posts_per_page'	=> 1,
+				// The only way to find an already-imported attachment is by the file it
+				// was stored under, and that lives in post meta.
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				'meta_query'		=> array(
 					array(
 						'key' => '_wp_attached_file',

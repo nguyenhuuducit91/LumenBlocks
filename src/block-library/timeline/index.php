@@ -15,11 +15,11 @@ if ( ! function_exists( 'lumen_load_timeline_ios_frontend_polyfill' ) ) {
 		return preg_replace( '/lmn-block-timeline/', 'lmn-block-timeline lmn-block-timeline__ios-polyfill', $block_content, 1 );
 	}
 
-	$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	$lumen_user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 	// Add polyfill if device is iPhone/iPad
 	// Include Safari because by default the User Agent in Safari on iPadOS is same  on MacOS
 	// Reference: https://developer.apple.com/forums/thread/119186
-	if ( ! empty( $user_agent ) && ( stripos( $user_agent, 'iPhone' ) !== false || stripos( $user_agent, 'iPad' ) !== false || stripos( $user_agent, 'Safari/' ) !== false ) ) {
+	if ( ! empty( $lumen_user_agent ) && ( stripos( $lumen_user_agent, 'iPhone' ) !== false || stripos( $lumen_user_agent, 'iPad' ) !== false || stripos( $lumen_user_agent, 'Safari/' ) !== false ) ) {
 		add_filter( 'render_block_lumen/timeline', 'lumen_load_timeline_ios_frontend_polyfill', 10, 2 );
 	}
 }

@@ -1,210 +1,270 @@
 === Lumen Blocks ===
-Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.8.2
-Tested up to: 7.0.2
+Contributors: ducnguyenhuu
+Tags: blocks, gutenberg, page builder, block editor, patterns
+Requires at least: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
+Turn the block editor into a page builder: 40 blocks, 70 patterns, 34 page templates and one design system driving them all.
 
 == Description ==
 
-**A page builder toolkit for the WordPress Block Editor**
+Lumen Blocks adds a page-builder toolkit to the WordPress block editor. You get forty
+blocks that share one set of controls, a design library you can insert whole sections and
+pages from, and a global design system so a colour or spacing change lands everywhere at
+once.
 
-Lumen Blocks turns the WordPress Block Editor into a full page builder. Build dynamic
-websites with lightweight custom blocks, a global design system, global settings and
-advanced customization options, without writing a line of code.
+There is no separate builder to learn. Everything happens in the editor you already use,
+and everything saves as standard block markup.
 
-## Global Design System
+= Insert a section, not a blank page =
 
-Design faster with global controls: style once, apply everywhere.
+The Design Library ships with content, so it is useful on the first day:
 
-- Inherit styles from your Block Theme
-- Theme.json support
-- Pattern Library
-- Full Page Templates
-- Global Design System
-- Global Color Schemes
-- Global Typography
-- Global Spacing, Borders, Buttons and Icons
+* **70 patterns** — heroes, feature grids, pricing tables, testimonials, team sections,
+FAQs and call-to-action bands, across ten colour palettes with light and dark variants.
+* **34 full page templates** — home, about, services, product, pricing, contact, careers,
+case studies, resources and landing pages for a company website.
 
-## Design Library
+Every one is built from Lumen blocks, so once inserted it is yours to edit like anything
+else. No remote images, no external requests, nothing to configure. You can point the
+library at your own endpoint as well — see the FAQ.
 
-The Design Library loads ready-made patterns from a CDN of your choosing. It ships
-unconfigured; point the `LUMEN_DESIGN_LIBRARY_URL` constant or the
-`lumen_design_library_url` filter at your own endpoint to enable it.
+= One design system, applied everywhere =
 
-## Powerful Custom Blocks
+Set colours, typography and spacing once and every block follows.
 
-Over 40 flexible custom blocks that are feature-rich out of the box. Enable only the
-blocks you need and disable the rest from the settings screen.
+* Inherits from your block theme and theme.json first, so a fresh install already matches
+your site
+* Global colour schemes and typography
+* Global spacing, borders, buttons and icons
+* Change the system and every page updates together
 
-**Essential Blocks**
+= Forty blocks in the inserter =
 
-- Advanced Columns Block
-- Advanced Heading Block
-- Advanced Text Block
-- Advanced Image Block
-- Icon List Block
-- Button Block
-- Icon Button Block
-- Icon Block
+**Essential** — Columns, Heading, Text, Image, Icon, Icon List, Button Group
 
-**Special Blocks**
+**Layout and content** — Accordion, Card, Carousel, Countdown, Count Up, Divider,
+Expand / Show More, Horizontal Scroller, Icon Label, Image Box, Map, Notification,
+Number Box, Posts, Price, Progress Bar, Progress Circle, Separator, Spacer, Subtitle,
+Table of Contents, Tabs, Timeline, Video Popup, Design Library
 
-- Carousel Block
-- Horizontal Scroller Block
-- Tabs Block
-- Countdown Block
-- Timeline Block
-- Table of Contents Block
-- Posts Block
-- Image Box Block
-- Video Popup Block
-- Progress Circle Block
-- Progress Bar Block
-- Accordion Block
-- Map Block
-- Icon Label Block
-- Social Buttons Block
-- Card Block
-- Count Up Block
-- Number Box Block
-- Notification Block
-- Expand / Show More Block
-- Separator Block
-- Subtitle Block
-- Price Block
-- Divider Block
-- Spacer Block
+**Sections** — Hero, Call to Action, Feature, Feature Grid, Pricing Box, Icon Box,
+Testimonial, Team Member, Blockquote
 
-**Section Blocks**
+Seven further blocks — Button, Icon Button, Inner Column, Tab Labels, Tab Content and
+friends — exist as inner blocks of the ones above. Any block you do not want can be
+turned off from the settings screen.
 
-- Hero Block
-- Call to Action Block
-- Feature Block
-- Feature Grid Block
-- Pricing Box Block
-- Icon Box Block
-- Testimonial Block
-- Team Members Block
-- Blockquote Block
+= Design controls without the CSS =
 
-## Page Builder-like Design Options
+* Block theme and theme.json support
+* Flexbox and multiple block layouts
+* Background, image and gradient controls
+* Typography, borders, shadows and hover styles
+* Image shapes, lightbox and focal point
+* Save block defaults
+* Custom `data-*` attributes
 
-Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
+= Responsive by control, not by breakpoint hunting =
 
-- Block Theme & Theme.json Support
-- Global Design System
-- Multiple Block Layouts
-- Flexbox Controls
-- Image and Video Lightbox
-- Save Block Defaults
-- Customize block hover styles
-- Block Background and Image Color Settings
-- Block Typography Settings
-- Image Shapes and Settings
-- Advanced Gradient Color Picker
-- Advanced Icon Options
-- Advanced Column and Spacing Settings
-- Global Colors & Typography Settings
-- Responsiveness
-    - Tablet and Mobile Column Arrangement
-    - Live Responsive Editing
-    - Ability to tweak designs for Tablet and Mobile views
-    - Specify how Columns collapse in Tablet and Mobile
-    - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
-    - Custom Tablet and Mobile breakpoints
-- Custom `data-*` attributes
+Every value can differ per device without writing a media query.
 
-## Finding Your Way Around a Big Inspector
+* Live responsive editing for tablet and mobile
+* Per-device column arrangement and collapse order
+* Show or hide any block per device
+* Custom tablet and mobile breakpoints
 
-A block carries hundreds of settings. These exist so that number never becomes your problem:
+= Finding your way around a large inspector =
 
-- Find a setting — a search box under the tab strip that filters the panels as you type, and follows the setting onto another tab when that is where it lives
-- Applied settings — everything the block currently sets, in one list, with the viewport or state each value belongs to, a jump to its control and a reset for that one value
-- Copy & paste styling — carries what you changed, never what you wrote; settings the target block does not have are dropped rather than written into your post
+A block carries hundreds of settings. These exist so that number never becomes your
+problem:
 
-## Motion, CSS and Conditions
+* **Find a setting** — a search box that filters the panels as you type, and follows a
+setting onto another tab when that is where it lives
+* **Applied settings** — everything the block currently sets, in one list, with the
+viewport or state each value belongs to, a jump to its control, and a reset for that one
+value
+* **Copy and paste styling** — carries what you changed, never what you wrote; settings
+the target block does not have are dropped rather than written into your post
 
-- Transform & Transition — move, rotate and scale per device and per hover state, stored as CSS so hand-written transforms survive
-- Motion Effects — ten entrance animations that start when the block is scrolled to, set per device, and skipped entirely for readers who ask for reduced motion
-- Custom CSS — per block and scoped to that block, so one block's CSS cannot restyle the site; unsafe constructs are stripped
-- Conditional Display — show a block by login state, role, date range, post type, page context or device, decided on the server so a hidden block is never sent to the reader
+= Motion, CSS and conditions =
 
-## Fast Page Loading Speed
+* **Transform and transition** — move, rotate and scale per device and per hover state
+* **Motion effects** — ten entrance animations that start when the block is scrolled to,
+set per device, and skipped entirely for readers who ask for reduced motion
+* **Custom CSS** — written per block and scoped to that block, so one block's CSS cannot
+restyle the rest of the site
+* **Conditional display** — show a block by login state, role, date range, post type,
+page context or device, decided on the server so a hidden block is never sent to the
+reader
 
-Optimize your website’s performance, and get lightning fast page loading to make your site visitors stay. Have the chance to maximize your page speed insights and achieve high Core Web Vitals and higher SEO rankings.
+= Built to be handed over =
 
-- Loads the smallest file size possible of CSS and JS files in the frontend, ~ only 7.8kb total
-- Adds almost no PHP server overhead for fast page loads
-- Zero Bloat, no jQuery, no dependencies
-- Optimized page loading with focus on Core Web Vitals
-- Responsive image loading for faster browsing speeds in mobile devices
-- Compatible with Optimization Plugins and use optimization techniques such as combining CSS and JS files and minification
+* Every override is a control with a reset beside it
+* No shortcodes and no proprietary storage — content is standard block markup
+* Deactivating the plugin leaves your content in place
+* The role manager can hide the styling tabs from editors who only need content fields
 
-## Integrations & Compatibility
+= Performance =
 
-Make your page building experience more well-rounded by using other popular tools. We've seamlessly integrated with these essential third-party plugins and tools:
+* Only the CSS a page actually uses is written into that page, so an unused block costs a
+reader nothing
+* No jQuery and no front-end framework
+* Works with page caching and with CSS/JS combining plugins
 
-- WPML
-- Weglot
-- Blocksy
-- Toolset
-- Font Awesome
-- Google Fonts
-- see our full list of integrations and compatibility
+= Integrations =
+
+WPML, Weglot, Blocksy, Toolset, Font Awesome and Google Fonts.
 
 == Installation ==
 
-= Minimum Requirements =
+= Minimum requirements =
 
-* WordPress 6.8.2 or greater
-* PHP version 7.4 or greater
+* WordPress 6.8 or greater
+* PHP 7.4 or greater
 
-1. Upload the plugin folder to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen.
-2. Activate the plugin through the *Plugins* screen in WordPress.
-3. Open the Block Editor and look for the Lumen blocks in the inserter.
+= Installing =
+
+1. Upload the plugin folder to `/wp-content/plugins/`, or install it from the WordPress
+plugins screen.
+2. Activate the plugin through the *Plugins* screen.
+3. Open a page in the block editor and look for the Lumen blocks in the inserter, or open
+the Design Library to insert a ready-made section or page.
 
 == Frequently Asked Questions ==
 
-**Do I need to know how to code to use Lumen Blocks?**
+= Do I need to know how to code? =
 
-No. Every block is configured visually from the block inspector.
+No. Every block is configured visually from the block inspector, and anything you change
+has a reset next to it.
 
-**What are Blocks?**
+= What themes does it work with? =
 
-Blocks are the building elements of the WordPress Block Editor: buttons, cards, videos,
-columns and so on. Lumen Blocks adds an extensive collection of them so you can build
-landing pages and front pages without a page builder plugin.
+Any theme. A block theme gives the best result, because Lumen reads widths, colours and
+typography from your theme's theme.json before applying anything of its own.
 
-**What themes can I use with Lumen Blocks?**
+= What happens to my content if I deactivate the plugin? =
 
-Any theme. A block theme gives the best experience because the plugin can inherit its
-styles through theme.json.
+It stays. Blocks fall back to their saved markup, so pages keep rendering. There are no
+shortcodes left behind.
 
-**Can I disable blocks that I do not use?**
+= Can I turn off blocks I do not use? =
 
 Yes. Every block can be toggled on or off from the plugin settings screen.
 
-**Can I use this plugin with other block plugins?**
+= Does it work alongside other block plugins? =
 
-Yes, Lumen blocks coexist with other block plugins.
+Yes. Lumen blocks are namespaced and coexist with other block libraries.
 
-**Why is the Design Library empty?**
+= Can I point the Design Library at my own patterns? =
 
-The Design Library reads its patterns from an external CDN, which is not configured by
-default. Define `LUMEN_DESIGN_LIBRARY_URL` in `wp-config.php` or hook the
-`lumen_design_library_url` filter to point it at your own endpoint.
+Yes. The library ships with 70 patterns and 34 page templates built in, and no CDN is
+required. To add your own, define `LUMEN_DESIGN_LIBRARY_URL` in `wp-config.php` or hook
+the `lumen_design_library_url` filter. Designs from your endpoint are merged with the
+built-in ones, and yours win on an id clash.
+
+= Will this slow my site down? =
+
+Only the CSS a page uses is written into it, so blocks you do not place on a page cost
+nothing. Everything renders to static markup at save time, so page caching works
+normally.
+
+= Is it accessible? =
+
+Motion effects respect `prefers-reduced-motion`, and interactive blocks ship with the
+roles and labels a screen reader needs.
+
+== Support the project ==
+
+Lumen Blocks is free software under the GPL and will stay that way. There is no paid
+tier, no licence key and no upsell inside the plugin.
+
+If it saves you time and you would like to put something back, there are QR codes for
+bank transfer and PayPal on the **Lumen → About** screen in your WordPress admin.
+
+Contributions are as welcome as money. Bug reports, translations and patches all help,
+and the licence guarantees you can fork the plugin if you would rather go your own way.
+
+== Screenshots ==
+
+1. The Design Library, with 70 patterns across ten colour palettes.
+2. Full page templates for a company website.
+3. The global design system — set colours, type and spacing once.
+4. Block settings, with setting search and the applied-settings list.
+5. Responsive controls: a different value per device on any setting.
+
+== External services ==
+
+The plugin works without contacting anyone. The services below are reached only by the
+features that need them, and only when you use those features.
+
+= Google Fonts =
+
+Reached when you pick a Google font in the typography settings. The stylesheet is then
+requested from fonts.googleapis.com by the reader's browser on the front end, and by the
+editor while previewing the font, so Google receives the reader's IP address, user agent
+and the address of the page. Pick no Google font and nothing is requested.
+Terms: https://policies.google.com/terms — Privacy: https://policies.google.com/privacy
+
+= Google Maps =
+
+The Map block embeds a map from maps.google.com, loaded by the reader's browser on pages
+that contain the block, which sends their IP address and the address shown on the map to
+Google. If you save a Google Maps API key in the plugin settings, the editor also loads
+the Maps JavaScript API from maps.googleapis.com so you can search for an address.
+Without a key that request never happens.
+Terms: https://cloud.google.com/maps-platform/terms — Privacy: https://policies.google.com/privacy
+
+= Font Awesome =
+
+The icon picker searches the Font Awesome catalogue. Typing in the icon search field
+sends your search term and the Font Awesome version to api.fontawesome.com and gets back
+matching icon names. This happens in the editor only, while searching.
+Terms: https://fontawesome.com/support/terms — Privacy: https://fontawesome.com/privacy
+
+= Unsplash =
+
+A few of the older blocks show placeholder photos from source.unsplash.com in their
+inserter preview. Requested by the editor's browser when the preview is displayed, never
+on the front end.
+Terms: https://unsplash.com/terms — Privacy: https://unsplash.com/privacy
+
+= Design Library endpoint =
+
+The 70 patterns and 34 templates are built into the plugin and need no connection. If you
+define LUMEN_DESIGN_LIBRARY_URL or hook the lumen_design_library_url filter, the plugin
+downloads pattern definitions and preview images from the address you chose. Which
+endpoint that is, and what terms apply to it, is entirely your decision.
+
+== Development ==
+
+Lumen Blocks is developed in the open. The unminified JavaScript and SCSS behind
+everything in the plugin's dist folder, along with the build tooling, lives at
+https://github.com/nguyenhuuducit91/LumenBlocks
+
+Build it yourself with `npm ci && npm run build:no-translate` — the compiled assets land
+in dist/ and the packaged plugin in build/lumen-blocks.zip.
 
 == Credits ==
 
-Lumen Blocks is a fork of Stackable by Gambit Technologies, Inc., distributed
-under GPL-3.0-or-later. See NOTICE.md in the plugin folder for the list of changes.
+Lumen Blocks is a fork of Stackable by Gambit Technologies, Inc., distributed under
+GPL-3.0-or-later. The full list of changes is in NOTICE.txt inside the plugin folder.
 
 == Changelog ==
 
 = 1.0.0 =
-* Initial release of Lumen Blocks.
+* Initial release.
+* 40 blocks in the inserter, plus inner blocks.
+* Design Library with 70 built-in patterns and 34 full page templates, no CDN required.
+* Global design system with theme.json inheritance.
+* Setting search, applied-settings list and copy/paste styling in the block inspector.
+* Motion effects, scoped custom CSS and conditional display.
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+First public release.

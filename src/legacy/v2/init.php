@@ -57,7 +57,7 @@ if ( ! function_exists( 'lumen_v2_compatibility_option' ) ) {
 			'lumen_v2_frontend_compatibility',
 			array(
 				'type' => 'string',
-				'description' => __( 'Load version 2 frontend styles and scripts', LUMEN_I18N ),
+				'description' => __( 'Load version 2 frontend styles and scripts', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -72,7 +72,7 @@ if ( ! function_exists( 'lumen_v2_compatibility_option' ) ) {
 			'lumen_v2_editor_compatibility',
 			array(
 				'type' => 'string',
-				'description' => __( 'Load version 2 blocks in the editor', LUMEN_I18N ),
+				'description' => __( 'Load version 2 blocks in the editor', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -86,7 +86,7 @@ if ( ! function_exists( 'lumen_v2_compatibility_option' ) ) {
 			'lumen_v2_editor_compatibility_usage',
 			array(
 				'type' => 'string',
-				'description' => __( 'Load version 2 blocks when old blocks are used', LUMEN_I18N ),
+				'description' => __( 'Load version 2 blocks when old blocks are used', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -100,7 +100,7 @@ if ( ! function_exists( 'lumen_v2_compatibility_option' ) ) {
 			'lumen_v2_block_detector_disabled',
 			array(
 				'type' => 'string',
-				'description' => __( 'This disables the v2 block detected in the editor', LUMEN_I18N ),
+				'description' => __( 'This disables the v2 block detected in the editor', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -114,7 +114,7 @@ if ( ! function_exists( 'lumen_v2_compatibility_option' ) ) {
 			'lumen_v2_frontend_detector_counter',
 			array(
 				'type' => 'number',
-				'description' => __( 'This disables the v2 block detected in the frontend', LUMEN_I18N ),
+				'description' => __( 'This disables the v2 block detected in the frontend', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -125,7 +125,7 @@ if ( ! function_exists( 'lumen_v2_compatibility_option' ) ) {
 	add_action( 'rest_api_init', 'lumen_v2_compatibility_option' );
 }
 
-if ( ! function_exists( 'has_lumen_v2_frontend_compatibility' ) ) {
+if ( ! function_exists( 'lumen_has_v2_frontend_compatibility' ) ) {
 
 	/**
 	 * Should we load v2 frontend
@@ -134,7 +134,7 @@ if ( ! function_exists( 'has_lumen_v2_frontend_compatibility' ) ) {
 	 *
 	 * @since 3.0.0
 	 */
-	function has_lumen_v2_frontend_compatibility() {
+	function lumen_has_v2_frontend_compatibility() {
 		// In case the plugin was auto-updated from v2 to v3, run auto-compatibility cehck.
 		if ( ! is_admin() && get_option( 'lumen_current_version_installed' ) !== LUMEN_VERSION ) {
 			lumen_auto_compatibility_v2( get_option( 'lumen_current_version_installed' ), LUMEN_VERSION );
@@ -149,7 +149,7 @@ if ( ! function_exists( 'has_lumen_v2_frontend_compatibility' ) ) {
 	 *
 	 * @since 3.0.0
 	 */
-	function has_lumen_v2_editor_compatibility() {
+	function lumen_has_v2_editor_compatibility() {
 		return get_option( 'lumen_v2_editor_compatibility' ) === '1' || get_option( 'lumen_v2_editor_compatibility_usage' ) === '1';
 	}
 
@@ -160,7 +160,7 @@ if ( ! function_exists( 'has_lumen_v2_frontend_compatibility' ) ) {
 	 *
 	 * @since 3.0.0
 	 */
-	function has_lumen_v2_editor_compatibility_usage() {
+	function lumen_has_v2_editor_compatibility_usage() {
 		return get_option( 'lumen_v2_editor_compatibility_usage' ) === '1';
 	}
 }
@@ -193,7 +193,8 @@ if ( ! function_exists( 'lumen_block_assets_v2' ) ) {
 				'lmb-block-frontend-js-v2',
 				plugins_url( 'dist/deprecated/frontend_blocks_deprecated_v2.js', LUMEN_FILE ),
 				apply_filters( 'lumen_frontend_js_dependencies_v2', array() ),
-				LUMEN_VERSION
+				LUMEN_VERSION,
+				true
 			);
 
 			$args = apply_filters( 'lumen_localize_frontend_script', array(
@@ -203,7 +204,7 @@ if ( ! function_exists( 'lumen_block_assets_v2' ) ) {
 		}
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_action( 'init', 'lumen_block_assets_v2' );
 	}
 }
@@ -242,11 +243,12 @@ if ( ! function_exists( 'lumen_block_editor_assets_v2' ) ) {
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
 			apply_filters( 'lumen_editor_js_dependencies_v2', $dependencies ),
-			LUMEN_VERSION
+			LUMEN_VERSION,
+			true
 		);
 
 		// Add translations.
-		wp_set_script_translations( 'lmb-block-js-v2', LUMEN_I18N );
+		wp_set_script_translations( 'lmb-block-js-v2', 'lumen-blocks' );
 
 		// Backend editor only styles.
 		wp_register_style(
@@ -257,7 +259,7 @@ if ( ! function_exists( 'lumen_block_editor_assets_v2' ) ) {
 		);
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_action( 'init', 'lumen_block_editor_assets_v2' );
 	}
 }
@@ -272,7 +274,7 @@ if ( ! function_exists( 'lumen_is_lumen_block_v2' ) ) {
 		}
 		return $is_lumen_block;
 	}
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_filter( 'lumen_is_lumen_block', 'lumen_is_lumen_block_v2', 10, 2 );
 	}
 }
@@ -294,7 +296,7 @@ if ( ! function_exists( 'lumen_add_required_block_styles_v2' ) ) {
 		}';
 		wp_add_inline_style( 'lmb-style-css-v2', $custom_css );
 	}
-	if ( has_lumen_v2_editor_compatibility() || has_lumen_v2_frontend_compatibility() ) {
+	if ( lumen_has_v2_editor_compatibility() || lumen_has_v2_frontend_compatibility() ) {
 		add_action( 'enqueue_block_assets', 'lumen_add_required_block_styles_v2', 11 );
 	}
 }
@@ -303,9 +305,9 @@ if ( ! function_exists( 'lumen_add_required_block_styles_v2' ) ) {
  * If frontend compatibility is enabled, and editor compatibility is disabled,
  * try and load add the required frontend styles when the blocks are used.
  */
-if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
+if ( ! function_exists( 'lumen_load_frontend_scripts_conditionally_v2') ) {
 
-	function load_frontend_scripts_conditionally_v2( $block_content, $block ) {
+	function lumen_load_frontend_scripts_conditionally_v2( $block_content, $block ) {
 		if ( $block_content === null ) {
 			return $block_content;
 		}
@@ -318,20 +320,20 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 			lumen_add_required_block_styles_v2();
 
 			// Don't do this again.
-			remove_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
+			remove_filter( 'render_block', 'lumen_load_frontend_scripts_conditionally_v2', 10, 2 );
 		}
 
 		return $block_content;
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() && ! has_lumen_v2_editor_compatibility() ) {
-		if ( is_frontend() ) {
-			add_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
+	if ( lumen_has_v2_frontend_compatibility() && ! lumen_has_v2_editor_compatibility() ) {
+		if ( lumen_is_frontend() ) {
+			add_filter( 'render_block', 'lumen_load_frontend_scripts_conditionally_v2', 10, 2 );
 		}
 	}
 }
 
-if ( ! function_exists( 'register_frontend_blog_posts_block_compatibility_v2' ) ) {
+if ( ! function_exists( 'lumen_register_frontend_blog_posts_block_compatibility_v2' ) ) {
 	/**
 	 * Registers the blog posts block to make it work in the frontend. This is
 	 * only used when the v2 blocks aren't loaded in the editor, but frontend
@@ -339,15 +341,15 @@ if ( ! function_exists( 'register_frontend_blog_posts_block_compatibility_v2' ) 
 	 *
 	 * @return void
 	 */
-	function register_frontend_blog_posts_block_compatibility_v2() {
+	function lumen_register_frontend_blog_posts_block_compatibility_v2() {
 		register_block_type( 'lmb/blog-posts', array(
 			'attributes' => lumen_blog_posts_attributes_v2(),
 			'render_callback' => 'lumen_render_blog_posts_block_v2',
 		) );
 	}
 
-	if ( ! is_admin() && has_lumen_v2_frontend_compatibility() && ! has_lumen_v2_editor_compatibility() ) {
-		add_action( 'init', 'register_frontend_blog_posts_block_compatibility_v2' );
+	if ( ! is_admin() && lumen_has_v2_frontend_compatibility() && ! lumen_has_v2_editor_compatibility() ) {
+		add_action( 'init', 'lumen_register_frontend_blog_posts_block_compatibility_v2' );
 	}
 }
 
@@ -400,7 +402,7 @@ if ( ! function_exists( 'lumen_frontend_v2_try_migration' ) ) {
 	function lumen_frontend_v2_try_migration_detected() {
 		lumen_block_enqueue_frontend_assets_v2();
 		lumen_add_required_block_styles_v2();
-		register_frontend_blog_posts_block_compatibility_v2();
+		lumen_register_frontend_blog_posts_block_compatibility_v2();
 
 		// Enable frontend compatibility.
 		update_option( 'lumen_v2_frontend_compatibility', '1' );
@@ -422,7 +424,7 @@ if ( ! function_exists( 'lumen_frontend_v2_try_migration' ) ) {
 	// 	$detector_counter = get_option( 'lumen_v2_frontend_detector_counter' );
 	// 	$detector_counter = empty( $detector_counter ) ? 0 : (int) $detector_counter;
 
-	// 	if ( $detector_counter < LUMEN_FRONTEND_V2_DETECTOR_LIMIT && ! has_lumen_v2_frontend_compatibility() ) {
+	// 	if ( $detector_counter < LUMEN_FRONTEND_V2_DETECTOR_LIMIT && ! lumen_has_v2_frontend_compatibility() ) {
 	// 		// Try and check if we need to perform v2 frontend migration.
 	// 		add_filter( 'render_block', 'lumen_frontend_v2_try_migration', 9, 2 );
 	// 		// Need to also do this in the_content, since catching a v2 blog

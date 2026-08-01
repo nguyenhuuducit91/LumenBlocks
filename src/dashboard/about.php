@@ -45,8 +45,8 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 		public function add_page() {
 			add_submenu_page(
 				'lumen',
-				__( 'About', LUMEN_I18N ),
-				__( 'About', LUMEN_I18N ),
+				__( 'About', 'lumen-blocks' ),
+				__( 'About', 'lumen-blocks' ),
 				'manage_options',
 				'lumen-about',
 				array( $this, 'render' )
@@ -104,12 +104,12 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 			// The block count is already one of the figures in the hero, so it
 			// is not repeated here.
 			$highlights = array(
-				__( 'Global design system', LUMEN_I18N ),
-				__( 'Responsive controls', LUMEN_I18N ),
-				__( 'Copy & paste styling', LUMEN_I18N ),
-				__( 'Motion effects', LUMEN_I18N ),
-				__( 'Custom CSS', LUMEN_I18N ),
-				__( 'Conditional display', LUMEN_I18N ),
+				__( 'Global design system', 'lumen-blocks' ),
+				__( 'Responsive controls', 'lumen-blocks' ),
+				__( 'Copy & paste styling', 'lumen-blocks' ),
+				__( 'Motion effects', 'lumen-blocks' ),
+				__( 'Custom CSS', 'lumen-blocks' ),
+				__( 'Conditional display', 'lumen-blocks' ),
 			);
 			?>
 			<div class="wrap wrap-settings lmn-about">
@@ -131,23 +131,23 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 									alt=""
 								/>
 							</div>
-							<h2 class="lmn-about__title"><?php esc_html_e( 'Lumen Blocks', LUMEN_I18N ); ?></h2>
+							<h2 class="lmn-about__title"><?php esc_html_e( 'Lumen Blocks', 'lumen-blocks' ); ?></h2>
 							<p class="lmn-about__tagline">
-								<?php esc_html_e( 'A page builder that is just the block editor.', LUMEN_I18N ); ?>
+								<?php esc_html_e( 'A page builder that is just the block editor.', 'lumen-blocks' ); ?>
 							</p>
 
 							<?php /* Three facts worth knowing before anything else. */ ?>
 							<dl class="lmn-about__stats">
 								<div class="lmn-about__stat">
-									<dt><?php esc_html_e( 'Blocks', LUMEN_I18N ); ?></dt>
+									<dt><?php esc_html_e( 'Blocks', 'lumen-blocks' ); ?></dt>
 									<dd><?php echo esc_html( $blocks ); ?></dd>
 								</div>
 								<div class="lmn-about__stat">
-									<dt><?php esc_html_e( 'Version', LUMEN_I18N ); ?></dt>
+									<dt><?php esc_html_e( 'Version', 'lumen-blocks' ); ?></dt>
 									<dd><?php echo esc_html( LUMEN_VERSION ); ?></dd>
 								</div>
 								<div class="lmn-about__stat">
-									<dt><?php esc_html_e( 'Licence', LUMEN_I18N ); ?></dt>
+									<dt><?php esc_html_e( 'Licence', 'lumen-blocks' ); ?></dt>
 									<dd>GPL-3.0</dd>
 								</div>
 							</dl>
@@ -167,12 +167,12 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 							 */ ?>
 							<div class="lmn-about__columns">
 								<section class="lmn-about__panel">
-									<h3 class="lmn-about__heading"><?php esc_html_e( 'Developer', LUMEN_I18N ); ?></h3>
+									<h3 class="lmn-about__heading"><?php esc_html_e( 'Developer', 'lumen-blocks' ); ?></h3>
 									<div class="lmn-about__rows">
 										<?php
 										$this->row( 'admin-users', self::AUTHOR, self::AUTHOR_ROLE );
-										$this->row( 'email-alt', self::AUTHOR_EMAIL, __( 'Email', LUMEN_I18N ), 'mailto:' . self::AUTHOR_EMAIL );
-										$this->row( 'phone', self::AUTHOR_PHONE, __( 'Phone', LUMEN_I18N ), 'tel:' . preg_replace( '/\s+/', '', self::AUTHOR_PHONE ) );
+										$this->row( 'email-alt', self::AUTHOR_EMAIL, __( 'Email', 'lumen-blocks' ), 'mailto:' . self::AUTHOR_EMAIL );
+										$this->row( 'phone', self::AUTHOR_PHONE, __( 'Phone', 'lumen-blocks' ), 'tel:' . preg_replace( '/\s+/', '', self::AUTHOR_PHONE ) );
 										?>
 									</div>
 								</section>
@@ -180,27 +180,27 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 								<section class="lmn-about__panel lmn-about__panel--donate">
 									<h3 class="lmn-about__heading">
 										<span class="dashicons dashicons-heart"></span>
-										<?php esc_html_e( 'Support the developer', LUMEN_I18N ); ?>
+										<?php esc_html_e( 'Support the developer', 'lumen-blocks' ); ?>
 									</h3>
 									<p class="lmn-about__donate-text">
-										<?php esc_html_e( 'Lumen Blocks is free and always will be. If it saves you time, a coffee keeps it improving.', LUMEN_I18N ); ?>
+										<?php esc_html_e( 'Lumen Blocks is free and always will be. If it saves you time, a coffee keeps it improving.', 'lumen-blocks' ); ?>
 									</p>
 									<div class="lmn-about__qr-row">
 										<figure class="lmn-about__qr-item">
 											<img
 												class="lmn-about__qr"
 												src="<?php echo $this->image( 'donate-bank.png' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
-												alt="<?php esc_attr_e( 'Bank transfer QR code', LUMEN_I18N ); ?>"
+												alt="<?php esc_attr_e( 'Bank transfer QR code', 'lumen-blocks' ); ?>"
 											/>
-											<figcaption><?php esc_html_e( 'Bank transfer', LUMEN_I18N ); ?></figcaption>
+											<figcaption><?php esc_html_e( 'Bank transfer', 'lumen-blocks' ); ?></figcaption>
 										</figure>
 										<figure class="lmn-about__qr-item">
 											<img
 												class="lmn-about__qr"
 												src="<?php echo $this->image( 'donate-paypal.png' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
-												alt="<?php esc_attr_e( 'PayPal QR code', LUMEN_I18N ); ?>"
+												alt="<?php esc_attr_e( 'PayPal QR code', 'lumen-blocks' ); ?>"
 											/>
-											<figcaption><?php esc_html_e( 'PayPal', LUMEN_I18N ); ?></figcaption>
+											<figcaption><?php esc_html_e( 'PayPal', 'lumen-blocks' ); ?></figcaption>
 										</figure>
 									</div>
 								</section>
@@ -210,7 +210,7 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 								<?php
 								printf(
 									/* translators: %s: the licence name, linked. */
-									esc_html__( 'Released under %s. Lumen Blocks is a fork of Stackable by Gambit Technologies, Inc., also under GPL-3.0. The changes are listed in NOTICE.md.', LUMEN_I18N ),
+									esc_html__( 'Released under %s. Lumen Blocks is a fork of Stackable by Gambit Technologies, Inc., also under GPL-3.0. The changes are listed in NOTICE.txt.', 'lumen-blocks' ),
 									'<a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer">GPL-3.0-or-later</a>'
 								);
 								?>
@@ -218,7 +218,7 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 						</div>
 
 						<footer class="lmn-about__foot">
-							<?php esc_html_e( 'Made with ♥ in Vietnam', LUMEN_I18N ); ?>
+							<?php esc_html_e( 'Made with ♥ in Vietnam', 'lumen-blocks' ); ?>
 						</footer>
 					</div>
 				</section>

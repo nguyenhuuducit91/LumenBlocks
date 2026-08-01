@@ -15,6 +15,7 @@ import {
 	getTypographyClasses,
 	getAlignmentClasses,
 	Alignment,
+	BORDER_CONTROLS,
 	MarginBottom,
 	CustomAttributes,
 	EffectsAnimations,
@@ -31,7 +32,9 @@ import {
 	PanelAdvancedSettings,
 	ColorPaletteControl,
 	AdvancedRangeControl,
+	AdvancedToolbarControl,
 	AlignButtonsControl,
+	FourRangeControl,
 	useBlockCssGenerator,
 } from '~lumen/ui'
 import { createBlockCompleter } from '~lumen/utils'
@@ -133,6 +136,8 @@ const Edit = props => {
 			<InspectorControls
 				showTopLine={ props.attributes.showTopLine }
 				showBottomLine={ props.attributes.showBottomLine }
+				topLineBorderStyle={ props.attributes.topLineBorderStyle }
+				bottomLineBorderStyle={ props.attributes.bottomLineBorderStyle }
 				setAttributes={ setAttributes }
 				parentBlock={ parentBlock }
 				blockState={ props.blockState }
@@ -226,6 +231,45 @@ const InspectorControls = memo( props => {
 							responsive="all"
 						/>
 
+						<AdvancedToolbarControl
+							label={ __( 'Borders', i18n ) }
+							controls={ BORDER_CONTROLS }
+							className="lmb-border-controls__border-type-toolbar"
+							attribute="topLineBorderStyle"
+							fullwidth={ true }
+							isSmall={ true }
+						/>
+
+						{ props.topLineBorderStyle &&
+							<AdvancedRangeControl
+								label={ __( 'Border Width', i18n ) }
+								attribute="topLineBorderWidth"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 5 }
+								placeholder="1"
+							/>
+						}
+
+						{ props.topLineBorderStyle &&
+							<ColorPaletteControl
+								label={ __( 'Border Color', i18n ) }
+								attribute="topLineBorderColor"
+								hover="all"
+							/>
+						}
+
+						<FourRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							attribute="topLineBorderRadius"
+							responsive="all"
+							min={ 0 }
+							isCorner={ true }
+							sliderMax={ 50 }
+							defaultLocked={ true }
+							placeholder="0"
+						/>
+
 					</PanelAdvancedSettings>
 					<PanelAdvancedSettings
 						attribute="showBottomLine"
@@ -271,6 +315,45 @@ const InspectorControls = memo( props => {
 							label={ __( 'Align', i18n ) }
 							attribute="bottomLineAlign"
 							responsive="all"
+						/>
+
+						<AdvancedToolbarControl
+							label={ __( 'Borders', i18n ) }
+							controls={ BORDER_CONTROLS }
+							className="lmb-border-controls__border-type-toolbar"
+							attribute="bottomLineBorderStyle"
+							fullwidth={ true }
+							isSmall={ true }
+						/>
+
+						{ props.bottomLineBorderStyle &&
+							<AdvancedRangeControl
+								label={ __( 'Border Width', i18n ) }
+								attribute="bottomLineBorderWidth"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 5 }
+								placeholder="1"
+							/>
+						}
+
+						{ props.bottomLineBorderStyle &&
+							<ColorPaletteControl
+								label={ __( 'Border Color', i18n ) }
+								attribute="bottomLineBorderColor"
+								hover="all"
+							/>
+						}
+
+						<FourRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							attribute="bottomLineBorderRadius"
+							responsive="all"
+							min={ 0 }
+							isCorner={ true }
+							sliderMax={ 50 }
+							defaultLocked={ true }
+							placeholder="0"
 						/>
 
 					</PanelAdvancedSettings>

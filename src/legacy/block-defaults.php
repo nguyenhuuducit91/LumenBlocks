@@ -18,7 +18,7 @@ if ( ! function_exists( 'lumen_deprecated_block_defaults_option' ) ) {
 			'lumen_enable_block_defaults',
 			array(
 				'type' => 'boolean',
-				'description' => __( 'Use Block Defaults in the editor', LUMEN_I18N ),
+				'description' => __( 'Use Block Defaults in the editor', 'lumen-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => false,

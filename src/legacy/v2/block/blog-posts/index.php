@@ -96,6 +96,9 @@ if ( ! function_exists( 'lumen_blog_posts_post_query_v2' ) ) {
 				$passed_attributes[ 'tag' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
 			// Custom taxonomies.
 			} else {
+				// The taxonomy and terms are chosen by the editor in the block's own
+				// settings; there is no way to express that filter without tax_query.
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				$passed_attributes['tax_query'] = array(
 					array(
 						'taxonomy' => $attributes['taxonomyType'],
@@ -248,7 +251,7 @@ if ( ! function_exists( 'lumen_render_blog_posts_block_v2' ) ) {
 			// Title.
 			$title = get_the_title( $post_id );
 			if ( ! $title ) {
-				$title = __( '(Untitled)', LUMEN_I18N );
+				$title = __( '(Untitled)', 'lumen-blocks' );
 			}
 			$title = sprintf(
 				'<%s class="%s"><a href="%s">%s</a></%s>',
@@ -262,7 +265,7 @@ if ( ! function_exists( 'lumen_render_blog_posts_block_v2' ) ) {
 			// Category.
 			$category = sprintf(
 				'<div class="lmb-blog-posts__category">%s</div>',
-				get_the_category_list( esc_html__( ', ', LUMEN_I18N ), '', $post_id )
+				get_the_category_list( esc_html__( ', ', 'lumen-blocks' ), '', $post_id )
 			);
 
 			// Separator.
@@ -286,7 +289,8 @@ if ( ! function_exists( 'lumen_render_blog_posts_block_v2' ) ) {
 
             // Comments.
 			$num = get_comments_number( $post_id );
-			$num = sprintf( _n( '%d comment', '%d comments', $num, LUMEN_I18N ), $num );
+			/* translators: %d: number of comments on the post */
+			$num = sprintf( _n( '%d comment', '%d comments', $num, 'lumen-blocks' ), $num );
 
 			$comments = sprintf(
 				'<span>%s</span>',
@@ -313,7 +317,7 @@ if ( ! function_exists( 'lumen_render_blog_posts_block_v2' ) ) {
 			}
 
 			// Read more link.
-			$readmore_text = __( 'Continue reading', LUMEN_I18N );
+			$readmore_text = __( 'Continue reading', 'lumen-blocks' );
 			if ( ! empty( $attributes['readmoreText'] ) ) {
 				$readmore_text = $attributes['readmoreText'];
 			}
@@ -415,7 +419,7 @@ if ( ! function_exists( 'lumen_blog_posts_rest_fields_v2' ) ) {
 					'get_callback' => 'lumen_featured_image_urls_v2',
 					'update_callback' => null,
 					'schema' => array(
-						'description' => __( 'Different sized featured images', LUMEN_I18N ),
+						'description' => __( 'Different sized featured images', 'lumen-blocks' ),
 						'type' => 'array',
 					),
 				)
@@ -427,7 +431,7 @@ if ( ! function_exists( 'lumen_blog_posts_rest_fields_v2' ) ) {
 					'get_callback' => 'lumen_post_excerpt_v2',
 					'update_callback' => null,
 					'schema' => array(
-						'description' => __( 'Post excerpt for Lumen', LUMEN_I18N ),
+						'description' => __( 'Post excerpt for Lumen', 'lumen-blocks' ),
 						'type' => 'string',
 					),
 				)
@@ -439,7 +443,7 @@ if ( ! function_exists( 'lumen_blog_posts_rest_fields_v2' ) ) {
 					'get_callback' => 'lumen_category_list_v2',
 					'update_callback' => null,
 					'schema' => array(
-						'description' => __( 'Category list links', LUMEN_I18N ),
+						'description' => __( 'Category list links', 'lumen-blocks' ),
 						'type' => 'string',
 					),
 				)
@@ -451,7 +455,7 @@ if ( ! function_exists( 'lumen_blog_posts_rest_fields_v2' ) ) {
 					'get_callback' => 'lumen_author_info_v2',
 					'update_callback' => null,
 					'schema' => array(
-						'description' => __( 'Author information', LUMEN_I18N ),
+						'description' => __( 'Author information', 'lumen-blocks' ),
 						'type' => 'array',
 					),
 				)
@@ -463,7 +467,7 @@ if ( ! function_exists( 'lumen_blog_posts_rest_fields_v2' ) ) {
 					'get_callback' => 'lumen_commments_number_v2',
 					'update_callback' => null,
 					'schema' => array(
-						'description' => __( 'Number of comments', LUMEN_I18N ),
+						'description' => __( 'Number of comments', 'lumen-blocks' ),
 						'type' => 'number',
 					),
 				)
@@ -471,7 +475,7 @@ if ( ! function_exists( 'lumen_blog_posts_rest_fields_v2' ) ) {
 		}
     }
 
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_action( 'rest_api_init', 'lumen_blog_posts_rest_fields_v2' );
 	}
 }
@@ -540,7 +544,8 @@ if ( ! function_exists( 'lumen_commments_number_v2' ) ) {
      */
     function lumen_commments_number_v2( $object ) {
         $num = get_comments_number( $object['id'] );
-        return sprintf( _n( '%d comment', '%d comments', $num, LUMEN_I18N ), $num );
+        /* translators: %d: number of comments on the post */
+        return sprintf( _n( '%d comment', '%d comments', $num, 'lumen-blocks' ), $num );
     }
 }
 
@@ -551,7 +556,7 @@ if ( ! function_exists( 'lumen_category_list_v2' ) ) {
      * @since 1.7
      */
     function lumen_category_list_v2( $object ) {
-        return get_the_category_list( esc_html__( ', ', LUMEN_I18N ), '', $object['id'] );
+        return get_the_category_list( esc_html__( ', ', 'lumen-blocks' ), '', $object['id'] );
     }
 }
 
@@ -579,6 +584,7 @@ if ( ! function_exists( 'lumen_get_excerpt_v2' ) ) {
 		$excerpt = get_post_field( 'post_excerpt', $post_id, 'display' );
 		// We need to check before running the filters since some plugins override it.
 		if ( ! empty( $excerpt ) ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 			$excerpt = apply_filters( 'the_excerpt', $excerpt );
 		}
 
@@ -587,13 +593,16 @@ if ( ! function_exists( 'lumen_get_excerpt_v2' ) ) {
 
 			// If there's post content given to us, trim it and use that.
 			if ( ! empty( $post['post_content'] ) ) {
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 				$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
 			} else {
 				// If there's no post content given to us, then get the content.
 				$post_content = get_post_field( 'post_content', $post_id );
 				if ( ! empty( $post_content ) ) {
 					// Remove the jetpack sharing button filter.
+					// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 					$post_content = apply_filters( 'the_content', $post_content );
+					// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied on purpose so themes and plugins format the post text as they do in the loop.
 					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
 				}
 			}
@@ -646,7 +655,7 @@ if ( ! function_exists( 'lumen_render_block_blog_posts_v2' ) ) {
 		return $parts[0] . $parts[1] . $block_content . $parts[2];
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_filter( 'render_block_lmb/blog-posts', 'lumen_render_block_blog_posts_v2', 10, 2 );
 	}
 }
@@ -713,7 +722,7 @@ if ( ! function_exists( 'lumen_get_terms_endpoint_v2' ) ) {
 			},
 		) );
 	}
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_action( 'rest_api_init', 'lumen_get_terms_endpoint_v2' );
 	}
 }

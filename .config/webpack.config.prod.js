@@ -150,7 +150,7 @@ module.exports = [
 		'frontend_image_lightbox': path.resolve( __dirname, '../src/lightbox/frontend-image-lightbox.js' ),
 		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
 		'frontend_block_accordion': path.resolve( __dirname, '../src/block-library/accordion/frontend-accordion.js' ),
-		'frontend_block_accordion_polyfill': path.resolve( __dirname, '../src/block-library/accordion/frontend-accordion-polyfill.js' ),
+		'frontend_block_accordion_fallback': path.resolve( __dirname, '../src/block-library/accordion/frontend-accordion-fallback.js' ),
 		'frontend_block_carousel': path.resolve( __dirname, '../src/block-library/carousel/frontend-carousel.js' ),
 		'frontend_block_count_up': path.resolve( __dirname, '../src/block-library/count-up/frontend-count-up.js' ),
 		'frontend_block_countdown': path.resolve( __dirname, '../src/block-library/countdown/frontend-countdown.js' ),
@@ -162,7 +162,7 @@ module.exports = [
 		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block-library/progress-bar/frontend-progress-bar.js' ),
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block-library/horizontal-scroller/frontend-horizontal-scroller.js' ),
 		'frontend_block_tabs': path.resolve( __dirname, '../src/block-library/tabs/frontend-tabs.js' ),
-		'frontend_image_optimizer_polyfill': path.resolve( __dirname, '../src/features/image/image-optimizer-polyfill.js' ),
+		'frontend_image_optimizer_fallback': path.resolve( __dirname, '../src/features/image/image-optimizer-fallback.js' ),
 		'frontend_motion_effects': path.resolve( __dirname, '../src/features/effects-animations/frontend.js' ),
 	},
 

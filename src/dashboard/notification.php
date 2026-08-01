@@ -74,7 +74,8 @@ if ( ! function_exists( 'lumen_notification_count' ) ) {
             return sprintf( '<span class="update-plugins lmn-update-plugins count-%s"><span class="plugin-count" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
                 $num_notifiations,
                 $num_notifiations,
-                sprintf( _n( '%s notification', '%s notifications', $num_notifiations, LUMEN_I18N ), $num_notifiations )
+                /* translators: %s: number of unread notifications */
+                sprintf( _n( '%s notification', '%s notifications', $num_notifiations, 'lumen-blocks' ), $num_notifiations )
             );
         }
         return '';
@@ -129,13 +130,13 @@ if ( ! function_exists( 'lumen_welcome_notification' ) ) {
             }
         </script>
         <aside class="lumen_notice_wrapper s-box">
-            <h3><?php esc_html_e( '👉 Notifications', LUMEN_I18N ) ?></h3>
+            <h3><?php esc_html_e( '👉 Notifications', 'lumen-blocks' ) ?></h3>
             <?php
             foreach ( $lumen_notifications as $notification ) {
                 ?>
                 <div class="lumen_notice">
                     <?php echo wp_kses_post( $notification['message'] ) ?>
-                    <p><button class="button button-primary" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="lumen_dismiss(this); event.preventDefault();"><?php _e( 'Don\'t show me this anymore', LUMEN_I18N ) ?></button></p>
+                    <p><button class="button button-primary" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="lumen_dismiss(this); event.preventDefault();"><?php esc_html_e( 'Don\'t show me this anymore', 'lumen-blocks' ) ?></button></p>
                 </div>
                 <?php
             }

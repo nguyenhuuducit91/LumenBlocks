@@ -27,11 +27,11 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 
   		function __construct() {
 			// Register our settings.
-			add_action( 'register_lumen_global_settings', array( $this, 'register_color_schemes' ) );
+			add_action( 'lumen_register_global_settings', array( $this, 'register_color_schemes' ) );
 
 			add_action( 'lumen_early_version_upgraded', array( $this, 'extend_color_scheme' ), 10, 2 );
 
-			if ( is_frontend() ) {
+			if ( lumen_is_frontend() ) {
 
 				/**
 				 * Global Color Schemes hooks
@@ -54,7 +54,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_global_color_schemes',
 				array(
 					'type' => 'array',
-					'description' => __( 'Lumen Global Color Schemes', LUMEN_I18N ),
+					'description' => __( 'Lumen Global Color Schemes', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -81,7 +81,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_global_hide_color_scheme_colors',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Hide color scheme colors in the Lumen color picker', LUMEN_I18N ),
+					'description' => __( 'Hide color scheme colors in the Lumen color picker', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -93,7 +93,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_global_base_color_scheme',
 				array(
 					'type' => 'string',
-					'description' => __( 'Lumen Global Base Color Scheme', LUMEN_I18N ),
+					'description' => __( 'Lumen Global Base Color Scheme', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -105,7 +105,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_global_background_mode_color_scheme',
 				array(
 					'type' => 'string',
-					'description' => __( 'Lumen Global Background Mode Color Scheme', LUMEN_I18N ),
+					'description' => __( 'Lumen Global Background Mode Color Scheme', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -117,7 +117,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_global_container_mode_color_scheme',
 				array(
 					'type' => 'string',
-					'description' => __( 'Lumen Global Container Mode Color Scheme', LUMEN_I18N ),
+					'description' => __( 'Lumen Global Container Mode Color Scheme', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -129,7 +129,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_global_color_scheme_generated_css',
 				array(
 					'type' => 'string',
-					'description' => __( 'Lumen Global Color Scheme Generated CSS', LUMEN_I18N ),
+					'description' => __( 'Lumen Global Color Scheme Generated CSS', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -141,7 +141,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 				'lumen_use_v3_16_0_color_scheme_inheritance',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Lumen Global Color Scheme v3.16.0 Color Scheme Inheritance', LUMEN_I18N ),
+					'description' => __( 'Lumen Global Color Scheme v3.16.0 Color Scheme Inheritance', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => false,
@@ -211,7 +211,7 @@ if ( ! class_exists( 'Lumen_Global_Color_Schemes' ) ) {
 					}
 
 					$updated_schemes[] = array(
-						'name' => __( 'Alternate Scheme', LUMEN_I18N ),
+						'name' => __( 'Alternate Scheme', 'lumen-blocks' ),
 						'key' => 'scheme-default-3',
 						'colorScheme' => array(
 							'backgroundColor' => array( 'desktop' => '#0f0e17' ),

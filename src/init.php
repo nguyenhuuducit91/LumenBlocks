@@ -56,8 +56,6 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 				add_action( 'enqueue_block_assets', array( $this, 'enqueue_style_in_editor' ), 50 );
 			}
 
-			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
-
 			add_action( 'wp_footer', array( $this, 'init_lumen_vars' ) );
 
 			// Add the fallback values for the default block width and wide block width.
@@ -119,19 +117,19 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 			wp_enqueue_style( 'lmb-style-css-responsive' );
 
 			if ( ! is_admin() ) {
-				wp_register_script( 'lmb-block-frontend-js', null, [], LUMEN_VERSION );
+				wp_register_script( 'lmb-block-frontend-js', null, [], LUMEN_VERSION, true );
 			}
 
 			// Register inline frontend styles, these are always loaded.
 			// Register via a dummy style.
-			wp_register_style( 'lmb-style-css-nodep', false );
+			wp_register_style( 'lmb-style-css-nodep', false, array(), LUMEN_VERSION );
 			$inline_css = apply_filters( 'lumen_inline_styles_nodep', '' );
 			if ( ! empty( $inline_css ) ) {
 				wp_add_inline_style( 'lmb-style-css-nodep', trim( $inline_css ) );
 			}
 
 			// Register inline frontend styles for theme.json block style inheritance
-			wp_register_style( 'lmb-block-style-inheritance-nodep', false );
+			wp_register_style( 'lmb-block-style-inheritance-nodep', false, array(), LUMEN_VERSION );
 			$block_style_inline_css = apply_filters( 'lumen_block_style_inheritance_inline_styles_nodep', '' );
 			if ( ! empty( $block_style_inline_css ) ) {
 				wp_add_inline_style( 'lmb-block-style-inheritance-nodep', $block_style_inline_css );
@@ -259,7 +257,7 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 		public static function block_enqueue_frontend_assets() {
 			self::register_frontend_assets();
 			wp_enqueue_style( 'lmb-style-css' );
-			if ( is_frontend() ) {
+			if ( lumen_is_frontend() ) {
 				wp_enqueue_style( 'lmb-block-style-inheritance-nodep' );
 			}
 			wp_enqueue_style( 'lmb-style-css-nodep' );
@@ -338,7 +336,8 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 				// wp-util for wp.ajax.
 				// wp-plugins & wp-edit-post for Gutenberg plugins.
 				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api', 'lodash' ),
-				LUMEN_VERSION
+				LUMEN_VERSION,
+				true
 			);
 
 			// Backend editor scripts: blocks.
@@ -347,12 +346,13 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 				plugins_url( 'dist/editor_blocks.js', LUMEN_FILE ),
 				// Depend on the window.lmn API.
 				apply_filters( 'lumen_editor_js_dependencies', array( 'lmb-lmn' ) ),
-				LUMEN_VERSION
+				LUMEN_VERSION,
+				true
 			);
 
 			// Add translations.
-			wp_set_script_translations( 'lmb-lmn', LUMEN_I18N );
-			wp_set_script_translations( 'lmb-block-js', LUMEN_I18N );
+			wp_set_script_translations( 'lmb-lmn', 'lumen-blocks' );
+			wp_set_script_translations( 'lmb-block-js', 'lumen-blocks' );
 
 			// Backend editor only styles.
 			wp_register_style(
@@ -376,7 +376,7 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 				'srcUrl' => untrailingslashit( plugins_url( '/', LUMEN_FILE ) ),
 				'homeUrl' => home_url(),
 				'contentWidth' => isset( $content_width ) ? $content_width : 900,
-				'i18n' => LUMEN_I18N,
+				'i18n' => 'lumen-blocks',
 				'nonce' => wp_create_nonce( 'lumen' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 				'cdnUrl' => LUMEN_DESIGN_LIBRARY_URL,
@@ -507,13 +507,6 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 		}
 
 		/**
-		 * Translations.
-		 */
-		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'lumen-blocks' );
-		}
-
-		/**
 		 * Adds the lumen object with frontend constants if needed.
 		 *
 		 * @return void
@@ -541,8 +534,8 @@ if ( ! function_exists( 'lumen_load_js_translations' ) ) {
 	 * @return void
 	 */
 	function lumen_load_js_translations() {
-		wp_enqueue_script( 'lumen-strings', plugins_url( 'dist/translation-strings.js', LUMEN_FILE ), array(), LUMEN_VERSION );
-		wp_set_script_translations( 'lumen-strings', LUMEN_I18N );
+		wp_enqueue_script( 'lumen-strings', plugins_url( 'dist/translation-strings.js', LUMEN_FILE ), array(), LUMEN_VERSION, true );
+		wp_set_script_translations( 'lumen-strings', 'lumen-blocks' );
 	}
 }
 
@@ -592,7 +585,7 @@ if ( ! function_exists( 'lumen_check_block_animation' ) ) {
 		return $css;
 	}
 
-	if ( is_frontend() ) {
+	if ( lumen_is_frontend() ) {
 		add_filter( 'render_block', 'lumen_check_block_animation', 1, 2 );
 		add_filter( 'lumen_frontend_css', 'lumen_check_block_animation_on_global_styles', 999 );
 	}

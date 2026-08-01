@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "lmb/divider",
 	"title": "Divider",
 	"description": "Add a pause between your content.",

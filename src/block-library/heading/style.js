@@ -16,6 +16,59 @@ const blockStyles = new BlockStyleGenerator( {
 	versionDeprecated: '',
 } )
 
+// The top & bottom lines share the same set of border styles, only the
+// selector and the attribute prefix differ.
+const addLineBorderStyles = ( selector, attrPrefix ) => {
+	const versionAdded = '3.19.10'
+
+	blockStyles.addBlockStyles( `${ attrPrefix }BorderStyle`, [ {
+		selector,
+		styleRule: 'borderStyle',
+		attrName: `${ attrPrefix }BorderStyle`,
+		key: `${ attrPrefix }BorderStyle`,
+		versionAdded,
+	} ] )
+
+	blockStyles.addBlockStyles( `${ attrPrefix }BorderWidth`, [ {
+		selector,
+		styleRule: 'borderWidth',
+		attrName: `${ attrPrefix }BorderWidth`,
+		key: `${ attrPrefix }BorderWidth`,
+		responsive: 'all',
+		format: '%spx',
+		versionAdded,
+	} ] )
+
+	blockStyles.addBlockStyles( `${ attrPrefix }BorderColor`, [ {
+		selector,
+		styleRule: 'borderColor',
+		attrName: `${ attrPrefix }BorderColor`,
+		key: `${ attrPrefix }BorderColor`,
+		hover: 'all',
+		versionAdded,
+	} ] )
+
+	// The FourRangeControl corner values map to: top -> top left, right -> top
+	// right, bottom -> bottom left, left -> bottom right.
+	const corners = [
+		[ 'borderTopLeftRadius', 'top' ],
+		[ 'borderTopRightRadius', 'right' ],
+		[ 'borderBottomLeftRadius', 'bottom' ],
+		[ 'borderBottomRightRadius', 'left' ],
+	]
+
+	blockStyles.addBlockStyles( `${ attrPrefix }BorderRadius`, corners.map( ( [ styleRule, corner ] ) => ( {
+		selector,
+		styleRule,
+		attrName: `${ attrPrefix }BorderRadius`,
+		key: `${ attrPrefix }-${ styleRule }`,
+		responsive: 'all',
+		format: '%spx',
+		valuePreCallback: value => value?.[ corner ],
+		versionAdded,
+	} ) ) )
+}
+
 blockStyles.addBlockStyles( 'topLineHeight', [ {
 	selector: '.lmn-block-heading__top-line',
 	styleRule: 'height',
@@ -115,6 +168,9 @@ blockStyles.addBlockStyles( 'bottomLineAlign', [ {
 	responsive: 'all',
 	valueCallback: value => value === 'center' || value === 'left' ? 'auto' : 0,
 } ] )
+
+addLineBorderStyles( '.lmn-block-heading__top-line', 'topLine' )
+addLineBorderStyles( '.lmn-block-heading__bottom-line', 'bottomLine' )
 
 Alignment.addStyles( blockStyles )
 BlockDiv.addStyles( blockStyles )

@@ -1,5 +1,6 @@
 .lmn-block-heading__top-line,
 .lmn-block-heading__bottom-line {
+	box-sizing: border-box;
 	width: 100px;
 	height: 4px;
 	background-color: #000;

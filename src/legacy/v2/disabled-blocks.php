@@ -16,7 +16,7 @@ if ( ! class_exists( 'Lumen_Disabled_Blocks_V2' ) ) {
 		 * Add our hooks.
 		 */
 		function __construct() {
-			if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+			if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 				// Add variables needed in the editor.
 				add_filter( 'lumen_localize_script', array( $this, 'add_disabled_blocks_editor' ) );
 
@@ -59,10 +59,12 @@ if ( ! class_exists( 'Lumen_Disabled_Blocks_V2' ) ) {
 			$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
 
 			if ( ! wp_verify_nonce( $nonce, 'lumen_disable_blocks' ) ) {
-				wp_send_json_error( __( 'Security error, please refresh the page and try again.', LUMEN_I18N ) );
+				wp_send_json_error( __( 'Security error, please refresh the page and try again.', 'lumen-blocks' ) );
 			}
 
-			$disabled_blocks = isset( $_POST['disabledBlocks'] ) ? $_POST['disabledBlocks'] : array();
+			$disabled_blocks = isset( $_POST['disabledBlocks'] )
+				? array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['disabledBlocks'] ) )
+				: array();
 			update_option( 'lumen_v2_disabled_blocks', $disabled_blocks, 'no' );
 			wp_send_json_success();
 		}

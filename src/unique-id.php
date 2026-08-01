@@ -43,7 +43,7 @@ if ( ! function_exists( 'lumen_prevent_duplicate_unique_ids' ) ) {
 	}
 
 	// Only do this in the frontend.
-	if ( is_frontend() ) {
+	if ( lumen_is_frontend() ) {
 		add_filter( 'render_block', 'lumen_prevent_duplicate_unique_ids', 9, 2 );
 	}
 }

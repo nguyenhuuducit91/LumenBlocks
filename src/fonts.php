@@ -90,7 +90,7 @@ if ( ! class_exists( 'Lumen_Google_Fonts' ) ) {
 		public static $done_registering = [];
 
 		function __construct() {
-			if ( is_frontend() ) {
+			if ( lumen_is_frontend() ) {
 				add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
 			}
 		}

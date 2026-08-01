@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "lmb/accordion",
 	"title": "Accordion",
 	"description": "A title that your visitors can toggle to view more text.",

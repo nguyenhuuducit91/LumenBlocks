@@ -18,8 +18,8 @@ if ( ! function_exists( 'lumen_load_columns_firefox_frontend_polyfill' ) ) {
 		return $block_content;
 	}
 
-	$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
-	if ( ! empty( $user_agent ) && stripos( $user_agent, 'Firefox/' ) !== false ) {
+	$lumen_user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+	if ( ! empty( $lumen_user_agent ) && stripos( $lumen_user_agent, 'Firefox/' ) !== false ) {
 		add_filter( 'render_block_lumen/columns', 'lumen_load_columns_firefox_frontend_polyfill', 10, 2 );
 	}
 }

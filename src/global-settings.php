@@ -51,7 +51,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
-			if ( is_frontend() ) {
+			if ( lumen_is_frontend() ) {
 
 				/**
 				 * Color hooks
@@ -202,7 +202,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_colors',
 				array(
 					'type' => 'array',
-					'description' => __( 'Lumen global color palette', LUMEN_I18N ),
+					'description' => __( 'Lumen global color palette', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -237,7 +237,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_hide_theme_colors',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Hide theme colors in the Lumen color picker', LUMEN_I18N ),
+					'description' => __( 'Hide theme colors in the Lumen color picker', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -249,7 +249,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_hide_default_colors',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Hide default colors in the Lumen color picker', LUMEN_I18N ),
+					'description' => __( 'Hide default colors in the Lumen color picker', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -261,7 +261,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_hide_site_editor_colors',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Hide Site Editor colors in the Lumen color picker', LUMEN_I18N ),
+					'description' => __( 'Hide Site Editor colors in the Lumen color picker', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -273,7 +273,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_typography_apply_to',
 				array(
 					'type' => 'string',
-					'description' => __( 'Lumen global typography apply to setting', LUMEN_I18N ),
+					'description' => __( 'Lumen global typography apply to setting', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -285,7 +285,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_force_typography',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Lumen global typography add important to global styles', LUMEN_I18N ),
+					'description' => __( 'Lumen global typography add important to global styles', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -357,7 +357,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_global_typography',
 				array(
 					'type' => 'array',
-					'description' => __( 'Lumen global typography settings', LUMEN_I18N ),
+					'description' => __( 'Lumen global typography settings', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -387,7 +387,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_selected_font_pair',
 				array(
 					'type' => 'string',
-					'description' => __( 'Lumen currently selected global font pair', LUMEN_I18N ),
+					'description' => __( 'Lumen currently selected global font pair', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -399,7 +399,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_custom_font_pairs',
 				array(
 					'type' => 'array',
-					'description' => __( 'Lumen added custom font pairs', LUMEN_I18N ),
+					'description' => __( 'Lumen added custom font pairs', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -437,7 +437,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_use_typography_as_presets',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Use Global Typography font sizes as preset', LUMEN_I18N ),
+					'description' => __( 'Use Global Typography font sizes as preset', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -449,7 +449,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_is_apply_body_to_html',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Lumen global typography apply to setting', LUMEN_I18N ),
+					'description' => __( 'Lumen global typography apply to setting', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -461,7 +461,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				'lumen_icon_library',
 				array(
 					'type' => 'array',
-					'description' => __( 'Lumen Icon Library', LUMEN_I18N ),
+					'description' => __( 'Lumen Icon Library', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
@@ -485,7 +485,7 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				)
 			);
 
-			do_action( 'register_lumen_global_settings' );
+			do_action( 'lumen_register_global_settings' );
 		}
 
 		/**

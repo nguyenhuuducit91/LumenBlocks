@@ -22,9 +22,9 @@ if ( ! class_exists( 'Lumen_Global_Block_Styles' ) ) {
 
   		function __construct() {
 			// Register our settings.
-			add_action( 'register_lumen_global_settings', array( $this, 'register_block_styles' ) );
+			add_action( 'lumen_register_global_settings', array( $this, 'register_block_styles' ) );
 
-			if ( is_frontend() ) {
+			if ( lumen_is_frontend() ) {
 				// Add the Global Block Styles styles in the frontend only.
 				add_filter( 'lumen_inline_styles_nodep', array( $this, 'add_global_block_styles' ) );
 			}
@@ -41,7 +41,7 @@ if ( ! class_exists( 'Lumen_Global_Block_Styles' ) ) {
 				'lumen_global_block_styles',
 				array(
 					'type' => 'object',
-					'description' => __( 'Lumen Block Styles', LUMEN_I18N ),
+					'description' => __( 'Lumen Block Styles', 'lumen-blocks' ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(

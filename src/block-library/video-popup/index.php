@@ -32,7 +32,7 @@ if ( ! class_exists( 'Lumen_Video_Popup_Schema' ) ) {
 		public function print_video_popup_schema() {
 			if ( count( $this->video_entities ) ) {
 				// Compile all video schema entities into a single script
-				echo '<script type="application/ld+json"> [ ' . implode( ', ', $this->video_entities ) . ' ] </script>';
+				echo '<script type="application/ld+json">' . wp_json_encode( $this->video_entities, JSON_UNESCAPED_SLASHES ) . '</script>';
 			}
 		}
 
@@ -88,8 +88,7 @@ if ( ! class_exists( 'Lumen_Video_Popup_Schema' ) ) {
 				$video_schema[ 'thumbnailUrl' ] = esc_url( $thumbnail_url );
 			}
 
-			$video_schema_json = wp_json_encode( $video_schema, JSON_UNESCAPED_SLASHES );
-			$this->video_entities[] = $video_schema_json;
+			$this->video_entities[] = $video_schema;
 
 			return $block_content;
 		}

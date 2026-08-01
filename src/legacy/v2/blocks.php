@@ -142,11 +142,11 @@ if ( ! function_exists( 'lumen_register_blocks_v2' ) ) {
 		}
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() && ! is_admin() ) {
+	if ( lumen_has_v2_frontend_compatibility() && ! is_admin() ) {
 		// Load the scripts normally in the frontend.
 		add_action( 'init', 'lumen_register_blocks_v2' );
-	} else if ( has_lumen_v2_editor_compatibility() ) {
-		if ( ! is_admin() || ! has_lumen_v2_editor_compatibility_usage() ) {
+	} else if ( lumen_has_v2_editor_compatibility() ) {
+		if ( ! is_admin() || ! lumen_has_v2_editor_compatibility_usage() ) {
 			// Load the block scripts normally in the editor.
 			add_action( 'init', 'lumen_register_blocks_v2' );
 		} else {
@@ -179,7 +179,7 @@ if ( ! function_exists( 'lumen_add_excerpt_wrapper_blocks_v2' ) ) {
 		return array_merge( $allowed_lumen_wrapper_blocks, $allowed_wrapper_blocks );
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_filter( 'excerpt_allowed_wrapper_blocks', 'lumen_add_excerpt_wrapper_blocks_v2' );
 	}
 }
@@ -216,7 +216,7 @@ if ( ! function_exists( 'lumen_add_excerpt_blocks_v2' ) ) {
 		return array_merge( $allowed_lumen_blocks, $allowed_blocks );
 	}
 
-	if ( has_lumen_v2_frontend_compatibility() || has_lumen_v2_editor_compatibility() ) {
+	if ( lumen_has_v2_frontend_compatibility() || lumen_has_v2_editor_compatibility() ) {
 		add_filter( 'excerpt_allowed_blocks', 'lumen_add_excerpt_blocks_v2' );
 	}
 }

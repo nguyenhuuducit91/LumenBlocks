@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "lmb/blockquote",
 	"title": "Blockquote",
 	"description": "Display a quote in style",

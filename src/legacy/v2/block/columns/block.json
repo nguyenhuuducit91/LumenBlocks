@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "lmb/columns",
 	"title": "Advanced Columns & Grid",
 	"description": "Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.",

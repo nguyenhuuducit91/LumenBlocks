@@ -42,7 +42,7 @@ if ( ! class_exists( 'Lumen_Size_And_Spacing_Preset_Controls' ) ) {
 		 * Initialize
 		 */
   		function __construct() {
-			add_action( 'register_lumen_global_settings', array( $this, 'register_use_size_presets_by_default' ) );
+			add_action( 'lumen_register_global_settings', array( $this, 'register_use_size_presets_by_default' ) );
 			// Unhooked in Lumen: migrated sites upgrading from an upstream release older
 			// than 3.16.0. Lumen's version line starts at 1.0.0, so this guard would compare
 			// 1.x against 3.16.0 and wrongly re-run on every update.
@@ -64,7 +64,7 @@ if ( ! class_exists( 'Lumen_Size_And_Spacing_Preset_Controls' ) ) {
 				'lumen_use_size_presets_by_default',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'If enabled, range controls will be on preset mode by default', LUMEN_I18N ),
+					'description' => __( 'If enabled, range controls will be on preset mode by default', 'lumen-blocks' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,

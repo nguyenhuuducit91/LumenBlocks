@@ -26,7 +26,7 @@ if ( ! function_exists( 'lumen_load_accordion_frontend_polyfill_script' ) ) {
 	 */
 	function lumen_load_accordion_frontend_polyfill_script() {
 
-		$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 
 		if ( ! $user_agent ) {
 			return;
@@ -56,9 +56,10 @@ if ( ! function_exists( 'lumen_load_accordion_frontend_polyfill_script' ) ) {
 		if ( $load_polyfill ) {
 			wp_enqueue_script(
 				'lmn-frontend-accordion-polyfill',
-				plugins_url( 'dist/frontend_block_accordion_polyfill.js', LUMEN_FILE ),
+				plugins_url( 'dist/frontend_block_accordion_fallback.js', LUMEN_FILE ),
 				array(),
-				LUMEN_VERSION
+				LUMEN_VERSION,
+				true
 			);
 		}
 	}
@@ -76,14 +77,12 @@ if ( ! class_exists( 'Lumen_Accordion_FAQ_Schema' ) ) {
 
 		public function print_faq_schema() {
 			if ( count( $this->faq_entities ) ) {
-				echo
-				'<script type="application/ld+json">
-				{
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					"mainEntity": [' . implode( ', ', $this->faq_entities ) . ']
-				}
-				</script>';
+				$schema = array(
+					'@context'   => 'https://schema.org',
+					'@type'      => 'FAQPage',
+					'mainEntity' => $this->faq_entities,
+				);
+				echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . '</script>';
 			}
 		}
 
@@ -134,14 +133,14 @@ if ( ! class_exists( 'Lumen_Accordion_FAQ_Schema' ) ) {
 				$answer = '';
 				$answer = $this->get_faq_answer( $block[ 'innerBlocks' ][1], $answer );
 
-				$this->faq_entities[] = '{
-						"@type": "Question",
-						"name": ' . json_encode( $question, JSON_UNESCAPED_UNICODE ) . ',
-						"acceptedAnswer": {
-							"@type": "Answer",
-							"text": ' . json_encode( $answer, JSON_UNESCAPED_UNICODE ) .'
-						}
-					}';
+				$this->faq_entities[] = array(
+					'@type'          => 'Question',
+					'name'           => $question,
+					'acceptedAnswer' => array(
+						'@type' => 'Answer',
+						'text'  => $answer,
+					),
+				);
 			}
 
 			return $block_content;

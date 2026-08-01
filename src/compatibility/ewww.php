@@ -12,7 +12,7 @@ if ( ! function_exists( 'lumen_load_image_optimizer_polyfill_frontend_script' ) 
 		if ( ! is_admin() ) {
 			wp_enqueue_script(
 				'lmn-frontend-image-optimizer-polyfill',
-				plugins_url( 'dist/frontend_image_optimizer_polyfill.js', LUMEN_FILE ),
+				plugins_url( 'dist/frontend_image_optimizer_fallback.js', LUMEN_FILE ),
 				array(),
 				LUMEN_VERSION,
 				true

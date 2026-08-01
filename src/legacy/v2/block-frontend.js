@@ -7,7 +7,7 @@
 /**
  * Internal dependencies
  */
-import './polyfill'
+import './browser-fallback'
 
 const context = require.context(
 	'./block', // Search within the src/blocks directory.
