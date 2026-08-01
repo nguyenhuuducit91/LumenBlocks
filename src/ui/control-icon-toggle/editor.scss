@@ -1,0 +1,83 @@
+.lmn-label-unit-toggle {
+	margin-left: 6px;
+	align-items: center;
+	width: 24px;
+	height: 24px;
+	position: relative;
+	z-index: 3;
+	overflow: hidden;
+	&[aria-expanded="true"] {
+		z-index: 4;
+		overflow: visible;
+		.lmn-label-unit-toggle__wrapper {
+			background: #fff;
+			outline: 1px solid #222;
+		}
+	}
+	&[aria-expanded="false"]:hover {
+		outline: 1px solid #222;
+	}
+	button {
+		height: 14px;
+		width: 14px;
+		padding: 5px !important; // Force override for Gutenberg 7.7.
+		min-width: 11px !important; // Force override for Gutenberg 7.7.
+		box-sizing: content-box;
+		border-radius: 0 !important;
+		margin: 0;
+		justify-content: center;
+		font-size: 10px; // For text only toggles
+		font-weight: 400; // For text only toggles
+		position: relative;
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+		&.is-active {
+			z-index: 2;
+		}
+		&:hover {
+			z-index: 3;
+		}
+	}
+	+ .lmn-label-unit-toggle {
+		margin-left: 0;
+	}
+
+	// If focused on while closed, show an outline.
+	&:not(.is-open):focus-within {
+		outline: var(--wp-admin-border-width-focus) solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
+	}
+}
+.lmn-label-unit-toggle__wrapper {
+	position: absolute;
+	outline: 1px solid transparent;
+}
+.lmn-label-unit-toggle__popup.is-from-right {
+	.components-popover__content {
+		margin-right: 10px;
+	}
+}
+
+.lmn-label-unit-toggle__colored {
+	button.is-active:not([data-index="0"]) {
+		background: #007cba;
+		background: var(--wp-admin-theme-color, #007cba);
+		color: #fff;
+		border-color: #007cba !important;
+		border-color: var(--wp-admin-theme-color, #007cba) !important;
+	}
+}
+
+// Color the toggle orange if we have a tablet or mobile value that's set.
+.lmn-label-unit-toggle > .lmn-label-unit-toggle__wrapper:not(.is-open):has(.has-value) {
+	button.is-active {
+		background: #ffc107;
+	}
+}
+// Color the actual device button when the toggle is open.
+.lmn-label-unit-toggle > .lmn-label-unit-toggle__wrapper.is-open {
+	button.has-value {
+		background: #ffc107;
+	}
+}

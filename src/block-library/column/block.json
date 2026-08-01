@@ -1,0 +1,25 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/column",
+	"title": "Inner Column",
+	"description": "A single column with advanced layout options.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId", "lumen/innerBlockOrientation", "lumen/columnWrapDesktop" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"keywords": [
+		"Section rows"
+	],
+	"parent": [
+		"lumen/columns",
+		"lumen/carousel",
+		"lumen/feature",
+		"lumen/feature-grid",
+		"lumen/horizontal-scroller",
+		"lumen/tab-content"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "hidden",
+	"lmn-available-states": [ "enabled", "hidden" ]
+}

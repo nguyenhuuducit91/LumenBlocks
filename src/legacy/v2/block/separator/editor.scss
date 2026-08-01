@@ -1,0 +1,24 @@
+/**
+ * Editor styles for the Separator Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+// Full-width blocks are z-index 20, make sure we are above.
+[data-type="lmb/separator"] {
+	z-index: 30 !important;
+}
+// Make adjacent blocks higher when selected to show the outlines.
+[data-type="lmb/separator"] ~ .wp-block.is-selected {
+	z-index: 31;
+}
+[data-type="lmb/separator"][data-align="full"] {
+	.lmb-separator {
+		.lmb-separator__svg-inner {
+			overflow: hidden;
+		}
+		.lmb-separator__svg-wrapper {
+			overflow: visible;
+		}
+	}
+}

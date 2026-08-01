@@ -1,0 +1,53 @@
+/**
+ * Place styles here that fixes theme specific issues in the editor.
+ */
+
+// Blocksy theme
+// Full width needs more margins on the sides to make look full.
+.ct-theme-editor-styles .is-root-container > [data-type^="lumen/"][data-align="full"] {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+.lmn--is-blocksy-theme .lmn--is-hovered.lmn-block > :is(h1,h2,h3,h4,h5,h6) {
+	color: var(--lmn-heading-color-parent-hover);
+}
+
+// Default block width and wide widths - used for Content Width of column-type blocks.
+.ct-theme-editor-styles {
+	--lmn-block-width-default-detected: var(--has-wide, var(--theme-block-max-width, var(--block-max-width)));
+	--lmn-block-width-wide-detected: var(--has-wide, var(--theme-block-wide-max-width, var(--wide-block-max-width)));
+}
+
+/**
+ * Twenty Twenty Two full width support.
+ */
+.lmn--is-twentytwentytwo-theme {
+	// We can have a gap on the sides.
+	.is-root-container > [data-type^="lumen/"][data-align="full"] {
+		margin-left: calc(-1 * var(--wp--custom--spacing--outer)) !important;
+		margin-right: calc(-1 * var(--wp--custom--spacing--outer)) !important;
+	}
+}
+
+/**
+ * Twenty Twenty One uses an old custom properties which are no longer standard.
+ */
+.lmn--is-twentytwentyone-theme {
+	--lmn-block-width-default-detected: var(--responsive--aligndefault-width);
+	--lmn-block-width-wide-detected: var(--responsive--alignwide-width);
+}
+
+/**
+ * Astra
+ */
+.lmn--is-astra-theme {
+	// The inner width is not centered.
+	[data-type^="lumen/"]:is([data-align="full"], [data-align="wide"]) .lmn-block-content.alignwide {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.lmn-block a {
+		color: var(--lmn-link-color);
+	}
+}

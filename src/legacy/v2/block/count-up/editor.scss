@@ -1,0 +1,13 @@
+/**
+ * Editor styles for the Count Up Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+[data-align="full"] {
+	.lmb-countup {
+		border-radius: 0 !important;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}

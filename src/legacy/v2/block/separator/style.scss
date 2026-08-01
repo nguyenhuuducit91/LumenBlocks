@@ -1,0 +1,91 @@
+/**
+ * Frontend styles for the Separator Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+@import "common";
+
+.lmb-separator .lmb-block-content .lmb-separator__svg-wrapper {
+	height: 200px;
+}
+@media (max-width: 1024px) {
+	.lmb-separator .lmb-block-content .lmb-separator__svg-wrapper {
+		height: 175px;
+	}
+}
+@media (max-width: 767px) {
+	.lmb-separator .lmb-block-content .lmb-separator__svg-wrapper {
+		height: 75px;
+	}
+}
+.lmb-separator {
+	box-sizing: content-box;
+	position: relative;
+
+	// Make sure we are 1 level above all the other blocks.
+	&.lmb-separator.lmb-separator.lmb-separator {
+		z-index: 2;
+	}
+
+	&.lmb-separator--flip-vertical {
+		transform: scaleY(-1);
+	}
+	&.lmb-separator--flip-horizontal {
+		transform: scaleX(-1);
+	}
+	&.lmb-separator--flip-vertical.lmb-separator--flip-horizontal {
+		transform: scaleY(-1) scaleX(-1);
+	}
+	.lmb-separator__svg-wrapper {
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		overflow-x: hidden;
+		overflow-y: visible;
+		box-sizing: content-box;
+	}
+	&.alignfull {
+		overflow: visible;
+		.lmb-separator__svg-wrapper {
+			overflow: visible;
+		}
+	}
+	.lmb-separator__svg-inner {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		overflow-x: hidden;
+	}
+	svg {
+		height: 100%;
+		width: 100%;
+		display: block;
+		fill: #abb8c3;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 3;
+		transform-origin: bottom;
+	}
+	svg.lmb-separator--no-shadow *:not(:last-child) {
+		display: none;
+	}
+	.lmb-separator__top-pad,
+	.lmb-separator__bottom-pad {
+		height: 0;
+		width: 100%;
+		z-index: 2; // Ensure that our paddings are on top to prevent a thin line from showing.
+		position: relative;
+	}
+	.lmb-separator__top-pad {
+		margin-bottom: -1px; // Prevent white lines.
+	}
+	.lmb-separator__bottom-pad {
+		margin-top: -1px; // Prevent white lines.
+		background: #abb8c3;
+	}
+
+
+}

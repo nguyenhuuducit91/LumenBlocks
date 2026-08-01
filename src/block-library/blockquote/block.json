@@ -1,0 +1,16 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/blockquote",
+	"title": "Blockquote",
+	"description": "Display a quote in style",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-required-blocks": [
+		"lumen/icon"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/text"
+	]
+}

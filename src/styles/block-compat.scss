@@ -1,0 +1,80 @@
+/**
+ * Place styles here that fixes theme specific issues in the frontend.
+ */
+
+// Blocksy theme
+// Default and wide widths - used for Content Width of column-type blocks.
+body.lmn--is-blocksy-theme .lmn-block { // Need to add .lmn-block here, this doesn't work when in body.
+	--lmn-block-width-default-detected: var(--theme-block-max-width, var(--block-max-width));
+	--lmn-block-width-wide-detected: var(--theme-block-wide-max-width, var(--block-wide-max-width));
+}
+
+// .lmn--is-blocksy-theme .lmn-block > :is(h1,h2,h3,h4,h5,h6) {
+// 	color: var(--lmn-heading-color, var(--theme-headings-color));
+// }
+// body.lmn--is-blocksy-theme :where(.lmn-block.is-style-link, .lmn-block:not(.lmn-block-button)) a {
+// 	color: var(--lmn-link-color, var(--theme-link-initial-color));
+// 	&:hover {
+// 		color: var(--lmn-link-color-hover, var(--theme-link-hover-color));
+// 	}
+// }
+
+// Astra theme
+// Wide block width - used for Content Width of column-type blocks.
+body.lmn--is-astra-theme {
+	--lmn-block-width-wide-detected: calc(var(--lmn-block-width-default-detected) + 200px);
+	// The inner width is not centered.
+	.entry-content :is(.alignfull, .alignwide) > .alignwide {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+// .lmn--is-astra-theme .lmn-block > :is(h1,h2,h3,h4,h5,h6) {
+// 	color: var(--lmn-heading-color, var(--ast-global-color-2));
+// }
+
+
+// Neve theme
+// Wide block width - used for Content Width of column-type blocks.
+body.lmn--is-neve-theme {
+	--lmn-block-width-wide-detected: 70vw;
+}
+
+// Kadence theme
+// Kadence adds negative inline margins that screws up our blocks, make the selector more specific.
+body.lmn--is-kadence-theme :is(.entry-content, .site-content) .lmn-block > .lmn-inner-blocks {
+	&.alignwide,
+	&:not(.alignwide) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+// body.lmn--is-kadence-theme .lmn-block > :is(h1,h2,h3,h4,h5,h6) {
+// 	color: var(--lmn-heading-color, var(--global-palette3));
+// }
+// body.lmn--is-kadence-theme :where(.lmn-block) > :is(p, div) {
+// 	color: var(--lmn-text-color, var(--global-palette4));
+// }
+
+// Storefront theme
+// Storefront adds negative inline margins and paddings inside our blocks.
+body.lmn--is-storefront-theme {
+	// There are added paddings to the sides of wide blocks
+	:is(.entry-content, .site-content) .lmn-block.alignwide:not(.lmn-block-background) {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	// There are inline margins, make the selector more specific.
+	:is(.entry-content, .site-content) .lmn-block > .lmn-inner-blocks:is(.alignwide, .alignfull) {
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0;
+	}
+}
+
+// Twenty Twenty One theme
+// Twenty Twenty One uses an old custom properties which are no longer standard.
+body.lmn--is-twentytwentyone-theme {
+	--lmn-block-width-default-detected: var(--responsive--aligndefault-width);
+	--lmn-block-width-wide-detected: var(--responsive--alignwide-width);
+}

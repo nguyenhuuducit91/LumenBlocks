@@ -1,0 +1,11 @@
+$padding: 16px;
+
+.lmb-design-control {
+	max-height: 40vh;
+	overflow-y: auto;
+	.components-base-control__label {
+		margin-left: #{ -$padding };
+		margin-right: #{ -$padding };
+		margin-bottom: 8px;
+	}
+}

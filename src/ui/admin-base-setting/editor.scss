@@ -1,0 +1,44 @@
+.lmb-admin-setting:not(:last-child) {
+	padding-bottom: 32px;
+	margin-bottom: 16px;
+	&.lmb-admin-setting--small {
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	}
+}
+.lmb-admin-setting {
+	&.lmb-admin-setting--small {
+		--label-width: 0;
+		max-width: 450px;
+		.lmb-admin-setting__label-wrapper {
+			justify-content: space-between;
+		}
+		.lmb-admin-setting__label {
+			width: auto !important;
+			flex-basis: 250px;
+		}
+		.lmb-admin-setting__field {
+			white-space: nowrap;
+		}
+	}
+}
+.lmb-admin-setting__label-wrapper {
+	display: flex;
+	align-items: center;
+}
+.lmb-admin-setting__label {
+	width: var(--label-width);
+	display: inline-block;
+	font-weight: 700;
+	color: #666;
+	padding-right: 15px;
+	box-sizing: border-box;
+}
+.lmb-admin-setting__field {
+	flex: 1;
+}
+body .lmb-admin-setting .lmb-admin-setting__label-wrapper + .lmb-admin-setting__help {
+	margin-left: var(--label-width);
+	margin-bottom: 0 !important;
+	margin-top: 8px !important;
+}

@@ -1,0 +1,17 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/icon-button",
+	"title": "Icon Button",
+	"description": "Add a customizable button.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"parent": [
+		"lumen/button-group"
+	],
+	"keywords": [
+		"Link"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "hidden",
+	"lmn-block-dependency": "lumen/button-group|icon-button"
+}

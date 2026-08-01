@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-divider lmb-divider--v2 lmb-divider--design-basic lmb-main-block"
+>
+  <style>
+    hr.lmb-divider__hr{margin-left:auto !important;margin-right:auto !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <hr
+        class="lmb-divider__hr"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Divider (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-divider lmb-divider--v2 lmb-divider--design-wave-2 lmb-main-block"
+>
+  <style>
+    .lmb-block-content{margin-top:123px !important;margin-bottom:123px !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <hr
+        class="lmb-divider__hr"
+      />
+    </div>
+  </div>
+</div>
+`;

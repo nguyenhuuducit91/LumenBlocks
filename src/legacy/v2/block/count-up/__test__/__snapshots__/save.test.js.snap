@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Count Up (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-count-up lmb-countup--v4 lmb-countup--columns-2 lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-countup__item lmb-countup__item1"
+      >
+        <h4
+          class="lmb-countup__title"
+        >
+          <div>
+            Title
+          </div>
+        </h4>
+        <div
+          class="lmb-countup__counter"
+          data-delay="16"
+          data-duration="1000"
+        >
+          <div>
+            $99.99
+          </div>
+        </div>
+        <p
+          class="lmb-countup__description"
+        >
+          <div>
+            Description
+          </div>
+        </p>
+      </div>
+      <div
+        class="lmb-countup__item lmb-countup__item2"
+      >
+        <h4
+          class="lmb-countup__title"
+        >
+          <div>
+            Title
+          </div>
+        </h4>
+        <div
+          class="lmb-countup__counter"
+          data-delay="16"
+          data-duration="1000"
+        >
+          <div>
+            1,234
+          </div>
+        </div>
+        <p
+          class="lmb-countup__description"
+        >
+          <div>
+            Description
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Count Up (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-count-up lmb-countup--v4 lmb-countup--columns-3 lmb-countup--design-wave-2 lmb-main-block"
+>
+  <style>
+    .lmb-countup__icon{margin-bottom:123px !important;margin-left:auto !important;margin-right:auto !important;opacity:123 !important}.lmb-countup__icon svg:not(.lmb-custom-icon){color:#123456}.lmb-countup__icon .lmb-icon-inner-svg,.lmb-countup__icon .lmb-icon-inner-svg svg{width:123px !important;height:123px !important}.lmb-countup__icon .lmb-icon-inner-svg{color:#123456 !important;transform:rotate(123deg) !important}@media screen and (max-width:1025px){.lmb-countup__icon{margin-left:auto !important;margin-right:auto !important}}@media screen and (min-width:768px) and (max-width:1025px){.lmb-countup__icon{margin-bottom:123px !important}.lmb-countup__icon .lmb-icon-inner-svg,.lmb-countup__icon .lmb-icon-inner-svg svg{width:123px !important;height:123px !important}}@media screen and (max-width:768px){.lmb-countup__icon{margin-bottom:123px !important;margin-left:auto !important;margin-right:auto !important}.lmb-countup__icon .lmb-icon-inner-svg,.lmb-countup__icon .lmb-icon-inner-svg svg{width:123px !important;height:123px !important}}.lmb-countup__icon .lmb-icon-inner-svg,.lmb-countup__icon .lmb-icon-inner-svg svg *{color:#123456 !important;fill:#123456 !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-countup__item lmb-countup__item1"
+      >
+        <div
+          class="lmb-countup__icon lmb-countup__icon--v2"
+        >
+          <div
+            class="lmb-icon-inner-svg lmb-icon--#123456"
+          />
+        </div>
+      </div>
+      <div
+        class="lmb-countup__item lmb-countup__item2"
+      >
+        <div
+          class="lmb-countup__icon lmb-countup__icon--v2"
+        >
+          <div
+            class="lmb-icon-inner-svg lmb-icon--#123456"
+          />
+        </div>
+      </div>
+      <div
+        class="lmb-countup__item lmb-countup__item3"
+      >
+        <div
+          class="lmb-countup__icon lmb-countup__icon--v2"
+        >
+          <div
+            class="lmb-icon-inner-svg lmb-icon--#123456"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

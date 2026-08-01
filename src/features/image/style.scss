@@ -1,0 +1,80 @@
+.lmn-img-wrapper {
+	position: relative;
+	width: 100%;
+	// max-width: 100%;
+	margin: 0 auto;
+	display: block;
+	overflow: hidden; // This is needed for zooming the image.
+
+	//Added this to fix filter: drop-shadows flicker/do not show in safari browsers
+	will-change: filter;
+
+	&::after,
+	&::before,
+	&.lmn-img--gradient-overlay::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		opacity: var(--lmn-gradient-overlay, 0.3);
+		pointer-events: none; // Disallow the gradient overlay to capture the mouse events (so people can still right-click on the image)
+	}
+	&.lmn-img--gradient-overlay {
+		// If not hovered, hide the overlay hover state.
+		&:not(:hover)::before {
+			opacity: 0 !important;
+		}
+		&:hover::after {
+			opacity: 0 !important;
+		}
+	}
+
+	img {
+		object-fit: cover;
+		width: 100% !important;
+		height: 100% !important;
+		margin: 0 !important;
+		display: block !important;
+	}
+
+	// Shapes.
+	&.lmn-img--shape {
+		&::after,
+		&::before,
+		img {
+			mask-mode: alpha;
+			mask-repeat: no-repeat;
+			mask-size: contain;
+			mask-position: center;
+			border-radius: 0;
+		}
+	}
+	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
+	&.lmn-image--shape-stretch {
+		&,
+		&::after,
+		&::before {
+			mask-size: 100% 100%;
+		}
+		// Firefox doesn't automatically inherit the mask-size from the parent. Fixes #3042.
+		img {
+			mask-size: inherit !important;
+		}
+	}
+}
+
+// Fallback for IE11: SVG icons will not display as bullets, fallback to normal bullets.
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	.lmn-img-wrapper.lmn-img--shape {
+		border-radius: 9999px !important;
+	}
+}
+
+// This is needed to fix the images rendering as lines when lazy-loaded in Safari. We target only the known issue here based on lazy loading from another plugin so as not to affect other uses of the image
+// Targets Safari 9+ on iOS and macOS, works as of late 2025.
+@supports (font: -apple-system-body) {
+	img.lmn-img.lazyloaded {
+		will-change: transform;
+	}
+}

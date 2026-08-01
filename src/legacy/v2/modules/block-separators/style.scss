@@ -1,0 +1,82 @@
+// Add some default paddings if we have a separator.
+.lmb--has-top-separator {
+	padding-top: 200px !important;
+}
+.lmb--has-bottom-separator {
+	padding-bottom: 200px !important;
+}
+.lmb-main-block {
+	position: relative;
+	> * {
+		z-index: 2;
+	}
+	.lmb-inner-block {
+		z-index: 5;
+	}
+}
+.lmb-top-separator,
+.lmb-bottom-separator {
+	pointer-events: none;
+	position: absolute !important;
+	top: -1px;
+	left: -1px;
+	right: -1px;
+	bottom: -1px;
+	overflow: hidden;
+	margin: 0;
+	.lmb-separator-wrapper {
+		position: absolute;
+		top: auto;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 200px;
+		margin: 0;
+	}
+	.lmb-separator__layer-1,
+	.lmb-separator__shadow {
+		position: absolute;
+		fill: #fff;
+		height: 100%;
+		width: 100%;
+		z-index: 4;
+	}
+	svg {
+		left: 0;
+		right: 0;
+	}
+	.lmb-separator__shadow {
+		z-index: 3;
+	}
+}
+.lmb-top-separator {
+	transform: scaleY(-1);
+}
+.lmb-bottom-separator {
+	.lmb-separator-wrapper {
+		top: auto;
+		bottom: 0;
+	}
+	.lmb-separator__layer-1,
+	.lmb-separator__shadow {
+		transform: none;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.lmb-top-separator,
+	.lmb-bottom-separator {
+		.lmb-separator-wrapper {
+			height: 23vw;
+		}
+	}
+	.lmb-main-block {
+		// Add some default paddings if we have a separator.
+		&.lmb--has-top-separator {
+			padding-top: 23vw !important;
+		}
+		&.lmb--has-bottom-separator {
+			padding-bottom: 23vw !important;
+		}
+	}
+}

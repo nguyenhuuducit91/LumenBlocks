@@ -1,0 +1,39 @@
+.lmn-block-icon-label {
+	// used by iconGap2
+	.lmn-inner-blocks {
+		gap: 28px;
+	}
+
+	// Remove margins and make sure the icon and text are both centered.
+	:is(.lmn-block-icon, .lmn-block-heading) {
+		--lmn-block-margin-bottom: 0;
+		display: flex;
+		align-items: center;
+	}
+	// Remove default text margins.
+	.lmn-block-heading__text {
+		width: 100%;
+		margin-block: 0;
+		text-align: start;
+	}
+	// Don't allow the icon and text to stack.
+	.lmn-row {
+		flex-wrap: nowrap;
+	}
+	// Inherit the width of the container
+	.wp-block-lumen-heading.lmn-block-heading,
+	.lmn-block-heading {
+		width: inherit;
+	}
+}
+
+// Deprecated styles: we changed how icon gap works. Before it was flex basis, now it's a gap
+.lmn-block-icon-label.lmn-block-icon-label--use-flex-basis {
+	// Default width of the icon width.
+	.lmn-block-icon {
+		flex: 0 0 64px;
+	}
+	.lmn-inner-blocks {
+		gap: 0;
+	}
+}

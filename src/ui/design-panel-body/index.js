@@ -1,0 +1,50 @@
+/**
+ * A Panel for selecting designs
+ */
+
+/**
+ * External dependencies
+ */
+import { DesignControl, PanelAdvancedSettings } from '~lumen/ui'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import classnames from 'classnames'
+import { i18n } from 'lumen'
+import { omit } from 'lodash'
+
+function DesignPanelBody( props ) {
+	const {
+		options,
+		selected,
+		title = __( 'Layout', i18n ),
+		selectedOptionInTitle = true,
+		help = '',
+		className = '',
+		initialOpen = true,
+	} = props
+	const selectedOption = options ? options.find( opt => opt.value === selected ) : null
+	const panelTitle = selectedOption ? `${ title } – ${ selectedOption.label }` : title
+	const mainClasses = classnames( [ 'lmb-design-panel-body', className ] )
+
+	return (
+		<PanelAdvancedSettings
+			title={ selectedOptionInTitle ? <span>{ panelTitle }</span> : title }
+			className={ mainClasses }
+			initialOpen={ initialOpen }
+			{ ...omit( props, [ 'help', 'onChange' ] ) }
+		>
+			{ help &&
+				<p className="components-base-control__help">{ help }</p>
+			}
+			{ options &&
+				<DesignControl { ...omit( props, [ 'help', 'title', 'children' ] ) } />
+			}
+			{ props.children }
+		</PanelAdvancedSettings>
+	)
+}
+
+export default DesignPanelBody

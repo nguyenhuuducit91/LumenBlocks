@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Box (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-image-box__box": Object {
+    "borderRadius": undefined,
+  },
+  ".lmb-image-box__description": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-image-box__image": Object {
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+  },
+  ".lmb-image-box__item": Object {
+    "height": undefined,
+    "justifyContent": undefined,
+  },
+  ".lmb-image-box__item1 .lmb-image-box__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".lmb-image-box__item2 .lmb-image-box__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".lmb-image-box__item3 .lmb-image-box__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".lmb-image-box__item4 .lmb-image-box__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".lmb-image-box__subtitle": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-image-box__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-image-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-image-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-image-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-image-box__description": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-image-box__item": Object {
+      "height": undefined,
+      "justifyContent": undefined,
+    },
+    ".lmb-image-box__subtitle": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-image-box__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-image-box__description": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-image-box__item": Object {
+      "justifyContent": undefined,
+    },
+    ".lmb-image-box__subtitle": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-image-box__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-image-box__description": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-image-box__item": Object {
+      "height": undefined,
+    },
+    ".lmb-image-box__subtitle": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-image-box__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Image Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-image-box__arrow": Object {
+    "marginBottom": "123px !important",
+    "textAlign": "arrowAlign !important",
+  },
+  ".lmb-image-box__arrow svg": Object {
+    "fill": "#123456 !important",
+  },
+  ".lmb-image-box__box": Object {
+    "borderRadius": "123px !important",
+  },
+  ".lmb-image-box__image": Object {
+    "backgroundPosition": "imageBackgroundPosition !important",
+    "backgroundRepeat": "imageBackgroundRepeat !important",
+    "backgroundSize": "imageBackgroundSize !important",
+  },
+  ".lmb-image-box__item": Object {
+    "borderBottomWidth": "123px !important",
+    "borderColor": "#123456 !important",
+    "borderLeftWidth": "123px !important",
+    "borderRightWidth": "123px !important",
+    "borderStyle": "columnBorderType !important",
+    "borderTopWidth": "123px !important",
+    "height": undefined,
+    "justifyContent": undefined,
+  },
+  ".lmb-image-box__item1 .lmb-image-box__image": Object {
+    "backgroundImage": "url(image1Url)",
+  },
+  ".lmb-image-box__item2 .lmb-image-box__image": Object {
+    "backgroundImage": "url(image2Url)",
+  },
+  ".lmb-image-box__item3 .lmb-image-box__image": Object {
+    "backgroundImage": "url(image3Url)",
+  },
+  ".lmb-image-box__item4 .lmb-image-box__image": Object {
+    "backgroundImage": "url(image4Url)",
+  },
+  ".lmb-image-box__item:not(:hover) .lmb-image-box__overlay": Object {
+    "opacity": "0 !important",
+  },
+  ".lmb-image-box__overlay": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "overlayBackgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "backgroundPosition": "overlayBackgroundPosition",
+    "backgroundRepeat": "overlayBackgroundRepeat",
+    "backgroundSize": "overlayBackgroundSize",
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  "desktopOnly": Object {
+    ".lmb-image-box__arrow svg": Object {
+      "width": "123px !important",
+    },
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-image-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-image-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-image-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-image-box__arrow": Object {
+      "marginBottom": "123px !important",
+      "textAlign": "arrowMobileAlign !important",
+    },
+    ".lmb-image-box__arrow svg": Object {
+      "width": "123px !important",
+    },
+    ".lmb-image-box__item": Object {
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+      "height": undefined,
+      "justifyContent": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-image-box__item": Object {
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+      "justifyContent": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-image-box__arrow": Object {
+      "marginBottom": "123px !important",
+      "textAlign": "arrowTabletAlign !important",
+    },
+    ".lmb-image-box__arrow svg": Object {
+      "width": "123px !important",
+    },
+    ".lmb-image-box__item": Object {
+      "height": undefined,
+    },
+  },
+}
+`;

@@ -1,0 +1,42 @@
+@import "common";
+
+.lmb-column {
+	.lmb-column__item {
+		> *:first-child {
+			margin-top: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	&.lmb-main-block {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	// Columns need to occupy all the available height provided by the columns
+	// block.
+	&,
+	> .lmb-inner-block,
+	> .lmb-inner-block > .lmb-block-content,
+	.lmb-column__item {
+		height: 100%;
+	}
+
+	// Make vertical alignment work.
+	.lmb-column__item {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+// The default style is centered, but stretched columns should default to flex-start.
+.lmb-columns .lmb-column {
+	align-items: flex-start;
+}
+
+// Boxed style. Don't affect other nested columns.
+.lmb-column.lmb-column--design-basic > .lmb-inner-block > .lmb-block-content > .lmb-column__item {
+	@include boxNoPadding();
+	padding: $box-hori-padding;
+}

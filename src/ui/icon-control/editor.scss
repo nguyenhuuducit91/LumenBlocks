@@ -1,0 +1,19 @@
+.lmb-icon-control {
+	.lmb-icon-control__icon-button {
+		height: auto;
+		padding: 8px;
+		margin-right: auto;
+		svg {
+			width: 30px;
+			height: 30px;
+		}
+	}
+	.lmb-icon-control__wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.lmn-inspector-control__reset-button {
+		bottom: 10px !important;
+	}
+}

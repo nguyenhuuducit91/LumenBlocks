@@ -1,0 +1,33 @@
+@import "common";
+
+.lmn-block.lmn-block-column .lmn-column-wrapper {
+	width: 100%;
+}
+.lmn-block-column__content {
+	box-sizing: border-box;
+}
+.lmn-column-wrapper > .lmn-inner-blocks {
+	margin-bottom: 0;
+}
+
+// Align the last block to the bottom.
+.lmn-block .lmn--align-last-block-to-bottom {
+	height: 100%;
+	> *:last-child {
+		margin-top: auto;
+	}
+}
+
+// FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
+// // we need this to make position sticky to work inside columns.
+// .lmn-block.lmn-block-column--v2 > * > .lmn-inner-blocks {
+// 	// This is needed for the Container Content Vertical Align to work.
+// 	min-height: 100%;
+// }
+
+// Allow columns to shrink below their content size (If you add a horizontal
+// scroller block inside a column, the horizontal scroller will be too wide.)
+// @see https://dfmcphee.com/flex-items-and-min-width-0/
+.lmn-block:is(.lmn-block-column--v3, [data-v]) > .lmn-column-wrapper {
+	min-width: 0;
+}

@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Box (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-image-box lmb-image-box--v4 lmb-image-box--columns-3 lmb-image-box--design-basic lmb-main-block"
+>
+  <style>
+    .lmb-image-box__item:hover .lmb-image-box__overlay-hover{opacity:0.7 !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-image-box__item lmb-image-box__item1 lmb-image-box__box"
+      >
+        
+        <div
+          class="lmb-image-box__box lmb-image-box__overlay-hover"
+        />
+        <div
+          class="lmb-image-box__content"
+        >
+          <div
+            class="lmb-image-box__header"
+          >
+            <div
+              class="lmb-image-box__subtitle"
+            >
+              <div>
+                Subtitle
+              </div>
+            </div>
+            <h4
+              class="lmb-image-box__title"
+            >
+              <div>
+                Title
+              </div>
+            </h4>
+          </div>
+          <p
+            class="lmb-image-box__description"
+          >
+            <div>
+              Description
+            </div>
+          </p>
+        </div>
+        
+      </div>
+      <div
+        class="lmb-image-box__item lmb-image-box__item2 lmb-image-box__box"
+      >
+        
+        <div
+          class="lmb-image-box__box lmb-image-box__overlay-hover"
+        />
+        <div
+          class="lmb-image-box__content"
+        >
+          <div
+            class="lmb-image-box__header"
+          >
+            <div
+              class="lmb-image-box__subtitle"
+            >
+              <div>
+                Subtitle
+              </div>
+            </div>
+            <h4
+              class="lmb-image-box__title"
+            >
+              <div>
+                Title
+              </div>
+            </h4>
+          </div>
+          <p
+            class="lmb-image-box__description"
+          >
+            <div>
+              Description
+            </div>
+          </p>
+        </div>
+        
+      </div>
+      <div
+        class="lmb-image-box__item lmb-image-box__item3 lmb-image-box__box"
+      >
+        
+        <div
+          class="lmb-image-box__box lmb-image-box__overlay-hover"
+        />
+        <div
+          class="lmb-image-box__content"
+        >
+          <div
+            class="lmb-image-box__header"
+          >
+            <div
+              class="lmb-image-box__subtitle"
+            >
+              <div>
+                Subtitle
+              </div>
+            </div>
+            <h4
+              class="lmb-image-box__title"
+            >
+              <div>
+                Title
+              </div>
+            </h4>
+          </div>
+          <p
+            class="lmb-image-box__description"
+          >
+            <div>
+              Description
+            </div>
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Image Box (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-image-box lmb-image-box--v4 lmb-image-box--columns-3 lmb-image-box--design-wave-2 lmb-image-box--effect-imageHoverEffect lmb-image-box--with-arrow lmb-main-block"
+>
+  <style>
+    .lmb-image-box__box{border-radius:123px !important}.lmb-image-box__item{border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important}.lmb-image-box__item1 .lmb-image-box__image{background-image:url(image1Url)}.lmb-image-box__item2 .lmb-image-box__image{background-image:url(image2Url)}.lmb-image-box__item3 .lmb-image-box__image{background-image:url(image3Url)}.lmb-image-box__item4 .lmb-image-box__image{background-image:url(image4Url)}.lmb-image-box__image{background-position:imageBackgroundPosition !important;background-repeat:imageBackgroundRepeat !important;background-size:imageBackgroundSize !important}.lmb-image-box__overlay{background-color:#123456 !important;background-attachment:fixed;background-position:overlayBackgroundPosition;background-repeat:overlayBackgroundRepeat;background-size:overlayBackgroundSize;background-blend-mode:overlayBackgroundImageBlendMode;opacity:12.3}.lmb-image-box__item:not(:hover) .lmb-image-box__overlay{opacity:0 !important}.lmb-image-box__arrow svg{fill:#123456 !important}.lmb-image-box__arrow{text-align:arrowAlign !important;margin-bottom:123px !important}@media screen and (min-width:1025px){.lmb-image-box__arrow svg{width:123px !important}}@media screen and (max-width:1025px){.lmb-image-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important}}@media screen and (min-width:768px) and (max-width:1025px){.lmb-image-box__arrow svg{width:123px !important}.lmb-image-box__arrow{text-align:arrowTabletAlign !important;margin-bottom:123px !important}}@media screen and (max-width:768px){.lmb-image-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important}.lmb-image-box__arrow svg{width:123px !important}.lmb-image-box__arrow{text-align:arrowMobileAlign !important;margin-bottom:123px !important}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-image-box__item lmb-image-box__item1 lmb-image-box__box lmb--shadow-123"
+      >
+        <div
+          class="lmb-image-box__box lmb-image-box__image-wrapper"
+        >
+          <div
+            class="lmb-image-box__box lmb-image-box__image"
+          />
+        </div>
+        <div
+          class="lmb-image-box__box lmb-image-box__overlay"
+        />
+        <div
+          class="lmb-image-box__content"
+        />
+        <div
+          class="lmb-image-box__arrow"
+        >
+          <svg />
+        </div>
+        <a
+          aria-label=""
+          class="lmb-image-box__overlay-link"
+          href="link1Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        />
+      </div>
+      <div
+        class="lmb-image-box__item lmb-image-box__item2 lmb-image-box__box lmb--shadow-123"
+      >
+        <div
+          class="lmb-image-box__box lmb-image-box__image-wrapper"
+        >
+          <div
+            class="lmb-image-box__box lmb-image-box__image"
+          />
+        </div>
+        <div
+          class="lmb-image-box__box lmb-image-box__overlay"
+        />
+        <div
+          class="lmb-image-box__content"
+        />
+        <div
+          class="lmb-image-box__arrow"
+        >
+          <svg />
+        </div>
+        <a
+          aria-label=""
+          class="lmb-image-box__overlay-link"
+          href="link2Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        />
+      </div>
+      <div
+        class="lmb-image-box__item lmb-image-box__item3 lmb-image-box__box lmb--shadow-123"
+      >
+        <div
+          class="lmb-image-box__box lmb-image-box__image-wrapper"
+        >
+          <div
+            class="lmb-image-box__box lmb-image-box__image"
+          />
+        </div>
+        <div
+          class="lmb-image-box__box lmb-image-box__overlay"
+        />
+        <div
+          class="lmb-image-box__content"
+        />
+        <div
+          class="lmb-image-box__arrow"
+        >
+          <svg />
+        </div>
+        <a
+          aria-label=""
+          class="lmb-image-box__overlay-link"
+          href="link3Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

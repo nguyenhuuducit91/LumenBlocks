@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Count Up (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-countup__counter": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-countup__description": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-countup__icon, .lmb-countup__counter, .lmb-countup__title, .lmb-countup__description": Object {
+    "textAlign": undefined,
+  },
+  ".lmb-countup__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-countup__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-countup__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-countup__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-countup__counter": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-countup__description": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-countup__icon, .lmb-countup__counter, .lmb-countup__title, .lmb-countup__description": Object {
+      "textAlign": undefined,
+    },
+    ".lmb-countup__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-countup__counter": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-countup__description": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-countup__icon, .lmb-countup__counter, .lmb-countup__title, .lmb-countup__description": Object {
+      "textAlign": undefined,
+    },
+    ".lmb-countup__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-countup__counter": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-countup__description": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-countup__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Count Up (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-countup__icon": Object {
+    "marginBottom": "123px !important",
+    "marginLeft": "auto !important",
+    "marginRight": "auto !important",
+    "opacity": "123 !important",
+  },
+  ".lmb-countup__icon .lmb-icon-inner-svg": Object {
+    "color": "#123456 !important",
+    "transform": "rotate(123deg) !important",
+  },
+  ".lmb-countup__icon .lmb-icon-inner-svg, .lmb-countup__icon .lmb-icon-inner-svg svg": Object {
+    "height": "123px !important",
+    "width": "123px !important",
+  },
+  ".lmb-countup__icon svg:not(.lmb-custom-icon)": Object {
+    "color": "#123456",
+  },
+  ".lmb-countup__icon, .lmb-countup__counter, .lmb-countup__title, .lmb-countup__description": Object {
+    "textAlign": undefined,
+  },
+  "editor": Object {
+    ".lmb-countup__icon .lmb-icon-inner-svg, .lmb-countup__icon .lmb-icon-inner-svg svg path, .lmb-countup__icon .lmb-icon-inner-svg svg g, .lmb-countup__icon .lmb-icon-inner-svg svg shape, .lmb-countup__icon .lmb-icon-inner-svg svg circle, .lmb-countup__icon .lmb-icon-inner-svg svg path, .lmb-countup__icon .lmb-icon-inner-svg svg rect, .lmb-countup__icon .lmb-icon-inner-svg svg polygon, .lmb-countup__icon .lmb-icon-inner-svg svg ellipse": Object {
+      "color": "#123456 !important",
+      "fill": "#123456 !important",
+    },
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-countup__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-countup__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-countup__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-countup__icon": Object {
+      "marginBottom": "123px !important",
+      "marginLeft": "auto !important",
+      "marginRight": "auto !important",
+    },
+    ".lmb-countup__icon .lmb-icon-inner-svg, .lmb-countup__icon .lmb-icon-inner-svg svg": Object {
+      "height": "123px !important",
+      "width": "123px !important",
+    },
+    ".lmb-countup__icon, .lmb-countup__counter, .lmb-countup__title, .lmb-countup__description": Object {
+      "textAlign": undefined,
+    },
+  },
+  "saveOnly": Object {
+    ".lmb-countup__icon .lmb-icon-inner-svg, .lmb-countup__icon .lmb-icon-inner-svg svg *": Object {
+      "color": "#123456 !important",
+      "fill": "#123456 !important",
+    },
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-countup__icon": Object {
+      "marginLeft": "auto !important",
+      "marginRight": "auto !important",
+    },
+    ".lmb-countup__icon, .lmb-countup__counter, .lmb-countup__title, .lmb-countup__description": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-countup__icon": Object {
+      "marginBottom": "123px !important",
+    },
+    ".lmb-countup__icon .lmb-icon-inner-svg, .lmb-countup__icon .lmb-icon-inner-svg svg": Object {
+      "height": "123px !important",
+      "width": "123px !important",
+    },
+  },
+}
+`;

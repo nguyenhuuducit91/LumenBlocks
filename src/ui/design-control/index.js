@@ -1,0 +1,69 @@
+/**
+ * A Control for selecting designs.
+ */
+/**
+ * External dependencies
+ */
+import { DesignPanelItem } from '~lumen/ui'
+import { omit } from 'lodash'
+import classnames from 'classnames'
+import { isPro } from 'lumen'
+import LabelTooltip from '../base-control2/label-tooltip'
+
+/**
+ * WordPress dependencies
+ */
+import { RadioControl } from '@wordpress/components'
+
+const DesignControl = props => {
+	// Convert the options.
+	const _options = props.options.filter( option => option.premium ? isPro : true )
+	const fixedOptions = _options.map( option => {
+		return {
+			...option,
+			label: (
+				<DesignPanelItem
+					imageFile={ option.image }
+					imageHoverFile={ option.hoverImage }
+					imageWidth={ option.imageWidth }
+					imageHeight={ option.imageHeight }
+					isPro={ option.isPro }
+					label={ option.label }
+					isActive={ option.value === props.selected }
+				/>
+			),
+			title: option.label,
+			value: option.value,
+		}
+	} )
+
+	const mainClasses = classnames( [
+		props.className,
+		'lmb-design-control-wrapper',
+		'components-base-control',
+		`lmb-design-control--columns-${ props.columns }`,
+	] )
+
+	return (
+		<div className={ mainClasses }>
+			{ props.label && <LabelTooltip label={ props.label } { ...props.helpTooltip } /> }
+			<RadioControl
+				{ ...omit( props, [ 'label' ] ) }
+				className="lmb-design-control"
+				selected={ props.selected }
+				options={ fixedOptions }
+				onChange={ props.onChange }
+			/>
+		</div>
+	)
+}
+
+DesignControl.defaultProps = {
+	className: '',
+	columns: 2,
+	selected: '',
+	options: [],
+	onChange: () => {},
+}
+
+export default DesignControl

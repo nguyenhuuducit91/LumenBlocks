@@ -1,0 +1,56 @@
+@import "breakpoints";
+@import "cssvars";
+
+// Button alignment.
+.lmn-block .lmn-button-group {
+	&:not(.lmn-collapse-on-desktop) {
+		justify-content: var(--lmn-alignment-justify-content);
+	}
+	&:is(.lmn--collapse-on-desktop) {
+		.lmn-block:is(.lmn-block-button, .lmn-block-icon-button) {
+			margin-inline-start: var(--lmn-alignment-margin-left);
+			margin-inline-end: var(--lmn-alignment-margin-right);
+		}
+	}
+}
+
+@include tablet {
+	.lmn-button-group:is(.lmn--collapse-on-tablet) {
+		.lmn-block:is(.lmn-block-button, .lmn-block-icon-button) {
+			margin-inline-start: var(--lmn-alignment-margin-left);
+			margin-inline-end: var(--lmn-alignment-margin-right);
+		}
+	}
+}
+
+@include mobile {
+	.lmn-button-group:is(.lmn--collapse-on-tablet),
+	.lmn-button-group:is(.lmn--collapse-on-mobile) {
+		.lmn-block:is(.lmn-block-button, .lmn-block-icon-button) {
+			margin-inline-start: var(--lmn-alignment-margin-left);
+			margin-inline-end: var(--lmn-alignment-margin-right);
+		}
+	}
+}
+
+// Block spacing when horizontally oriented. This has been replaced by .lmn--block-horizontal-flex.
+// We still need to keep this just in case someone is using the old block in the frontend.
+.lmn--block-orientation-horizontal > * + * {
+	margin-left: cssvar(block-margin-bottom);
+}
+
+.lmn--block-orientation-horizontal .lmn-block {
+	width: auto;
+}
+.lmn-inner-blocks {
+	&:not(.lmn-row) {
+		// Inner block orientation.
+		&.lmn--block-orientation-horizontal {
+			flex-direction: row;
+			> * {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,63 @@
+@import "common";
+@import "./deprecated-style";
+
+// Older Feature Grid saves put the desktop wrap marker on the block wrapper.
+.lmn--flex:not(.lmn--column-wrap-desktop):not(.lmn-block-feature-grid.lmn--column-wrap-desktop > .lmn-block-content) > .lmn-block-column {
+	width: fit-content;
+	flex: 0 1 auto !important;
+	min-width: 24px;
+	max-width: none;
+}
+
+.lmn-block-columns > .lmn-block-content {
+	--lmn-column-gap: 0px; // For nested columns, this takes precedence.
+	column-gap: var(--lmn-column-gap);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+// DEV NOTE: Let's not add this theme.json inheritance since it destroys the normal behavior of our blocks.
+// These are styles added from the block style inheritance.
+// :where(.lmn-has-block-style-inheritance) {
+// 	.lmn-block-columns > .lmn-block-content {
+// 		--lmn-column-gap: var(--lmn-columns-column-gap, 0px); // For nested columns, this takes precedence.
+// 	}
+// }
+
+// These are styles added from the global spacing and borders.
+:where(.lmn-has-design-system-spacing-and-borders) {
+	.lmn-block-columns > .lmn-block-content {
+		--lmn-column-gap: var(--lmn-columns-column-gap, 0px); // For nested columns, this takes precedence.
+		row-gap: var(--lmn-columns-row-gap, 0px);
+	}
+}
+
+// Add a 0 specificity style to set the default column order. This is to prevent
+// the column order from spilling to nested blocks.
+// Target the lmn-column-wrapper to also include blocks with column innerblocks
+// but are not columns (no lmn-block-columns), like accordion and horizontal scroller.
+:where(.lmn-block-columns) {
+	@for $i from 1 through 40 {
+		--lmn-col-order-#{ $i }: #{ $i };
+	}
+}
+
+// Column order.
+@for $i from 1 through 40 {
+	.lmn-block-column:nth-child(#{ $i }) {
+		order: var(--lmn-col-order-#{ $i }, initial);
+	}
+}
+
+// Make sure that columns are of the correct width even if there's paddings on the column.
+// Default percentages to make columns even because flexbox makes columns with paddings weird.
+// The problem with flexbox and paddings is better explained here: https://css-tricks.com/equal-columns-with-flexbox-its-more-complicated-than-you-might-think/
+@include desktop-tablet {
+	@for $columns from 2 through 6 {
+		@for $index from 1 through $columns {
+			:where(body:not(.wp-admin) .lmn-block-column:nth-child(#{ $index }):nth-last-child(#{ $columns - ($index - 1) })) {
+				flex: 1 1 calc(( 100% / #{ $columns } ) - var(--lmn-column-gap, 0px) * #{ $columns - 1 } / #{ $columns }) !important;
+			}
+		}
+	}
+}

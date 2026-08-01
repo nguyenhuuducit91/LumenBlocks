@@ -1,0 +1,177 @@
+// Inspector tab strip (Layout / Style / Advanced).
+//
+// The tab strip is sticky directly under the editor toolbar, and the panel
+// titles below stick under the tab strip. Both offsets derive from the same
+// numbers so the two never overlap.
+$lmn-editor-toolbar-height: 47px;
+$lmn-tab-height: 40px;
+$lmn-tab-border-width: 1px;
+$lmn-tab-indicator-height: 2px;
+$lmn-panel-title-offset: $lmn-editor-toolbar-height + $lmn-tab-height + $lmn-tab-border-width;
+
+.lmb-panel-tabs {
+	--lmn-brand-accent: #f59e0b;
+	--lmn-brand-accent-strong: #d97706;
+
+	position: sticky;
+	top: $lmn-editor-toolbar-height;
+	z-index: 5;
+
+	.lmb-panel-tabs__wrapper {
+		display: flex !important;
+		flex-wrap: nowrap;
+		&,
+		> button {
+			transition: background-color 0.12s cubic-bezier(0.2, 0.6, 0.4, 1), color 0.12s cubic-bezier(0.2, 0.6, 0.4, 1);
+			background: #fff;
+			box-shadow: none;
+			border: 0;
+		}
+	}
+
+	button {
+		position: relative;
+		outline: none !important;
+		display: flex;
+		// Icon and label sit on one line so the strip stays compact.
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		height: $lmn-tab-height;
+		padding: 0 4px !important;
+		flex: 1;
+		min-width: 0;
+		margin: 0 !important;
+		cursor: pointer;
+		color: #50575e;
+		border: 0 !important;
+		gap: 6px;
+		font-size: 12px;
+		line-height: 1;
+		font-weight: 500;
+		// Long translations must not wrap and grow the strip back.
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		.dashicon,
+		svg {
+			flex: none;
+			width: 16px;
+			height: 16px;
+		}
+		.dashicon::before {
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+		}
+
+		// Active tab: a brand-coloured underline instead of a full outline box,
+		// which reads more clearly at this size.
+		&::after {
+			content: "";
+			position: absolute;
+			inset: auto 0 0 0;
+			height: $lmn-tab-indicator-height;
+			background: var(--lmn-brand-accent);
+			transform: scaleX(0);
+			transition: transform 0.12s cubic-bezier(0.2, 0.6, 0.4, 1);
+		}
+		&.is-active {
+			border-bottom: 0;
+			color: #1e1e1e;
+			font-weight: 600;
+			&::after {
+				transform: scaleX(1);
+			}
+			.dashicon,
+			svg {
+				color: var(--lmn-brand-accent-strong);
+				fill: currentColor;
+			}
+		}
+
+		&:hover {
+			background: #f2f2f2;
+			color: #1e1e1e;
+		}
+		// Keep a strong, visible keyboard focus ring.
+		&:focus-visible {
+			box-shadow: inset 0 0 0 1.5px var(--wp-admin-theme-color, #007cba);
+		}
+	}
+
+	// Below ~230px of sidebar the labels are unreadable anyway; show icons only
+	// and expose the name through the existing aria-label/title.
+	@media (max-width: 782px) {
+		button {
+			gap: 0;
+			font-size: 0;
+			.dashicon,
+			svg {
+				width: 18px;
+				height: 18px;
+			}
+			.dashicon::before {
+				font-size: 18px;
+			}
+		}
+	}
+}
+
+// Panels can become hard to decipher, separate them a bit to make things easier to see.
+.lmb-panel-tabs {
+	border-bottom: $lmn-tab-border-width solid #e2e4e7 !important;
+}
+
+// Fixes the small gap at the bottom of the panel tabs
+// when other panels further below are hidden.
+[data-lmb-tab] > * {
+	padding-bottom: 0 !important;
+}
+
+.lmb-toggle-panel-body {
+	.components-panel__body-title {
+		&:not(:hover) {
+			background: #fff;
+		}
+		// If the first control is a toggle, it will display higher and will
+		// not look nice. Make it lower a bit.
+		+ .components-toggle-control {
+			margin-top: 24px !important;
+		}
+	}
+	&.is-opened .components-panel__body-title {
+		margin-bottom: 12px !important;
+		border-bottom: 1px solid #e1e1e1;
+		// Sticky, directly under the tab strip.
+		position: sticky;
+		top: $lmn-panel-title-offset;
+		z-index: 4;
+	}
+	background: #fafafa;
+	// Our tabs already have a bottom border. This will thicken it.
+	&:first-child {
+		border-top: 0 !important;
+	}
+	// The last panel will remove the border top of the native Advanced tab.
+	&:last-child {
+		margin-bottom: 1px;
+	}
+}
+
+$tabs: "block", "layout", "style", "advanced";
+@each $tab in $tabs {
+	[data-lmb-tab="#{ $tab }"] {
+		// Hide panels which are not specified for thi
+		.lmb-inspector-panel-controls:not(.lmb-panel-#{ $tab }) {
+			display: none;
+		}
+		@if $tab != "advanced" {
+			// Advanced Gutenberg tab is always in advanced, hide it.
+			.block-editor-block-inspector__advanced {
+				display: none;
+			}
+		}
+	}
+}

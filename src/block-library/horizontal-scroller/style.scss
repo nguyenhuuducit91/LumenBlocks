@@ -1,0 +1,62 @@
+.lmn-block-horizontal-scroller:not(.editor) {
+	overflow: hidden;
+	> .lmn-block-content {
+		cursor: grab;
+		--lmn-column-gap: 0px; // For nested columns, this takes precedence.
+		display: grid;
+		overflow-x: auto;
+		overscroll-behavior-inline: contain;
+		grid-auto-flow: column;
+		grid-auto-columns: var(--lmn-column-width, 300px);
+		gap: var(--lmn-column-gap);
+		height: var(--lmn-column-height);
+		padding-inline-start: var(--lmn-left-offset, 0px);
+		overflow-x: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+		box-sizing: border-box;
+		> .lmn-block-column {
+			scroll-snap-align: var(--lmn-snapping, center);
+			width: 100% !important;
+		}
+		&.lmn--with-scrollbar {
+			scrollbar-color: var(--lmn-scrollbar-thumb-color, #d3d3d3) var(--lmn-scrollbar-track-color, #eee); // For Firefox
+			scrollbar-width: var(--lmn-scrollbar-height-firefox, auto); // For Firefox
+			&::-webkit-scrollbar {
+				height: var(--lmn-scrollbar-height, 10px);
+			}
+			&::-webkit-scrollbar-track {
+				background: var(--lmn-scrollbar-track-color, #eee);
+				border-radius: var(--lmn-scrollbar-thumb-radius, 0px);
+			}
+			&::-webkit-scrollbar-thumb {
+				background: var(--lmn-scrollbar-thumb-color, #d3d3d3);
+				border-radius: var(--lmn-scrollbar-thumb-radius, 0px);
+			}
+		}
+		&:not(.lmn--with-scrollbar) {
+			scrollbar-width: none; // For Firefox
+			&::-webkit-scrollbar {
+				height: 0 !important;
+			}
+		}
+		&:not(.lmn--snapping-deactivated) {
+			scroll-behavior: smooth;
+			scroll-snap-type: inline mandatory;
+		}
+
+		// Disallow selection of content, this messes up dragging.
+		&.lmn--snapping-deactivated {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+	}
+}
+
+// Support for SiteGround lazy loaded images: they make the horizontal scroller taller.
+.lmn-block-horizontal-scroller .lmn-img-horizontal-scroller.lazyload[src*="data:"] {
+	height: 1px !important;
+}

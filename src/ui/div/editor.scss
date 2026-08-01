@@ -1,0 +1,18 @@
+// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
+// .editor-styles-wrapper .lmn--has-background-overlay {
+// 	&.lmn--has-background-overlay {
+// 		&::before,
+// 		> .lmn-video-background {
+// 			pointer-events: none;
+// 		}
+// 	}
+// }
+//
+// Sometimes, the position style doesn't get applied inside editor
+.editor-styles-wrapper .lmn-block.lmn--has-background-overlay {
+	position: relative;
+}
+
+.lmn-video-background {
+	pointer-events: none;
+}

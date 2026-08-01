@@ -1,0 +1,18 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/tabs",
+	"title": "Tabs",
+	"description": "Organize and display content in multiple tabs.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"toggle"
+	],
+	"providesContext": {
+		"lumen/initialTabOpen": "initialTabOpen",
+		"lumen/tabOrientation": "tabOrientation",
+		"lumen/tabPanelEffect": "tabPanelEffect",
+		"lumen/equalTabHeight": "equalTabHeight"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

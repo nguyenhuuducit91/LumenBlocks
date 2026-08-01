@@ -1,0 +1,16 @@
+@import "common";
+
+.lmn-block-card__image {
+	height: 300px;
+	width: 100%;
+	background-size: cover;
+
+	+ .lmn-block-card__content:not(.lmn-container-padding) {
+		padding-top: cssvar(block-margin-bottom);
+	}
+}
+
+.lmn-block-card__content {
+	display: flex;
+	flex-direction: column;
+}

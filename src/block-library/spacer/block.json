@@ -1,0 +1,10 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/spacer",
+	"title": "Spacer",
+	"description": "Sometimes you just need some space.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"
+}

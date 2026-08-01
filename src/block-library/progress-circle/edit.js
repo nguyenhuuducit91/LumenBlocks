@@ -1,0 +1,180 @@
+/**
+ * Internal dependencies
+ */
+import blockStyles from './style'
+import { DEFAULT_PROGRESS } from './schema'
+
+/**
+ * External dependencies
+ */
+import {
+	InspectorTabs, useDynamicContent, useBlockCssGenerator,
+} from '~lumen/ui'
+import {
+	BlockDiv,
+	Alignment,
+	Advanced,
+	Responsive,
+	MarginBottom,
+	Transform,
+	EffectsAnimations,
+	CustomAttributes,
+	CustomCSS,
+	ConditionalDisplay,
+	ProgressBar,
+	Typography,
+	getTypographyClasses,
+	getAlignmentClasses,
+} from '~lumen/features'
+import { version as VERSION, i18n } from 'lumen'
+import {
+	withBlockAttributeContext, withBlockStyleContext,
+	withBlockWrapperIsHovered, withQueryLoopContext,
+} from '~lumen/hoc'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
+
+const Edit = props => {
+	const {
+		className,
+		attributes,
+	} = props
+
+	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const textClasses = getTypographyClasses( attributes )
+
+	const blockClassNames = classnames( [
+		className,
+		'lmn-block-progress-circle',
+	] )
+
+	const containerClassNames = classnames( [
+		'lmn-block-progress-circle__container',
+		blockAlignmentClass,
+	] )
+
+	const textClassNames = classnames( [
+		'lmn-progress-circle__inner-text',
+		textClasses,
+	] )
+
+	const progressValue = attributes.progressValue || ''
+
+	// this is to handle dynamic content; only show valid value
+	const parsedProgressValue = parseFloat( useDynamicContent( progressValue ).replace( /,/g, '' ) )
+	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
+	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
+
+	// generate custom identifier on the editor as uniqueId can be blank
+	// This happens when adding block with default block styling created.
+	// should use uniqueId upon saving
+	const color1 = attributes.progressColor1 || ''
+	const color2 = attributes.progressColor2 || ''
+	const direction = attributes.progressColorGradientDirection || ''
+	const customGradientId = ( color1 + color2 + direction ).replace( /[^0-9A-Z]+/gi, '' )
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
+	return (
+		<>
+			<InspectorControls blockState={ props.blockState } />
+
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				{ blockCss && <style key="block-css">{ blockCss }</style> }
+				<CustomCSS mainBlockClass="lmn-block-progress-circle" />
+				<div className={ containerClassNames }>
+					<div className="lmn-progress-circle lmn-animate">
+						<svg>
+							{ attributes.progressColorType === 'gradient' && (
+								<defs>
+									<linearGradient
+										id={ `gradient-${ customGradientId }` }
+										gradientTransform={ attributes.progressColorGradientDirection ? `rotate(${ attributes.progressColorGradientDirection })` : undefined }
+									>
+										<stop offset="0%" stopColor={ attributes.progressColor1 } />
+										<stop offset="100%" stopColor={ attributes.progressColor2 } />
+									</linearGradient>
+								</defs>
+							) }
+							<circle className="lmn-progress-circle__background"></circle>
+							<circle className="lmn-progress-circle__bar"></circle>
+						</svg>
+						{ attributes.showText && (
+							<div className="lmn-number">
+								<Typography
+									tagName="span"
+									className={ textClassNames }
+									value={ derivedValue }
+									editable={ false }
+								/>
+							</div>
+						) }
+					</div>
+				</div>
+				{ /* Add our progress style here because we're adjusting the value using a hook */ }
+				<style>
+					{ `.editor-styles-wrapper .lmn-${ props.attributes.uniqueId } .lmn-progress-circle { --progress-value:${ derivedProgressValue } }` }
+				</style>
+			</BlockDiv>
+			{ props.isHovered && <MarginBottom /> }
+		</>
+	)
+}
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+
+			<ProgressBar.InspectorControls isCircle />
+			<Typography.InspectorControls
+				{ ...props }
+				initialOpen={ false }
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasTextShadow
+				hasToggle
+				label={ __( 'Label', i18n ) }
+			/>
+
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="lmn-block-progress-circle" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+		</>
+	)
+} )
+
+export default compose(
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
+)( Edit )

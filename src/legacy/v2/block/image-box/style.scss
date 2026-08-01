@@ -1,0 +1,294 @@
+/**
+ * Frontend styles for the Image Box Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@use "sass:math";
+
+@import "common";
+
+.lmb-image-box.lmb-image-box--v4 {
+	text-align: center;
+	.lmb-block-content {
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+	}
+	.lmb-image-box__item {
+		position: relative;
+		height: 350px;
+		overflow: hidden;
+		@include box();
+		padding: $box-hori-padding;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.lmb-image-box__image,
+	.lmb-image-box__image-wrapper,
+	.lmb-image-box__overlay,
+	.lmb-image-box__overlay-hover,
+	.lmb-image-box__overlay-link {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	.lmb-image-box__image { // Push back a bit to prevent any white gaps.
+		top: -0.3px;
+		left: -0.3px;
+		right: -0.3px;
+		bottom: -0.3px;
+	}
+	.lmb-image-box__image-wrapper {
+		height: auto;
+		z-index: 1;
+		// Safari fix for flashing overlay outside border-radius.
+		-webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+		// Edge fix for flashing overlay outside border-radius.
+		transform: translateZ(0px);
+	}
+	.lmb-image-box__image {
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+		// Remove this since it's causing images to not show up in Chrome 100.
+		// will-change: filter, transform;
+	}
+	.lmb-image-box__overlay,
+	.lmb-image-box__overlay-hover {
+		pointer-events: none;
+		z-index: 2;
+		background-color: #000;
+		opacity: 0.7;
+	}
+	.lmb-image-box__overlay-hover {
+		z-index: 3;
+	}
+	.lmb-image-box__overlay-link {
+		z-index: 5;
+	}
+	.lmb-image-box__item:hover {
+		.lmb-image-box__overlay {
+			opacity: 0 !important;
+		}
+	}
+	.lmb-image-box__item:not(:hover) {
+		.lmb-image-box__overlay-hover {
+			opacity: 0 !important;
+		}
+	}
+	.lmb-image-box__content {
+		z-index: 4;
+		> *:first-child {
+			margin-top: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.lmb-image-box__subtitle,
+	.lmb-image-box__title,
+	.lmb-image-box__line,
+	.lmb-image-box__description {
+		color: #fff;
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.lmb-image-box__subtitle {
+		font-size: 0.8em;
+		margin-bottom: #{ math.div($text-margin-bottom, 3) };
+	}
+	.lmb-image-box__box {
+		border-radius: 12px;
+	}
+	.lmb-image-box__arrow {
+		pointer-events: none;
+		z-index: 4;
+		position: absolute;
+		bottom: $box-hori-padding;
+		left: $box-hori-padding;
+		right: $box-hori-padding;
+		svg {
+			display: inline-block;
+			fill: #fff;
+			width: 30px;
+		}
+	}
+
+	.lmb-image-box__content,
+	.lmb-image-box__header,
+	.lmb-image-box__image,
+	.lmb-image-box__image-wrapper,
+	.lmb-image-box__overlay,
+	.lmb-image-box__overlay-hover,
+	.lmb-image-box__overlay-link,
+	.lmb-image-box__subtitle,
+	.lmb-image-box__title,
+	.lmb-image-box__line,
+	.lmb-image-box__description,
+	.lmb-image-box__arrow {
+		transition: all 0.4s ease-in-out;
+	}
+}
+
+.lmb-image-box.lmb-image-box--v4 {
+	&.lmb-image-box--effect-zoom-in .lmb-image-box__item:hover {
+		.lmb-image-box__image {
+			transform: scale(1.1);
+		}
+	}
+	&.lmb-image-box--effect-zoom-out .lmb-image-box__item {
+		.lmb-image-box__image {
+			transform: scale(1.1);
+		}
+		&:hover {
+			.lmb-image-box__image {
+				transform: scale(1);
+			}
+		}
+	}
+}
+
+.lmb-image-box.lmb-image-box--v4.lmb-image-box--design-basic {
+	.lmb-image-box__description {
+		margin-bottom: 0;
+	}
+	&.lmb-image-box--with-arrow {
+		.lmb-image-box__item {
+			padding-bottom: #{ $box-hori-padding * 2};
+		}
+	}
+
+	.lmb-image-box__subtitle {
+		opacity: 0;
+	}
+	.lmb-image-box__description {
+		transform: translateY(-30px);
+		opacity: 0;
+	}
+	.lmb-image-box__arrow {
+		transform: translateY(30px);
+		opacity: 0;
+	}
+	.lmb-image-box__item:hover {
+		.lmb-image-box__subtitle,
+		.lmb-image-box__description,
+		.lmb-image-box__arrow {
+			transform: translateY(0px);
+			opacity: 1;
+		}
+	}
+}
+
+.lmb-image-box.lmb-image-box--v4.lmb-image-box--design-plain {
+	text-align: left;
+	.lmb-image-box__item {
+		justify-content: flex-end;
+	}
+	.lmb-image-box__arrow {
+		position: relative;
+		bottom: auto;
+		left: auto;
+		right: auto;
+	}
+
+	.lmb-image-box__content {
+		transform: translateY(30px);
+		margin-bottom: 10px;
+	}
+	.lmb-image-box__description {
+		transform: translateY(-30px);
+		opacity: 0;
+	}
+	.lmb-image-box__arrow {
+		transform: translateY(-60px);
+		opacity: 0;
+	}
+	.lmb-image-box__item:hover {
+		.lmb-image-box__content,
+		.lmb-image-box__description,
+		.lmb-image-box__arrow {
+			transform: translateY(0px);
+			opacity: 1;
+		}
+	}
+}
+
+.lmb-image-box.lmb-image-box--v4 {
+	@media screen and (min-width: $break-small) and (max-width: $break-large) {
+		&.lmb-image-box--columns-4 {
+			.lmb-block-content {
+				grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.lmb-image-box.lmb-image-box--v4 {
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
+// IE 11 grid styles
+.lmb-image-box.lmb-image-box--v4 {
+	&.lmb-image-box--columns-4 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-image-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-image-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+		.lmb-image-box__item:nth-child(4) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 7;
+		}
+	}
+	&.lmb-image-box--columns-3 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-image-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-image-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.lmb-image-box--columns-2 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-image-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.lmb-block-content {
+				display: block !important;
+			}
+			.lmb-image-box__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}

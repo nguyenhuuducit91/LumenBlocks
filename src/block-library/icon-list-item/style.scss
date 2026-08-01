@@ -1,0 +1,118 @@
+.lmn-block-icon-list-item {
+	list-style-type: none !important;
+}
+.lmn-block-icon-list.lmn-block {
+	.wp-block-lumen-icon-list-item:not(:last-child)::after {
+		content: "" !important;
+		display: block;
+		width: 100%;
+		position: absolute;
+		border-top: 0;
+		border-left: 0;
+		border-right: 0;
+		bottom: calc(var(--lmn-icon-list-row-gap, 0px) / -2) !important;
+		left: 0;
+		border-style: none;
+		border-width: 1px;
+		border-color: rgba(0, 0, 0, 0.4);
+	}
+
+	// Apply the color to the SVG path on the defintion
+	&:not(.lmn__use-custom-icon-color) svg:where(.lmb-custom-icon) :is(g,path,rect,polygon,ellipse) {
+		fill: var(--lmn-icon-list-marker-color) !important;
+		color: var(--lmn-icon-list-marker-color) !important;
+	}
+}
+
+.lmn-block-icon-list-item__content {
+	gap: var(--lmn-icon-list-icon-gap, 8px);
+}
+
+.lmn-block-icon-list .lmn-block-icon-list__ul .lmn-block-icon-list-item {
+	flex-direction: column;
+	// Need to make this fit the content so that we can align left/center/right
+	// the list alignment.
+	width: 100%;
+	margin-inline: 0 auto;
+
+	.lmn-block-icon-list-item__content {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		position: relative;
+		.lmn--svg-wrapper {
+			.lmn--inner-svg svg {
+				// In Global Buttons and Icons, we renamed `--lmn-icon-height` to `--lmn-icon-list-icon-size`.
+				// Keep the `--lmn-icon-height` for backward compatibility.
+				height: var(--lmn-icon-height, var(--lmn-icon-list-icon-size, 16px));
+				width: var(--lmn-icon-height, var(--lmn-icon-list-icon-size, 16px));
+				transform: rotate(var(--lmn-icon-list-icon-rotation, 0deg));
+				opacity: var(--lmn-icon-list-icon-opacity, 1);
+				position: relative;
+
+			}
+		}
+	}
+}
+
+.lmn-block-icon-list:not(.lmn__use-custom-icon-color) .lmn-block-icon-list__ul .lmn-block-icon-list-item .lmn-block-icon-list-item__content {
+	.lmn--inner-svg svg {
+		fill: var(--lmn-icon-list-marker-color);
+		color: var(--lmn-icon-list-marker-color);
+
+		:is(use,g,path,rect,polygon,ellipse) {
+			fill: var(--lmn-icon-list-marker-color);
+			color: var(--lmn-icon-list-marker-color);
+		}
+	}
+}
+
+.lmn-block-icon-list [data-type^="lumen/"] .lmn-block-icon-list-item .lmn--svg-wrapper svg {
+	cursor: copy;
+}
+
+.lmn-block-icon-list.lmn-block [data-block][data-type="lumen/icon-list-item"]:not(:focus):hover::after {
+	outline: none;
+}
+
+.lmn-block-icon-list .lmn-block-icon-list__ol li.lmn-block-icon-list-item {
+	width: 100%;
+	margin-inline: 0 auto;
+	counter-increment: lmn-icon-list-counter;
+
+	.lmn-block-icon-list-item__content {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		position: relative;
+
+		.lmn-block-icon-list-item__marker::before {
+			content: counter(lmn-icon-list-counter, var(--lmn-list-style-type, decimal)) ". ";
+			display: block;
+			// In Global Buttons and Icons, we renamed `--lmn-icon-height` to `--lmn-icon-list-icon-size`.
+			// Keep the `--lmn-icon-height` for backward compatibility.
+			font-size: var(--lmn-icon-height, var(--lmn-icon-list-icon-size, 16px));
+			color: var(--lmn-icon-list-marker-color);
+			transform: rotate(var(--lmn-icon-list-icon-rotation, 0deg));
+			opacity: var(--lmn-icon-list-icon-opacity, 1);
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+	}
+
+}
+
+li.wp-block-lumen-icon-list-item.lmn-block-icon-list-item {
+	margin-bottom: 0;
+}
+
+// If single text color is added (not gradient), reset text-fill-color.
+// Icon list marker is only limited to single text color.
+// These ensure that having gradient in parent icon list still allows
+// modification in icon list items.
+.lmn-block-icon-list-item__text:is(.has-text-color):not(.lmn--is-gradient),
+.lmn-block-icon-list-item__marker {
+	-webkit-text-fill-color: initial !important;
+	-moz-text-fill-color: initial !important;
+	-o-text-fill-color: initial !important;
+}

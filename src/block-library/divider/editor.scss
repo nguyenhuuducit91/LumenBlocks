@@ -1,0 +1,109 @@
+@import "common";
+
+@include desktop {
+	:where(.has-text-align-left) .lmn-block-divider {
+		--lmn-dots-margin-left: 0;
+		--lmn-dots-margin-right: auto;
+	}
+
+	:where(.has-text-align-right) .lmn-block-divider {
+		--lmn-dots-margin-right: 0;
+		--lmn-dots-margin-left: auto;
+	}
+
+	:where(.has-text-align-center) .lmn-block-divider {
+		--lmn-dots-margin-right: auto;
+		--lmn-dots-margin-left: auto;
+	}
+}
+
+@include tablet {
+	:where(.has-text-align-left-tablet) .lmn-block-divider {
+
+		--lmn-dots-margin-left: 0;
+		--lmn-dots-margin-right: auto;
+	}
+
+	:where(.has-text-align-right-tablet) .lmn-block-divider {
+
+		--lmn-dots-margin-right: 0;
+		--lmn-dots-margin-left: auto;
+	}
+
+	:where(.has-text-align-center-tablet) .lmn-block-divider {
+		--lmn-dots-margin-right: auto;
+		--lmn-dots-margin-left: auto;
+	}
+}
+
+@include mobile {
+	:where(.has-text-align-left-mobile) .lmn-block-divider {
+		--lmn-dots-margin-left: 0;
+		--lmn-dots-margin-right: auto;
+	}
+
+	:where(.has-text-align-right-mobile) .lmn-block-divider {
+		--lmn-dots-margin-right: 0;
+		--lmn-dots-margin-left: auto;
+	}
+
+	:where(.has-text-align-center-mobile) .lmn-block-divider {
+		--lmn-dots-margin-right: auto;
+		--lmn-dots-margin-left: auto;
+	}
+}
+
+.lmn-block.lmn-block-divider {
+
+	@include desktop {
+		&.has-text-align-center {
+			--lmn-dots-margin-right: auto;
+			--lmn-dots-margin-left: auto;
+		}
+
+		&.has-text-align-right {
+			--lmn-dots-margin-right: 0;
+			--lmn-dots-margin-left: auto;
+		}
+
+		&.has-text-align-left {
+			--lmn-dots-margin-left: 0;
+			--lmn-dots-margin-right: auto;
+		}
+	}
+
+	@include tablet-mobile {
+		&.has-text-align-center-tablet {
+			--lmn-dots-margin-right: auto;
+			--lmn-dots-margin-left: auto;
+		}
+
+		&.has-text-align-right-tablet {
+			--lmn-dots-margin-right: 0;
+			--lmn-dots-margin-left: auto;
+		}
+
+		&.has-text-align-left-tablet {
+			--lmn-dots-margin-left: 0;
+			--lmn-dots-margin-right: auto;
+		}
+	}
+
+	@include mobile {
+		&.has-text-align-center-mobile {
+			--lmn-dots-margin-right: auto;
+			--lmn-dots-margin-left: auto;
+		}
+
+		&.has-text-align-right-mobile {
+			--lmn-dots-margin-right: 0;
+			--lmn-dots-margin-left: auto;
+		}
+
+		&.has-text-align-left-mobile {
+			--lmn-dots-margin-left: 0;
+			--lmn-dots-margin-right: auto;
+		}
+	}
+
+}

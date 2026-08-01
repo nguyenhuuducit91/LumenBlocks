@@ -1,0 +1,53 @@
+.lmb-icon__bg-shape-wrapper {
+	position: relative;
+	> *:not(.lmb-icon__bg-shape) {
+		position: relative;
+		z-index: 2;
+	}
+	.lmb-icon__bg-shape {
+		position: absolute;
+		z-index: 1;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		height: 100%;
+		width: 100%;
+		color: #cde;
+		fill: #cde;
+	}
+}
+
+// Get rid of the small gap below the icon.
+.lmb-icon-inner-svg svg {
+	display: block;
+}
+
+.lmb-icon__design-wrapper {
+	padding: 20px;
+
+	// Shadow 9 isn't visible.
+	&.lmb--shadow-9 {
+		box-shadow: 0 25px 60px -15px rgba(72, 73, 121, 0.38) !important;
+	}
+}
+.lmb-icon__design-wrapper.lmb-icon__design-shaped {
+	background-color: #ddd;
+}
+.lmb-icon__design-wrapper.lmb-icon__design-outlined {
+	border: 3px solid #ddd;
+}
+
+// Hide the icon gradient color.
+.lmb-icon__gradient {
+	opacity: 0 !important;
+	height: 0 !important;
+	width: 0 !important;
+	visibility: hidden !important;
+	overflow: hidden !important;
+	position: absolute !important;
+	z-index: -99999 !important;
+	max-height: 0 !important;
+	max-width: 0 !important;
+	min-height: 0 !important;
+	min-width: 0 !important;
+}

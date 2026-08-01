@@ -1,0 +1,49 @@
+// Containers have overflow and cut off the block editor's controls (toolbar and
+// drag handles).  Make overflow visible, but also do some tweaks so that the
+// background gradients & videos Still follow the border radius of the Container
+// block.
+.lmb-column > .lmb-inner-block > .lmb-block-content > .lmb-column__item {
+	overflow: visible;
+}
+
+// Allow our columns to look like they span more than one row.
+[data-type="lmb/column"] > .block-editor-block-list__block-edit {
+	height: 100%;
+	> [data-block] {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+// WP sets a maximum width for blocks in the editor view, remove them to let
+// them occupy the entire column.
+.wp-block[data-type="lmb/column"] {
+	&,
+	.wp-block {
+		max-width: none;
+	}
+}
+
+// Columns need to occupy all the available height provided by the columns
+// block.
+[data-type="lmb/column"] {
+	&,
+	> .lmb-column {
+		height: 100%;
+	}
+}
+
+// Smoothen the transition of moving columns around.
+[data-type="lmb/column"] {
+	transition: none !important;
+}
+
+// Remove margins from first and last child blocks.
+.lmb-column__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	> [data-block]:first-child {
+		margin-top: 0 !important;
+	}
+	> .block-list-appender:not(:first-child) {
+		margin-bottom: -28px !important;
+	}
+}

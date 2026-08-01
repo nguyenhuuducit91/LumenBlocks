@@ -1,0 +1,36 @@
+.lmb-pro-control-more-dots {
+	display: flex;
+	background: transparent;
+	margin: 0 auto;
+	width: 50px;
+	justify-content: center;
+	border-radius: 25px;
+	height: 25px;
+	align-items: center;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	border: none;
+	outline: none;
+
+	.lmb-pro-control-more-dots__dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 100%;
+		margin: 0 2px;
+		transition: all 0.3s ease-in-out;
+	}
+
+	&:hover,
+	&:focus {
+		background: rgba(245, 158, 11, 0.3);
+	}
+}
+
+.lmb-pro-control-button__wrapper {
+	max-height: 800px;
+	transition: all 0.3s ease-in-out;
+	overflow: hidden;
+	&.lmb-pro-control-button--hidden {
+		max-height: 0;
+	}
+}

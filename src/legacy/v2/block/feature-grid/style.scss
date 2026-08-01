@@ -1,0 +1,144 @@
+/**
+ * Frontend styles for the Feature Grid Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-feature-grid.lmb-feature-grid--v2 {
+	.lmb-block-content {
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+		text-align: center;
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.lmb-feature-grid__content {
+		z-index: 2;
+	}
+	.lmb-feature-grid__item {
+		display: flex;
+		flex-direction: column;
+		background-position: center;
+	}
+	.lmb-feature-grid__image {
+		margin-left: auto;
+		margin-right: auto;
+		img {
+			margin: 0 auto;
+			height: auto;
+			max-width: 100%;
+			position: relative;
+		}
+	}
+	.lmb-feature-grid__image,
+	.lmb-feature-grid__title,
+	.lmb-feature-grid__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+
+	&:not(.lmb-feature-grid--design-plain) {
+		.lmb-feature-grid__item {
+			@include box();
+		}
+	}
+}
+
+.lmb-feature-grid.lmb-feature-grid--v2 {
+	@media screen and (min-width: $break-small) and (max-width: $break-large) {
+		&.lmb-feature-grid--columns-4 {
+			.lmb-block-content {
+				grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.lmb-feature-grid.lmb-feature-grid--v2 {
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
+// IE 11 grid styles
+.lmb-feature-grid.lmb-feature-grid--v2 {
+	.lmb-feature-grid__image {
+		min-height: 1px;
+	}
+	&.lmb-feature-grid--columns-4 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-feature-grid__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-feature-grid__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+		.lmb-feature-grid__item:nth-child(4) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 7;
+		}
+	}
+	&.lmb-feature-grid--columns-3 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-feature-grid__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-feature-grid__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.lmb-feature-grid--columns-2 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-feature-grid__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	&.lmb-feature-grid--design-horizontal {
+		.lmb-feature-grid__item {
+			display: -ms-grid;
+			-ms-grid-columns: 1fr 35px 1fr;
+		}
+		.lmb-feature-grid__content {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-feature-grid__item > *:first-child:last-child {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 1 !important;
+			-ms-grid-column-span: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.lmb-block-content {
+				display: block !important;
+			}
+			.lmb-feature-grid__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}

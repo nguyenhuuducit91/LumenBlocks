@@ -1,0 +1,214 @@
+// Editor only: Smooth changes.
+// $effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out, transform 0.2s ease-in-out, padding 0.2s ease-in-out, border-radius 0.2s ease-in-out, fill 0.2s ease-in-out, top 0.2s ease-in-out, left 0.2s ease-in-out;
+// .wp-admin .wp-block [class*="lmb-"],
+// .wp-admin .wp-block [class*="lmb-"] * {
+// 	transition: $effect-transition;
+// }
+@import "common";
+@import "styles/editor-block-design-system";
+@import "styles/editor-block";
+@import "styles/editor-skin";
+
+// Lumen gradient fill. Works in tandem with icons.js
+svg.lmn-lumen-icon-gradient {
+	fill: url(#lumen-gradient) !important;
+}
+
+// Hide the additional Panels of EditorsKit for Lumen blocks, since we have
+// duplicate functionality.
+.lmb--has-panel-tabs .lmb-panel-tabs ~ .editorskit-panel {
+	display: none;
+}
+
+// Styling for inspector toolbars which are Premium only.
+// This adds a lock icon when hovering over the option.
+.components-toolbar__control.lmb--is-premium {
+	position: relative;
+	&::after {
+		position: absolute;
+		z-index: 1;
+		background: none;
+		line-height: 18px;
+		padding: 0 6px;
+		border-radius: 2px;
+		left: 0;
+		right: 0;
+		text-transform: uppercase;
+		background-size: 100%;
+		background-repeat: no-repeat;
+		font-family: dashicons;
+		content: "\f160";
+		color: #888;
+		font-size: 20px;
+		opacity: 0;
+	}
+	*,
+	&::after {
+		transition: all 0.2s ease-in-out;
+	}
+	// Adjust opacity since a disabled toolbar changes the opacity of the whole thing.
+	&:disabled {
+		opacity: 1;
+		* {
+			opacity: 0.3;
+		}
+	}
+	&:hover {
+		* {
+			opacity: 0;
+		}
+		&::after {
+			opacity: 1;
+		}
+	}
+}
+
+/**
+ * Thicker column (blue) outlines for container-type blocks.
+ */
+
+$blocks: (
+	'[data-type="lumen/column"]',
+	'[data-type="lumen/call-to-action"]',
+	'[data-type="lumen/card"]',
+	'[data-type="lumen/hero"]',
+	'[data-type="lumen/notification"]',
+	'[data-type="lumen/testimonial"]',
+	'[data-type="lumen/team-member"]'
+);
+$block-joined: #{ join($blocks, (), $separator: comma) };
+
+// Highlight column blocks in a special color so people can see the column better.
+:is(#{ $block-joined }):hover {
+	outline: 2px solid var(--wp-admin-theme-color);
+}
+// Darker color for nested columns.
+:is(#{ $block-joined }) :is(#{ $block-joined }):hover {
+	outline: 2px solid var(--wp-admin-theme-color-darker-20);
+}
+
+/**
+ * Gray dotted outlines for blocks
+ */
+
+:root {
+	--lmn-block-outline-color: #888;
+}
+// Highlight root blocks with an outline when they're hovered on. But only
+// lumen blocks to keep the default behavior of core blocks and other
+// third-party blocks.
+.is-root-container > [data-block][data-type^="lumen/"]:not([data-type*="/column"]):not(:focus) {
+	&::after {
+		content: "";
+		inset: 0;
+		pointer-events: none;
+	}
+	&:hover::after {
+		outline: 2px dotted var(--lmn-block-outline-color);
+		position: absolute;
+	}
+}
+// For blocks inside columns, highlight all blocks.
+[data-type^="lumen/"] {
+	[data-block]:not([data-type*="/column"]):not(:focus) { // Don't do this for columns and column blocks since they have their own highlight.
+		&::after {
+			content: "";
+			inset: 0;
+			pointer-events: none;
+		}
+		&:hover::after {
+			outline: 2px dotted var(--lmn-block-outline-color);
+			position: absolute;
+		}
+	}
+}
+// Some blocks contain other blocks, make them a lighter gray shade.
+[data-type="lumen/button-group"],
+[data-type="lumen/blockquote"],
+[data-type="lumen/icon-label"],
+[data-type="lumen/expand"] {
+	--lmn-block-outline-color: #ccc;
+	* {
+		--lmn-block-outline-color: #888;
+	}
+}
+
+// Hide the gray outline of some blocks.
+[data-type="lumen/accordion"]::after,
+[data-type="lumen/feature-grid"]::after,
+[data-type="lumen/pricing-box"]::after,
+[data-type="lumen/feature"]::after,
+.lmn-block-accordion__heading [data-type="lumen/icon-label"]::after, // Hide the outline for the accordion heading.
+.lmn-block-video-popup [data-type="lumen/image"]::after, // Hide the outline for the video popup image block.
+:is(#{ $block-joined })::after { // Make sure that all the blue highlighted blocks don't have gray outlines.
+	outline: none !important;
+}
+
+// Make highlighted block icons white in the list view.
+.block-editor-list-view-leaf.is-selected {
+	svg.lmn-lumen-icon-gradient {
+		fill: #fff !important;
+	}
+}
+
+// Small card notice fonts so they look like help comments from the inspector.
+.lmn-block .components-card__body {
+	font-size: 12px;
+}
+
+// Focal point picker goes past container.
+.lmn-control .components-focal-point-picker__icon_container {
+	z-index: 3 !important;
+}
+
+// Fix WP 6.1 makes the control into 1 column only.
+.lmb-design-control .components-flex {
+	display: inline-block;
+}
+.lmb-columns-width-control .lmb-design-control .components-flex {
+	display: inline-block;
+	text-align: center;
+}
+
+// Fix WP 6.1 FSE selected block outline looks like cut when with background color.
+.is-outline-mode [class*="wp-block-lumen-"].block-editor-block-list__block:not(.remove-outline) {
+	&.is-selected,
+	&.is-hovered,
+	&.is-highlighted {
+		padding: 2px;
+	}
+}
+
+// Adjust the styles of †he datetime picker.
+.lmb-toggle-panel-body {
+	.components-datetime__time-wrapper {
+		.components-base-control {
+			margin-bottom: 0px !important;
+		}
+
+		.components-datetime__timezone {
+			display: none;
+		}
+	}
+
+	.components-datetime__date {
+		.components-datetime__date__day[aria-label*="Selected" i] {
+			color: #fff;
+			&:hover {
+				color: #fff !important;
+			}
+		}
+		:last-child {
+			row-gap: 8px;
+			column-gap: 4px;
+			div:nth-of-type(7) {
+				justify-self: auto;
+			}
+		}
+	}
+}
+
+// Remove the block description from the inspector.
+.block-editor-block-inspector:has(.lmb-panel-tabs) .block-editor-block-card__description {
+	display: none;
+}

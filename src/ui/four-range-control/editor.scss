@@ -1,0 +1,27 @@
+.lmb-four-range-control__range {
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin-top: 4px;
+}
+.lmb-four-range-control__icon {
+	height: 20px;
+	width: 20px;
+	flex-shrink: 0;
+	margin-right: 10px;
+}
+
+.lmb-four-range-control__lock {
+	height: auto;
+	margin-left: 5px;
+	.dashicon {
+		font-size: 16px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	svg {
+		height: 16px;
+		width: 16px;
+	}
+}

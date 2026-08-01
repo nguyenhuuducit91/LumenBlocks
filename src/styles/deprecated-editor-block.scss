@@ -1,0 +1,52 @@
+@import "editor-breakpoints";
+@import "cssvars";
+
+// Button alignment.
+.lmn-button-group {
+	&:not(.lmn-collapse-on-desktop) .block-editor-block-list__layout {
+		justify-content: var(--lmn-alignment-justify-content);
+	}
+	&:is(.lmn--collapse-on-desktop) > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		> [data-block] {
+			margin-inline-start: var(--lmn-alignment-margin-left);
+			margin-inline-end: var(--lmn-alignment-margin-right);
+		}
+	}
+}
+
+@include tablet {
+	.lmn-button-group:is(.lmn--collapse-on-tablet) > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		> [data-block] {
+			margin-inline-start: var(--lmn-alignment-margin-left);
+			margin-inline-end: var(--lmn-alignment-margin-right);
+		}
+	}
+}
+
+@include mobile {
+	.lmn-button-group:is(.lmn--collapse-on-tablet) > .block-editor-inner-blocks > .block-editor-block-list__layout,
+	.lmn-button-group:is(.lmn--collapse-on-mobile) > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		> [data-block] {
+			margin-inline-start: var(--lmn-alignment-margin-left);
+			margin-inline-end: var(--lmn-alignment-margin-right);
+		}
+	}
+}
+
+// Block spacing when horizontally oriented. This has been replaced by .lmn--block-horizontal-flex.
+// We still need to keep this just in case someone is using the old block in the frontend.
+.lmn--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout > * + * {
+	margin-left: cssvar(block-margin-bottom);
+}
+
+.lmn--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex !important;
+	flex-direction: row;
+	> * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	> [data-block] {
+		width: auto;
+	}
+}

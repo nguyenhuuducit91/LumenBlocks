@@ -1,0 +1,23 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/new-block",
+	"title": "New Block",
+	"description": "A new block.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Keywords that are not in the title"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/icon-label",
+		"lumen/heading",
+		"lumen/icon"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/text"
+	],
+	"lmn-block-dependency": "lumen/button-group|button",
+	"lmn-available-states": [ "enabled", "hidden" ]
+}

@@ -1,0 +1,22 @@
+import { __ } from '@wordpress/i18n'
+import { i18n } from 'lumen'
+import { createInterpolateElement } from '@wordpress/element'
+
+export const editor = {
+	hasConfetti: false,
+	steps: [
+		{
+			title: '👋 ' + __( 'Welcome to Lumen', i18n ),
+			description: __( 'We\'re excited to have you here. Let\'s get you started by opening the Design Library.', i18n ),
+			help: createInterpolateElement( __( 'Click the <strong>Design Library</strong> button to continue.', i18n ), {
+				strong: <strong />,
+			} ),
+			// size: 'medium',
+			anchor: '.lmb-insert-library-button',
+			position: 'bottom',
+			nextEventTarget: '.lmb-insert-library-button',
+			glowTarget: '.lmb-insert-library-button',
+			showNext: false,
+		},
+	],
+}

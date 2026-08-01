@@ -1,0 +1,32 @@
+/**
+ * BLOCK: New Block.
+ */
+/**
+ * External dependencies
+ */
+import { TabsLabelIcon } from '~lumen/icons'
+
+/**
+ * Internal dependencies
+ */
+// import transforms from './transforms'
+import edit from './edit'
+import save from './save'
+import schema from './schema'
+import metadata from './block.json'
+import deprecated from './deprecated'
+
+export const settings = {
+	...metadata,
+
+	icon: TabsLabelIcon,
+	attributes: schema,
+	supports: {
+		anchor: true,
+		reusable: false,
+		lmnSaveBlockStyle: false,
+	},
+	deprecated,
+	edit,
+	save,
+}

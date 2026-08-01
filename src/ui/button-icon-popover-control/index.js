@@ -1,0 +1,114 @@
+/**
+ * Internal dependencies
+ */
+import {
+	Button, BaseControl, Popover,
+} from '~lumen/ui'
+
+/**
+ * WordPress dependencies
+ */
+import { ToggleControl, PanelBody } from '@wordpress/components'
+import {
+	useEffect, useState, memo, useRef,
+} from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { i18n } from 'lumen'
+
+const ButtonIconPopoverControl = memo( props => {
+	const [ isOpen, setIsOpen ] = useState( false )
+	const buttonRef = useRef( null )
+
+	useEffect( () => {
+		if ( isOpen ) {
+			const handleOnClickOutside = ev => {
+				// If the Media Manager is open, do not do anything since this might
+				// interfere with how the Media Manager works.
+				if ( window.wp?.media?.frame?.el?.clientHeight ) {
+					return
+				}
+
+				if ( ! ev.target.closest( '.lmb-button-icon-control__popover' ) &&
+					// The popup should toggle when the control's button is clicked.
+					buttonRef?.current !== ev.target.closest( '.lmb-button-icon-control__edit' ) &&
+					! ev.target.closest( '.components-color-picker' ) &&
+					! ev.target.closest( '.react-autosuggest__suggestions-container' ) &&
+					! ev.target.closest( '.components-dropdown__content' ) ) {
+					setIsOpen( false )
+				}
+			}
+
+			document.addEventListener( 'mousedown', handleOnClickOutside ) // eslint-disable-line @wordpress/no-global-event-listener
+			return () => document.removeEventListener( 'mousedown', handleOnClickOutside ) // eslint-disable-line @wordpress/no-global-event-listener
+		}
+	}, [ isOpen ] )
+
+	return (
+		<BaseControl
+			help={ props.help }
+			label={ props.label }
+			id="lmb-button-icon-control"
+			className={ classnames( 'lmb-button-icon-control', props.className ) }
+			allowReset={ true }
+			showReset={ props.allowReset || ( props.onToggle ? props.checked : false ) }
+			onReset={ () => {
+				props.onReset()
+				if ( props.onToggle ) {
+					props.onToggle( false )
+				}
+			} }
+			hasLabel={ ! props.onToggle }
+		>
+			{ props.onToggle && (
+				<ToggleControl
+					label={ props.label }
+					checked={ props.checked }
+					onChange={ props.onToggle }
+					__nextHasNoMarginBottom
+				/>
+			) }
+			<div className="lmb-button-icon-control__wrapper">
+				<Button
+					onClick={ () => setIsOpen( isOpen => ! isOpen ) }
+					className="lmb-button-icon-control__edit"
+					label={ __( 'Edit', i18n ) }
+					isSecondary
+					icon="edit"
+					ref={ buttonRef }
+				/>
+				{ isOpen && (
+					<Popover
+						className="lmb-button-icon-control__popover"
+						focusOnMount="container"
+						onEscape={ () => setIsOpen( false ) }
+					>
+						<PanelBody>
+							{ ( typeof props.popoverLabel !== 'undefined' ? props.popoverLabel : props.label ) &&
+								<h2 className="components-panel__body-title">{ props.popoverLabel || props.label }</h2>
+							}
+							{ props.children }
+						</PanelBody>
+					</Popover>
+				) }
+			</div>
+		</BaseControl>
+	)
+} )
+
+ButtonIconPopoverControl.defaultProps = {
+	help: '',
+	label: '',
+	popoverLabel: undefined,
+	className: '',
+	allowReset: false,
+	onReset: () => {},
+	checked: false,
+	onToggle: undefined,
+}
+
+export default ButtonIconPopoverControl

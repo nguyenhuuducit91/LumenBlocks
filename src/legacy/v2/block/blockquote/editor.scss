@@ -1,0 +1,15 @@
+/**
+ * Editor styles for the Blockquote Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+// Some themes like Lumen adds left/right margins on the block on the backend.
+.lmb-blockquote {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.lmb-blockquote__inspector__icon {
+	flex-wrap: wrap;
+}

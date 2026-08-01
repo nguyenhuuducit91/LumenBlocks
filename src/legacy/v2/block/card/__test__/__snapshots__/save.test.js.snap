@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-card lmb-card--v2 lmb-card--design-basic lmb-card--columns-2 lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-card__item lmb-card__item1"
+      >
+        
+        <div
+          class="lmb-card__content"
+        >
+          <h4
+            class="lmb-card__title"
+          >
+            <div>
+              Title for This Block
+            </div>
+          </h4>
+          <p
+            class="lmb-card__subtitle"
+          >
+            <div>
+              Subtitle for This Block
+            </div>
+          </p>
+          <p
+            class="lmb-card__description"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="lmb-button-container"
+          >
+            <a
+              class="lmb-button lmb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="lmb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="lmb-card__item lmb-card__item2"
+      >
+        
+        <div
+          class="lmb-card__content"
+        >
+          <h4
+            class="lmb-card__title"
+          >
+            <div>
+              Title for This Block
+            </div>
+          </h4>
+          <p
+            class="lmb-card__subtitle"
+          >
+            <div>
+              Subtitle for This Block
+            </div>
+          </p>
+          <p
+            class="lmb-card__description"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="lmb-button-container"
+          >
+            <a
+              class="lmb-button lmb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="lmb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Card (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-card lmb-card--v2 lmb-card--design-wave-2 lmb-card--columns-3 lmb-main-block"
+>
+  <style>
+    .lmb-card__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.lmb-card__item:before{background-color:#123456 !important;opacity:12.3}.lmb-card__item1 .lmb-card__image{background-image:url(image1Url)}.lmb-card__item2 .lmb-card__image{background-image:url(image2Url)}.lmb-card__item3 .lmb-card__image{background-image:url(image3Url)}.lmb-card__image{background-image:url(imageUrl);background-position:imageBackgroundPosition !important;background-repeat:imageBackgroundRepeat !important;background-size:imageBackgroundSize !important}@media screen and (max-width:1025px){.lmb-card__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.lmb-card__item:before{opacity:12.3}}@media screen and (max-width:768px){.lmb-card__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.lmb-card__item:before{opacity:12.3}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-card__item lmb-card__item1 lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-card__content"
+        />
+      </div>
+      <div
+        class="lmb-card__item lmb-card__item2 lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-card__content"
+        />
+      </div>
+      <div
+        class="lmb-card__item lmb-card__item3 lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-card__content"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

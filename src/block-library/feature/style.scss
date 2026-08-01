@@ -1,0 +1,35 @@
+@import "common";
+
+.lmn-block-feature {
+	--lmn-column-gap: 0px; // For nested columns, this takes precedence.
+	--lmn-row-gap: 0px;
+}
+.lmn-block-feature > * > .lmn-block-content {
+	column-gap: var(--lmn-column-gap);
+	row-gap: var(--lmn-row-gap);
+}
+
+.lmn-block.lmn-block-feature:is(.is-style-default, .is-style-horizontal) {
+	> .lmn-container > .lmn-inner-blocks.lmn-block-content {
+		@include mobile {
+			flex-direction: column-reverse;
+		}
+	}
+}
+
+.lmn-block-feature {
+	> * > .lmn-row {
+		display: flex;
+		flex-direction: row;
+		// We need to add wrapping here for the desktop wrapping to work. We
+		// need to be able to override this.
+		flex-wrap: var(--lmn-feature-flex-wrap, wrap);
+	}
+	@include desktop {
+		> * > .lmn-row {
+			// We need to add wrapping here for the desktop wrapping to work. We
+			// need to be able to override this.
+			flex-wrap: var(--lmn-feature-flex-wrap, nowrap);
+		}
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/map",
+	"title": "Map",
+	"description": "Embedded Google Map with advanced controls.",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"textdomain": "lumen-blocks",
+	"keywords": [ "location", "address" ],
+	"lmn-type": "special"}

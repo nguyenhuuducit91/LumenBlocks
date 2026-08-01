@@ -1,0 +1,26 @@
+/**
+ * Frontend styles for the Spacer Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+.lmb-spacer.lmb-spacer--v2 {
+	height: 50px;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	background-size: cover;
+	background-position: center;
+	padding: 0 !important;
+	.lmb-inner-block,
+	.lmb-block-content,
+	.lmb-spacer--inner {
+		height: 100%;
+	}
+	.lmb-top-separator,
+	.lmb-bottom-separator {
+		z-index: 6; // This value comes from modules/block-separators/index.js
+	}
+	&.lmb--has-top-separator,
+	&.lmb--has-bottom-separator {
+		padding: 0 !important;
+	}
+}

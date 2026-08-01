@@ -1,0 +1,18 @@
+@import "common";
+
+.lmn-row > .lmn-block-content.lmn-button-group .block-editor-block-list__layout > div.wp-block[data-type="lumen/button"] {
+	flex: unset;
+	width: unset;
+
+	> div {
+		width: unset;
+	}
+}
+
+// This makes it so that when the button becomes too small for the viewport,
+// that's the time we wrap text. If the button is fullwidth, and other
+// non-fullwidth button presses against it, this stops the button text from
+// wrapping (it will make the other button wrap below instead)
+[data-type="lumen/button"] {
+	min-width: fit-content;
+}

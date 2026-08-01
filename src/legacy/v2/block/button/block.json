@@ -1,0 +1,10 @@
+{
+	"name": "lmb/button",
+	"title": "Button",
+	"description": "Add a customizable button.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Link"
+	],
+	"textdomain": "lumen-blocks"
+}

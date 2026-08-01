@@ -1,0 +1,4 @@
+// Ensure every other content is behind the link.
+.lmn-block-link ~ * {
+	z-index: 1;
+}

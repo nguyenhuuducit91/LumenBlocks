@@ -1,0 +1,7 @@
+{
+	"name": "lmb/blockquote",
+	"title": "Blockquote",
+	"description": "Display a quote in style",
+	"category": "lumen-v2",
+	"textdomain": "lumen-blocks"
+}

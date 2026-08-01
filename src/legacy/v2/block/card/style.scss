@@ -1,0 +1,117 @@
+/**
+ * Frontend styles for the Card Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-card.lmb-card--v2 {
+	.lmb-block-content {
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.lmb-card__item {
+		display: flex;
+		flex-direction: column;
+	}
+	.lmb-card__content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		background-size: cover;
+		background-position: center;
+		padding: $box-vert-padding $box-hori-padding;
+	}
+	.lmb-card__subtitle,
+	.lmb-card__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.lmb-card__image {
+		height: 300px;
+		width: 100%;
+		background-size: cover;
+		background-position: center;
+	}
+	.lmb-card__title {
+		margin: 0 0 #{ $text-margin-bottom * 0.5 } 0;
+	}
+	.lmb-card__subtitle {
+		font-size: 0.85em;
+	}
+
+	&:not(.lmb-card--design-plain) {
+		.lmb-card__item {
+			@include boxNoPadding();
+		}
+	}
+	&.lmb-card--design-plain {
+		.lmb-card__image {
+			margin-bottom: 0 0 $text-margin-bottom 0;
+		}
+		.lmb-card__content {
+			padding: 0;
+		}
+	}
+}
+
+.lmb-card.lmb-card--v2 {
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
+// IE 11 grid styles
+.lmb-card.lmb-card--v2 {
+	&.lmb-card--columns-3 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-card__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-card__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.lmb-card--columns-2 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-card__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+}
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+	.lmb-card.lmb-card--v2 {
+		&:not(.lmb-card--design-horizontal) {
+			.lmb-card__content {
+				flex: 1 1 auto;
+			}
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			display: block !important;
+		}
+		.lmb-card__item {
+			margin-bottom: 35px;
+		}
+	}
+}

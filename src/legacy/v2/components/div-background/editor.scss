@@ -1,0 +1,9 @@
+// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
+.editor-styles-wrapper .lmb--has-background-overlay {
+	&.lmb--has-background-overlay {
+		&::before,
+		.lmb-video-background {
+			pointer-events: none;
+		}
+	}
+}

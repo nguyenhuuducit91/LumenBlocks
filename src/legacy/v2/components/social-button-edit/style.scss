@@ -1,0 +1,38 @@
+// Social Network colors.
+$social: (
+	"facebook": #1877f2,
+	"twitter": #1da1f2,
+	"instagram": #c32aa3,
+	"pinterest": #bd081c,
+	"linkedin": #007bb5,
+	"youtube": #f00,
+	"email": #a6b1b7,
+);
+
+@each $network, $color in $social {
+	.lmb-social-button.lmb-social-button--social-colors {
+		&.lmb-button-#{ $network } {
+			background: #{ $color };
+
+			&.lmb-button--design-ghost {
+				border-color: #{ $color };
+
+				// Ghost hover effect.
+				&.lmb-button--ghost-to-normal-effect:hover {
+					background: #{ $color };
+					svg {
+						color: #fff;
+					}
+				}
+			}
+
+			&.lmb-button--design-ghost,
+			&.lmb-button--design-plain {
+				background: transparent;
+				svg {
+					color: #{ $color };
+				}
+			}
+		}
+	}
+}

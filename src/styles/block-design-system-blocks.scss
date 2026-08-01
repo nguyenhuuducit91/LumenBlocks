@@ -1,0 +1,448 @@
+@import "block-design-system";
+
+/**
+ * Block implemtation of the Design System.
+ */
+
+// Blocks
+.lmn-block,
+.entry-content .lmn-block,
+.lmn-block-column__content > * { // Some themes don't add margin bottom to insides of columns.
+	margin-bottom: cssvar(block-margin-bottom);
+}
+
+.lmn-button-group {
+	row-gap: cssvar(button-row-gap);
+	column-gap: cssvar(button-column-gap);
+	justify-content: var(--lmn-alignment-justify-content);
+}
+
+.lmn-block:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+	&:not(.is-style-link) {
+		.lmn-button {
+			background: cssvar(button-background-color);
+			padding: cssvar(button-padding);
+
+			// Adjust icon color and icon size.
+			#{ '--lmn-icon-color' }: cssvar(button-text-color);
+
+			.lmn--inner-svg {
+				color: cssvar(button-text-color);
+			}
+
+			> .lmn-button__inner-text {
+				color: cssvar(button-text-color);
+				&:hover {
+					color: cssvar(button-text-color); // Override theme's hover text color.
+				}
+			}
+		}
+	}
+
+	.lmn-button {
+		// Adjust icon color and icon size.
+		--lmn-icon-size: 1em;
+	}
+
+	// Ghost button color.
+	&.is-style-ghost {
+		#{ '--lmn-button-text-color' }: cssvar(button-background-color);
+		.lmn-button {
+			&::before {
+				border-width: cssvar(button-ghost-border-width);
+				border-color: cssvar(button-background-color);
+			}
+		}
+	}
+
+	// Plain button color.
+	&.is-style-plain {
+		#{ '--lmn-button-text-color' }: cssvar(button-background-color);
+	}
+}
+// Ensure buttons use the correct paddings.
+.lmn-block-icon-button {
+	.lmn-button {
+		#{ '--lmn-button-padding' }: cssvar(icon-button-padding);
+	}
+}
+
+// Block spacing when horizontally oriented.
+.lmn--block-horizontal-flex {
+	column-gap: cssvar(block-margin-bottom);
+}
+
+// Containers
+.lmn-container:not(.lmn--no-padding) {
+	padding: cssvar(container-padding);
+}
+
+.lmn--container-small .lmn-container:not(.lmn--no-padding) {
+	#{ '--lmn-container-padding' }: cssvar(container-padding-small);
+}
+.lmn-container:not(.lmn--no-background) {
+	background-color: cssvar(container-background-color);
+	border-radius: cssvar(container-border-radius);
+	box-shadow: cssvar(container-box-shadow);
+	color: cssvar(container-color);
+}
+
+.lmn-container-padding {
+	padding: cssvar(container-padding);
+}
+
+// Columns
+.lmn-block:not(.lmn-block-column) {
+	#{ '--lmn-columns-spacing' }: cssvar(column-margin);
+}
+body:not(.wp-admin) .lmn-block-columns:has(> .lmn-block-content > .lmn-block-column:first-child:last-child) { // Remove the margins if it's only 1 block.
+	--lmn-columns-spacing: 0;
+}
+.lmn-block-columns.lmn-block-columns--has-single-block-polyfill { // For Firefox polyfill provided by src/block-library/columns/frontend-has-polyfill.js
+	--lmn-columns-spacing: 0;
+}
+
+// Block Background
+.lmn-block-background {
+	background-color: cssvar(block-background-color);
+	&:not(.lmn--no-padding) {
+		padding: cssvar(block-background-padding);
+	}
+}
+
+// Icons
+.lmn--inner-svg {
+	border-color: cssvar(icon-color);
+	svg:last-child:not(.lmb-custom-icon):not(.lmn-custom-icon) {
+		width: cssvar(icon-size);
+		height: cssvar(icon-size);
+		&,
+		:is(g, path, rect, polygon, ellipse) {
+			fill: cssvar(icon-color);
+		}
+	}
+}
+
+// Typography
+.lmn-subtitle {
+	font-size: cssvar(subtitle-size);
+	color: cssvar(subtitle-color);
+}
+
+// Posts
+.lmn-block-posts {
+	&__meta {
+		color: cssvar(subtitle-color);
+	}
+}
+
+// These are the global styles for spacing and borders, and buttons and icons.
+:where(.lmn-has-design-system-spacing-and-borders, .lmn-has-design-system-buttons-and-icons) {
+	// Containers
+	// .lmn-container:not(.lmn--no-padding) {
+	// 	&:hover {
+	// 		padding: cssvar(container-padding-hover);
+	// 	}
+	// }
+
+	// .lmn--container-small .lmn-container:not(.lmn--no-padding) {
+	// 	#{ '--lmn-container-padding-hover' }: cssvar(container-padding-small);
+	// 	#{ '--lmn-container-padding-parent-hover' }: cssvar(container-padding-small);
+	// }
+
+	.lmn-container:not(.lmn--no-background) {
+		border-style: cssvar(container-border-style);
+		border-width: cssvar(container-border-width);
+
+		&:hover {
+			border-width: var(--lmn-container-border-width-hover, cssvar(container-border-width));
+			box-shadow: var(--lmn-container-box-shadow-hover, cssvar(container-box-shadow));
+		}
+	}
+	:where(.lmn-hover-parent:hover) .lmn-container:not(.lmn--no-background) {
+		border-width: var(--lmn-container-border-width-parent-hover, cssvar(container-border-width));
+		box-shadow: var(--lmn-container-box-shadow-parent-hover, cssvar(container-box-shadow));
+
+		&:hover {
+			border-width: var(--lmn-container-border-width-hover, var(--lmn-container-border-width-parent-hover, cssvar(container-border-width)));
+			box-shadow: var(--lmn-container-box-shadow-hover, var(--lmn-container-box-shadow-parent-hover, cssvar(container-box-shadow)));
+		}
+	}
+	// .lmn-container-padding {
+	// &:hover {
+	// 	padding: cssvar(container-padding-hover);
+	// }
+	// }
+
+
+	// :where(.lmn-hover-parent:hover) .lmn-container:not(.lmn--no-padding),
+	// :where(.lmn-hover-parent:hover) .lmn-container-padding {
+	// 	padding: cssvar(container-padding-parent-hover);
+	// }
+
+	// Block Background
+	.lmn-block-background {
+		border-radius: cssvar(block-background-border-radius);
+		box-shadow: cssvar(block-background-box-shadow);
+		// &:not(.lmn--no-padding) {
+		// &:hover {
+		// 	padding: cssvar(block-background-padding-hover);
+		// }
+		// }
+	}
+
+	.lmn-block.lmn-block-background {
+		border-style: cssvar(block-background-border-style);
+		border-width: cssvar(block-background-border-width);
+		&:hover {
+			border-width: var(--lmn-block-background-border-width-hover, cssvar(block-background-border-width));
+			box-shadow: var(--lmn-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
+		}
+	}
+
+	:where(.lmn-hover-parent:hover) .lmn-block.lmn-block-background {
+		border-width: var(--lmn-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--lmn-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
+		&:hover {
+			border-width: var(--lmn-block-background-border-width-hover, var(--lmn-block-background-border-width-parent-hover, cssvar(block-background-border-width)));
+			box-shadow: var(--lmn-block-background-box-shadow-hover, var(--lmn-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow)));
+		}
+		// &:not(.lmn--no-padding) {
+		// 	padding: cssvar(block-background-padding-parent-hover);
+		// }
+	}
+
+
+	// Images
+	.lmn-img-wrapper {
+		filter: drop-shadow(cssvar(image-drop-shadow));
+		&:hover {
+			filter: drop-shadow(var(--lmn-image-drop-shadow-hover, cssvar(image-drop-shadow)));
+		}
+
+		img {
+			border-radius: cssvar(image-border-radius);
+		}
+	}
+	:where(.lmn-hover-parent:hover) .lmn-img-wrapper {
+		filter: drop-shadow(var(--lmn-image-drop-shadow-parent-hover, cssvar(image-drop-shadow)));
+		&:hover {
+			filter: drop-shadow(var(--lmn-image-drop-shadow-hover, var(--lmn-image-drop-shadow-parent-hover, cssvar(image-drop-shadow))));
+		}
+	}
+
+	// Icons
+	.lmn--inner-svg {
+		svg:last-child {
+			&:is(.lmb-custom-icon, .lmn-custom-icon) {
+				width: cssvar(custom-icon-size);
+				height: cssvar(custom-icon-size);
+			}
+			&:not(.lmb-custom-icon):not(.lmn-custom-icon) {
+				width: cssvar(icon-size);
+				height: cssvar(icon-size);
+			}
+		}
+	}
+}
+
+// These are the global styles for buttons
+:where(.lmn-has-design-system-buttons-and-icons) {
+	.lmn-block:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link) {
+			.lmn-button {
+				&::before {
+					border-style: cssvar(button-border-style);
+					box-shadow: cssvar(button-box-shadow);
+				}
+				&:hover::before {
+					box-shadow: var(--lmn-button-box-shadow-hover, cssvar(button-box-shadow));
+				}
+			}
+		}
+
+		&:not(.is-style-link, .is-style-ghost) .lmn-button {
+			&::before {
+				border-width: cssvar(button-border-width);
+			}
+			&:hover::before {
+				border-width: var(--lmn-button-border-width-hover, cssvar(button-border-width));
+			}
+		}
+
+		.lmn-button {
+			// Adjust icon color and icon size.
+			#{'--lmn-icon-size'}: cssvar(button-icon-size);
+			#{'--lmn-custom-icon-size'}: cssvar(custom-button-icon-size);
+			min-height: cssvar(button-min-height);
+		}
+
+		&.is-style-ghost .lmn-button {
+			&:hover::before {
+				border-width: var(--lmn-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
+			}
+		}
+	}
+
+	:is(.lmn-block-button, .lmn-block-pagination) .lmn-button {
+		border-radius: cssvar(button-border-radius);
+	}
+
+	:where(.lmn-hover-parent:hover) .lmn-block:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .lmn-button {
+			&::before {
+				border-width: var(--lmn-button-border-width-parent-hover, cssvar(button-border-width));
+				box-shadow: var(--lmn-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+			}
+			&:hover::before {
+				border-width: var(--lmn-button-border-width-hover, var(--lmn-button-border-width-parent-hover, cssvar(button-border-width)));
+				box-shadow: var(--lmn-button-box-shadow-hover, var(--lmn-button-box-shadow-parent-hover, cssvar(button-box-shadow)));
+			}
+		}
+		&.is-style-ghost .lmn-button {
+			&::before {
+				border-width: var(--lmn-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+				box-shadow: var(--lmn-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+			}
+			&:hover::before {
+				border-width: var(--lmn-button-ghost-border-width-hover, var(--lmn-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width)));
+				box-shadow: var(--lmn-button-box-shadow-hover, var(--lmn-button-box-shadow-parent-hover, cssvar(button-box-shadow)));
+			}
+		}
+	}
+}
+
+// These are the global styles for color schemes.
+:where(#{$lmn-has-color-schemes-selector}) {
+	:where(.lmn-block) > :is(p, div) {
+		color: var(--lmn-text-color);
+	}
+	.lmn-block > :is(h1,h2,h3,h4,h5,h6) {
+		color: var(--lmn-heading-color);
+	}
+
+	:is(.lmn-block-text__text, .lmn-block-heading__text, .is-style-link, .lmn-table-of-contents__table) a {
+		color: var(--lmn-link-color, var(--theme-link-initial-color, unset));
+		&:hover {
+			color: var(--lmn-link-color-hover, var(--lmn-link-color, var(--theme-link-hover-color, unset)));
+		}
+	}
+	.lmn-block:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		#{'--lmn-accent-color'}: cssvar(button-text-color);
+
+		&:not(.is-style-link) .lmn-button {
+			&:where(:hover) {
+				background: var(--lmn-button-background-color-hover, cssvar(button-background-color));
+
+				// Adjust icon color and icon size.
+				#{ '--lmn-icon-color' }: var(--lmn-button-text-color-hover, cssvar(button-text-color));
+				#{ '--lmn-accent-color-hover' }: var(--lmn-button-text-color-hover, cssvar(button-text-color));
+				#{ '--lmn-accent-color' }: var(--lmn-button-text-color-hover, cssvar(button-text-color));
+
+				.lmn--inner-svg {
+					color: var(--lmn-button-text-color-hover, cssvar(button-text-color));
+				}
+
+				> .lmn-button__inner-text {
+					color: var(--lmn-button-text-color-hover, cssvar(button-text-color));
+					&:hover {
+						color: var(--lmn-button-text-color-hover, cssvar(button-text-color)); // Override theme's hover text color.
+					}
+				}
+			}
+		}
+
+		&.is-style-ghost {
+			#{ '--lmn-button-text-color' }: var(--lmn-button-outline-color, cssvar(button-background-color));
+			.lmn-button::before {
+				border-color: var(--lmn-button-outline-color, cssvar(button-background-color));
+			}
+			&:where(:hover) {
+				#{ '--lmn-button-text-color-hover' }: var(--lmn-button-outline-color-hover, var(--lmn-button-outline-color, var(--lmn-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--lmn-accent-color-hover' }: var(--lmn-button-outline-color-hover, var(--lmn-button-outline-color, var(--lmn-button-background-color-hover, cssvar(button-background-color))));
+				.lmn-button::before {
+					border-color: var(--lmn-button-outline-color-hover, var(--lmn-button-outline-color, var(--lmn-button-background-color-hover, cssvar(button-background-color))));
+				}
+			}
+		}
+
+		&.is-style-plain {
+			#{ '--lmn-button-text-color' }: var(--lmn-button-plain-text-color, cssvar(button-background-color));
+			.lmn-button:hover {
+				#{ '--lmn-button-text-color-hover' }: var(--lmn-button-plain-text-color-hover, var(--lmn-button-plain-text-color, var(--lmn-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--lmn-accent-color-hover' }: var(--lmn-button-plain-text-color-hover, var(--lmn-button-plain-text-color, var(--lmn-button-background-color-hover, cssvar(button-background-color))));
+				#{ '--lmn-accent-color' }: var(--lmn-button-plain-text-color-hover, var(--lmn-button-plain-text-color, var(--lmn-button-background-color-hover, cssvar(button-background-color))));
+			}
+		}
+
+		&.is-style-link {
+			#{ '--lmn-button-text-color' }: cssvar(link-color);
+			:where(.lmn-button:hover) {
+				#{ '--lmn-accent-color-hover' }: cssvar(link-color-hover);
+				#{ '--lmn-accent-color' }: cssvar(link-color-hover);
+			}
+		}
+	}
+
+	.lmn--inner-svg {
+		border-color: var(--lmn-default-icon-color, var(--lmn-accent-color, cssvar(icon-color)));
+		svg:last-child:not(.lmb-custom-icon):not(.lmn-custom-icon) {
+			&,
+			:is(g, path, rect, polygon, ellipse) {
+				fill: var(--lmn-accent-color, cssvar(icon-color));
+			}
+		}
+		&:where(:hover) {
+			border-color: var(--lmn-accent-color-hover, var(--lmn-accent-color, cssvar(icon-color)));
+			svg:last-child:not(.lmb-custom-icon):not(.lmn-custom-icon) {
+				&,
+				:is(g, path, rect, polygon, ellipse) {
+					fill: var(--lmn-accent-color-hover, var(--lmn-accent-color, cssvar(icon-color)));
+				}
+			}
+		}
+	}
+
+	// Typography
+	.lmn-subtitle {
+		&:where(:hover) {
+			color: var(--lmn-subtitle-color-hover, cssvar(subtitle-color));
+		}
+	}
+
+	// Posts
+	.lmn-block-posts {
+		&__meta {
+			&:where(:hover) {
+				color: var(--lmn-subtitle-color-hover, cssvar(subtitle-color));
+			}
+		}
+	}
+}
+
+:where(.lmn--has-container-scheme) .lmn-container:not(.lmn--no-background),
+.lmn-container:not(.lmn--no-background):where([class*="lmn--container-scheme"]) {
+	background-image: var(--lmn-container-background-color, none);
+	&:hover {
+		background-color: var(--lmn-container-background-color-hover, cssvar(container-background-color));
+		background-image: var(--lmn-container-background-color-hover, var(--lmn-container-background-color, none));
+	}
+}
+
+:where(.lmn--has-background-scheme) .lmn-block-background,
+.lmn-block-background:where([class*="lmn--background-scheme"]) {
+	background-image: var(--lmn-block-background-color, none);
+	&:hover {
+		background-color: var(--lmn-block-background-color-hover, cssvar(block-background-color));
+		background-image: var(--lmn-block-background-color-hover, var(--lmn-block-background-color, none));
+	}
+}
+
+// These are the global styles applied when theme block styles are inherited and when there are color schemes.
+:where(.lmn-has-block-style-inheritance):where(#{$lmn-has-color-schemes-selector}) {
+	.lmn-block:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link) .lmn-button {
+			color: var(--lmn-button-text-color-hover, cssvar(button-text-color));
+		}
+	}
+}

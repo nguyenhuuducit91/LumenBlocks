@@ -1,0 +1,91 @@
+@import "common";
+
+.lmn-block {
+	&:is(.lmn-has-top-separator, .lmn-has-bottom-separator) {
+		> *:not(.lmn-video-background) { // Don't change the order of any video backgrounds, they stay at the back.
+			z-index: 2;
+		}
+
+		.lmn-separator ~ *:not(.lmn-separator, .lmn-video-background) {
+			z-index: 3;
+			position: relative;
+		}
+	}
+	&.lmn-has-bottom-separator:not(.lmn-has-top-separator) {
+		> *:not(.lmn-separator, .lmn-video-background) {
+			z-index: 3;
+			position: relative;
+		}
+	}
+
+	.lmn-separator__top {
+		transform: scaleY(-1);
+	}
+
+	.lmn-separator__bottom {
+		.lmn-separator__wrapper {
+			top: auto;
+			bottom: 0;
+		}
+
+		.lmn-separator__layer-1 {
+			transform: none;
+		}
+	}
+
+	.lmn-separator__wrapper {
+		height: 200px;
+		inset: auto 0 0 0;
+	}
+
+	.lmn-separator__layer-1 {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		z-index: 4;
+	}
+
+	.lmn-separator,
+	.lmn-separator__wrapper {
+		position: absolute !important;
+		margin: 0;
+		max-width: none !important;
+	}
+
+	.lmn-separator {
+		pointer-events: none;
+		inset: -1px 0; // -1px on the sides might make horizontal scrollbars appear.
+		overflow: hidden;
+		svg {
+			filter: drop-shadow(0px 2px 20px rgba(153, 153, 153, 0.2));
+			left: 0;
+			right: 0;
+		}
+	}
+}
+
+// More specificity for the paddings to apply in blocks.
+.entry-content .lmn-block {
+	&.lmn-has-top-separator {
+		padding-top: 200px;
+	}
+
+	&.lmn-has-bottom-separator {
+		padding-bottom: 200px;
+	}
+}
+
+@include mobile {
+	.entry-content .lmn-block {
+		&.lmn-has-top-separator {
+			padding-top: 23vw;
+		}
+
+		&.lmn-has-bottom-separator {
+			padding-bottom: 23vw;
+		}
+		.lmn-separator__wrapper {
+			height: 23vw;
+		}
+	}
+}

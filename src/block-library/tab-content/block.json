@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/tab-content",
+	"title": "Tab Content",
+	"description": "A wrapper for tab panels.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation", "lumen/tabPanelEffect", "lumen/equalTabHeight" ],
+	"keywords": [],
+	"parent": [
+		"lumen/tabs"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "hidden"
+}

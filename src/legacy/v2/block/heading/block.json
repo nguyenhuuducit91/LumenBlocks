@@ -1,0 +1,10 @@
+{
+	"name": "lmb/heading",
+	"title": "Advanced Heading",
+	"description": "Introduce new sections of your content in style.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Title"
+	],
+	"textdomain": "lumen-blocks"
+}

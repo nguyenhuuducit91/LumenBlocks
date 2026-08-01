@@ -1,0 +1,15 @@
+/**
+ * Editor styles for the CTA Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+// Contents go full-width when full-width.
+[data-type][data-align="full"] .lmb-cta.lmb-main-block:not(.lmb--has-block-background),
+// Contents go full-width when full-width with block background.
+[data-type][data-align="full"] .lmb-cta.lmb-main-block.lmb-main-block--inner-full.lmb--has-block-background {
+	padding: 0;
+	.lmb-cta__item {
+		border-radius: 0;
+	}
+}

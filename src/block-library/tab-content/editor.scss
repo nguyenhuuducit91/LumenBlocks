@@ -1,0 +1,19 @@
+.lmn-block-tab-content.lmn-block {
+	margin-bottom: 0;
+	display: flex;
+}
+.lmn-block-tab-content > .lmn-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: grid;
+	> [data-block] {
+		grid-column: 1 / 1;
+		grid-row: 1 / 1;
+		z-index: 2; // The active panel should be on top.
+	}
+}
+.lmn-block-tab-content > .lmn-inner-blocks {
+	&,
+	> .block-editor-inner-blocks,
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		height: 100%;
+	}
+}

@@ -1,0 +1,369 @@
+/*
+ * External dependencies
+ */
+import {
+	AdvancedRangeControl,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedToolbarControl,
+	ColorPaletteControl,
+	FourRangeControl,
+	AdvancedToggleControl,
+	AdvancedSelectControl,
+} from '~lumen/ui'
+import { i18n } from 'lumen'
+import {
+	useBlockAttributesContext, useBlockLayoutDefaults, usePresetControls,
+} from '~lumen/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
+import { BorderControls as _BorderControls } from '../helpers/borders'
+import { Link as _Link } from '../link'
+import { Icon as _Icon } from '../icon'
+import { applyFilters } from '@wordpress/hooks'
+import { useSelect } from '@wordpress/data'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { getAttributeNameFunc } from '~lumen/utils'
+
+export const Icon = props => (
+	<_Icon.InspectorControls
+		hasColor={ props.hasColor }
+		hasGradient={ false }
+		hasShape={ false }
+		hasBackgroundShape={ false }
+		hasIconGap={ props.hasIconGap }
+		hasIconPosition={ props.hasIconPosition }
+		defaultValue={ props.defaultValue }
+		iconSizePlaceholderName="button-icon-size"
+		iconGapPlaceholderName={ props.iconGapPlaceholderName }
+	/>
+)
+
+Icon.defaultProps = {
+	hasIconGap: true,
+	hasIconPosition: true,
+	hasColor: true,
+	defaultValue: '',
+}
+
+export const Link = _Link.InspectorControls
+
+const HOVER_OPTIONS = [
+	{
+		label: __( 'None', i18n ),
+		value: '',
+	},
+	{
+		label: __( 'Darken', i18n ),
+		value: 'darken',
+	},
+	{
+		label: __( 'Lift', i18n ),
+		value: 'lift',
+	},
+	{
+		label: __( 'Scale', i18n ),
+		value: 'scale',
+	},
+	{
+		label: __( 'Lift & Scale', i18n ),
+		value: 'lift-scale',
+	},
+	{
+		label: __( 'Lift More', i18n ),
+		value: 'lift-more',
+	},
+	{
+		label: __( 'Scale More', i18n ),
+		value: 'scale-more',
+	},
+	{
+		label: __( 'Lift & Scale More', i18n ),
+		value: 'lift-scale-more',
+	},
+]
+
+export const HoverEffects = () => {
+	return (
+		<AdvancedSelectControl
+			label={ __( 'Hover Effect', i18n ) }
+			attribute="buttonHoverEffect"
+			options={ HOVER_OPTIONS }
+			default="darken"
+			helpTooltip={ {
+				video: 'button-hover-effect',
+				title: __( 'Hover effect', i18n ),
+				description: __( 'Triggers animation or effects when you mouse over', i18n ),
+			} }
+		/>
+	)
+}
+
+export const ColorsControls = props => {
+	const {
+		hasIconColor,
+		hasTextColor,
+		attrNameTemplate = 'button%s',
+	} = props
+
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
+
+	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
+		return attributes[ getAttrName( 'backgroundColorType' ) ]
+	} )
+
+	return ( <>
+		<AdvancedToolbarControl
+			controls={ [
+				{
+					value: '',
+					title: __( 'Single', i18n ),
+				},
+				{
+					value: 'gradient',
+					title: __( 'Gradient', i18n ),
+				},
+			] }
+			attribute={ getAttrName( 'backgroundColorType' ) }
+			isSmall={ true }
+		/>
+		<ColorPaletteControl
+			label={ __( 'Button Color', i18n ) }
+			attribute={ getAttrName( 'backgroundColor' ) }
+			hover="all"
+			isGradient={ buttonBackgroundColorType === 'gradient' }
+		/>
+
+		{ hasTextColor && (
+			<ColorPaletteControl
+				label={ __( 'Text Color', i18n ) }
+				attribute="textColor1"
+				hover="all"
+			/>
+		) }
+
+		{ hasIconColor && (
+			<ColorPaletteControl
+				label={ __( 'Icon Color', i18n ) }
+				attribute="iconColor1"
+				hover="all"
+			/>
+		) }
+	</> )
+}
+
+export const Colors = props => {
+	return (
+		<InspectorStyleControls>
+			<PanelAdvancedSettings
+				title={ __( 'Button Colors', i18n ) }
+				id="button-colors"
+			>
+				<ColorsControls { ...props } />
+			</PanelAdvancedSettings>
+		</InspectorStyleControls>
+	)
+}
+
+Colors.defaultProps = {
+	hasTextColor: true,
+	hasIconColor: false,
+}
+
+const SizeControls = props => {
+	const {
+		attrNameTemplate = 'button%s',
+		paddingPlaceholderName = 'button-padding',
+	} = props
+
+	const getAttrName = getAttributeNameFunc( attrNameTemplate )
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const buttonPaddingPlaceholder = getPlaceholder( paddingPlaceholderName, { single: false } )
+
+	const presetMarks = usePresetControls( 'spacingSizes' )
+		?.getPresetMarks( { addNonePreset: true } ) || null
+
+	return ( <>
+		{ props.hasFullWidth && (
+			<AdvancedToggleControl
+				label={ __( 'Full Width', i18n ) }
+				attribute={ getAttrName( 'fullWidth' ) }
+			/>
+		) }
+		<AdvancedRangeControl
+			label={ __( 'Min. Button Height', i18n ) }
+			responsive="all"
+			attribute={ getAttrName( 'minHeight' ) }
+			min={ 0 }
+			max={ 100 }
+			placeholder={ getPlaceholder( 'button-min-height' ) }
+		/>
+		{ props.hasWidth && ! props.hasFullWidth && (
+			<AdvancedRangeControl
+				label={ __( 'Button Width', i18n ) }
+				responsive="all"
+				attribute={ getAttrName( 'width' ) }
+				min={ 0 }
+				max={ 100 }
+				placeholder=""
+			/>
+		) }
+		<FourRangeControl
+			label={ __( 'Button Padding', i18n ) }
+			units={ [ 'px', '%' ] }
+			responsive="all"
+			defaultLocked={ true }
+			attribute={ getAttrName( 'padding' ) }
+			sliderMin={ [ 0, 0 ] }
+			sliderMax={ [ 40, 100 ] }
+			vhMode={ true }
+			placeholderTop={ buttonPaddingPlaceholder?.top || '' }
+			placeholderRight={ buttonPaddingPlaceholder?.right || '' }
+			placeholderBottom={ buttonPaddingPlaceholder?.bottom || '' }
+			placeholderLeft={ buttonPaddingPlaceholder?.left || '' }
+			helpTooltip={ {
+				// TODO: Add a working video
+				title: __( 'Button padding', i18n ),
+				description: __( 'Adjusts the space between the button text and button borders', i18n ),
+			} }
+			marks={ presetMarks }
+		/>
+	</> )
+}
+
+export const Size = props => {
+	return (
+		<InspectorStyleControls>
+			<PanelAdvancedSettings
+				title={ __( 'Button Size & Spacing', i18n ) }
+				id="button"
+			>
+				<SizeControls { ...props } />
+			</PanelAdvancedSettings>
+		</InspectorStyleControls>
+	)
+}
+
+Size.defaultProps = {
+	hasWidth: false,
+}
+
+const BorderControls = props => {
+	const className = useBlockAttributesContext( attributes => {
+		return attributes.className
+	} )
+	const { getPlaceholder } = useBlockLayoutDefaults()
+
+	const borderWidthPlaceholder = className === 'is-style-ghost' ? getPlaceholder( 'button-ghost-border-width' ) : getPlaceholder( 'button-border-width' )
+
+	return (
+		<_BorderControls
+			hasBorderRadiusHover={ false }
+			borderSelector={ props.borderSelector }
+			borderRadiusPlaceholder={ props.placeholder }
+			borderTypeValue={ getPlaceholder( 'button-border-style' ) }
+			borderWidthPlaceholder={ borderWidthPlaceholder }
+			placeholderTemplate="button"
+			{ ...props }
+		/>
+	)
+}
+
+export const Borders = props => {
+	return (
+		<InspectorStyleControls>
+			<PanelAdvancedSettings
+				title={ __( 'Button Borders & Shadows', i18n ) }
+				id="button-borders"
+			>
+				<BorderControls
+					attrNameTemplate="button%s"
+					hasBorderRadiusHover={ false }
+					{ ...props }
+				/>
+			</PanelAdvancedSettings>
+		</InspectorStyleControls>
+	)
+}
+
+Borders.defaultProps = {
+	borderSelector: '',
+}
+
+export const Edit = props => {
+	const {
+		borderSelector,
+		hasTextColor,
+		hasIcon,
+		hasLink,
+		hasIconGap,
+		hasIconPosition,
+		borderRadiusPlaceholder,
+		hasFullWidth,
+		iconGapPlaceholderName,
+		...propsToPass
+	} = props
+
+	const { clientId } = useBlockEditContext()
+	const { parentBlock } = useSelect(
+		select => {
+			const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+			const rootClientId = getBlockRootClientId( clientId )
+
+			return {
+				parentBlock: getBlock( rootClientId ),
+			}
+		},
+		[ clientId ]
+	)
+
+	const enableLink = applyFilters( 'lumen.edit.button.enable-link', true, parentBlock )
+
+	return (
+		<>
+			{ ( hasLink && enableLink ) && <Link hasAnchorId={ true } /> }
+			<Colors hasTextColor={ hasTextColor } { ...propsToPass } />
+			<Size hasFullWidth={ hasFullWidth } />
+			<Borders
+				borderSelector={ borderSelector }
+				placeholder={ borderRadiusPlaceholder }
+			/>
+			{ hasIcon && (
+				<Icon
+					hasIconGap={ hasIconGap }
+					hasIconPosition={ hasIconPosition }
+					iconGapPlaceholderName={ iconGapPlaceholderName }
+				/>
+			) }
+		</>
+	)
+}
+
+Edit.defaultProps = {
+	hasIcon: true,
+	hasLink: true,
+	borderSelector: '',
+	hasTextColor: true,
+	hasIconGap: true,
+	hasIconPosition: true,
+	hasFullWidth: false,
+	iconGapPlaceholderName: undefined,
+}
+
+Edit.Link = Link
+Edit.Colors = Colors
+Edit.Colors.Controls = ColorsControls
+Edit.Size = Size
+Edit.Size.Controls = SizeControls
+Edit.Borders = Borders
+Edit.Borders.Controls = BorderControls
+Edit.Icon = Icon
+Edit.HoverEffects = HoverEffects

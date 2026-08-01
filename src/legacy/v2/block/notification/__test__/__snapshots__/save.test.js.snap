@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-notification lmb-notification--v2 lmb-notification--design-basic lmb-notification--type-success lmb-main-block"
+>
+  <style>
+    .lmb-button{border-color:#ffffff}.lmb-button .lmb-button--inner,.lmb-button.lmb-button--has-icon.lmb-button--has-icon svg{color:#ffffff}.lmb-button:hover .lmb-button--inner,.lmb-button:hover svg{color:#ffffff}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-notification__item lmb-notification--new-icon lmb--shadow-3"
+      >
+        <h5
+          class="lmb-notification__title"
+        >
+          <div>
+            Title for This Block
+          </div>
+        </h5>
+        <p
+          class="lmb-notification__description"
+        >
+          <div>
+            Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+          </div>
+        </p>
+        <div
+          class="lmb-button-container"
+        >
+          <a
+            class="lmb-button lmb-button--size-normal lmb-button--design-ghost"
+            href=""
+            rel=""
+            title=""
+          >
+            
+            <span
+              class="lmb-button--inner"
+            >
+              <div>
+                Button text
+              </div>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Notification (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-notification lmb-notification--v2 lmb-notification--design-wave-2 lmb-notification--type-notifType lmb-notification--dismissible lmb-main-block"
+>
+  <style>
+    .lmb-notification__item{border-radius:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode;padding-right:100px !important}.lmb-notification__item:before{background-color:#123456 !important;opacity:12.3}.lmb-notification__close-button svg{fill:#123456 !important}.lmb-notification__icon svg:not(.lmb-custom-icon){color:#123456 !important}.lmb-notification__icon{margin-left:auto !important;margin-right:auto !important;height:123px !important;width:123px !important;opacity:123 !important;margin-bottom:123px !important}.lmb-notification__icon .lmb-icon-inner-svg,.lmb-notification__icon .lmb-icon-inner-svg svg{width:123px !important;height:123px !important}.lmb-notification__icon .lmb-icon-inner-svg{color:#123456 !important;transform:rotate(123deg) !important}@media screen and (min-width:768px){.lmb-notification__close-button{width:123px;height:123px}}@media screen and (max-width:1025px){.lmb-notification__item{background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.lmb-notification__item:before{opacity:12.3}.lmb-notification__icon{margin-left:auto !important;margin-right:auto !important;height:123px !important;width:123px !important}}@media screen and (min-width:768px) and (max-width:1025px){.lmb-notification__close-button{width:123px;height:123px}.lmb-notification__icon .lmb-icon-inner-svg,.lmb-notification__icon .lmb-icon-inner-svg svg{width:123px !important;height:123px !important}.lmb-notification__icon{margin-bottom:123px !important}}@media screen and (max-width:768px){.lmb-notification__item{background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.lmb-notification__item:before{opacity:12.3}.lmb-notification__close-button{width:123px;height:123px}.lmb-notification__icon{margin-left:auto !important;margin-right:auto !important;height:123px !important;width:123px !important;margin-bottom:123px !important}.lmb-notification__icon .lmb-icon-inner-svg,.lmb-notification__icon .lmb-icon-inner-svg svg{width:123px !important;height:123px !important}}.lmb-notification__icon .lmb-icon-inner-svg,.lmb-notification__icon .lmb-icon-inner-svg svg *{color:#123456 !important;fill:#123456 !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-notification__item lmb-notification--new-icon lmb--shadow-1 lmb--has-background-overlay"
+      >
+        <span
+          class="lmb-notification__close-button"
+          role="button"
+          tabindex="0"
+        >
+          <svg />
+        </span>
+        <div
+          class="lmb-notification__icon"
+        >
+          <div
+            class="lmb-icon-inner-svg lmb-icon--#123456"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

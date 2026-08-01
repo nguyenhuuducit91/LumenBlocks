@@ -1,0 +1,16 @@
+/**
+ * Editor styles for the Feature Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.lmb-feature {
+	&.lmb-feature--design-basic,
+	&.lmb-feature--design-plain {
+		.lmb-feature__image.lmb-image-upload-placeholder.lmb-image-upload-has-placeholder {
+			height: 250px;
+		}
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/notification",
+	"title": "Notification",
+	"description": "Show a notice to your readers. People can dismiss the notice to permanently hide it.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"keywords": [
+		"Notice",
+		"Alert"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/icon"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/heading",
+		"lumen/text",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

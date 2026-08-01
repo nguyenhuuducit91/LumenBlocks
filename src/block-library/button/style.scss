@@ -1,0 +1,38 @@
+@import "common";
+
+// We have a block group, and that has the bottom margin.
+.lmn-block-button {
+	--lmn-block-margin-bottom: 0;
+}
+
+// This makes it so that when the button becomes too small for the viewport,
+// that's the time we wrap text. If the button is fullwidth, and other
+// non-fullwidth button presses against it, this stops the button text from
+// wrapping (it will make the other button wrap below instead)
+@include tablet-mobile {
+	.lmn-block-button {
+		min-width: fit-content;
+	}
+}
+
+.lmn-block.lmn-block-button {
+	width: auto;
+	min-width: fit-content;
+}
+
+// Prevent fullwidth buttons from going past their container.
+.lmn-button {
+	&,
+	&::before,
+	&::after {
+		box-sizing: border-box;
+	}
+}
+
+// Force Safari to render the SVG on its own layer to prevent shifting
+// during parent transition.
+@supports (font: -apple-system-body) {
+	.lmn-button svg {
+		will-change: transform;
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/separator",
+	"title": "Separator",
+	"description": "A fancy separator to be placed between content.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Svg Divider"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

@@ -1,0 +1,20 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/card",
+	"title": "Card",
+	"description": "Describe a single subject in a small card. You can use this to describe your product, service or a person.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-substitution-blocks": [
+		"lumen/heading",
+		"lumen/text",
+		"lumen/subtitle",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

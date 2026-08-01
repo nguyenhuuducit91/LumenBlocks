@@ -1,0 +1,71 @@
+/**
+ * This defines all styles related to making the hover states of blocks animate smoothly.
+ */
+// Hover transitions.
+
+$lmn-anim-selectors:
+	".lmn-block",
+	".lmn-container",
+	".lmn-container-padding",
+	".lmn-img-wrapper", // Images.
+	".lmn-img-wrapper img", // Images.
+	".lmn-block-heading__top-line",
+	".lmn-block-heading__bottom-line",
+	".lmn-block-posts__item-hide", // For posts transitions
+	".lmn-block-posts__title > a", // For posts title
+	".lmn-button", // Buttons
+	".lmn-button__inner-text", // Button text
+	".lmn-block li", // For icon list texts
+	".lmn-block p",
+	".lmn-block h1",
+	".lmn-block h2",
+	".lmn-block h3",
+	".lmn-block h4",
+	".lmn-block h5",
+	".lmn-block h6",
+	".lmn-block [class*='__text']";
+
+$lmn-anim-selectors-pseudo:
+	".lmn--has-background-overlay::before", // Image background overlays
+	".lmn-block .lmn-button::before", // For button animations
+	".lmn-block .lmn-button::after", // For button animations
+	".lmn-img-wrapper::after", // Image block overlay.
+	".lmn-img-wrapper::before", // Image block hover ovelay.
+	".lmn-block li::marker", // For icon list marker
+	".lmn-block-tabs__tab";  // Tabs block
+
+body.lmn--anim-init {
+	:is(#{$lmn-anim-selectors}), // Text inside blocks.
+	// These are outside :is() since pseudo elements won't compile correctly.
+	#{$lmn-anim-selectors-pseudo} {
+		transition: var(--lmn-transition-default, all var(--lmn-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), flex 0s, max-width 0s, visibility 0s); // Don't include flex & max-width since column widths would animate.
+	}
+
+	// WP 6.9 Compatibility: Remove the transition for Core Stretchy Paragraph blocks inside Lumen blocks
+	// This is to prevent the text from flickering.
+	.lmn-block .has-fit-text {
+		transition: font-size 0s;
+	}
+
+	:where(#{$lmn-anim-selectors}),
+	#{$lmn-anim-selectors-pseudo} {
+		border-width: 1px;
+		border-style: none;
+	}
+	.lmn--svg-wrapper :is(.lmn--shape-icon, .lmn--inner-svg, .lmn--inner-svg *) {
+		transition: var(--lmn-transition-default, all var(--lmn-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95));
+	}
+	// Icons can have a delay in transitions. It's more apparent when transitioning fill, removing it seems to fix this.
+	.lmn--svg-wrapper .lmn--inner-svg svg:last-child {
+		transition: var(--lmn-transition-default, all var(--lmn-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), fill 0s);
+	}
+}
+
+// Some attributes will not animate if they have no starting values.
+.lmn-container,
+.lmn-container-padding {
+	min-height: 0;
+}
+.lmn-block {
+	min-height: 0;
+}

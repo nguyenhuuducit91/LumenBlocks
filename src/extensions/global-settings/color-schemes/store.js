@@ -1,0 +1,144 @@
+/**
+ * External dependencies
+ */
+import { fetchSettings } from '~lumen/utils'
+import { i18n } from 'lumen'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	register, createReduxStore, dispatch,
+} from '@wordpress/data'
+import domReady from '@wordpress/dom-ready'
+import { __ } from '@wordpress/i18n'
+
+// Include all the stored state.
+const DEFAULT_STATE = {
+	colorSchemes: [],
+	hideColorSchemeColors: '',
+	baseColorScheme: '',
+	backgroundModeColorScheme: '',
+	containerModeColorScheme: '',
+	useV3_16_0_ColorSchemeInheritance: '',
+}
+
+const STORE_ACTIONS = {
+	updateColorSchemes: colorSchemes => ( {
+		type: 'UPDATE_COLOR_SCHEMES',
+		colorSchemes,
+	} ),
+	updateSettings: settings => ( {
+		type: 'UPDATE_SETTINGS',
+		settings,
+	} ),
+}
+
+const STORE_SELECTORS = {
+	getSettings: state => ( {
+		...state,
+		baseColorScheme: state.baseColorScheme || 'scheme-default-1',
+		backgroundModeColorScheme: state.backgroundModeColorScheme || 'scheme-default-2',
+		containerModeColorScheme: state.containerModeColorScheme || 'scheme-default-1',
+	} ),
+}
+
+const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
+	switch ( action.type ) {
+		case 'UPDATE_COLOR_SCHEMES': {
+			return {
+				...state,
+				colorSchemes: action.colorSchemes,
+			}
+		}
+		case 'UPDATE_SETTINGS': {
+			return {
+				...state,
+				...action.settings,
+			}
+		}
+		default: {
+			return state
+		}
+	}
+}
+
+register( createReduxStore( 'lumen/global-color-schemes', {
+	reducer: STORE_REDUCER,
+	actions: STORE_ACTIONS,
+	selectors: STORE_SELECTORS,
+} ) )
+
+// Load all our settings into our store.
+domReady( () => {
+	fetchSettings().then( response => {
+		const {
+			lumen_global_color_schemes: _colorSchemes,
+			lumen_global_hide_color_scheme_colors: hideColorSchemeColors,
+			lumen_global_base_color_scheme: baseColorScheme,
+			lumen_global_background_mode_color_scheme: backgroundModeColorScheme,
+			lumen_global_container_mode_color_scheme: containerModeColorScheme,
+			lumen_use_v3_16_0_color_scheme_inheritance: useV3_16_0_ColorSchemeInheritance,
+		} = response
+
+		const colorSchemesRaw = Array.isArray( _colorSchemes ) && _colorSchemes.length > 0 ? [ ..._colorSchemes ] : []
+
+		const defaultScheme = {
+			name: __( 'Default Scheme', i18n ),
+			key: 'scheme-default-1',
+			colorScheme: {
+				backgroundColor: { desktop: '' },
+				headingColor: { desktop: '' },
+				textColor: { desktop: '' },
+				linkColor: { desktop: '' },
+				accentColor: { desktop: '' },
+				buttonBackgroundColor: { desktop: '' },
+				buttonTextColor: { desktop: '' },
+				buttonOutlineColor: { desktop: '' },
+			},
+			hideInPicker: false,
+		}
+
+		const backgroundScheme = {
+			name: __( 'Background Scheme', i18n ),
+			key: 'scheme-default-2',
+			colorScheme: {
+				backgroundColor: { desktop: '' },
+				headingColor: { desktop: '' },
+				textColor: { desktop: '' },
+				linkColor: { desktop: '' },
+				accentColor: { desktop: '' },
+				buttonBackgroundColor: { desktop: '' },
+				buttonTextColor: { desktop: '' },
+				buttonOutlineColor: { desktop: '' },
+			},
+			hideInPicker: false,
+		}
+
+		const hasDefaultScheme = colorSchemesRaw.some( scheme => scheme.key === 'scheme-default-1' )
+		const hasBackgroundScheme = colorSchemesRaw.some( scheme => scheme.key === 'scheme-default-2' )
+
+		if ( ! hasDefaultScheme ) {
+			colorSchemesRaw.push( defaultScheme )
+		}
+		if ( ! hasBackgroundScheme ) {
+			colorSchemesRaw.push( backgroundScheme )
+		}
+
+		// Ensure there are a max of three color schemes
+		const colorSchemes = [ ...colorSchemesRaw ].sort( ( a, b ) => {
+			return a.key < b.key ? -1 : ( a.key > b.key ? 1 : 0 )
+		} )
+
+		const settings = {
+			colorSchemes,
+			hideColorSchemeColors,
+			baseColorScheme,
+			backgroundModeColorScheme,
+			containerModeColorScheme,
+			useV3_16_0_ColorSchemeInheritance,
+		}
+
+		dispatch( 'lumen/global-color-schemes' ).updateSettings( settings )
+	} )
+} )

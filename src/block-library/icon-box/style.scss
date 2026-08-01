@@ -1,0 +1,6 @@
+.lmn-block-icon-box__content {
+	> :not(.lmn-block-icon-label) {
+		padding-left: 64px;
+	}
+	max-width: none !important;
+}

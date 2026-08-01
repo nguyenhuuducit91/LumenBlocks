@@ -1,0 +1,12 @@
+.lmn-block-price {
+	[data-type="lumen/text"] {
+		display: inline-block;
+		width: auto !important;
+		&:first-child {
+			vertical-align: top;
+		}
+		&:last-child {
+			vertical-align: bottom;
+		}
+	}
+}

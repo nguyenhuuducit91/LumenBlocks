@@ -1,0 +1,39 @@
+/**
+ * Frontend styles for the CTA Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-cta.lmb-cta--v2 {
+	.lmb-cta__item {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.lmb-cta__title,
+	.lmb-cta__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	&:not(.lmb-cta--design-plain) {
+		.lmb-cta__item {
+			@include box();
+		}
+	}
+	&.lmb-cta--design-plain .lmb-cta__item {
+		padding: 0 $box-hori-padding;
+	}
+}
+
+// Full width
+.lmb-cta.lmb-main-block.alignfull {
+	&:not(.lmb--has-block-background),
+	&.lmb-main-block--inner-full {
+		padding: 0;
+		.lmb-cta__item {
+			border-radius: 0;
+		}
+	}
+}

@@ -1,0 +1,70 @@
+@import "common";
+
+.lmn-block-progress-bar:not(.alignfull) {
+	width: 100%;
+}
+
+.lmn-progress-bar {
+	position: relative;
+	width: var(--progress-bar-width, 100%);
+	height: var(--progress-size, 32px);
+	border-radius: var(--progress-border-radius, 0);
+	background-color: var(--progress-background, #f0f0f0);
+	overflow: hidden;
+	.lmn-progress-bar__bar {
+		// 	percentage = ( progressValue (%) / progressMax ) * 100
+		--progress-percent: calc(( var(--progress-value, 50%) / var(--progress-max, 100)) * 100);
+		width: 0%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background-color: var(--progress-color-1, #3498db);
+		border-radius: var(--progress-bar-border-radius, 0);
+		.lmn-progress-bar__inner-text {
+			white-space: nowrap !important;
+			overflow: hidden;
+			&.lmn-progress-bar__text {
+				text-overflow: ellipsis;
+				padding-inline-start: 12px;
+			}
+			&.lmn-progress-bar__progress-value-text {
+				padding-inline-end: 12px;
+			}
+		}
+	}
+	&.lmn--with-animation {
+		.lmn-progress-bar__bar {
+			will-change: width;
+			@include transition(width);
+		}
+	}
+	&.lmn-animate {
+		.lmn-progress-bar__bar {
+			width: var(--progress-percent);
+		}
+	}
+}
+
+// These are styles added from the global color schemes.
+:where(#{$lmn-has-color-schemes-selector}) {
+	.lmn-block-progress-bar {
+		--progress-color-1: var(--lmn-accent-color);
+	}
+}
+
+@media (prefers-reduced-motion) {
+	.lmn-progress-bar {
+		&.lmn--with-animation {
+			.lmn-progress-bar__bar {
+				transition: none;
+			}
+		}
+	}
+}
+
+.lmn-block .lmn-block-progress-bar__container {
+	display: flex;
+	width: 100%;
+	justify-content: var(--lmn-alignment-justify-content, flex-start);
+}

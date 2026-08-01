@@ -1,0 +1,22 @@
+.lmb-design-panel-item {
+	position: relative;
+	// Our inspector panels are now a bit gray, blend the white image
+	// background.
+	.lmb-design-panel-item__image {
+		mix-blend-mode: darken;
+		max-width: 100%;
+		height: auto;
+	}
+}
+.lmb-design-panel-item__hover-image {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	width: calc(100% - 10px);
+	opacity: 0;
+	transition: opacity 0.4s ease-in-out;
+}
+.lmb-design-panel-item:hover .lmb-design-panel-item__hover-image {
+	opacity: 1;
+}

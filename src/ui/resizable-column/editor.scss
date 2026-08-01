@@ -1,0 +1,130 @@
+/**
+ * COMMENTED THIS OUT FOR NOW, THIS ONE DISPLAYS COLUMN VALUES OF ALL DECENDANTS
+ * AND ITS PARENTS. THE NEXT ONE DISPLAYS ONLY FOR THE SELECTED BLOCK AND ITS
+ * PARENTS.
+ * TODO: TEST FIRST WHICH ONE IS BETTER.
+ */
+
+// // Show column widths when hovering.
+// .lmn-row:hover .block-editor-block-list__layout:first-of-type > .wp-block {
+// 	.lmn-column-resizeable:first-of-type {
+// 		> .lmn-resizable-column__size-tooltip,
+// 		> .lmn-resizable-column__popup {
+// 			display: block !important;
+// 		}
+// 	}
+// }
+// // Show column widths when columns and their contents are selected.
+// [data-type^="lumen/"].has-child-selected > .lmn-row .block-editor-block-list__layout:first-of-type > .wp-block {
+// 	.lmn-column-resizeable:first-of-type {
+// 		> .lmn-resizable-column__size-tooltip,
+// 		> .lmn-resizable-column__popup {
+// 			display: block !important;
+// 		}
+// 	}
+// }
+
+// Show column widths when hovering.
+// .lmn-row:hover > * > * > .block-editor-block-list__layout > .wp-block {
+// 	> * > .lmn-column-resizeable {
+// 		> .lmn-resizable-column__size-tooltip,
+// 		> .lmn-resizable-column__popup {
+// 			display: block;
+// 		}
+// 	}
+// }
+// // Show column widths when columns and their contents are selected.
+// [data-type^="lumen/"].has-child-selected > .lmn-row > * > * > .block-editor-block-list__layout > .wp-block {
+// 	> * > .lmn-column-resizeable {
+// 		> .lmn-resizable-column__size-tooltip,
+// 		> .lmn-resizable-column__popup {
+// 			display: block;
+// 		}
+// 	}
+// }
+.lmn-resizable-column__size-tooltip {
+	// Prevents ::before pseudo element from overflowing and causing
+	// the size indicators to flicker.
+	overflow: auto;
+
+	&::before {
+		content: "";
+		height: 0;
+		width: 0;
+		display: block;
+		border: 6px solid transparent;
+		border-right-color: var(--wp-admin-theme-color-darker-20);
+		transform: translate(-6px, -6px) rotate(45deg);
+	}
+	// Drop down icon.
+	svg {
+		top: 2px;
+		position: relative;
+		margin-left: 4px;
+		display: none;
+	}
+
+	width: 16px;
+	height: 16px;
+	background: transparent;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: #fff;
+	padding: 0;
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	left: 0;
+	white-space: nowrap;
+	z-index: 9;
+	cursor: pointer;
+	user-select: none;
+	&:hover {
+		opacity: 1;
+	}
+	&:focus {
+		border-color: #007cba;
+		border-color: var(--wp-admin-theme-color);
+		box-shadow: 0 0 0 1px #007cba;
+		box-shadow: 0 0 0 1px var(--wp-admin-theme-color);
+		outline: 2px solid transparent;
+	}
+}
+
+// If the column is hovered on, show the column width location.
+.lmn-column-resizeable:hover > .lmn-resizable-column__size-tooltip {
+	opacity: 1;
+}
+
+// The .lmn--column-tooltip-hovered class is provided by the ColumnInnerBlocks
+// component.
+.lmn--column-tooltip-hovered .lmn-resizable-column__size-tooltip {
+	opacity: 1;
+	padding: 4px 8px;
+	background: rgba(0, 0, 0, 0.75);
+	width: auto;
+	height: auto;
+	&::before {
+		content: var(--width);
+		height: auto;
+		width: auto;
+		border: none;
+		transform: none;
+		background: transparent;
+		display: inline;
+	}
+	svg {
+		display: inline;
+	}
+}
+// Don't make the tooltips of the nested columns show up when we're showing tooltips.
+.lmn--column-tooltip-hovered .lmn-block-columns .lmn-resizable-column__size-tooltip {
+	opacity: 0;
+}
+
+.lmn-resizable-column__popup .components-popover__content {
+	padding: 8px 16px;
+	min-width: auto;
+	width: 130px;
+	font-size: 12px;
+}

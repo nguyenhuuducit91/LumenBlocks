@@ -1,0 +1,11 @@
+@import "common";
+
+// Always show in the editor.
+.lmb--hide-desktop.lmb--hide-desktop.lmb--hide-desktop,
+.lmb--hide-tablet.lmb--hide-tablet.lmb--hide-tablet,
+.lmb--hide-mobile.lmb--hide-mobile.lmb--hide-mobile {
+	display: block !important;
+	&.lmb-main-block {
+		display: flex !important;
+	}
+}

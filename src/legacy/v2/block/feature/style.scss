@@ -1,0 +1,81 @@
+/**
+ * Frontend styles for the Feature Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-feature.lmb-feature--v2 {
+	text-align: left;
+	&.lmb-feature--design-basic {
+		.lmb-feature__item {
+			@include box();
+		}
+	}
+
+	.lmb-feature__item {
+		display: grid;
+		justify-content: center;
+		align-items: center;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: $box-hori-padding;
+	}
+	.lmb-feature__image-side {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.lmb-feature__image {
+		&.lmb-feature__image-has-shape {
+			box-shadow: none !important;
+			border-radius: 0 !important;
+		}
+	}
+
+	.lmb-feature__title,
+	.lmb-feature__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+
+	.lmb-feature__item,
+	.lmb-feature__content {
+		background-size: cover;
+		background-position: center;
+	}
+
+	&.lmb-feature--invert {
+		.lmb-feature__content {
+			grid-column: 2;
+			grid-row: 1;
+		}
+	}
+}
+
+// Fallback for IE11: SVG icons will not display as bullets, fallback to normal bullets.
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	.lmb-feature.lmb-feature--v2 .lmb-feature__image.lmb-feature__image-has-shape.lmb-img.lmb-img--shape {
+		border-radius: 9999px !important;
+	}
+}
+
+@media screen and (max-width: $break-medium) {
+	.lmb-feature__item {
+		grid-template-columns: 1fr !important;
+	}
+	.lmb-feature.lmb-feature--v2 {
+		&.lmb-feature--design-basic,
+		&.lmb-feature--design-plain {
+			.lmb-feature__content {
+				grid-row: 2;
+				grid-column: 1;
+			}
+			.lmb-feature__image-side {
+				grid-row: 1;
+				grid-column: 1;
+			}
+		}
+	}
+}

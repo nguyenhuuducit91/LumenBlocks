@@ -1,0 +1,19 @@
+.lmn-block.lmn-block-blockquote {
+	margin-inline: 0;
+}
+.lmn-block-blockquote {
+	.block-editor-block-list__layout {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+	}
+	[data-type="lumen/icon"] {
+		flex: 0;
+		width: auto;
+	}
+}
+.editor-styles-wrapper .lmn-block-blockquote {
+	[data-type="lumen/text"] {
+		max-width: none;
+	}
+}

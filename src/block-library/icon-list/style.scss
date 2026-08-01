@@ -1,0 +1,106 @@
+@import "common";
+
+// Important, we can't use flex since it causes issues with columns.
+.lmn-block-icon-list {
+	.lmn-block-icon-list--grid:is(ul, ol) {
+		display: grid;
+		grid-template-columns: repeat(var(--lmn-icon-list-column-count, 1), 1fr);
+		row-gap: var(--lmn-icon-list-row-gap, 0);
+		column-gap: var(--lmn-icon-list-column-gap, 16px);
+		width: 100%;
+		text-align: start;
+	}
+	.lmn-block-icon-list--column:is(.lmn-block-icon-list__ul, .lmn-block-icon-list__ol) {
+		display: block;
+		column-count: var(--lmn-icon-list-column-count, 1);
+		column-gap: var(--lmn-icon-list-column-gap, 16px);
+		width: 100%;
+		text-align: start;
+		.lmn-block-icon-list__group {
+			width: fit-content;
+			padding-inline-start: 0;
+			list-style-type: none !important;
+		}
+		.wp-block-lumen-icon-list-item {
+			margin-bottom: var(--lmn-icon-list-row-gap, 0);
+		}
+		.wp-block-lumen-icon-list-item:last-child {
+			margin-bottom: 0;
+		}
+
+	}
+	:is(ul.lmn-block-icon-list__ul, ol.lmn-block-icon-list__ol) {
+		flex: none;
+	}
+	ol {
+		list-style-image: none;
+	}
+
+	ul.lmn-block-icon-list__ul {
+		list-style-type: none !important;
+	}
+	ul.lmn-block-icon-list__ul,
+	ol.lmn-block-icon-list__ol {
+		padding-inline-start: var(--lmn-icon-list-indentation, 0);
+	}
+
+	.lmn-block-icon-list__ol {
+		counter-reset: lmn-icon-list-counter;
+		list-style-type: none !important;
+	}
+
+	// @from https://css-tricks.com/almanac/properties/b/break-inside/
+	li {
+		page-break-inside: avoid; /* Firefox */
+		break-inside: avoid;
+	}
+
+	// For previous icon list blocks.
+	&.lmn-block :is(ul:not(.lmn-block-icon-list__ul)),
+	&.lmn-block :is(ol:not(.lmn-block-icon-list__ol)) {
+		padding-inline-start: 1em;
+	}
+	// For previous icon list blocks.
+	// Need to make this fit the content so that we can align left/center/right
+	// the list alignment.
+	:not(ul.lmn-block-icon-list__ul, ol.lmn-block-icon-list__ol) {
+		width: fit-content;
+	}
+	:not(ul.lmn-block-icon-list__ul, ol.lmn-block-icon-list__ol) li:not(.lmn-block-icon-list-item) {
+		width: fit-content;
+		&::marker {
+			line-height: 0;
+		}
+	}
+
+	> svg [id^="lmn-icon-list__icon-svg-def"] svg {
+		width: initial;
+	}
+}
+
+// Alignments when the icon list is aligned.
+.lmn-block-icon-list.lmn-block :is(ul, ol) {
+	margin-left: var(--lmn-alignment-margin-left);
+	margin-right: var(--lmn-alignment-margin-right);
+}
+
+// Prevents theme's css from affecting the icon list.
+.lmn-block-icon-list.lmn-block :is(ul, ol) {
+	margin-top: 0;
+	margin-bottom: 0;
+
+	li:last-child {
+		margin-bottom: 0;
+	}
+}
+
+:where(#{$lmn-has-color-schemes-selector}) {
+	.lmn-block-icon-list {
+		--lmn-icon-list-marker-color: var(--lmn-accent-color);
+		:where(.lmn-block-icon-list-item) {
+			&:where(:hover) {
+				--lmn-icon-list-marker-color: var(--lmn-accent-color-hover, var(--lmn-accent-color));
+			}
+		}
+	}
+}

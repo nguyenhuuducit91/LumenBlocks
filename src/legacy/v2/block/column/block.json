@@ -1,0 +1,13 @@
+{
+	"name": "lmb/column",
+	"title": "Advanced Column",
+	"description": "A single column within an advanced columns block. Get advanced options on how you want your column to look.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Section rows"
+	],
+	"parent": [
+		"lmb/columns"
+	],
+	"textdomain": "lumen-blocks"
+}

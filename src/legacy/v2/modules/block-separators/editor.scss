@@ -1,0 +1,16 @@
+// Limit the height of the design picker.
+.lmb-top-block-separator-panel,
+.lmb-bottom-block-separator-panel {
+	.lmb-design-control {
+		max-height: 270px;
+	}
+}
+.lmb-top-block-separator-panel .lmb-design-panel-item__image {
+	transform: scaleY(-1);
+}
+.lmb-top-separator,
+.lmb-bottom-separator {
+	svg {
+		transition: none !important;
+	}
+}

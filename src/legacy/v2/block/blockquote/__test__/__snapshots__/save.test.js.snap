@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blockquote (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-blockquote lmb-blockquote--v3 lmb-blockquote--design-plain lmb-main-block"
+>
+  <style>
+    .lmb-blockquote__quote{width:70px !important;height:70px !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-blockquote__item"
+      >
+        <svg
+          class="lmb-blockquote__quote"
+          height="70"
+          width="70"
+        />
+        <div
+          class="lmb-blockquote__content"
+        >
+          <p
+            class="lmb-blockquote__text"
+          >
+            <div />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Blockquote (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-blockquote lmb-blockquote--v3 lmb-blockquote--design-wave-2 lmb-blockquote--small-quote lmb-main-block"
+>
+  <style>
+    .lmb-blockquote__text{font-family:"textFontFamily",Sans-serif !important;font-size:123textFontSizeUnit !important;font-weight:textFontWeight !important;text-transform:textTextTransform !important;letter-spacing:123px !important;line-height:123textLineHeightUnit !important;color:#123456}.lmb-blockquote__item{text-align:textAlign !important}@media screen and (max-width:1025px){.lmb-blockquote__text{line-height:123textTabletLineHeightUnit !important;font-size:123textTabletFontSizeUnit !important}}@media screen and (min-width:768px) and (max-width:1025px){.lmb-blockquote__item{text-align:textTabletAlign !important}}@media screen and (max-width:768px){.lmb-blockquote__text{line-height:123textMobileLineHeightUnit !important;font-size:123textMobileFontSizeUnit !important}.lmb-blockquote__item{text-align:textMobileAlign !important}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-blockquote__item"
+      >
+        <div
+          class="lmb-blockquote__content"
+        >
+          <p
+            class="lmb-blockquote__text"
+          >
+            <div>
+              text
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

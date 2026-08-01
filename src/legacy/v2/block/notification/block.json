@@ -1,0 +1,11 @@
+{
+	"name": "lmb/notification",
+	"title": "Notification",
+	"description": "Show a notice to your readers. People can dismiss the notice to permanently hide it.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Notice",
+		"Alert"
+	],
+	"textdomain": "lumen-blocks"
+}

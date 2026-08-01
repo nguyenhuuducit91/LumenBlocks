@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/tab-labels",
+	"title": "Tab Labels",
+	"description": "Create interactive navigation within tabs.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation", "lumen/initialTabOpen", "lumen/tabOrientation" ],
+	"keywords": [],
+	"parent": [
+		"lumen/tabs"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "hidden"
+}

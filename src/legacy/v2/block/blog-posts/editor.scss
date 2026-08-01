@@ -1,0 +1,17 @@
+/**
+ * Editor styles for the Posts Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+// Used for double click to open controls.
+.lmb-blog-posts__item::after {
+	pointer-events: none;
+}
+
+// Remove extra meta separators inside the editor.
+.lmb-blog-posts__meta > *::after {
+	content: none !important;
+}

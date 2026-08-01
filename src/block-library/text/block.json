@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/text",
+	"title": "Text",
+	"description": "Start with the building block of all page layouts.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId", "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Paragraph"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "essential"}

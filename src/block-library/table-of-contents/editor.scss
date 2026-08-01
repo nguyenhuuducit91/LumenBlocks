@@ -1,0 +1,90 @@
+.lmn-block-table-of-contents {
+	.components-card {
+		margin-bottom: 18px;
+		display: flex;
+	}
+
+	&:is(.lmn--is-gradient) {
+		// This prevents the text in the card component from going blank.
+		li,
+		// This prevents the text in the card component from going blank.
+		.lmn-table-of-contents__empty-anchor,
+		// This prevents the eye icon from going blank.
+		.lmn-block-table-of-contents__list-item__exclude-button span {
+			-webkit-text-fill-color: initial;
+			-moz-text-fill-color: initial;
+			-o-text-fill-color: initial;
+		}
+
+	}
+
+	&:is(.lmn-block-background) {
+		background-clip: unset;
+	}
+
+	li {
+		position: relative;
+	}
+
+	.lmn-block-table-of-contents__list-item-inner {
+		display: block;
+	}
+
+	.lmn-block-table-of-contents__list-item__exclude-button {
+		display: inline-block;
+		height: auto;
+		vertical-align: middle;
+	}
+
+	.lmn-block-table-of-contents__list-item__excluded {
+		a,
+		.dashicon {
+			opacity: 0.4;
+		}
+	}
+
+	.lmn-block-table-of-contents__list-item__hidden {
+		display: none;
+	}
+
+	// For the visibility toggle styles.
+	.lmn-block-table-of-contents__link-wrapper {
+		display: block;
+	}
+
+	.lmn-block-table-of-contents__list-item__exclude-button {
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	.lmn-block-table-of-contents__list-item__exclude-button {
+		visibility: hidden;
+	}
+
+	.lmn-block-table-of-contents__link-wrapper:hover > .lmn-block-table-of-contents__list-item__exclude-button {
+		visibility: visible;
+	}
+}
+
+// Fade hidden entries.
+[data-type="lumen/table-of-contents"]:not(.is-selected) {
+	.lmn-block-table-of-contents__list-item__exclude-button {
+		opacity: 0;
+	}
+	.lmn-block-table-of-contents__link-wrapper:hover {
+		.lmn-block-table-of-contents__list-item__exclude-button {
+			opacity: 1;
+		}
+	}
+}
+
+// Alignments when the icon list is aligned.
+[data-type="lumen/table-of-contents"] .lmn-block-table-of-contents :is(ul, ol) {
+	margin-left: var(--lmn-alignment-margin-left);
+	margin-right: var(--lmn-alignment-margin-right);
+}
+
+[data-type="lumen/table-of-contents"] nav {
+	width: 100%;
+}

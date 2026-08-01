@@ -1,0 +1,8 @@
+.lmn-block-button-group.lmn-row > .lmn-block-content .block-editor-block-list__layout > div.wp-block[data-type="lumen/icon-button"] {
+	flex: unset;
+	width: unset;
+
+	> div {
+		width: unset;
+	}
+}

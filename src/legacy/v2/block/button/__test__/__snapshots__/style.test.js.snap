@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-block-content": Object {
+    "justifyContent": undefined,
+  },
+  ".lmb-block-content .lmb-button": Object {
+    "borderRadius": undefined,
+  },
+  ".lmb-button1": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "opacity": undefined,
+    "paddingBottom": undefined,
+    "paddingLeft": undefined,
+    "paddingRight": undefined,
+    "paddingTop": undefined,
+  },
+  ".lmb-button1 .lmb-button--inner": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-button1 .lmb-button--inner, .lmb-button1 svg:not(.lmb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".lmb-button1.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": undefined,
+  },
+  ".lmb-button1:before": Object {
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "content": undefined,
+  },
+  ".lmb-button1:hover": Object {
+    "backgroundColor": undefined,
+    "opacity": undefined,
+  },
+  ".lmb-button1:hover .lmb-button--inner, .lmb-button1:hover svg:not(.lmb-custom-icon)": Object {
+    "color": undefined,
+  },
+  "mobile": Object {
+    ".lmb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": undefined,
+      "justifyContent": undefined,
+    },
+    ".lmb-button1 .lmb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+  },
+  "tablet": Object {
+    ".lmb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": undefined,
+      "justifyContent": undefined,
+    },
+    ".lmb-button1 .lmb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+  },
+}
+`;
+
+exports[`Button (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-block-content": Object {
+    "justifyContent": undefined,
+  },
+  ".lmb-block-content .lmb-button": Object {
+    "borderRadius": "123px",
+  },
+  ".lmb-button1": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".lmb-button1 .lmb-button--inner": Object {
+    "fontFamily": "\\"button1FontFamily\\", Sans-serif !important",
+    "fontSize": "123button1FontSizeUnit !important",
+    "fontWeight": "button1FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button1LineHeightUnit !important",
+    "textTransform": "button1TextTransform !important",
+  },
+  ".lmb-button1.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".lmb-button1:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".lmb-button1:hover": Object {
+    "opacity": 123,
+  },
+  ".lmb-button2": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".lmb-button2 .lmb-button--inner": Object {
+    "fontFamily": "\\"button2FontFamily\\", Sans-serif !important",
+    "fontSize": "123button2FontSizeUnit !important",
+    "fontWeight": "button2FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button2LineHeightUnit !important",
+    "textTransform": "button2TextTransform !important",
+  },
+  ".lmb-button2.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".lmb-button2:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".lmb-button2:hover": Object {
+    "opacity": 123,
+  },
+  ".lmb-button3": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".lmb-button3 .lmb-button--inner": Object {
+    "fontFamily": "\\"button3FontFamily\\", Sans-serif !important",
+    "fontSize": "123button3FontSizeUnit !important",
+    "fontWeight": "button3FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button3LineHeightUnit !important",
+    "textTransform": "button3TextTransform !important",
+  },
+  ".lmb-button3.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".lmb-button3:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".lmb-button3:hover": Object {
+    "opacity": 123,
+  },
+  "mobile": Object {
+    ".lmb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": "column",
+      "justifyContent": undefined,
+    },
+    ".lmb-button1 .lmb-button--inner": Object {
+      "fontSize": "123button1MobileFontSizeUnit !important",
+      "lineHeight": "123button1MobileLineHeightUnit !important",
+    },
+    ".lmb-button2 .lmb-button--inner": Object {
+      "fontSize": "123button2MobileFontSizeUnit !important",
+      "lineHeight": "123button2MobileLineHeightUnit !important",
+    },
+    ".lmb-button3 .lmb-button--inner": Object {
+      "fontSize": "123button3MobileFontSizeUnit !important",
+      "lineHeight": "123button3MobileLineHeightUnit !important",
+    },
+  },
+  "tablet": Object {
+    ".lmb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": undefined,
+      "justifyContent": undefined,
+    },
+    ".lmb-button1 .lmb-button--inner": Object {
+      "fontSize": "123button1TabletFontSizeUnit !important",
+      "lineHeight": "123button1TabletLineHeightUnit !important",
+    },
+    ".lmb-button2 .lmb-button--inner": Object {
+      "fontSize": "123button2TabletFontSizeUnit !important",
+      "lineHeight": "123button2TabletLineHeightUnit !important",
+    },
+    ".lmb-button3 .lmb-button--inner": Object {
+      "fontSize": "123button3TabletFontSizeUnit !important",
+      "lineHeight": "123button3TabletLineHeightUnit !important",
+    },
+  },
+}
+`;

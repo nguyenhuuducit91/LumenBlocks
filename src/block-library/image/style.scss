@@ -1,0 +1,26 @@
+.lmn-block-image .lmn-img-wrapper {
+	margin-left: var(--lmn-alignment-margin-left, auto);
+	margin-right: var(--lmn-alignment-margin-right, auto);
+}
+// Some themes might add a margin to the image.
+.lmn-block-image figure {
+	margin: 0;
+}
+
+// Placeholder images will collapse if flex is used.
+.lmn--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	[data-type="lumen/image"]:has(.lmn-img-placeholder) {
+		width: 150px;
+		.lmn-block-image:not(.lmn--is-resizing) .lmn-img-placeholder.lmn--never-resized {
+			height: 200px !important;
+		}
+		> .lmn-block-image {
+			width: 100%;
+		}
+	}
+}
+
+.lmn-block-image .lmn-img-figcaption {
+	margin: 0;
+	text-align: left;
+}

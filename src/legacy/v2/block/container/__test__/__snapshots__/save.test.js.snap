@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-container lmb-container--v2 lmb-container--design-basic lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-container__wrapper -wrapper"
+      >
+        <div
+          class="lmb-container__side"
+        >
+          <div
+            class="lmb-container__content-wrapper -content-wrapper"
+          >
+            <div />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Container (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-container lmb-container--v2 lmb-container--design-wave-2 lmb-main-block"
+>
+  <style>
+    .-wrapper.lmb-container__wrapper{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize !important;background-blend-mode:columnBackgroundImageBlendMode}.-wrapper &gt; .lmb-container__side{align-items:contentHorizontalAlign !important}.-wrapper.lmb-container__wrapper:before{background-color:#123456 !important;opacity:12.3}h1,h2,h3,h4,h5,h6{color:#123456}p,li,label,table{color:#123456}a:hover,a:hover:visited{color:#123456}.-content-wrapper &gt; h1,.-content-wrapper &gt; h2,.-content-wrapper &gt; h3,.-content-wrapper &gt; h4,.-content-wrapper &gt; h5,.-content-wrapper &gt; h6{color:#123456}.-content-wrapper &gt; p,.-content-wrapper &gt; ol li,.-content-wrapper &gt; ul li{color:#123456}@media screen and (min-width:768px){.-content-wrapper.lmb-container__content-wrapper{width:123% !important}}@media screen and (max-width:1025px){.-wrapper.lmb-container__wrapper{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize !important}.-wrapper.lmb-container__wrapper:before{opacity:12.3}}@media screen and (min-width:768px) and (max-width:1025px){.-content-wrapper.lmb-container__content-wrapper{width:123% !important}}@media screen and (max-width:768px){.-wrapper.lmb-container__wrapper{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize !important}.-content-wrapper.lmb-container__content-wrapper{width:123% !important}.-wrapper.lmb-container__wrapper:before{opacity:12.3}}a,a:visited,a:focus{color:#123456}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-container__wrapper -wrapper lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-container__side"
+        >
+          <div
+            class="lmb-container__content-wrapper -content-wrapper"
+          >
+            <div />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

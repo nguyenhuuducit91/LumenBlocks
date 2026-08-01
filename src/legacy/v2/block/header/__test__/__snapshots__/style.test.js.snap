@@ -1,0 +1,368 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-button-container": Object {
+    "marginBottom": undefined,
+  },
+  ".lmb-button2": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "opacity": undefined,
+    "paddingBottom": undefined,
+    "paddingLeft": undefined,
+    "paddingRight": undefined,
+    "paddingTop": undefined,
+  },
+  ".lmb-button2 .lmb-button--inner": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-button2 .lmb-button--inner, .lmb-button2 svg:not(.lmb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".lmb-button2.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": undefined,
+  },
+  ".lmb-button2:before": Object {
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "content": undefined,
+  },
+  ".lmb-button2:hover": Object {
+    "backgroundColor": undefined,
+    "opacity": undefined,
+  },
+  ".lmb-button2:hover .lmb-button--inner, .lmb-button2:hover svg:not(.lmb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".lmb-header__buttons": Object {
+    "justifyContent": undefined,
+  },
+  ".lmb-header__item": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": "#000000 !important",
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+    "borderRadius": undefined,
+  },
+  ".lmb-header__item:before": Object {
+    "backgroundColor": "#000000 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  ".lmb-header__subtitle": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-header__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-header__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-header__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-header__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-button2 .lmb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".lmb-header__buttons": Object {
+      "justifyContent": undefined,
+    },
+    ".lmb-header__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".lmb-header__item:before": Object {
+      "opacity": undefined,
+    },
+    ".lmb-header__subtitle": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-header__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-button2 .lmb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".lmb-header__buttons": Object {
+      "justifyContent": undefined,
+    },
+    ".lmb-header__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".lmb-header__item:before": Object {
+      "opacity": undefined,
+    },
+    ".lmb-header__subtitle": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-header__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-header__subtitle": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-header__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Header (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-button-container": Object {
+    "marginBottom": "123px !important",
+  },
+  ".lmb-button2": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".lmb-button2 .lmb-button--inner": Object {
+    "fontFamily": "\\"button2FontFamily\\", Sans-serif !important",
+    "fontSize": "123button2FontSizeUnit !important",
+    "fontWeight": "button2FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button2LineHeightUnit !important",
+    "textTransform": "button2TextTransform !important",
+  },
+  ".lmb-button2.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".lmb-button2:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".lmb-button2:hover": Object {
+    "opacity": 123,
+  },
+  ".lmb-header__buttons": Object {
+    "justifyContent": undefined,
+  },
+  ".lmb-header__item": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "columnBackgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": "url(columnBackgroundMediaUrl)",
+    "backgroundPosition": "columnBackgroundPosition",
+    "backgroundRepeat": "columnBackgroundRepeat",
+    "backgroundSize": "columnBackgroundSize",
+    "borderBottomWidth": "123px !important",
+    "borderColor": "#123456 !important",
+    "borderLeftWidth": "123px !important",
+    "borderRadius": "123px !important",
+    "borderRightWidth": "123px !important",
+    "borderStyle": "columnBorderType !important",
+    "borderTopWidth": "123px !important",
+  },
+  ".lmb-header__item:before": Object {
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-header__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-header__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-header__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-button-container": Object {
+      "marginBottom": "123px !important",
+    },
+    ".lmb-button2 .lmb-button--inner": Object {
+      "fontSize": "123button2MobileFontSizeUnit !important",
+      "lineHeight": "123button2MobileLineHeightUnit !important",
+    },
+    ".lmb-header__buttons": Object {
+      "justifyContent": undefined,
+    },
+    ".lmb-header__item": Object {
+      "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
+      "backgroundPosition": "columnMobileBackgroundPosition",
+      "backgroundRepeat": "columnMobileBackgroundRepeat",
+      "backgroundSize": "columnMobileBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+    },
+    ".lmb-header__item:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-button2 .lmb-button--inner": Object {
+      "fontSize": "123button2TabletFontSizeUnit !important",
+      "lineHeight": "123button2TabletLineHeightUnit !important",
+    },
+    ".lmb-header__buttons": Object {
+      "justifyContent": undefined,
+    },
+    ".lmb-header__item": Object {
+      "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
+      "backgroundPosition": "columnTabletBackgroundPosition",
+      "backgroundRepeat": "columnTabletBackgroundRepeat",
+      "backgroundSize": "columnTabletBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+    },
+    ".lmb-header__item:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-button-container": Object {
+      "marginBottom": "123px !important",
+    },
+  },
+}
+`;

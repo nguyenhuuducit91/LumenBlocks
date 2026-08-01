@@ -1,0 +1,73 @@
+.lmb-admin-toggle-setting .lmb-admin-setting__field {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: row;
+	gap: 8px;
+}
+.lmb-admin-toggle-setting__button {
+	--toggle-height: 26px;
+	--toggle-padding: 3px;
+	outline: 0;
+	display: block;
+	height: var(--toggle-height);
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+	padding: var(--toggle-padding) !important;
+	border: 0 !important;
+	border-radius: var(--toggle-height);
+	transition: all 0.4s ease;
+	display: inline-block;
+	background: #12b76a;
+	outline: none;
+	outline-offset: 3px;
+	width: calc(var(--toggle-height) * 1.8);
+
+	&:focus {
+		outline: 1px dashed #888;
+	}
+
+	&::after,
+	&::before {
+		position: relative;
+		display: block;
+		content: "";
+		aspect-ratio: 1 / 1;
+		height: 100%;
+	}
+	&::after {
+		left: calc(100% - (var(--toggle-height) - var(--toggle-padding) - var(--toggle-padding)));
+		background: #fff;
+		border-radius: 50%;
+		transition: all 0.2s ease;
+		box-shadow: 0px 1px 3px rgb(16 24 40 / 10%), 0px 1px 2px rgb(16 24 40 / 6%);
+	}
+	&::before {
+		display: none;
+	}
+
+	&[aria-checked="false"] {
+		background: #d5d5d5;
+		&::after {
+			left: 0;
+			background: #fff;
+		}
+	}
+
+	// Make the labels overlap so that the toggle button is always the same size.
+	~ .lmb-admin-toggle-setting__label {
+		display: flex;
+		flex-direction: column;
+		> *:not(:last-child) {
+			height: 0;
+			overflow: visible;
+		}
+		color: #667085;
+	}
+	&.lmb-admin-toggle-setting__button--enabled {
+		~ .lmb-admin-toggle-setting__label {
+			color: #12b76a;
+		}
+	}
+}

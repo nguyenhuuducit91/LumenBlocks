@@ -1,0 +1,318 @@
+/**
+ * External dependencies
+ */
+import { UrlInputPopover } from '~lumen/ui'
+import striptags from 'striptags'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { Component, Fragment } from '@wordpress/element'
+import classnames from 'classnames'
+import { i18n } from 'lumen'
+import { RichText } from '@wordpress/block-editor'
+
+// Deprecated ButtonEdit.Content methods.
+export * from './deprecated'
+export { default as ButtonEditHelper } from './helper'
+import SvgIcon from '../svg-icon'
+import SvgIconPlaceholder from '../svg-icon-placeholder'
+
+let buttonInstanceId = 1
+
+class ButtonEdit extends Component {
+	constructor() {
+		super( ...arguments )
+		this.state = {
+			openPopup: false,
+		}
+		this.buttonInstanceId = buttonInstanceId++
+
+		this.onButtonClickHandler = this.onButtonClickHandler.bind( this )
+		this.outsideClickHandler = this.outsideClickHandler.bind( this )
+		this.onKeyPressHandler = this.onKeyPressHandler.bind( this )
+	}
+
+	onButtonClickHandler( event ) {
+		if ( this.props.iconButton && event.target.closest( '.lmb-svg-icon-placeholder__button' ) ) {
+			// If this is an icon button, open the url popover if the icon is clicked.
+		} else if ( event.target.closest( '.lmb-svg-icon-placeholder__button' ) ||
+			event.target.closest( '.lmb-url-input-popover' ) ||
+			event.target.closest( '.lmb-icon-popover' ) ||
+			event.target.closest( '.components-popover' )
+		) {
+			return
+		}
+		if ( ! this.state.openPopup ) {
+			let selector = document.body
+			if ( document.querySelector( 'iframe[name="editor-canvas"]' ) ) {
+				selector = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
+			}
+			selector.addEventListener( 'click', this.outsideClickHandler )
+		}
+		this.setState( { openPopup: true } )
+	}
+
+	outsideClickHandler( event ) {
+		if ( ! event.target.closest( `.lmb-button-container-${ this.buttonInstanceId }` ) &&
+			! event.target.closest( '.lmb-url-input-popover' ) &&
+			! event.target.closest( '.components-popover:not(.block-editor-block-list__block-popover)' ) && // Don't close if the popover is clicked (note that the toolbar is a popover).
+			! event.target.closest( '.block-editor-link-control__search-item-top' ) && // Prevent popover from closing when clicking on the link button.
+			! event.target.closest( '.lmn-button-controls__wrapper' ) ) { // Prevent popover from closing when clicking on the toggle label.
+			this.hideUrlPopup()
+		} else if ( this.props.iconButton && event.target.closest( '.lmb-svg-icon-placeholder__button' ) ) {
+			// If this is an icon button, don't close the url popover if the icon is clicked.
+		} else if ( event.target.closest( '.lmb-svg-icon-placeholder__button' ) ) {
+			this.hideUrlPopup()
+		}
+	}
+
+	hideUrlPopup = () => {
+		let selector = document.body
+		if ( document.querySelector( 'iframe[name="editor-canvas"]' ) ) {
+			selector = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
+		}
+		selector.removeEventListener( 'click', this.outsideClickHandler )
+		this.setState( { openPopup: false } )
+	}
+
+	onKeyPressHandler( event ) {
+		if ( event.target.closest( '.lmb-url-input-popover' ) ||
+			event.target.closest( '.components-popover' ) ) {
+			return
+		}
+		this.hideUrlPopup()
+	}
+
+	render() {
+		const {
+			iconButton,
+			className = '',
+			size = 'normal',
+			text = '',
+			onChange = () => {},
+			design = 'basic',
+			shadow = 0,
+			iconPosition = '',
+			hoverEffect = '',
+			ghostToNormalEffect = false,
+
+			url = '',
+			newTab = '',
+			noFollow = '',
+			sponsored = '',
+			ugc = '',
+			onChangeUrl = null,
+			onChangeNewTab = null,
+			onChangeNoFollow = null,
+			onChangeSponsored = null,
+			onChangeUgc = null,
+
+			onChangeIcon = null,
+			icon = null,
+
+			isSelected = null,
+		} = this.props
+
+		const mainClasses = classnames( [
+			className,
+			'lmb-button',
+			`lmb-button--size-${ size }`,
+		], {
+			'lmb-button--icon-only': iconButton,
+			'lmb-button--ghost-to-normal-effect': ghostToNormalEffect,
+			[ `lmb--hover-effect-${ hoverEffect }` ]: design !== 'link' && hoverEffect,
+			[ `lmb--shadow-${ shadow }` ]: design === 'basic' && shadow,
+			[ `lmb-button--design-${ design }` ]: design !== 'basic',
+			'lmb-button--has-icon': icon,
+			[ `lmb-button--icon-position-${ iconPosition }` ]: iconPosition,
+		} )
+
+		const containerClassName = classnames( [
+			'lmb-button-container',
+			`lmb-button-container-${ this.buttonInstanceId }`,
+			this.props.containerClassName,
+		] )
+
+		const openUrlPopover = ( isSelected !== null ? isSelected : true ) && this.state.openPopup
+
+		return (
+			<div
+				className={ containerClassName }
+				onClick={ this.onButtonClickHandler }
+				onKeyPress={ this.onKeyPressHandler }
+				role="button"
+				tabIndex="0"
+			>
+				{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+				<a className={ mainClasses }>
+					{ icon && design !== 'link' &&
+						<Fragment>
+							{ ! onChangeIcon &&
+								<SvgIcon
+									value={ icon }
+								/>
+							}
+							{ onChangeIcon &&
+								<SvgIconPlaceholder
+									value={ icon }
+									onChange={ onChangeIcon }
+									isOpen={ ! iconButton ? null : openUrlPopover }
+								/>
+							}
+						</Fragment>
+					}
+					{ ! iconButton &&
+						<RichText
+							tagName="span"
+							className={ design === 'link' ? '' : 'lmb-button--inner' }
+							placeholder={ __( 'Button text', i18n ) }
+							value={ text }
+							onChange={ onChange }
+							withoutInteractiveFormatting={ true }
+							keepPlaceholderOnFocus
+						/>
+					}
+					{ openUrlPopover &&
+						<UrlInputPopover
+							value={ url }
+							onChange={ onChangeUrl }
+							newTab={ newTab }
+							noFollow={ noFollow }
+							sponsored={ sponsored }
+							ugc={ ugc }
+							onChangeNewTab={ onChangeNewTab }
+							onChangeNoFollow={ onChangeNoFollow }
+							onChangeSponsored={ onChangeSponsored }
+							onChangeUgc={ onChangeUgc }
+							disableSuggestions={ this.props.disableSuggestions }
+						/>
+					}
+				</a>
+			</div>
+		)
+	}
+}
+
+ButtonEdit.defaultProps = {
+	iconButton: false,
+	disableSuggestions: false,
+	containerClassName: '',
+	className: '',
+	size: 'normal',
+	text: '',
+	onChange: () => {},
+	design: 'basic',
+	shadow: 0,
+	iconPosition: '',
+	hoverEffect: '',
+	ghostToNormalEffect: false,
+
+	url: '',
+	newTab: '',
+	noFollow: '',
+	sponsored: '',
+	ugc: '',
+	onChangeUrl: null,
+	onChangeNewTab: null,
+	onChangeNoFollow: null,
+	onChangeSponsored: null,
+	onChangeUgc: null,
+
+	onChangeIcon: null,
+	icon: null,
+
+	isSelected: null,
+}
+
+ButtonEdit.Content = props => {
+	const {
+		iconButton,
+		className = '',
+		size = 'normal',
+		url = '',
+		icon = null,
+		text = '',
+		design = 'basic',
+		newTab = false,
+		shadow = 0,
+		iconPosition = false,
+		hoverEffect = '',
+		noFollow = false,
+		sponsored = false,
+		ugc = false,
+		ghostToNormalEffect = false,
+		target = '',
+		role = '',
+		title = '',
+		containerClassName = '',
+	} = props
+
+	const mainClasses = classnames( [
+		className,
+		'lmb-button',
+		`lmb-button--size-${ size }`,
+	], {
+		'lmb-button--icon-only': iconButton,
+		'lmb-button--ghost-to-normal-effect': ghostToNormalEffect,
+		[ `lmb--hover-effect-${ hoverEffect }` ]: design !== 'link' && hoverEffect,
+		[ `lmb--shadow-${ shadow }` ]: design === 'basic' && shadow,
+		[ `lmb-button--design-${ design }` ]: design !== 'basic',
+		'lmb-button--has-icon': icon,
+		[ `lmb-button--icon-position-${ iconPosition }` ]: iconPosition,
+	} )
+
+	const containerClassNames = classnames( [
+		'lmb-button-container',
+		containerClassName,
+	] )
+
+	const rel = []
+	if ( newTab ) {
+		rel.push( 'noopener' )
+		rel.push( 'noreferrer' )
+	}
+	if ( noFollow ) {
+		rel.push( 'nofollow' )
+	}
+	if ( sponsored ) {
+		rel.push( 'sponsored' )
+	}
+	if ( ugc ) {
+		rel.push( 'ugc' )
+	}
+
+	const propsToPass = {}
+	if ( role ) {
+		propsToPass.role = role
+	}
+
+	return (
+		<div className={ containerClassNames }>
+			{ ( text || iconButton ) &&
+				<a
+					className={ mainClasses }
+					href={ url }
+					target={ ( target || newTab ) ? ( target || '_blank' ) : undefined }
+					rel={ props.rel || rel.join( ' ' ) }
+					title={ striptags( title ) }
+					{ ...propsToPass }
+				>
+					{ icon && design !== 'link' &&
+						<SvgIcon.Content value={ icon } />
+					}
+					{ ! iconButton &&
+						<RichText.Content
+							tagName="span"
+							className={ design === 'link' ? '' : 'lmb-button--inner' }
+							value={ text }
+						/>
+					}
+				</a>
+			}
+		</div>
+	)
+}
+
+export default ButtonEdit

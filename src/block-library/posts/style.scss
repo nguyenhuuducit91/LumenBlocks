@@ -1,0 +1,117 @@
+@import "common";
+
+.lmn-block-posts {
+	$p: &;
+
+	// Gaps when we don't have containers.
+	&:not(.lmn--has-container) &__items {
+		row-gap: 32px;
+	}
+
+	@include mobile {
+		--lmn-columns: 1;
+	}
+
+	&__items {
+		flex-wrap: wrap;
+		display: flex;
+		column-gap: var(--lmn-column-gap, 0);
+		row-gap: 0;
+
+		// All contents should have bottom margins
+		:is([class*="lmn-block-posts__"], .lmn-img-wrapper):not(.lmn-block-posts__item) {
+			margin-bottom: cssvar(block-margin-bottom);
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// Add margins when there are containers, to mimic the sizes of columns that have containers.
+	&__items {
+		.lmn-container {
+			flex: 1;
+			margin: 6px; // Use margins instead of column-gap
+
+			&:not(.lmn--no-padding) {
+				margin: cssvar(column-margin);
+			}
+		}
+	}
+
+	// Category design when it's highlighted.
+	&__item &__category > a.lmn-button {
+		padding: 4px 8px;
+		display: inline-flex;
+		border-radius: 4px;
+	}
+
+	&__item {
+		// We need this to make advanced position work.
+		position: relative;
+		// Generate a flex basis value based on the number of columns.
+		flex-basis: calc((100%/var(--lmn-columns, 2)) - (var(--lmn-column-gap, 16px)) + (var(--lmn-column-gap, 16px)/var(--lmn-columns, 2)));
+		width: calc((100%/var(--lmn-columns, 2)) - (var(--lmn-column-gap, 16px)) + (var(--lmn-column-gap, 16px)/var(--lmn-columns, 2)));
+		overflow: hidden;
+		// Make the contents occupy entire area.
+		display: flex;
+	}
+
+	// Force remove heading titles from themes.
+	&__title {
+		margin-top: 0 !important;
+	}
+
+	// Left & right margins for meta separators.
+	&__meta-sep {
+		margin-inline: 1ch;
+	}
+
+	// Need to set these to block to apply margin bottoms.
+	&__readmore,
+	&__image-link {
+		display: block;
+	}
+
+	// Remove theme text decoration on links.
+	&__title a,
+	&__category a {
+		display: inline-block;
+		text-decoration: none;
+	}
+
+	// Word wrap.
+	&__title,
+	&__excerpt {
+		word-break: break-word;
+		hyphens: auto;
+	}
+
+	&:is(.is-style-list) {
+		.lmn-container {
+			display: flex;
+		}
+		.lmn-img-wrapper {
+			width: 100%;
+			height: 100%;
+		}
+
+		.lmn-block-posts__image-link:not(:empty) {
+			flex-basis: 50%;
+
+			~ .lmn-container-padding {
+				flex-basis: 50%;
+			}
+		}
+
+		.lmn-container-padding {
+			padding-block: 0;
+			padding-inline-end: 0;
+		}
+	}
+
+	.lmn-container-padding {
+		flex: 1;
+		box-sizing: border-box;
+	}
+}

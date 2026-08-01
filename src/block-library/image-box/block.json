@@ -1,0 +1,19 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/image-box",
+	"title": "Image Box",
+	"description": "Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/image",
+		"lumen/subtitle",
+		"lumen/icon"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/heading",
+		"lumen/text"
+	]
+}

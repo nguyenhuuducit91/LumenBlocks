@@ -1,0 +1,11 @@
+{
+	"name": "lmb/accordion",
+	"title": "Accordion",
+	"description": "A title that your visitors can toggle to view more text.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Toggle",
+		"Faq"
+	],
+	"textdomain": "lumen-blocks"
+}

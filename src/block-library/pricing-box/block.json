@@ -1,0 +1,29 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/pricing-box",
+	"title": "Pricing Box",
+	"description": "Display the different pricing tiers of your business.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"keywords": [
+		"Currency",
+		"Price",
+		"Pricing Table"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-required-blocks": [
+		"lumen/price",
+		"lumen/text",
+		"lumen/icon-list"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/heading",
+		"lumen/subtitle",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

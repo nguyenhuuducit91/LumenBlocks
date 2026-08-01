@@ -1,0 +1,471 @@
+/**
+ * Core Block Styles
+ */
+@use "sass:math";
+
+@import "breakpoints";
+@import "block-transitions";
+@import "block-compat";
+
+// We need to set this to relative for making the whole block clickable.
+.lmn-block {
+	position: relative;
+	box-sizing: border-box;
+}
+.lmn--block-horizontal-flex .lmn-block {
+	width: auto;
+}
+// .site-content - support for OceanWP
+.lmn-block,
+:is(.entry-content, .site-content) .lmn-block {
+	margin-top: 0;
+}
+
+// IMPORTANT: This fixes wide and full block widths and tame them in the frontend.
+:is(.entry-content, .site-content) .lmn-block > .lmn-content-align {
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
+}
+
+// Containers
+.lmn-column,
+.lmn-block.lmn-column {
+	margin-top: 0;
+	margin-bottom: 0;
+	// We need to add at least 1px here so that when the column collapses
+	// automatically, it still shows up in tablet and moblie.
+	min-width: 1px;
+}
+
+// Columns spacing
+.lmn-block.lmn-block-column.lmn-column > .lmn-column-wrapper {
+	margin: var(--lmn-columns-spacing); // This is defined in the design system
+}
+
+/**
+ * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
+ */
+:root {
+	--lmn-block-width-default-detected: 900px;
+	--lmn-block-width-wide-detected: 80vw;
+}
+
+@include desktop-tablet {
+	.lmn-block:is(.aligncenter, .alignwide, .alignfull) > .lmn-content-align:not(.alignwide):not(.alignfull),
+	// Dev note: add selector for carousel because it has an extra wrapper before the inner blocks.
+	.lmn-block-carousel:is(.aligncenter, .alignwide, .alignfull) > :where(.lmn-block-carousel__content-wrapper) > .lmn-content-align:not(.alignwide):not(.alignfull),
+	.lmn-block .lmn-block.aligncenter {
+		// --lmn-block-default-width is a Lumen setting
+		// --lmn-block-width-default-detected is from the fallback autodetected value.
+		max-width: var(--lmn-block-default-width, var(--lmn-block-width-default-detected, 900px));
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@include desktop-tablet {
+	.lmn-block:is(.aligncenter, .alignwide, .alignfull) > .lmn-content-align.alignwide,
+	// Dev note: add selector for carousel because it has an extra wrapper before the inner blocks.
+	.lmn-block-carousel:is(.aligncenter, .alignwide, .alignfull) > :where(.lmn-block-carousel__content-wrapper) > .lmn-content-align.alignwide,
+	.lmn-block .lmn-block.alignwide {
+		// --lmn-block-default-width is a Lumen setting
+		// --lmn-block-width-default-detected is from the fallback autodetected value.
+		max-width: var(--lmn-block-wide-width, var(--lmn-block-width-wide-detected, 80vw));
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@include mobile {
+	.lmn-block:is(.aligncenter, .alignwide, .alignfull) > .lmn-content-align:not(.alignwide):not(.alignfull),
+	.lmn-block:is(.aligncenter, .alignwide, .alignfull) > .lmn-content-align.alignwide,
+	.lmn-block .lmn-block:is(.aligncenter, .alignwide) {
+		width: 100%;
+	}
+}
+.lmn-block .lmn-block.alignfull {
+	width: 100%;
+}
+
+/**
+ * Resizeable rows and columns
+ */
+.lmn-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.lmn-column {
+	flex: 1 1 0; // flex-basis 0 means that all columns will be equal.
+	box-sizing: border-box;
+
+	// Don't center the columns.
+	margin-left: 0;
+	margin-right: 0;
+
+	// Make sure the contents occupy the entire area.
+	display: flex;
+	align-items: stretch;
+}
+
+// Column widths.
+@include desktop-tablet {
+	@for $i from 2 through 10 {
+		.lmn-row.lmn-columns-#{ $i } {
+			> .lmn-column {
+				flex: 1 1 #{ math.div(100%, $i) };
+				max-width: #{ math.div(100%, $i) };
+			}
+		}
+	}
+}
+
+// Columns can be collapsed for tablet and mobile only.
+@include desktop {
+	.lmn-row {
+		flex-wrap: nowrap;
+	}
+}
+// Mobile auto-collapses all columns.
+@include mobile {
+	.lmn-column {
+		flex: 1 1 100%;
+		max-width: 100%;
+	}
+}
+
+// Block inner blocks.
+.lmn-block-content {
+	width: 100%;
+	position: relative;
+	&:not(.lmn-row) {
+		// Make sure the inner blocks are top aligned.
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+}
+.lmn-inner-blocks {
+	flex: 1;
+	&:not(.lmn-row) {
+		// Make sure the inner blocks are top aligned.
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+
+		// Inner block orientation.
+		&.lmn--block-horizontal-flex {
+			flex-direction: row;
+			justify-content: space-evenly; // Default justification for horizontal blocks.
+			> * {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// Ensure the contents don't have extra margins.
+	> *:first-child {
+		margin-top: 0;
+	}
+	> *:last-child {
+		margin-bottom: 0;
+	}
+}
+// Column with a block background has a padding that might not be obvious.
+.lmn-block-background {
+	&.lmn-column > .lmn-block-content {
+		margin: 0;
+	}
+}
+
+// Images
+.lmn-image--fit {
+	object-fit: cover;
+	height: 100% !important;
+	width: 100% !important;
+}
+
+// Block float alignment.
+:is(.lmn-block.alignleft, .lmn-block.alignright) {
+	.lmn-inner-blocks:first-of-type > .lmn-block {
+		max-width: 350px; // Give a default width for a floated block.
+		width: auto;
+	}
+}
+
+// Responsive hiding.
+@include desktop {
+	.lmn--hide-desktop.lmn-block, // Other attributes like the content vertical align can interfere with responsive hiding.
+	.lmn--hide-desktop {
+		display: none !important;
+	}
+}
+@include tablet {
+	.lmn--hide-tablet.lmn-block, // Other attributes like the content vertical align can interfere with responsive hiding.
+	.lmn--hide-tablet {
+		display: none !important;
+	}
+}
+@include mobile {
+	.lmn--hide-mobile.lmn-block, // Other attributes like the content vertical align can interfere with responsive hiding.
+	.lmn--hide-mobile {
+		display: none !important;
+	}
+}
+
+// Headings, Subtitle, and Text.
+// This removes the normal margins of headings and paragraphs, so we can add our own.
+.lmn-block {
+	.lmn-block-heading__text,
+	.lmn-block-text__text,
+	.lmn-block-subtitle__text {
+		margin-bottom: 0;
+	}
+}
+.lmn-block-heading,
+.lmn-block-text,
+.lmn-block-subtitle,
+.lmn-block .lmn-block-subtitle__text,
+.lmn-block .lmn-block-text__text {
+	margin-top: 0;
+}
+.lmn-block-heading,
+.lmn-block-text,
+.lmn-block-subtitle {
+	word-break: break-word;
+	// hyphens: auto;
+}
+// Headings have a large margin top except when they're the first entry.
+:where(.lmn-block-heading:not(:first-child)) .lmn-block-heading__text {
+	margin-top: 1.5em;
+}
+// No margin top when the first child but only in the frontend.
+.lmn-block-heading:first-child .lmn-block-heading__text:not([contenteditable]) {
+	margin-top: 0;
+}
+// Remove any decorative things added by themes.
+.lmn-block-text__text,
+.lmn-block-subtitle__text,
+.lmn-block-heading__text {
+	&::after,
+	&::before {
+		content: unset;
+	}
+}
+
+// Typography Classes.
+:is(.lmn--is-gradient, .lmn--is-gradient li, .lmn--is-gradient span, .lmn--is-gradient a) {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
+}
+
+// Deprecated styles.
+@import "deprecated-block";
+
+.lmn-block .lmn-button-group {
+	flex-direction: row;
+	align-items: center; // Vertically align the buttons.
+}
+.lmn-button-group .lmn-block { // Prevent buttons from being always in the middle.
+	margin-inline: revert;
+}
+
+// Buttons.
+:where(body:not(.lmn-has-block-style-inheritance)) :is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination, .lmn-block-load-more, .lmn-block-posts):not(.is-style-link) .lmn-button {
+	text-decoration: none !important; // Some themes may add underlines on buttons, we need to force remove it. !important is the only way.
+}
+:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination, .lmn-block-load-more, .lmn-block-posts) {
+	&:not(.is-style-link) {
+		.lmn-button {
+			justify-content: center;
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			position: relative;
+
+			.lmn--svg-wrapper:not(:only-child) {
+				&:first-child .lmn--inner-svg svg:last-child {
+					margin-inline-end: var(--lmn-button-icon-gap);
+				}
+				&:last-child .lmn--inner-svg svg:last-child {
+					margin-inline-start: var(--lmn-button-icon-gap);
+				}
+			}
+			column-gap: 8px;
+
+			&::before,
+			&::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				height: 100%;
+				width: 100%;
+				pointer-events: none;
+				border-radius: inherit;
+			}
+
+			&::before {
+				// Borders should be on top of the ::after pseudoelement.
+				z-index: 2;
+			}
+
+			&::after {
+				opacity: 0;
+				z-index: 1;
+			}
+
+			> * {
+				z-index: 2;
+			}
+		}
+	}
+
+	&.is-style-pill {
+		.lmn-button {
+			width: 4em;
+			border-radius: 100px; // A large number to ensure it's a pill shape.
+		}
+	}
+}
+
+// Text alignment should also work for flex blocks like the icon block.
+@mixin align-center-styles {
+	--lmn-alignment-padding-left: 0;
+	--lmn-alignment-justify-content: center;
+	--lmn-alignment-text-align: center;
+	--lmn-alignment-margin-left: auto;
+	--lmn-alignment-margin-right: auto;
+	text-align: var(--lmn-alignment-text-align, start);
+}
+
+@mixin align-right-styles {
+	--lmn-alignment-justify-content: flex-end;
+	--lmn-alignment-text-align: end;
+	--lmn-alignment-margin-left: auto;
+	--lmn-alignment-margin-right: 0;
+	text-align: var(--lmn-alignment-text-align, start);
+}
+
+@mixin align-left-styles {
+	--lmn-alignment-justify-content: flex-start;
+	--lmn-alignment-text-align: start;
+	--lmn-alignment-margin-left: 0;
+	--lmn-alignment-margin-right: auto;
+	text-align: var(--lmn-alignment-text-align, start);
+}
+
+@mixin align-space-between-styles {
+	--lmn-alignment-justify-content: space-between;
+}
+
+@mixin align-space-around-styles {
+	--lmn-alignment-justify-content: space-around;
+}
+
+@mixin align-space-evenly-styles {
+	--lmn-alignment-justify-content: space-evenly;
+}
+
+@mixin align-justify-styles {
+	--lmn-alignment-text-align: justify;
+}
+
+// Default text direction, we need to add this for RTL support.
+.lmn-block {
+	text-align: start;
+	justify-content: var(--lmn-alignment-justify-content);
+}
+
+// Ensure that our alignments are applied to text.
+.lmn-block {
+	&[class*="has-text-align-"],
+	[class*="has-text-align-"] {
+		text-align: var(--lmn-alignment-text-align, start);
+	}
+}
+
+.has-text-align {
+	&-center {
+		@include align-center-styles;
+	}
+	&-left {
+		@include align-left-styles;
+	}
+	&-right {
+		@include align-right-styles;
+	}
+	&-justify {
+		@include align-justify-styles;
+	}
+	&-space-between {
+		@include align-space-between-styles;
+	}
+	&-space-around {
+		@include align-space-around-styles;
+	}
+	&-space-evenly {
+		@include align-space-evenly-styles;
+	}
+}
+
+@include tablet-mobile {
+	.has-text-align-center-tablet {
+		@include align-center-styles;
+	}
+	.has-text-align-left-tablet {
+		@include align-left-styles;
+	}
+	.has-text-align-right-tablet {
+		@include align-right-styles;
+	}
+	.has-text-align-justify-tablet {
+		@include align-justify-styles;
+	}
+	.has-text-align-space-between-tablet {
+		@include align-space-between-styles;
+	}
+	.has-text-align-space-around-tablet {
+		@include align-space-around-styles;
+	}
+	.has-text-align-space-evenly-tablet {
+		@include align-space-evenly-styles;
+	}
+}
+
+@include mobile {
+	.has-text-align-center-mobile {
+		@include align-center-styles;
+	}
+	.has-text-align-left-mobile {
+		@include align-left-styles;
+	}
+	.has-text-align-right-mobile {
+		@include align-right-styles;
+	}
+	.has-text-align-justify-mobile {
+		@include align-justify-styles;
+	}
+	.has-text-align-space-between-mobile {
+		@include align-space-between-styles;
+	}
+	.has-text-align-space-around-mobile {
+		@include align-space-around-styles;
+	}
+	.has-text-align-space-evenly-mobile {
+		@include align-space-evenly-styles;
+	}
+}
+
+// Text alignment should also work for flex blocks like the icon block.
+.lmn-block {
+	justify-content: var(--lmn-alignment-justify-content);
+	text-align: var(--lmn-alignment-text-align, start);
+}

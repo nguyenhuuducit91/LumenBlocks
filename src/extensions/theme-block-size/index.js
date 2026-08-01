@@ -1,0 +1,57 @@
+/**
+ * This plugin is in charge of adding the default/normal and wide sizes of
+ * blocks as defined in the current theme.json and adding them as custom CSS
+ * properties for our blocks to pick up in the editor.
+ */
+import { useDeviceType } from '~lumen/hooks'
+import { createRoot } from '~lumen/utils'
+import { useSettings as _useSettings, useSetting as deprecatedUseSetting } from '@wordpress/block-editor'
+import domReady from '@wordpress/dom-ready'
+import { useEffect } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
+
+// This is a custom hook for the deprecated useSetting since WP 6.3 & 6.4 doesn't have useSettings yet.
+const useSettings = _useSettings || ( () => {
+	const contentSize = deprecatedUseSetting( 'layout.contentSize' )
+	const wideSize = deprecatedUseSetting( 'layout.wideSize' )
+	return [ contentSize, wideSize ]
+} )
+
+export const ThemeBlockSize = () => {
+	const [ contentSize, wideSize ] = useSettings( 'layout.contentSize', 'layout.wideSize' )
+
+	const deviceType = useDeviceType()
+	const editorDom = useSelect( select => {
+		return select( 'lumen/editor-dom' ).getEditorDom()
+	} )
+
+	useEffect( () => {
+		const editorBody = editorDom?.closest( 'body' )
+		const editorHead = editorBody?.ownerDocument?.head
+
+		if ( editorHead ) {
+			editorHead.appendChild( themeBlockSizeWrapper )
+		}
+	}, [ deviceType, editorDom ] )
+
+	if ( ! contentSize && ! wideSize ) {
+		return null
+	}
+
+	return (
+		<>
+			{ contentSize && `:root { --lmn-block-width-default-detected: ${ contentSize }}` }
+			{ wideSize && `:root { --lmn-block-width-wide-detected: ${ wideSize }}` }
+		</>
+	)
+}
+
+const themeBlockSizeWrapper = document?.createElement( 'style' )
+if ( themeBlockSizeWrapper ) {
+	themeBlockSizeWrapper.setAttribute( 'id', 'lmn-theme-block-size' )
+}
+
+domReady( () => {
+	document?.head?.appendChild( themeBlockSizeWrapper )
+	createRoot( themeBlockSizeWrapper ).render( <ThemeBlockSize /> )
+} )

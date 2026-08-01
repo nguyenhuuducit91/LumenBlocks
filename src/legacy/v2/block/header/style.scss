@@ -1,0 +1,64 @@
+/**
+ * Frontend styles for the Header Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-header.lmb-header--v3 {
+	text-align: center;
+	&:not(.lmb-header--design-plain) {
+		.lmb-header__item {
+			@include box();
+			padding: 150px 60px;
+		}
+	}
+	.lmb-header__item {
+		padding: 150px 60px;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.lmb-button {
+		position: relative;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.lmb-header__title,
+	.lmb-header__subtitle {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+
+	.lmb-header__buttons {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: -0.5em;
+		margin-right: -0.5em;
+		> * {
+			margin: 0 0.5em 0.5em;
+		}
+	}
+}
+
+.lmb-header.lmb-header--v3 {
+	@media screen and (max-width: $break-small) {
+		.lmb-header__buttons {
+			flex-wrap: wrap;
+		}
+	}
+}
+
+
+// Full width
+.lmb-header.lmb-header--v3.lmb-main-block.alignfull {
+	&:not(.lmb-main-block--inner-center):not(.lmb-main-block--inner-wide) {
+		padding: 0;
+		.lmb-header__item {
+			border-radius: 0;
+		}
+	}
+}

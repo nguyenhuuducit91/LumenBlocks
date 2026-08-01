@@ -1,0 +1,34 @@
+.lmn-block {
+	&:is(.is-style-link) .lmn-button[class*="lmn--hover-effect-"] {
+		display: block;
+	}
+
+	.lmn-button {
+		transform-origin: center;
+		&.lmn--hover-effect-darken:hover {
+			filter: brightness(0.9) contrast(1.2);
+		}
+		&.lmn--hover-effect-lift:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.2);
+		}
+		&.lmn--hover-effect-scale:hover {
+			transform: scale(1.05);
+		}
+		&.lmn--hover-effect-lift-scale:hover {
+			transform: translateY(-4px) scale(1.05);
+			box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.2);
+		}
+		&.lmn--hover-effect-lift-more:hover {
+			transform: translateY(-8px);
+			box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.2);
+		}
+		&.lmn--hover-effect-scale-more:hover {
+			transform: scale(1.1);
+		}
+		&.lmn--hover-effect-lift-scale-more:hover {
+			transform: translateY(-8px) scale(1.1);
+			box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.2);
+		}
+	}
+}

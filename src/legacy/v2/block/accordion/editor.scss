@@ -1,0 +1,61 @@
+/**
+ * Editor styles for the Accordion Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+// Only show placeholder text while selected or typing.
+[data-type="lmb/accordion"] {
+	.lmb-accordion__heading {
+		outline: none;
+		svg {
+			transform: rotate(180deg) !important;
+		}
+		> *:first-child {
+			flex: 1;
+		}
+	}
+}
+
+// Animate accordion arrow.
+[data-type="lmb/accordion"] {
+	.lmb-accordion:not(.lmb-accordion--open) {
+		.lmb-accordion__content {
+			display: none;
+		}
+		.lmb-accordion__heading {
+			svg {
+				transform: rotate(0deg) !important;
+			}
+		}
+	}
+}
+
+// This shows padding although not in the frontend.
+.editor-styles-wrapper .lmb-accordion.lmb-accordion--v2 .lmb-accordion__content .lmb-accordion__content-inner {
+	padding-top: 0;
+}
+.editor-styles-wrapper .lmb-accordion.lmb-accordion--v2 .lmb-accordion__content {
+	overflow: visible;
+}
+.editor-styles-wrapper .lmb-accordion.lmb-accordion--v2.lmb-accordion--design-plain .lmb-accordion__content .lmb-accordion__content-inner {
+	padding-bottom: 0;
+}
+
+// Fix header overlapping the content toolbar
+.editor-styles-wrapper .lmb-accordion.lmb-accordion--v2 .lmb-accordion__heading {
+	z-index: 0;
+}
+
+// Fix not clickable if there's a color overlay.
+.editor-styles-wrapper .lmb-accordion.lmb-accordion--v2 .lmb-accordion__item.lmb--has-background-overlay::before,
+.editor-styles-wrapper .lmb-accordion.lmb-accordion--v2 .lmb-accordion__item.lmb--has-background-overlay .lmb-video-background {
+	z-index: -1 !important;
+}
+
+// Fix Gutenberg 6.9.0 visual error. a new blank div gets added when editing.
+.lmb-accordion__heading > div:empty {
+	display: none;
+}

@@ -1,0 +1,7 @@
+[data-lmb-tab="layout"],
+[data-lmb-tab="style"] {
+	// Advanced Gutenberg tab is always in advanced, hide it.
+	.editor-block-inspector__advanced {
+		display: none;
+	}
+}

@@ -1,0 +1,11 @@
+.lmn--is-astra-theme {
+	.is-root-container > [data-type^="lumen/timeline"][data-align="full"] {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	[data-type^="lumen/timeline"]:is([data-align="full"], [data-align="wide"]) .lmn-block-content.alignwide {
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}

@@ -1,0 +1,76 @@
+// We cannot trust the initialPosition of the RangeControl, so we manually set
+// it via CSS.
+.lmb-range-control {
+	&.lmb-range-control--blank {
+		.components-range-control__track {
+			width: var(--lmb-advanced-range-control--width) !important;
+			+ span {
+				left: var(--lmb-advanced-range-control--width) !important;
+			}
+		}
+	}
+}
+
+.lmb-range-control {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	height: 40px; // Follow new WP standard.
+	.components-range-control {
+		flex: 1;
+		margin: 0 !important;
+	}
+	// Style the input control to make it smaller.
+	.components-input-control__container {
+		position: relative;
+		border-radius: 2px;
+		padding-top: 0px;
+		box-sizing: border-box;
+		display: inline-block;
+		font-size: 13px;
+		margin-top: 0px;
+		width: 64px;
+		margin-left: 16px !important;
+		margin-bottom: 3px;
+	}
+	// Style the reset button.
+	.components-range-control__reset {
+		height: 30px;
+		min-height: 30px;
+		margin-left: 8px;
+	}
+	.components-base-control__field,
+	.components-input-control.components-base-control {
+		margin-bottom: 0;
+	}
+
+	.components-number-control {
+		width: unset;
+	}
+
+	// For displaying marks
+	.components-range-control__thumb-wrapper {
+		z-index: 2;
+	}
+	.components-range-control__mark {
+		background: var(--lmn-skin-bg-default) !important;
+		z-index: 1;
+		transform: translateX(-50%);
+		width: 3px;
+	}
+	.components-range-control__root {
+		min-height: 35px;
+	}
+	.lmn-range-control__custom-button {
+		margin-inline-start: 8px;
+		top: -1px;
+		position: relative;
+	}
+}
+.lmn-range-control--with-marks.lmn-range-control--mark-mode .components-range-control__wrapper {
+	margin-inline-end: 8px;
+}
+
+div.components-base-control.lmn-preset-controls {
+	flex-grow: 1;
+}

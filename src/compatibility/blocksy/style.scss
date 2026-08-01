@@ -1,0 +1,15 @@
+// Use Blocksy theme colors as fallback defaults for container color schemes.
+// These defaults apply when the default container color scheme is unset, but background or custom schemes exist.
+:where(.lmn--is-blocksy-theme.lmn--has-default-container-scheme) {
+	--lmn-default-link-color: var(--theme-link-initial-color);
+	--lmn-default-heading-color: var(--theme-heading-color, var(--theme-headings-color));
+	--lmn-default-button-background-color: var(--theme-button-background-initial-color);
+
+	:where(.lmn-block-heading) {
+		@for $i from 1 through 6 {
+			:where(h#{ $i }) {
+				--lmn-heading-color: var(--theme-heading-color, var(--theme-heading-#{ $i }-color, var(--theme-headings-color)));
+			}
+		}
+	}
+}

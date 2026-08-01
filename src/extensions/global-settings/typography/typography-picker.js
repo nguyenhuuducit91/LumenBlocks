@@ -1,0 +1,184 @@
+/**
+ * External dependencies
+ */
+import { Tooltip, TypographyControl } from '~lumen/ui'
+import {
+	createTypographyStyles, loadGoogleFont, createTypographyDescription,
+} from '~lumen/utils'
+import { i18n } from 'lumen'
+import { omit } from 'lodash'
+import classnames from 'classnames'
+import { generateStyles } from '~lumen/features'
+import { usePresetControls } from '~lumen/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
+import { Dashicon } from '@wordpress/components'
+
+const TypographyPicker = props => {
+	const { value, help } = props
+
+	// On style change, only get the new style then trigger the onChange.
+	const onChange = ( style, value ) => {
+		const newStyles = {
+			[ style ]: value,
+		}
+		props.onChange( newStyles )
+	}
+
+	// Typography preview label.
+	const label = (
+		<TypographyPreview
+			selector={ props.selector }
+			styles={ value }
+			help={ help }
+		>
+			{ props.label }
+		</TypographyPreview>
+	)
+
+	const mainClasses = classnames( [
+		'lmb-global-settings-typography-control',
+	], {
+		'lmb-global-settings-typography-control--with-description': createTypographyDescription( value ),
+	} )
+
+	const useTypographyAsPresets = useSelect( select =>
+		select( 'lumen/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+	)
+
+	const presetMarks = usePresetControls( 'fontSizes' )
+		?.getPresetMarks( { customOnly: useTypographyAsPresets } ) || null
+
+	return (
+		<TypographyControl
+			fontSizeProps={ {
+				units: [ 'px', 'em', 'rem' ],
+				min: [ 0, 0, 0 ],
+				sliderMax: [ 150, 7, 7 ],
+				step: [ 1, 0.05, 0.05 ],
+				marks: presetMarks,
+			} }
+			lineHeightUnits={ [ 'px', 'em', 'rem' ] }
+			className={ mainClasses }
+			label={ label }
+			popoverLabel={ null }
+			onChangeStyle={ false }
+			showSecondFontSize={ false }
+			allowReset={ true }
+			fontFamily={ value.fontFamily }
+			defaultFontFamily={ props?.defaultFontFamily }
+			fontSize={ value.fontSize }
+			htmlTag={ props.selector }
+			tabletFontSize={ value.tabletFontSize }
+			mobileFontSize={ value.mobileFontSize }
+			fontSizeUnit={ value.fontSizeUnit }
+			tabletFontSizeUnit={ value.tabletFontSizeUnit }
+			mobileFontSizeUnit={ value.mobileFontSizeUnit }
+			fontWeight={ value.fontWeight }
+			textTransform={ value.textTransform }
+			lineHeight={ value.lineHeight }
+			tabletLineHeight={ value.tabletLineHeight }
+			mobileLineHeight={ value.mobileLineHeight }
+			lineHeightUnit={ value.lineHeightUnit }
+			tabletLineHeightUnit={ value.tabletLineHeightUnit }
+			mobileLineHeightUnit={ value.mobileLineHeightUnit }
+			letterSpacing={ value.letterSpacing }
+			tabletLetterSpacing={ value.tabletLetterSpacing }
+			mobileLetterSpacing={ value.mobileLetterSpacing }
+			onChangeFontFamily={ value => onChange( 'fontFamily', value ) }
+			onChangeFontSize={ value => onChange( 'fontSize', value ) }
+			onChangeTabletFontSize={ value => onChange( 'tabletFontSize', value ) }
+			onChangeMobileFontSize={ value => onChange( 'mobileFontSize', value ) }
+			onChangeFontSizeUnit={ value => onChange( 'fontSizeUnit', value ) }
+			onChangeTabletFontSizeUnit={ value => onChange( 'tabletFontSizeUnit', value ) }
+			onChangeMobileFontSizeUnit={ value => onChange( 'mobileFontSizeUnit', value ) }
+			onChangeFontWeight={ value => onChange( 'fontWeight', value ) }
+			onChangeTextTransform={ value => onChange( 'textTransform', value ) }
+			onChangeLineHeight={ value => onChange( 'lineHeight', value ) }
+			onChangeTabletLineHeight={ value => onChange( 'tabletLineHeight', value ) }
+			onChangeMobileLineHeight={ value => onChange( 'mobileLineHeight', value ) }
+			onChangeLineHeightUnit={ value => onChange( 'lineHeightUnit', value ) }
+			onChangeTabletLineHeightUnit={ value => onChange( 'tabletLineHeightUnit', value ) }
+			onChangeMobileLineHeightUnit={ value => onChange( 'mobileLineHeightUnit', value ) }
+			onChangeLetterSpacing={ value => onChange( 'letterSpacing', value ) }
+			onChangeTabletLetterSpacing={ value => onChange( 'tabletLetterSpacing', value ) }
+			onChangeMobileLetterSpacing={ value => onChange( 'mobileLetterSpacing', value ) }
+			onReset={ () => props.onReset( props.selector ) }
+			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.selector === 'p' ? __( 'Body Text', i18n ) : props.selector.toUpperCase() ) }
+			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
+			isAllowReset={ props?.isAllowReset }
+		/>
+	)
+}
+
+TypographyPicker.defaultProps = {
+	selector: 'h1',
+	label: sprintf( __( 'Heading %d', i18n ), 1 ),
+	onChange: () => {},
+	onReset: () => {},
+	value: {},
+	letterSpacing: '',
+}
+
+export default TypographyPicker
+
+const TypographyPreview = props => {
+	const isSelectorTag = props.selector?.startsWith( '.' )
+	const Tag = isSelectorTag ? 'p' : props.selector
+	const tagClassName = classnames( [
+		'lmb-global-typography-preview__label',
+	], {
+		[ props.selector?.substring( 1 ) ]: isSelectorTag,
+	} )
+	const { device } = useSelect(
+		select => ( {
+			device: select( 'core/editor' )?.getDeviceType?.()?.toLowerCase() ||
+				select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType?.()?.toLowerCase() ||
+				select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.()?.toLowerCase() ||
+				'desktop',
+		} ),
+		[]
+	)
+	const description = createTypographyDescription( props.styles, device )
+
+	// Don't include the line-height since it can ruin our control.
+	const stylesToRender = omit( props.styles, [ 'lineHeight', 'tabletLineHeight', 'mobileLineHeight' ] )
+
+	// Generate our preview styles.
+	const styles = {
+		[ `.lmb-global-typography-preview__label[data-selector="${ props.selector }"]` ]: createTypographyStyles( '%s', 'desktop', stylesToRender, { important: true } ),
+		[ `.lmb-global-typography-preview__label[data-selector="${ props.selector }"]:not([data-device="desktop"])` ]: createTypographyStyles( '%s', 'tablet', stylesToRender, { important: true } ),
+		[ `.lmb-global-typography-preview__label[data-selector="${ props.selector }"][data-device="mobile"]` ]: createTypographyStyles( '%s', 'mobile', stylesToRender, { important: true } ),
+	}
+
+	// Load our Google Font is necessary.
+	if ( props.styles.fontFamily ) {
+		loadGoogleFont( props.styles.fontFamily )
+	}
+
+	return (
+		<div className="lmb-global-typography-preview">
+			<div className="editor-styles-wrapper">
+				<div className="block-editor-block-list__layout">
+					<div className="wp-block block-editor-block-list__block">
+						<style>{ generateStyles( styles ).join( '' ) }</style>
+						<Tag className={ tagClassName } data-selector={ props.selector } data-device={ device }>{ props.children }</Tag>
+					</div>
+				</div>
+				{ props.help && (
+					<Tooltip
+						placement="bottom"
+						text={ props.help }
+					>
+						<Dashicon icon="editor-help" />
+					</Tooltip>
+				) }
+			</div>
+			{ description && <p className="lmb-global-typography-preview__description">{ description }</p> }
+		</div>
+	)
+}

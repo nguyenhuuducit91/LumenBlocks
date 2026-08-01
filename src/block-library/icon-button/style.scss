@@ -1,0 +1,14 @@
+@import "common";
+
+// We have a block group, and that has the bottom margin.
+.lmn-block-icon-button {
+	--lmn-block-margin-bottom: 0;
+}
+
+.lmn-block.lmn-block-icon-button {
+	width: auto;
+
+	.lmn-button {
+		border-radius: 100%;
+	}
+}

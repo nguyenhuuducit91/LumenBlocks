@@ -1,0 +1,62 @@
+/**
+ * Frontend styles for the Container Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-container.lmb-container--v2 {
+	&.alignfull:not(.lmb-container--design-plain):not(.lmb--has-block-background) {
+		padding-left: 0;
+		padding-right: 0;
+		> .lmb-inner-block > .lmb-block-content > .lmb-container__wrapper {
+			border-radius: 0 !important;
+		}
+	}
+
+	// We need to write this the specific way so that we don't affect nested containers.
+	> .lmb-inner-block > .lmb-block-content > .lmb-container__wrapper {
+		@include box();
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.lmb-container__side {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.lmb-container__side,
+	.lmb-container__content-wrapper {
+		width: 100%;
+	}
+
+	// Adjust the edge content blocks.
+	.lmb-container__content-wrapper > *:first-child {
+		margin-top: 0;
+	}
+	.lmb-container__content-wrapper > *:last-child {
+		margin-bottom: 0;
+	}
+
+	// Disallow nested Lumen blocks to become full-width.
+	.lmb-main-block.alignfull,
+	.lmb--has-block-background {
+		width: auto !important;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.lmb-container.lmb-container--v2.lmb-container--design-plain {
+	> .lmb-inner-block > .lmb-block-content > .lmb-container__wrapper {
+		background: none;
+		padding-left: 0;
+		padding-right: 0;
+		box-shadow: none;
+		border-radius: 0;
+		overflow: visible;
+	}
+}

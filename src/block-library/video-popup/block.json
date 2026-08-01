@@ -1,0 +1,19 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/video-popup",
+	"title": "Video Popup",
+	"description": "Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"YouTube",
+		"Vimeo",
+		"Embed Mp4"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/icon",
+		"lumen/image"
+	]
+}

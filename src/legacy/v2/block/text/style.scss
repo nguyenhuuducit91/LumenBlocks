@@ -1,0 +1,274 @@
+/**
+ * Frontend styles for the Text Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-text__text-wrapper {
+	display: grid;
+	grid-auto-columns: minmax(0, 1fr);
+	grid-auto-flow: column;
+	grid-column-gap: #{ $box-hori-padding };
+}
+.lmb-text__text {
+	word-break: break-word;
+	hyphens: auto;
+	display: flex;
+	flex-direction: column;
+	> p {
+		margin-bottom: $text-margin-bottom;
+	}
+}
+
+/**
+ * Template grid for column rules.
+ */
+.lmb-text--has-rule {
+	&.lmb-text--columns-2 {
+		.lmb-text__text-wrapper {
+			grid-template-columns: 1fr 1px 1fr;
+		}
+	}
+	&.lmb-text--columns-3 {
+		.lmb-text__text-wrapper {
+			grid-template-columns: 1fr 1px 1fr 1px 1fr;
+		}
+	}
+	&.lmb-text--columns-4 {
+		.lmb-text__text-wrapper {
+			grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+		}
+	}
+}
+.lmb-text__rule {
+	width: 1px;
+	background: #ddd;
+	height: 100%;
+	margin: auto;
+}
+
+.lmb-text--design-side-title-1,
+.lmb-text--design-side-title-2 {
+	.lmb-block-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: #{ $box-hori-padding };
+		grid-row-gap: 0;
+	}
+}
+
+/**
+ * For side title 1, we have equal lengths of columns.  Since our title is in
+ * another grid, and our text uses the CSS column rule, we modify the grid to
+ * make them even.
+ */
+.lmb-text--design-side-title-1 {
+	&.lmb-text--columns-2 {
+		.lmb-block-content {
+			grid-template-columns: 1fr 2fr;
+		}
+	}
+	&.lmb-text--columns-3 {
+		.lmb-block-content {
+			grid-template-columns: 1fr 3fr;
+		}
+	}
+	&.lmb-text--columns-4 {
+		.lmb-block-content {
+			grid-template-columns: 1fr 4fr;
+		}
+	}
+	// Reverse title.
+	&.lmb-text--reverse-title {
+		&.lmb-text--columns-2 {
+			.lmb-block-content {
+				grid-template-columns: 2fr 1fr;
+			}
+		}
+		&.lmb-text--columns-3 {
+			.lmb-block-content {
+				grid-template-columns: 3fr 1fr;
+			}
+		}
+		&.lmb-text--columns-4 {
+			.lmb-block-content {
+				grid-template-columns: 4fr 1fr;
+			}
+		}
+	}
+}
+
+.lmb-text--design-side-title-2 {
+	.lmb-block-content {
+		grid-template-columns: max-content 1fr;
+		grid-template-columns: fit-content(75%) 1fr;
+	}
+	// Reverse title.
+	&.lmb-text--reverse-title {
+		.lmb-block-content {
+			grid-template-columns: 1fr max-content;
+			grid-template-columns: 1fr fit-content(75%);
+		}
+	}
+}
+
+/**
+ * Reverse title.
+ */
+.lmb-text--reverse-title {
+	.lmb-text__title-wrapper {
+		grid-column: 2 / 3;
+		grid-row: 1;
+	}
+	.lmb-text__text-wrapper {
+		grid-column: 1 / 2;
+		grid-row: 1;
+	}
+}
+
+/**
+ * Subtitle on top of title.
+ */
+.lmb-text--subtitle-top {
+	.lmb-text__subtitle {
+		order: 1;
+	}
+	.lmb-text__title {
+		order: 2;
+	}
+}
+
+// We need this so make the column spacing work.
+// .lmb-text__text-wrapper,
+.lmb-text__title-wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.lmb-text {
+	.lmb-text__title {
+		margin: 0 0 #{ $text-margin-bottom * 0.5 } 0;
+	}
+	.lmb-text__subtitle {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.lmb-text__subtitle {
+		font-size: 0.85em;
+	}
+}
+
+/**
+ * Column rule
+ */
+.lmb-text--has-rule {
+	.lmb-text__text {
+		column-rule: 1px solid #ddd;
+		column-gap: #{ $box-hori-padding * 1.5 };
+	}
+}
+
+/**
+ * Responsive.
+ */
+.lmb-text {
+	&:not(.lmb-text--design-plain) {
+		@media screen and (max-width: $break-large) {
+			&.lmb-text--columns-3,
+			&.lmb-text--columns-4 {
+				.lmb-block-content {
+					display: block;
+				}
+			}
+		}
+		@media screen and (max-width: $break-small) {
+			&.lmb-text--columns-3 {
+				.lmb-text__text-wrapper {
+					grid-template-columns: 1fr;
+					grid-auto-flow: row;
+				}
+				.lmb-text__rule {
+					display: none !important;
+				}
+			}
+			&.lmb-text--columns-2 {
+				.lmb-block-content {
+					display: block;
+				}
+			}
+		}
+		@media screen and (max-width: $break-medium) {
+			&.lmb-text--columns-4 {
+				.lmb-text__text-wrapper {
+					grid-template-columns: 1fr 1fr;
+					grid-auto-flow: row;
+				}
+				&.lmb-text--has-rule {
+					.lmb-text__text-wrapper {
+						grid-template-columns: 1fr 1px 1fr;
+						grid-auto-flow: row;
+					}
+					.lmb-text__rule-2 {
+						display: none !important;
+					}
+				}
+			}
+		}
+		@media screen and (max-width: $break-mobile) {
+			.lmb-block-content {
+				display: block;
+			}
+			.lmb-text__text-wrapper {
+				grid-template-columns: 1fr !important;
+				grid-auto-flow: row;
+			}
+			.lmb-text__rule {
+				display: none !important;
+			}
+		}
+	}
+
+	// Plain
+	&.lmb-text--design-plain {
+		@media screen and (max-width: $break-large) and (min-width: $break-mobile) {
+			&.lmb-text--columns-4 {
+				.lmb-text__text-wrapper {
+					grid-template-columns: 1fr 1fr;
+					grid-auto-flow: row;
+				}
+				&.lmb-text--has-rule {
+					.lmb-text__text-wrapper {
+						grid-template-columns: 1fr 1px 1fr;
+						grid-auto-flow: row;
+					}
+					.lmb-text__rule-2 {
+						display: none !important;
+					}
+				}
+			}
+		}
+		@media screen and (max-width: $break-small) {
+			&.lmb-text--columns-3 {
+				.lmb-text__text-wrapper {
+					grid-template-columns: 1fr;
+					grid-auto-flow: row;
+				}
+				.lmb-text__rule {
+					display: none !important;
+				}
+			}
+		}
+
+		@media screen and (max-width: $break-mobile) {
+			.lmb-text__text-wrapper {
+				grid-template-columns: 1fr;
+				grid-auto-flow: row;
+			}
+			.lmb-text__rule {
+				display: none !important;
+			}
+		}
+	}
+
+}

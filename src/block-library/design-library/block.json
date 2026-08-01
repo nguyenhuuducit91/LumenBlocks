@@ -1,0 +1,19 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/design-library",
+	"title": "Design Library",
+	"description": "Choose a layout or block from the Lumen Design Library.",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"keywords": [
+		"Template"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-available-states": [ "enabled", "hidden" ]
+}

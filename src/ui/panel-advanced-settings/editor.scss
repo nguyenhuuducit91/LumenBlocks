@@ -1,0 +1,203 @@
+.lmb-toggle-panel-form-toggle {
+	margin-right: 12px;
+}
+.lmb-panel-advanced-button {
+	text-transform: uppercase;
+	font-size: 9px;
+	background: transparent;
+	width: 100%;
+	display: block;
+	border: 0;
+	outline: none;
+	position: relative;
+	cursor: pointer;
+	padding-bottom: 15px;
+	&::after {
+		content: "❯";
+		position: absolute;
+		transform: translateX(-50%) rotate(90deg);
+		left: 50%;
+		bottom: 0;
+	}
+	&:hover {
+		color: #999;
+	}
+}
+.lmb-toggle-panel-body--advanced {
+	.lmb-panel-advanced-button {
+		padding-bottom: 0;
+		padding-top: 15px;
+		&::after {
+			top: 0;
+			bottom: auto;
+			transform: translate(-50%) rotate(-90deg);
+		}
+	}
+}
+
+.components-panel__body.lmb-toggle-panel-body {
+	padding: 16px;
+}
+.components-panel__body.lmb-toggle-panel-body > .components-panel__body-title {
+	margin: -16px;
+}
+
+// Icon size.
+.lmb-toggle-panel-body {
+	.components-panel__arrow {
+		height: 24px;
+		width: 24px;
+	}
+}
+
+// This fixes the auto-scroll when a panel is opened. Must clear the editor
+// toolbar (47px) plus the sticky tab strip (40px + 1px border) defined in
+// components/panel-tabs/editor.scss, with a little breathing room.
+.lmb-toggle-panel-body {
+	scroll-margin-top: 96px;
+}
+
+// Premium dot
+// .lmn--premium-panel .components-panel__body-toggle {
+// 	&::after {
+// 		content: "";
+// 		height: 6px;
+// 		width: 6px;
+// 		background: #f59e0b;
+// 		border-radius: 100%;
+// 		margin-inline: 8px;
+// 		opacity: 0.4;
+// 		transition: opacity 0.2s ease-in-out;
+// 	}
+// 	&:hover::after {
+// 		opacity: 1;
+// 	}
+// }
+
+.components-panel__body-toggle .lmn-pulsating-circle {
+	margin-left: auto;
+	margin-top: 8px;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	position: static;
+}
+
+.lmn-pulsating-circle {
+	width: 8px;
+	height: 8px;
+	position: relative;
+
+	&::before {
+		content: "";
+		position: relative;
+		display: block;
+		width: 300%;
+		height: 300%;
+		box-sizing: border-box;
+		margin-left: -100%;
+		margin-top: -100%;
+		border-radius: 45px;
+		background-color: #f59e0b;
+		animation: lmn-pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		background-color: #f59e0b;
+		border-radius: 15px;
+		box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+		animation: lmn-pulse-dot 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+	}
+}
+
+@keyframes lmn-pulse-ring {
+	0% {
+		transform: scale(0.33);
+		opacity: 0.8;
+	}
+	40%,
+	50%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes lmn-pulse-dot {
+	0% {
+		transform: scale(0.8);
+	}
+	25% {
+		transform: scale(1);
+	}
+	50%,
+	100% {
+		transform: scale(0.8);
+	}
+}
+
+/**
+ * Premium panels should be on the top when using the free version.
+ */
+div :has(> .lmn--premium-panel) {
+	display: flex;
+	flex-direction: column;
+	> .components-panel__body {
+		order: 1;
+	}
+}
+.components-panel__body.lmn--premium-panel {
+	order: 2 !important;
+}
+
+/**
+ * Modified controls indicator.
+ */
+.lmn-panel-modified-indicator {
+	width: 8px;
+	height: 8px;
+	border-radius: 100%;
+	margin-inline: 12px;
+	background: #ffc107;
+}
+
+/**
+ * Hide contents when not open.
+ */
+.lmb-toggle-panel-body:not(.is-opened) > *:not(.components-panel__body-title) {
+	display: none;
+}
+
+.lmn-panel-modified-indicator:not(.lmn--visible) {
+	display: none;
+}
+
+// Reset button = .lmn-control__reset-button & .lmn-inspector-control__reset-button
+// (We had to split this into multiple lines because of a compiler bug where the :not selector goes empty)
+.lmb-toggle-panel-body:has(.lmn-control__reset-button:not(.lmn-control__reset-button--no-modified)) .lmn-panel-modified-indicator {
+	display: block;
+}
+.lmb-toggle-panel-body:has(.lmn-inspector-control__reset-button:not(.lmn-control__reset-button--no-modified)) .lmn-panel-modified-indicator {
+	display: block;
+}
+// Highlighted responsive & hover state toggle = .lmn-label-unit-toggle .has-value
+// Conditional display = .lmn-condition-component
+.lmb-toggle-panel-body:has(.lmn-label-unit-toggle .has-value, .lmn-condition-component) .lmn-panel-modified-indicator {
+	display: block;
+}
+
+// Design panel selection
+.lmb-toggle-panel-body:has(.lmb-design-control .components-radio-control__option:not(:first-child) .is-active) .lmn-panel-modified-indicator {
+	display: block;
+}
+
+// For Button Style Selection
+.lmb-toggle-panel-body:has(.lmn-style-control__option.is-active:not(:first-child)) .lmn-panel-modified-indicator {
+	display: block;
+}

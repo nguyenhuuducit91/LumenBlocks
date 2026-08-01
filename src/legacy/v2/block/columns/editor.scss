@@ -1,0 +1,186 @@
+
+@import "common";
+@import "./style";
+
+// Required styles for non-plain columns so we can set their locations.
+.lmb-columns:not(.lmb-columns--design-plain) {
+	> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		> *:nth-child(1) {
+			grid-area: one;
+		}
+		> *:nth-child(2) {
+			grid-area: two;
+		}
+		> *:nth-child(3) {
+			grid-area: three;
+		}
+		> *:nth-child(4) {
+			grid-area: four;
+		}
+		> *:nth-child(5) {
+			grid-area: five;
+		}
+		> *:nth-child(6) {
+			grid-area: six;
+		}
+		> *:nth-child(7) {
+			grid-area: seven;
+		}
+		> *:nth-child(8) {
+			grid-area: eight;
+		}
+	}
+
+	&:not(.lmb-columns--design-plain) {
+		> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			grid-auto-columns: auto;
+			grid-auto-flow: row;
+		}
+	}
+}
+
+.lmb-columns {
+	> .lmb-inner-block > .lmb-block-content > .lmb-columns__item {
+		display: flex !important;
+		justify-content: stretch;
+		align-items: stretch;
+		height: 100%;
+		> .block-editor-inner-blocks > .block-editor-block-list__layout {
+			height: 100%;
+		}
+	}
+}
+.lmb-columns__item > .block-editor-inner-blocks {
+	width: 100%;
+}
+
+
+.lmb-columns {
+	> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@include columns-grid();
+	}
+}
+
+.editor-styles-wrapper .lmb-columns {
+	// Plain responsive
+	&.lmb-columns.lmb-columns.lmb-columns > .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@media screen and (max-width: $break-js-mobile) {
+			grid-auto-flow: row;
+			grid-template-columns: 1fr !important;
+			grid-template-areas: inherit !important;
+		}
+	}
+	> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@media screen and (max-width: $break-js-mobile) {
+			> .lmb-column {
+				grid-area: inherit !important;
+			}
+		}
+	}
+	&.lmb-columns--design-plain.lmb-columns--columns-4 {
+		> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			@media screen and (max-width: $break-js-mobile) {
+				grid-auto-flow: row;
+				grid-template-columns: 1fr 1fr !important;
+			}
+		}
+	}
+	&.lmb-columns--design-plain.lmb-columns--columns-6 {
+		> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			@media screen and (min-width: $break-js-mobile) and (max-width: $break-js-tablet) {
+				grid-auto-flow: row;
+				grid-template-columns: 1fr 1fr 1fr !important;
+			}
+			@media screen and (max-width: $break-js-mobile) {
+				grid-template-columns: 1fr !important;
+			}
+		}
+	}
+}
+
+.lmb-columns {
+	/**
+	 * Grid design.
+	 */
+	&.lmb-columns--design-grid {
+		@for $i from 2 through 8 {
+			&.lmb-columns--columns-#{ $i } {
+				> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+					@include columns-grid-grid( $i );
+				}
+			}
+		}
+	}
+}
+
+// Grid Responsive.
+.editor-styles-wrapper .lmb-columns.lmb-columns--design-grid {
+	> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@media screen and (max-width: $break-js-mobile) {
+			grid-template-areas: inherit !important;
+			> .block-editor-block-list__block {
+				grid-area: inherit;
+			}
+		}
+	}
+}
+
+.lmb-columns {
+	> .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+// Display the borders of columns of other columns when a column is selected.
+[data-type="lmb/columns"].has-child-selected {
+	[data-type="lmb/column"]:not(.has-child-selected)::before {
+		border: 1px dashed rgba(123, 134, 162, 0.3);
+	}
+}
+// Display the borders of columns if the columns block is selected.
+[data-type="lmb/columns"].is-selected {
+	[data-type="lmb/column"]:not(.has-child-selected)::before {
+		border: 1px dashed rgba(123, 134, 162, 0.3);
+	}
+}
+
+// Adjust the selection outline of columns, by default they're too tall and can
+// overlap against other columns.
+[data-type="lmb/column"]::before {
+	top: 0 !important;
+	bottom: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+}
+// Since we adjusted the size of outlines, the toolbars would appear past the
+// outline. Re-attach the toolbar to the outline.
+@media (min-width: 600px) {
+	[data-type="lmb/column"].block-editor-block-contextual-toolbar {
+		margin-bottom: 0 !important;
+		margin-left: 0 !important;
+	}
+}
+
+// Add some borders to our columns block so people know that they're clickable.
+[data-type="lmb/columns"]:not(.is-selected)::before {
+	border: 1px dashed rgba(251, 191, 36, 0.6) !important;
+}
+
+/**
+ * Rearranging columns.
+ */
+// Smoothly animate lifting of columns when mousing over rearranging.
+[data-type="lmb/column"] {
+	transition: all 0.3s ease-in-out !important;
+}
+// Set to no transition to let the sorter do its own animation.
+[data-type="lmb/column"][style*="transform: tra"] {
+	transition: none !important;
+}
+// Lift the column for rearranging visual feedback.
+@for $i from 1 through 8 {
+	.lmb-columns--highlight-#{ $i } > .lmb-inner-block > .lmb-block-content > .lmb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="lmb/column"]:nth-child(#{ $i }) {
+		transform: translateY(-20px) !important;
+	}
+}

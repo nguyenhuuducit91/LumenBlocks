@@ -1,0 +1,7 @@
+{
+	"name": "lmb/pricing-box",
+	"title": "Pricing Box",
+	"description": "Display the different pricing tiers of your business.",
+	"category": "lumen-v2",
+	"textdomain": "lumen-blocks"
+}

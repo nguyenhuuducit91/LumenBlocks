@@ -1,0 +1,16 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/horizontal-scroller",
+	"title": "Horizontal Scroller",
+	"description": "A slider that scrolls horizontally.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId", "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Slider",
+		"Carousel"
+	],
+	"providesContext": {
+		"lumen/columnFit": "columnFit"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

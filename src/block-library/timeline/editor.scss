@@ -1,0 +1,180 @@
+@import "common";
+
+.lmn-block-timeline > .lmn-inner-blocks {
+	display: grid !important;
+	grid-template-columns: 1fr var(--line-dot-size, 16px) 1fr;
+	grid-template-rows: auto;
+	column-gap: var(--gap, 16px);
+	align-items: center;
+}
+.lmn-block-timeline {
+	position: relative !important;
+}
+.lmn-block-timeline--left > .lmn-inner-blocks > * {
+	grid-row: 1 / 2;
+}
+// prevents content to be overlapped by background
+.lmn-block-timeline > .lmn-inner-blocks > * {
+	z-index: 2;
+}
+
+.lmn-block-timeline > .lmn-inner-blocks::after,
+.lmn-block-timeline__middle,
+.lmn-block-timeline__middle::after {
+	background: none !important;
+}
+.lmn-block-timeline__middle::after,
+.lmn-block-timeline > .lmn-inner-blocks::after {
+	content: none !important;
+}
+
+.lmn-block-timeline__middle {
+	z-index: 2 !important;
+}
+.lmn-block-timeline__middle__dot {
+	border-radius: var(--line-dot-border-radius, 100%);
+	width: var(--line-dot-size, 16px);
+	height: var(--line-dot-size, 16px);
+	position: relative;
+	z-index: 2;
+}
+.lmn-block-timeline__middle__dot,
+.lmn-block-timeline__vertical-line {
+	overflow: hidden;
+	background: var(--line-bg-color, #eee) !important;
+}
+
+.lmn-block-timeline__vertical-line {
+	position: absolute;
+	top: 0px;
+	inset-inline-start: calc(50% - var(--line-bg-width, 3px) / 2);
+	width: var(--line-bg-width, 3px);
+	height: 100%;
+	bottom: unset;
+}
+
+// branching line
+.lmn-block-timeline__middle__branch {
+	position: absolute;
+	top: calc(50% - var(--line-bg-width, 3px) / 2);
+	inset-inline-start: 50%;
+	height: var(--line-bg-width, 3px);
+	width: var(--content-line, 0);
+	border-radius: var(--line-bg-width, 3px);
+	background: var(--line-bg-color, #eee) !important;
+	overflow: hidden;
+}
+
+.lmn-block-timeline--left .lmn-block-timeline__middle__branch {
+	inset-inline-start: auto;
+	inset-inline-end: 50%;
+}
+
+// fills
+.lmn-block-timeline__middle__fill {
+	position: absolute;
+	width: var(--line-dot-size, 16px);
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, hsl(0, 0%, 0%)) var(--line-accent-bg-location, 50%)) no-repeat;
+	background-size: 100% 100vh;
+	background-position-y: var(--lmn-timeline-middle-bg-position, 0);
+}
+.lmn-block-timeline__middle__branch__fill {
+	position: absolute;
+	top: calc(50% - var(--line-bg-width, 3px) / 2);
+	width: var(--content-line, 0);
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%)) no-repeat;
+	background-size: 100% 100vh;
+	background-position-y: var(--lmn-timeline-middle-bg-position, 0);
+}
+.lmn-block-timeline__vertical-line__fill {
+	position: absolute;
+	width: var(--line-bg-width, 3px);
+	max-height: 100%;
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%)) no-repeat;
+	background-size: 100% 100vh;
+	background-position-y: var(--lmn-timeline-vertical-line-bg-position, 0);
+}
+
+// for first timeline block
+[data-type="lumen/timeline"]:not([data-type="lumen/timeline"] + [data-type="lumen/timeline"]) > .lmn-block-timeline .lmn-block-timeline__vertical-line {
+	top: unset;
+	bottom: 0;
+}
+
+[data-type="lumen/timeline"]:is([data-type="lumen/timeline"] + style + [data-type="lumen/timeline"]) > .lmn-block-timeline .lmn-block-timeline__vertical-line {
+	top: 0;
+}
+
+[data-type="lumen/timeline"]:not([data-type="lumen/timeline"] + [data-type="lumen/timeline"]) > .lmn-block-timeline .lmn-block-timeline__vertical-line__fill {
+	top: calc(var(--line-dot-size, 16px) / -2);
+	max-height: calc(100% + var(--line-dot-size, 16px));
+}
+
+// set max height to 0 if timeline block is single
+[data-type="lumen/timeline"]:not([data-type="lumen/timeline"] + [data-type="lumen/timeline"]) > .lmn-block-timeline.lmn-block-timeline--last .lmn-block-timeline__vertical-line {
+	max-height: 0;
+}
+
+// Remove the top 8px gap.
+[data-type="lumen/timeline"] + [data-type="lumen/timeline"] {
+	margin-top: 0 !important;
+}
+
+// Remove the default bottom margin of the timeline block because it's annoying
+// to keep on removing it when you want to stack them. This works in conjunction
+// with the lumen.resizable-bottom-margin.default filter in edit.js.
+.lmn-block.lmn-block-timeline {
+	margin-bottom: 0;
+}
+
+@include tablet-mobile {
+	// In tablet and mobile, fixed background shows weirdly, so we remove it.
+	.lmn-block-timeline__middle,
+	.lmn-block-timeline > .lmn-inner-blocks::after {
+		--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	}
+}
+
+@include mobile {
+	.editor-styles-wrapper .lmn-block.lmn-block-timeline {
+		--content-line: 0 !important;
+		padding-top: 0;
+	}
+	.lmn-block-timeline > .lmn-inner-blocks {
+		grid-template-columns: var(--line-dot-size, 16px) 1fr;
+		grid-template-rows: auto 1fr;
+		align-items: flex-start;
+		padding-left: 16px;
+	}
+	.lmn-block-timeline > .lmn-inner-blocks::after {
+		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2 + 16px);
+	}
+	.lmn-block-timeline .lmn-block-timeline__middle {
+		position: absolute;
+		inset-inline-start: 16px;
+	}
+	.lmn-block-timeline .lmn-block-timeline__middle__dot {
+		top: 16px;
+	}
+	.lmn-block-timeline .lmn-block-timeline__content {
+		grid-column: 2 / 3;
+		grid-row: 2 / 3;
+		text-align: start;
+	}
+	.lmn-block-timeline .lmn-block-timeline__date {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
+		text-align: start;
+	}
+	.lmn-block-timeline__vertical-line {
+		inset-inline-start: calc(16px + var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2);
+	}
+
+	[data-type="lumen/timeline"]:not([data-type="lumen/timeline"] + [data-type="lumen/timeline"]) > .lmn-block-timeline .lmn-block-timeline__vertical-line {
+		top: 16px;
+	}
+
+	[data-type="lumen/timeline"]:is([data-type="lumen/timeline"] + style + [data-type="lumen/timeline"]) > .lmn-block-timeline .lmn-block-timeline__vertical-line {
+		top: 0;
+	}
+}

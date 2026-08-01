@@ -1,0 +1,72 @@
+@import "common";
+
+.lmn-block-carousel__slider {
+	scrollbar-width: none; // Removes scrollbar visibility in Mozilla Firefox
+
+	// Column outlines should be offset inside or else they will be cut.
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		> [data-type="lumen/column"] {
+			outline-offset: -2px;
+		}
+	}
+	// Inner block outlines should be inside or else they will overlap with the
+	// column outlines.
+	.lmn-column-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:not([data-type*="/column"]):not(:focus)::after {
+		outline-offset: -2px !important;
+	}
+}
+
+.lmn-block-carousel {
+	.lmn-block-carousel__slider > .block-editor-inner-blocks {
+		width: 100%;
+	}
+	.lmn-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		display: flex;
+	}
+}
+.lmn-block-carousel.lmn--is-fade {
+	.lmn-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block-lumen-column {
+		width: 100%;
+		flex: 1 0 100% !important;
+		opacity: 0;
+		z-index: 1;
+		transition-duration: max(calc(var(--transition-duration, 0.3s) * 1.15), 0.01s);
+		transition-delay: calc(var(--transition-duration, 0.3s) * 0.3);
+		max-width: 100%; //Theme compability
+	}
+}
+
+.lmn-block-carousel.lmn--is-slide {
+	.lmn-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		gap: var(--gap);
+		overscroll-behavior-inline: contain;
+		overflow-x: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+			display: none !important;
+		}
+	}
+	.lmn-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="lumen/column"] {
+		scroll-snap-align: start;
+		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1));
+		max-width: 100%; // Slides may overflow if block is set to full width in some themes, prevent that
+	}
+}
+
+// Hide arrows and dots on mobile
+@include mobile {
+	.lmn-block-carousel.lmn--hide-mobile-arrows > .lmn-block-carousel__content-wrapper > * > .lmn-block-carousel__buttons {
+		display: none;
+	}
+	.lmn-block-carousel.lmn--hide-mobile-dots > .lmn-block-carousel__content-wrapper > .lmn-block-carousel__dots {
+		display: none;
+	}
+}
+
+// The div before the SVG should not affect the styles.
+.lmn-block-carousel__button > div {
+	height: fit-content;
+	width: fit-content;
+	display: flex;
+}

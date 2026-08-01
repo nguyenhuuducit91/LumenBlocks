@@ -1,0 +1,81 @@
+/**
+ * WordPress dependencies
+ */
+import { withInstanceId } from '@wordpress/compose'
+import { useState, useEffect } from '@wordpress/element'
+
+/**
+ * External dependencies
+ */
+import { Button, IconSearchPopover } from '~lumen/ui'
+
+/**
+ * Internal dependencies
+ */
+import SvgIconHelper from '../svg-icon-helper'
+
+const SvgIconPlaceholder = withInstanceId( ( props => {
+	const [ openPopover, setOpenPopover ] = useState( false )
+	const [ clickedOnButton, setClickedOnButton ] = useState( false )
+
+	const {
+		instanceId,
+		isOpen,
+		onChange,
+		...propsToPass
+	} = props
+
+	// Trigger on toggle event.
+	useEffect( () => {
+		props.onToggle( openPopover )
+	}, [ openPopover ] )
+
+	return (
+		<div className={ `lmb-svg-icon-placeholder lmb-svg-icon-placeholder-${ instanceId }` }>
+			<Button
+				className="lmb-svg-icon-placeholder__button"
+				onClick={ () => {
+					if ( ! clickedOnButton ) {
+						setOpenPopover( true )
+					} else {
+						// If the popup closed because this button was clicked (while the popup was open) ensure the popup is closed.
+						// This is needed or else the popup will always open when spam clicking the button.
+						setOpenPopover( false )
+						setClickedOnButton( false )
+					}
+				} }
+			>
+				<SvgIconHelper { ...propsToPass } />
+			</Button>
+			{ ( ( isOpen !== null && isOpen ) || ( isOpen === null && openPopover ) ) &&
+				<IconSearchPopover
+					__deprecatedOnClickOutside={ event => {
+						// This statement checks whether the close was triggered by clicking on the button that opens this.
+						// This is needed or else the popup will always open when spam clicking the button.
+						if ( event.target ) {
+							if ( event.target.closest( `.lmb-svg-icon-placeholder-${ instanceId }` ) ) {
+								setClickedOnButton( true )
+								return
+							}
+						}
+						setOpenPopover( false )
+						setClickedOnButton( false )
+					} }
+					__hasPopover={ true }
+					onClose={ () => setOpenPopover( false ) }
+					onChange={ onChange }
+				/>
+			}
+		</div>
+	)
+} ) )
+
+SvgIconPlaceholder.defaultProps = {
+	isOpen: null,
+	className: '',
+	value: '',
+	onChange: () => {},
+	onToggle: () => {},
+}
+
+export default SvgIconPlaceholder

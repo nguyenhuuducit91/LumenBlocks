@@ -1,0 +1,95 @@
+.lmb-image-control {
+	.lmb-placeholder {
+		height: 150px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #f1f1f1;
+		margin-bottom: 12px;
+		margin-top: 0.6rem;
+		svg {
+			height: 50px;
+			fill: #ddd;
+		}
+	}
+	.lmb-placeholder,
+	.lmb-image-preview {
+		border-radius: 4px;
+		transition: all 0.3s ease-in-out;
+		cursor: pointer;
+		&:hover {
+			background: #fafafa;
+		}
+		&:focus {
+			background: #fafafa;
+			box-shadow: 0 0 0 2px rgba(30, 140, 190, 0.8);
+		}
+		.dashicons {
+			pointer-events: none;
+			color: #e6e6e6;
+			font-size: 50px;
+			height: 50px;
+			width: 50px;
+		}
+	}
+	.lmb-image-preview-wrapper {
+		position: relative;
+		z-index: 1; // Prevent this from going on top of the 3-tabs.
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #f1f1f1;
+		margin-top: 0.6rem;
+		border-radius: 4px;
+		svg {
+			stroke: rgba(0, 0, 0, 0.3);
+			stroke-width: 1px;
+			fill: #fff;
+		}
+
+		+ .lmn-dynamic-content-control {
+			.components-button {
+				margin-top: 8px;
+			}
+		}
+	}
+	.lmb-image-preview {
+		min-width: 100px;
+		flex: 1 1 100px;
+		margin: 0;
+		position: relative;
+		z-index: 2;
+		object-fit: contain;
+		width: auto;
+		height: auto;
+	}
+
+	.lmn-dynamic-content-control {
+		display: flex;
+
+		.components-base-control {
+			align-self: flex-end;
+			width: 100%;
+		}
+
+		.lmn-dynamic-content-control__button {
+			position: unset;
+		}
+	}
+}
+
+.lmb-image-upload {
+	display: flex;
+	flex-grow: 1;
+	gap: 4px;
+	justify-content: center;
+	align-items: center;
+	height: 30px;
+	width: 100%;
+	svg {
+		fill: none;
+		color: transparent;
+		width: 16px;
+		height: 16px;
+	}
+}

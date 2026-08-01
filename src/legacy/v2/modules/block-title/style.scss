@@ -1,0 +1,11 @@
+:where(.lmb-main-block) {
+	.lmb-block-title {
+		margin: 0 0 64px;
+		&.lmb-block-title--with-subtitle {
+			margin-bottom: 16px;
+		}
+	}
+	.lmb-block-description {
+		margin: 0 0 64px;
+	}
+}

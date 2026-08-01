@@ -1,0 +1,20 @@
+/**
+ * Editor styles for the Video Popup Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.editor-styles-wrapper [data-type="lmb/video-popup"][data-align="full"] .lmb-video-popup {
+	&.lmb-main-block--inner-full.lmb--has-block-background,
+	&:not(.lmb--has-block-background) {
+		.lmb-video-popup__wrapper {
+			border-radius: 0;
+			// Escape and make it full-screen.
+			margin-left: #{ -$box-hori-padding };
+			margin-right: #{ -$box-hori-padding };
+			width: calc(100% + #{ 2 * $box-hori-padding });
+		}
+	}
+}

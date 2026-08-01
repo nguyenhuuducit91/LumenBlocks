@@ -1,0 +1,136 @@
+.lmb-block-styles-controls {
+	padding: 0 16px 8px 8px;
+	position: relative;
+	border-top: none !important;
+
+	.lmb-block-styles-controls__wrapper {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 4px;
+
+		.lmb-block-styles-controls__block-style-button {
+			padding-right: 6px;
+			display: inline-block;
+			height: auto;
+			line-height: 1.4;
+			text-align: left;
+			place-self: flex-start;
+		}
+
+		.lmn-control__reset-button {
+			position: relative;
+			top: 0;
+			right: 0;
+			color: var(--lmn-skin-error);
+		}
+	}
+
+	.lmb-button-component.has-icon:hover {
+		box-shadow: inset 0 0 0 1px var(--lmn-skin-dark);
+		background-color: var(--lmn-skin-bg-secondary);
+		color: var(--lmn-skin-dark);
+	}
+
+	.lmn-panel-modified-indicator {
+		display: inline-block;
+		margin-inline: 8px;
+	}
+}
+
+.lmb-block-styles__new-style-modal {
+	max-width: 550px;
+	width: 90vw;
+
+	.notice {
+		margin: 0 0 16px;
+	}
+}
+.lmb-block-styles__new-style-description {
+	color: #1e1e1e;
+	margin-top: 0;
+}
+.lmb-block-styles__new-style-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	.lmb-block-styles__attributes-list {
+		p {
+			margin: 0 0 4px;
+		}
+		ul {
+			margin: 0;
+			list-style: disc;
+			padding-inline-start: 20px;
+		}
+		li {
+			margin: 0;
+		}
+	}
+
+	.components-button {
+		margin-right: 0;
+		margin-left: auto;
+	}
+}
+
+.lmb-block-styles__update-style-form {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+.lmb-block-styles-controls__popover {
+	.components-popover__content {
+		width: 370px !important;
+	}
+	.components-button {
+		width: 100%;
+		position: relative;
+
+		&.lmb-block-styles-controls__selected {
+			outline: 1px solid var(--lmn-skin-dark) !important;
+		}
+
+		&:focus:not(:disabled) {
+			box-shadow: 0 0 0 2px var(--lmn-skin-dark);
+		}
+
+		.dashicons-lock {
+			position: absolute;
+			right: 8px;
+		}
+	}
+
+	.components-panel__body:has(.lmb-pro-control-button__wrapper:not(.lmb-pro-control-button--hidden)) > *:not(.lmb-pro-control-button__wrapper) {
+		height: 0 !important;
+		overflow: hidden !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
+		opacity: 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.components-panel__body-description {
+		margin: -12px 0 1.5em;
+	}
+
+	.lmb-block-styles-controls__selected-icon {
+		position: absolute;
+	}
+	.lmb-block-styles-controls__label {
+		margin-inline-start: 24px;
+	}
+
+	.lmn-pulsating-circle {
+		margin-inline-start: 8px;
+	}
+
+	.lmb-control-separator {
+		width: 100% !important;
+		margin: 0 auto !important;
+	}
+}

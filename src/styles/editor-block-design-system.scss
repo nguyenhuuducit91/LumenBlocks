@@ -1,0 +1,196 @@
+@import "cssvars";
+
+// Block spacing when horizontally oriented.
+.lmn--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	column-gap: cssvar(block-margin-bottom);
+}
+
+// Remove the margins if it's only 1 block.
+.lmn-block-columns:has(> .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="lumen/column"]:first-child:last-child),
+// The block visual guides will have a style tag at the start, but still have only 1 column.
+.lmn-block-columns:has(> .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > style:first-child):has(> .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="lumen/column"]:nth-child(2):last-child) {
+	--lmn-columns-spacing: 0;
+}
+
+.lmn-button-group {
+	.block-editor-block-list__layout {
+		align-items: center;
+		row-gap: cssvar(button-row-gap);
+		column-gap: cssvar(button-column-gap);
+	}
+}
+
+// These are the global styles for spacing and borders, and buttons and icons.
+:where(.lmn-has-design-system-spacing-and-borders, .lmn-has-design-system-buttons-and-icons) {
+	// Containers
+	[data-type^="lumen/"] .lmn-container:not(.lmn--no-background) {
+		border-style: cssvar(container-border-style);
+		border-width: cssvar(container-border-width);
+	}
+
+	:where(.lmn-hover-parent:hover) [data-type^="lumen/"] .lmn-container:not(.lmn--no-background) {
+		border-width: var(--lmn-container-border-width-parent-hover, cssvar(container-border-width));
+		box-shadow: var(--lmn-container-box-shadow-parent-hover, cssvar(container-box-shadow));
+	}
+
+	.is-selected .lmn--is-hovered .lmn-hover-parent [data-type^="lumen/"] .lmn-container:not(.lmn--no-padding),
+	.is-selected .lmn--is-hovered .lmn-hover-parent [data-type^="lumen/"] .lmn-container-padding {
+		padding: var(--lmn-container-padding-parent-hover, cssvar(container-padding));
+	}
+
+	.lmn--is-hovered .lmn-container:not(.lmn--no-padding),
+	.lmn--is-hovered .lmn-container-padding {
+		padding: var(--lmn-container-padding-hover, cssvar(container-padding));
+	}
+
+	.is-selected .lmn--is-hovered .lmn-hover-parent [data-type^="lumen/"] .lmn-container:not(.lmn--no-background) {
+		box-shadow: var(--lmn-container-box-shadow-parent-hover, cssvar(container-box-shadow));
+		border-width: var(--lmn-container-border-width-parent-hover, cssvar(container-border-width));
+	}
+
+	.lmn--is-hovered .lmn-container:not(.lmn--no-background) {
+		box-shadow: var(--lmn-container-box-shadow-hover, cssvar(container-box-shadow));
+		border-width: var(--lmn-container-border-width-hover, cssvar(container-border-width));
+	}
+
+	// Block Backgrounds
+	[data-type^="lumen/"] .lmn-block.lmn-block-background {
+		border-style: cssvar(block-background-border-style);
+		border-width: cssvar(block-background-border-width);
+		&:hover {
+			border-width: var(--lmn-block-background-border-width-hover, cssvar(block-background-border-width));
+			box-shadow: var(--lmn-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
+		}
+	}
+	.lmn-hover-parent:hover .lmn-block-background {
+		border-width: var(--lmn-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--lmn-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
+	}
+
+	.is-selected .lmn--is-hovered .lmn-hover-parent [data-type^="lumen/"] .lmn-block-background {
+		border-width: var(--lmn-block-background-border-width-parent-hover, cssvar(block-background-border-width));
+		box-shadow: var(--lmn-block-background-box-shadow-parent-hover, cssvar(block-background-box-shadow));
+	}
+
+	[data-type^="lumen/"] .lmn--is-hovered.lmn-block-background {
+		border-width: var(--lmn-block-background-border-width-hover, cssvar(block-background-border-width));
+		box-shadow: var(--lmn-block-background-box-shadow-hover, cssvar(block-background-box-shadow));
+	}
+
+	// Images
+	.lmn--is-hovered .lmn-img-wrapper {
+		filter: drop-shadow(var(--lmn-image-drop-shadow-hover, cssvar(image-drop-shadow)));
+	}
+	.is-selected .lmn--is-hovered .lmn-hover-parent .lmn-img-wrapper {
+		filter: drop-shadow(var(--lmn-image-drop-shadow-parent-hover, cssvar(image-drop-shadow)));
+	}
+}
+
+// These are the global styles for buttons
+:where(.lmn-has-design-system-buttons-and-icons) {
+	// Buttons
+	.lmn--is-hovered.lmn-block:is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .lmn-button::before {
+			border-width: var(--lmn-button-border-width-hover, cssvar(button-border-width));
+			box-shadow: var(--lmn-button-box-shadow-hover, cssvar(button-box-shadow));
+		}
+		&.is-style-ghost .lmn-button::before {
+			border-width: var(--lmn-button-ghost-border-width-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--lmn-button-box-shadow-hover, cssvar(button-box-shadow));
+		}
+	}
+	.is-selected .lmn--is-hovered :where(.lmn-hover-parent [data-type^="lumen/"]) :is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost) .lmn-button::before {
+			border-width: var(--lmn-button-border-width-parent-hover, cssvar(button-border-width));
+			box-shadow: var(--lmn-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+		}
+		&.is-style-ghost .lmn-button::before {
+			border-width: var(--lmn-button-ghost-border-width-parent-hover, cssvar(button-ghost-border-width));
+			box-shadow: var(--lmn-button-box-shadow-parent-hover, cssvar(button-box-shadow));
+		}
+	}
+}
+
+// These are the global styles for color schemes.
+:where(#{$lmn-has-color-schemes-selector}) {
+	div.lmn-block > :is(h1,h2,h3,h4,h5,h6) {
+		color: var(--lmn-heading-color);
+	}
+	.lmn--is-hovered > .lmn-hover-parent .lmn-block {
+		> :is(p:where(:not(.lmn-block-subtitle__text)), div) {
+			color: var(--lmn-text-color-parent-hover);
+		}
+		> :is(h1,h2,h3,h4,h5,h6) {
+			color: var(--lmn-heading-color-parent-hover);
+		}
+		#{ '--lmn-accent-color' }: cssvar(accent-color-parent-hover);
+	}
+
+	.lmn--is-hovered > .lmn-hover-parent .lmn-block a,
+	&.lmn-preview-state--parent-hover .is-selected .lmn-block a {
+		color: var(--lmn-link-color-parent-hover);
+	}
+	&.lmn-preview-state--hover .is-selected > .lmn-block a {
+		color: var(--lmn-link-color-hover);
+	}
+
+	.lmn--is-hovered > .lmn-hover-parent :is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination),
+	&.lmn-preview-state--parent-hover .is-selected > :is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost, .is-style-plain) .lmn-button {
+			background: var(--lmn-button-background-color-parent-hover, cssvar(button-background-color));
+			#{ '--lmn-button-text-color' }: var(--lmn-button-text-color-parent-hover, #fff);
+			#{ '--lmn-accent-color' }: var(--lmn-button-text-color-parent-hover, #fff);
+		}
+		&.is-style-link .lmn-button {
+			#{ '--lmn-accent-color' }: var(--lmn-link-color-parent-hover);
+		}
+		&.is-style-ghost .lmn-button {
+			#{ '--lmn-button-outline-color' }: var(--lmn-button-outline-color-parent-hover, #008de4);
+			#{ '--lmn-button-text-color' }: var(--lmn-button-outline-color-parent-hover, #008de4);
+			#{ '--lmn-accent-color' }: var(--lmn-button-outline-color-parent-hover, #008de4);
+		}
+		&.is-style-plain .lmn-button {
+			#{ '--lmn-button-background-color' }: var(--lmn-button-background-color-parent-hover, #008de4);
+			#{ '--lmn-button-text-color' }: var(--lmn-button-plain-text-color-parent-hover, cssvar(button-background-color));
+			#{ '--lmn-accent-color' }: var(--lmn-button-plain-text-color-parent-hover, cssvar(button-background-color));
+		}
+	}
+	&.lmn-preview-state--hover .is-selected > :is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination) {
+		&:not(.is-style-link, .is-style-ghost, .is-style-plain) .lmn-button {
+			background: var(--lmn-button-background-color-hover, cssvar(button-background-color));
+			#{ '--lmn-button-text-color' }: var(--lmn-button-text-color-hover, #fff);
+			#{ '--lmn-accent-color-hover' }: var(--lmn-button-text-color-hover, #fff);
+			#{ '--lmn-accent-color' }: var(--lmn-button-text-color-hover, #fff);
+		}
+		&.is-style-link .lmn-button {
+			#{ '--lmn-accent-color-hover' }: var(--lmn-link-color-hover);
+			#{ '--lmn-accent-color' }: var(--lmn-link-color-hover);
+		}
+		&.is-style-ghost .lmn-button {
+			#{ '--lmn-button-outline-color' }: var(--lmn-button-outline-color-hover, #008de4);
+			#{ '--lmn-button-text-color' }: var(--lmn-button-outline-color-hover, #008de4);
+			#{ '--lmn-accent-color-hover' }: var(--lmn-button-outline-color-hover, #008de4);
+			#{ '--lmn-accent-color' }: var(--lmn-button-outline-color-hover, #008de4);
+		}
+		&.is-style-plain .lmn-button {
+			#{ '--lmn-button-background-color' }: var(--lmn-button-background-color-hover, #008de4);
+			#{ '--lmn-button-text-color' }: var(--lmn-button-plain-text-color-hover, cssvar(button-background-color));
+			#{ '--lmn-accent-color-hover' }: var(--lmn-button-plain-text-color-hover, cssvar(button-background-color));
+			#{ '--lmn-accent-color' }: var(--lmn-button-plain-text-color-hover, cssvar(button-background-color));
+		}
+	}
+
+
+}
+
+:where(.lmn--has-container-scheme) .lmn--is-hovered .lmn-container:not(.lmn--no-background),
+.lmn--is-hovered .lmn-container:not(.lmn--no-background):where([class*="lmn--container-scheme"]) {
+	background-color: var(--lmn-container-background-color-hover, cssvar(container-background-color));
+	background-image: var(--lmn-container-background-color-hover, var(--lmn-container-background-color, none));
+}
+
+:where(.lmn--has-container-scheme) [data-type^="lumen/"] .lmn--is-hovered.lmn-block-background,
+[data-type^="lumen/"] .lmn--is-hovered.lmn-block-background:where([class*="lmn--background-scheme"]) {
+	background-image: var(--lmn-block-background-color-hover, var(--lmn-block-background-color, none));
+	background-color: var(--lmn-block-background-color-hover, cssvar(block-background-color));
+}

@@ -1,0 +1,29 @@
+.lmb-base-control-multi-label {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	margin-bottom: 5px;
+	align-items: center;
+	.lmb-base-control-multi-label__label {
+		margin-bottom: 0;
+	}
+}
+
+.lmb-base-control-multi-label__units {
+	top: 0;
+	right: 0;
+	display: flex;
+	button {
+		border: 0;
+		font-size: 10px;
+		margin: 0;
+		font-weight: 400;
+		outline: none;
+		padding: 0 4px;
+		background: transparent;
+		cursor: pointer;
+		text-transform: uppercase;
+	}
+	.components-button {
+		text-transform: none;
+	}
+}

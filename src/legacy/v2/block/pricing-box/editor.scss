@@ -1,0 +1,12 @@
+/**
+ * Editor styles for the Pricing Box Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+.lmb-pricing-box__price-line > *:first-child {
+	align-self: flex-start;
+}
+.lmb-pricing-box__price-line > *:last-child {
+	align-self: flex-end;
+}

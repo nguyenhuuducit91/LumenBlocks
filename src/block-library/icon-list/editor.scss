@@ -1,0 +1,31 @@
+// Lists in the editor can show a margin that's not visible in the frontend.
+.lmn-block-icon-list > div > .rich-text {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+// Show a cursor pointer when hovering over the bullet icons
+.lmn-block-icon-list {
+	li {
+		position: relative;
+	}
+
+	li::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 1em;
+		// In Global Buttons and Icons, we renamed `--lmn-icon-height` to `--lmn-icon-list-icon-size`.
+		// Keep the `--lmn-icon-height` for backward compatibility.
+		width: var(--lmn-icon-height, var(--lmn-icon-list-icon-size, 1em));
+		cursor: copy;
+		margin-left: calc(var(--lmn-icon-height, var(--lmn-icon-list-icon-size, 1em)) * -1);
+	}
+}
+
+// Alignments when the icon list is aligned.
+[data-type="lumen/icon-list"] .lmn-block-icon-list :is(ul, ol) {
+	margin-left: var(--lmn-alignment-margin-left);
+	margin-right: var(--lmn-alignment-margin-right);
+}

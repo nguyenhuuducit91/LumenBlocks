@@ -1,0 +1,22 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/accordion",
+	"title": "Accordion",
+	"description": "A title that your visitors can toggle to view more text.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Toggle",
+		"Faq"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/icon-label",
+		"lumen/heading",
+		"lumen/icon"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/text"
+	]
+}

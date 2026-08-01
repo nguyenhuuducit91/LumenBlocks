@@ -1,0 +1,47 @@
+/**
+ * Internal dependencies
+ */
+import { separators } from './separators'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+
+const Separator = props => {
+	const { shape: SeparatorComp, shadow: ShadowComp } = separators[ props.design || 'wave-1' ][ ! props.inverted ? 'default' : 'inverted' ]
+
+	const mainClasses = classnames( [
+		props.className,
+		'lmb-separator-wrapper',
+	] )
+
+	return (
+		<div className={ mainClasses }>
+			{ props.shadow && (
+				<ShadowComp
+					className="lmb-separator__shadow"
+					preserveAspectRatio="none"
+					aria-hidden="true"
+				/>
+			) }
+			<SeparatorComp
+				className="lmb-separator__layer-1"
+				preserveAspectRatio="none"
+				aria-hidden="true"
+			/>
+			{ props.children }
+		</div>
+	)
+}
+
+Separator.defaultProps = {
+	className: '',
+	design: 'wave-1',
+	shadow: false,
+	inverted: false,
+}
+
+Separator.Save = props => <Separator { ...props } />
+
+export default Separator

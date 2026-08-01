@@ -1,0 +1,19 @@
+@import "common";
+
+.lmn-block-price {
+	line-height: 1;
+	.lmn-block-text {
+		--lmn-block-margin-bottom: 0;
+	}
+	.lmn-block-text:first-child {
+		vertical-align: top;
+	}
+}
+.lmn-block-price__price {
+	font-size: 56px;
+	line-height: 0.7;
+}
+
+:where(#{$lmn-has-color-schemes-selector}) :where(.lmn-block-price) .lmn-block-text {
+	color: var(--lmn-text-color);
+}

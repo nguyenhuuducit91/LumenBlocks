@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/heading",
+	"title": "Heading",
+	"description": "Introduce new sections of your content in style.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Title"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "essential"}

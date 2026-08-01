@@ -1,0 +1,68 @@
+@import "common";
+
+// .lmn-block-accordion > .block-editor-inner-blocks > .block-editor-block-list__layout > :first-child { // First column, the accordion heading
+.lmn-block-accordion .lmn-block-accordion__heading {
+	.lmn-block-icon-label { // Icon label
+		[data-type="lumen/icon"]:first-child .lmn-block-icon {
+			justify-content: flex-start;
+		}
+		[data-type="lumen/icon"]:last-child .lmn-block-icon {
+			justify-content: flex-end;
+		}
+		[data-type="lumen/icon"] {
+			flex: 0 0 40px;
+		}
+	}
+}
+
+.lmn-block-accordion .lmn-block-accordion__content {
+	> * > * > .lmn-container {
+		padding: cssvar(container-padding);
+	}
+}
+
+// Accordion open/close display for the editor only.
+.lmn-block-accordion {
+	// Hide the content.
+	&:not(.lmn--is-open) {
+		> .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:last-child {
+			display: none;
+		}
+	}
+
+	// Rotate the icon when the accordion opens.
+	.lmn-block-accordion__heading {
+		.lmn-block-content.lmn-block-column__content.lmn-column-wrapper {
+			width: 100%; // Added for safari compatibility
+		}
+		.lmn--svg-wrapper {
+			@include transition();
+		}
+	}
+	&.lmn--is-open .lmn-block-accordion__heading {
+		.lmn--svg-wrapper:not(.lmn--has-icon2) {
+			transform: rotate(180deg);
+		}
+	}
+
+	// If another icon was used, don't rotate the icon, show the other icon when
+	// the accordion opens.
+	&.lmn--is-open .lmn-block-accordion__heading {
+		.lmn--svg-wrapper.lmn--has-icon2 {
+			.lmn--inner-svg {
+				display: none;
+			}
+		}
+		.lmn--icon-2 {
+			display: block !important;
+		}
+	}
+
+	// This is so that the accordion opens in the editor
+	// since open attribute is not present
+	&.lmn--is-open .lmn-block-accordion__content {
+		max-height: unset;
+		transform: translateY(0px);
+		opacity: 1;
+	}
+}

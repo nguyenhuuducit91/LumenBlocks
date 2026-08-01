@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pricing Box (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-pricing-box lmb-pricing-box--v3 lmb-pricing-box--columns-2 lmb-pricing-box--design-basic lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-pricing-box__item lmb-pricing-box__item1"
+      >
+        
+        <h3
+          class="lmb-pricing-box__title"
+        >
+          <div>
+            Title
+          </div>
+        </h3>
+        <div
+          class="lmb-pricing-box__price-wrapper"
+        >
+          <div
+            class="lmb-pricing-box__price-line"
+          >
+            <span
+              class="lmb-pricing-box__price-prefix"
+            >
+              <div>
+                $
+              </div>
+            </span>
+            <span
+              class="lmb-pricing-box__price"
+            >
+              <div>
+                9
+              </div>
+            </span>
+            <span
+              class="lmb-pricing-box__price-suffix"
+            >
+              <div>
+                .00
+              </div>
+            </span>
+          </div>
+        </div>
+        <p
+          class="lmb-pricing-box__subprice"
+        >
+          <div>
+            Sub Price
+          </div>
+        </p>
+        <div
+          class="lmb-pricing-box__button"
+        >
+          <div
+            class="lmb-button-container"
+          >
+            <a
+              class="lmb-button lmb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="lmb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+        <p
+          class="lmb-pricing-box__description"
+        >
+          <div>
+            Description for this block. You can use this space for describing your block.
+          </div>
+        </p>
+      </div>
+      <div
+        class="lmb-pricing-box__item lmb-pricing-box__item2"
+      >
+        
+        <h3
+          class="lmb-pricing-box__title"
+        >
+          <div>
+            Title
+          </div>
+        </h3>
+        <div
+          class="lmb-pricing-box__price-wrapper"
+        >
+          <div
+            class="lmb-pricing-box__price-line"
+          >
+            <span
+              class="lmb-pricing-box__price-prefix"
+            >
+              <div>
+                $
+              </div>
+            </span>
+            <span
+              class="lmb-pricing-box__price"
+            >
+              <div>
+                9
+              </div>
+            </span>
+            <span
+              class="lmb-pricing-box__price-suffix"
+            >
+              <div>
+                .00
+              </div>
+            </span>
+          </div>
+        </div>
+        <p
+          class="lmb-pricing-box__subprice"
+        >
+          <div>
+            Sub Price
+          </div>
+        </p>
+        <div
+          class="lmb-pricing-box__button"
+        >
+          <div
+            class="lmb-button-container"
+          >
+            <a
+              class="lmb-button lmb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="lmb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+        <p
+          class="lmb-pricing-box__description"
+        >
+          <div>
+            Description for this block. You can use this space for describing your block.
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Pricing Box (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-pricing-box lmb-pricing-box--v3 lmb-pricing-box--columns-3 lmb-pricing-box--design-wave-2 lmb-main-block"
+>
+  <style>
+    .lmb-pricing-box__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.lmb-pricing-box__item:before{background-color:#123456 !important;opacity:12.3}@media screen and (max-width:1025px){.lmb-pricing-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.lmb-pricing-box__item:before{opacity:12.3}}@media screen and (max-width:768px){.lmb-pricing-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.lmb-pricing-box__item:before{opacity:12.3}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-pricing-box__item lmb-pricing-box__item1 lmb--shadow-123 lmb--has-background-overlay"
+      />
+      <div
+        class="lmb-pricing-box__item lmb-pricing-box__item2 lmb--shadow-123 lmb--has-background-overlay"
+      />
+      <div
+        class="lmb-pricing-box__item lmb-pricing-box__item3 lmb--shadow-123 lmb--has-background-overlay"
+      />
+    </div>
+  </div>
+</div>
+`;

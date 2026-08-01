@@ -1,0 +1,28 @@
+/**
+ * Editor styles for the Container Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "../../common.scss";
+
+// Remove border radius on full width.
+[data-align="full"] {
+	.lmb-container:not(.lmb-container--design-plain):not(.lmb--has-block-background) {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		> .lmb-inner-block > .lmb-block-content > .lmb-container__wrapper {
+			border-radius: 0 !important;
+		}
+	}
+}
+
+// Prevent block align center from centering our text.
+[data-type="lmb/container"][data-align="center"] {
+	text-align: inherit;
+}
+
+// Inner blocks are always restricted to the content width.
+.lmb-container .block-editor-block-list__block {
+	max-width: none !important;
+}

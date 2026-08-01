@@ -1,0 +1,16 @@
+/**
+ * Editor styles for the Image Box Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.lmb-image-box__image:hover {
+	opacity: 1 !important;
+}
+
+// Used for double-click-to-open.
+.lmb-image-box__arrow {
+	pointer-events: all !important;
+}

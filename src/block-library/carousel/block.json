@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/carousel",
+	"title": "Carousel",
+	"description": "A carousel slider.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Slider"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

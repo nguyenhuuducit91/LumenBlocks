@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/countdown",
+	"title": "Countdown",
+	"description": "Display a countdown timer on your website.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Timer"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

@@ -1,0 +1,108 @@
+/**
+ * Frontend styles for the Accordion Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-accordion.lmb-accordion--v2 {
+	&.lmb-accordion--open > .lmb-inner-block > .lmb-block-content > .lmb-accordion__item > .lmb-accordion__heading .lmb-accordion__arrow {
+		transform: rotate(180deg);
+	}
+
+	&.lmb-accordion.lmb-accordion--design-basic {
+		.lmb-accordion__heading {
+			@include box();
+			padding: ($box-hori-padding * 0.5) $box-hori-padding;
+		}
+	}
+
+	.lmb-accordion__heading {
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		cursor: pointer;
+		transition: margin 0.3s ease-in-out;
+		will-change: margin;
+		.lmb-accordion__title {
+			flex: 1;
+			margin: 0 !important;
+			order: 1;
+		}
+		.lmb-accordion__arrow {
+			flex-shrink: 0;
+			order: 3;
+			transition: transform 0.3s ease-in-out;
+			transform: rotate(0deg);
+		}
+		// This is a make-shift gap.
+		&::after {
+			content: "";
+			width: #{ $box-hori-padding * 3*0.25 };
+			display: block;
+			order: 2;
+			flex-shrink: 0;
+		}
+		&:focus {
+			outline-width: 1px;
+			outline-style: dotted;
+		}
+
+		// Common shadow #9 doesn't show up since notification is too short.
+		&.lmb--shadow-9 {
+			box-shadow: 0 25px 60px -15px rgba(72, 73, 121, 0.38) !important;
+		}
+	}
+
+	.lmb-accordion__content {
+		transition: max-height 0.3s ease-in-out, transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+		transform: translateY(0);
+		opacity: 1;
+		will-change: max-height;
+		overflow: hidden;
+		.lmb-accordion__content-inner {
+			padding: $box-hori-padding $box-hori-padding 0;
+			> *:first-child {
+				margin-top: 0 !important;
+			}
+			> *:last-child {
+				margin-bottom: 0 !important;
+			}
+		}
+
+		// Fix for native image blocks surpassing the width of accordions.
+		.wp-block-image.wp-block-image.wp-block-image > img {
+			max-width: 100%;
+		}
+	}
+	&:not(.lmb-accordion--open) .lmb-accordion__heading {
+		margin-bottom: 0;
+	}
+	&:not(.lmb-accordion--open) .lmb-accordion__content {
+		max-height: 0;
+		transform: translateY(25px);
+		opacity: 0;
+	}
+
+	&.lmb-accordion--design-plain {
+		.lmb-accordion__item {
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
+		.lmb-accordion__heading {
+			box-shadow: none;
+			border-radius: 0;
+			padding: 0;
+			margin-bottom: 35px;
+			&:focus {
+				outline-offset: 10px;
+			}
+		}
+		.lmb-accordion__content {
+			.lmb-accordion__content-inner {
+				padding: 0 0 $box-hori-padding;
+			}
+		}
+	}
+}

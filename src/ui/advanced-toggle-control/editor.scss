@@ -1,0 +1,16 @@
+.lmn-toggle-control .lmn-inspector-control__reset-button {
+	bottom: -4px !important;
+}
+
+.lmn-toggle-control .components-base-control__field {
+	display: flex;
+	align-items: flex-start;
+	.components-form-toggle {
+		margin-inline-end: 12px;
+	}
+}
+
+// A little more gap when the prior control is not a toggle.
+.lmn-control:not(.lmn-toggle-control) + .lmn-toggle-control {
+	margin-top: 20px;
+}

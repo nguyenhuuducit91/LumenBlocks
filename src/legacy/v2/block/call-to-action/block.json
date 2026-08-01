@@ -1,0 +1,10 @@
+{
+	"name": "lmb/cta",
+	"title": "Call to Action",
+	"description": "A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Call to Action"
+	],
+	"textdomain": "lumen-blocks"
+}

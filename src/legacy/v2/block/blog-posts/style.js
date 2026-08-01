@@ -1,0 +1,350 @@
+/**
+ * External dependencies
+ */
+import {
+	appendImportantAll,
+	createResponsiveStyles,
+	createTypographyStyles,
+	whiteIfDarkBlackIfLight,
+	appendImportant,
+	__getValue,
+} from '~lumen/utils'
+import deepmerge from 'deepmerge'
+
+/**
+ * Internal dependencies
+ */
+import { showOptions } from './util'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+export const createStyles = props => {
+	const getValue = __getValue( props.attributes )
+
+	const {
+		columnBackgroundColor = '',
+		design = 'basic',
+		showReadmore = true,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	const styles = []
+
+	if ( ! show.columnBackground ) {
+		styles.push( {
+			'.lmb-blog-posts__featured-image': {
+				borderRadius: appendImportant( getValue( 'borderRadius', '%spx' ) ),
+			},
+		} )
+	}
+
+	const {
+		contentOrder = '',
+	} = props.attributes
+	if ( contentOrder && show.contentOrderStyles ) {
+		// Values follow this pattern "category,title,meta,excerpt".
+		contentOrder.split( ',' ).forEach( ( content, i ) => {
+			const order = i === 0 ? 1 :
+				i === 3 ? 10 :
+					i + 3
+
+			styles.push( {
+				[ `.lmb-blog-posts__${ content }` ]: {
+					order: appendImportant( order ),
+				},
+			} )
+
+			// Always order the read more button right after the excerpt.
+			if ( showReadmore && content === 'excerpt' ) {
+				styles.push( {
+					'.lmb-blog-posts__readmore': {
+						order: appendImportant( order ),
+					},
+				} )
+			}
+		} )
+	}
+
+	// Container.
+	const {
+		columnPaddingUnit = 'px',
+		tabletColumnPaddingUnit = 'px',
+		mobileColumnPaddingUnit = 'px',
+	} = props.attributes
+
+	const columnSelector = applyFilters( 'lumen.blog-posts.spacing-paddings.selector', '> .lmb-inner-block > .lmb-block-content > *', props )
+	const columnEditorSelector = applyFilters( 'lumen.blog-posts.spacing-paddings.selector', '> .lmb-inner-block > .lmb-block-content > .lmb-blog-posts__item', props )
+
+	styles.push( {
+		saveOnly: {
+			desktopTablet: {
+				[ columnSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+				} ),
+			},
+			tabletOnly: {
+				[ columnSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+				} ),
+			},
+			mobile: {
+				[ columnSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+				} ),
+			},
+		},
+		editor: {
+			desktopTablet: {
+				[ columnEditorSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+				} ),
+			},
+			tabletOnly: {
+				[ columnEditorSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+				} ),
+			},
+			mobile: {
+				[ columnEditorSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+				} ),
+			},
+		},
+	} )
+
+	// Image.
+	const {
+		showImage = true,
+	} = props.attributes
+	if ( showImage && show.imageHeight ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__featured-image img', 'image%sHeight', 'height', '%spx', props.attributes, { important: true } ) )
+	}
+	if ( showImage && show.imageWidth && design === 'list' ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__item', 'image%sWidth', 'gridTemplateColumns', '%spx minmax(0, 1fr)', props.attributes, { important: true } ) )
+	}
+
+	// Category.
+	const {
+		categoryHighlighted = false,
+		categoryColor = '',
+		showCategory = true,
+	} = props.attributes
+	if ( showCategory ) {
+		if ( categoryHighlighted ) {
+			styles.push( {
+				'.lmb-blog-posts__category a': {
+					backgroundColor: appendImportant( getValue( 'categoryColor' ) ),
+					color: appendImportant( whiteIfDarkBlackIfLight( '', getValue( 'categoryColor' ) ) ),
+				},
+				'.lmb-blog-posts__category a:hover': {
+					opacity: ! getValue( 'categoryHoverColor' ) ? 0.8 : undefined, // Opacity hover if no hover color.
+					backgroundColor: appendImportant( getValue( 'categoryHoverColor' ) ),
+					color: appendImportant( whiteIfDarkBlackIfLight( '', getValue( 'categoryHoverColor' ) ) ),
+				},
+			} )
+		} else {
+			styles.push( {
+				'.lmb-blog-posts__category a': {
+					color: appendImportant( whiteIfDarkBlackIfLight( categoryColor, show.columnBackground && columnBackgroundColor ) ),
+				},
+				'.lmb-blog-posts__category a:hover': {
+					opacity: categoryColor && ! getValue( 'categoryHoverColor' ) ? 0.8 : undefined, // Opacity hover if no hover color.
+					color: appendImportant( getValue( 'categoryHoverColor' ) ),
+				},
+			} )
+		}
+
+		styles.push( {
+			'.lmb-blog-posts__category': {
+				...createTypographyStyles( 'category%s', 'desktop', props.attributes, { importantSize: true } ),
+				textAlign: getValue( 'categoryAlign', '%s !important' ),
+			},
+			tablet: {
+				'.lmb-blog-posts__category': {
+					...createTypographyStyles( 'category%s', 'tablet', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'categoryTabletAlign', '%s !important' ),
+				},
+			},
+			mobile: {
+				'.lmb-blog-posts__category': {
+					...createTypographyStyles( 'category%s', 'mobile', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'categoryMobileAlign', '%s !important' ),
+				},
+			},
+		} )
+	}
+
+	// Title.
+	const {
+		titleColor = '',
+		showTitle = true,
+	} = props.attributes
+	if ( showTitle ) {
+		styles.push( {
+			'.lmb-blog-posts__title a': {
+				color: appendImportant( whiteIfDarkBlackIfLight( titleColor, show.columnBackground && columnBackgroundColor ) ),
+			},
+			'.lmb-blog-posts__title a:hover': {
+				opacity: titleColor && ! getValue( 'titleHoverColor' ) ? 0.8 : undefined, // Opacity hover if no hover color.
+				color: appendImportant( getValue( 'titleHoverColor' ) ),
+			},
+			'.lmb-blog-posts__title': {
+				...createTypographyStyles( 'title%s', 'desktop', props.attributes, { importantSize: true } ),
+				textAlign: getValue( 'titleAlign', '%s !important' ),
+			},
+			tablet: {
+				'.lmb-blog-posts__title': {
+					...createTypographyStyles( 'title%s', 'tablet', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'titleTabletAlign', '%s !important' ),
+				},
+			},
+			mobile: {
+				'.lmb-blog-posts__title': {
+					...createTypographyStyles( 'title%s', 'mobile', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'titleMobileAlign', '%s !important' ),
+				},
+			},
+		} )
+	}
+
+	// Excerpt.
+	const {
+		excerptColor = '',
+		showExcerpt = true,
+	} = props.attributes
+	if ( showExcerpt ) {
+		styles.push( {
+			'.lmb-blog-posts__excerpt, .lmb-blog-posts__excerpt p': {
+				...createTypographyStyles( 'excerpt%s', 'desktop', props.attributes, { importantSize: true } ),
+				color: appendImportant( whiteIfDarkBlackIfLight( excerptColor, show.columnBackground && columnBackgroundColor ) ),
+			},
+			'.lmb-blog-posts__excerpt': {
+				textAlign: getValue( 'excerptAlign', '%s !important' ),
+			},
+			tablet: {
+				'.lmb-blog-posts__excerpt, .lmb-blog-posts__excerpt p': {
+					...createTypographyStyles( 'excerpt%s', 'tablet', props.attributes, { importantSize: true } ),
+				},
+				'.lmb-blog-posts__excerpt': {
+					textAlign: getValue( 'excerptTabletAlign', '%s !important' ),
+				},
+			},
+			mobile: {
+				'.lmb-blog-posts__excerpt, .lmb-blog-posts__excerpt p': {
+					...createTypographyStyles( 'excerpt%s', 'mobile', props.attributes, { importantSize: true } ),
+				},
+				'.lmb-blog-posts__excerpt': {
+					textAlign: getValue( 'excerptMobileAlign', '%s !important' ),
+				},
+			},
+		} )
+	}
+
+	// Meta.
+	const {
+		metaColor = '',
+		showMeta = true,
+		showAuthor = true,
+		showDate = true,
+		showComments = true,
+	} = props.attributes
+	if ( showMeta && ( showAuthor || showDate || showComments ) ) {
+		styles.push( {
+			'.lmb-blog-posts__meta': {
+				...createTypographyStyles( 'meta%s', 'desktop', props.attributes, { importantSize: true } ),
+				color: appendImportant( whiteIfDarkBlackIfLight( metaColor, show.columnBackground && columnBackgroundColor ) ),
+				textAlign: getValue( 'metaAlign', '%s !important' ),
+			},
+			tablet: {
+				'.lmb-blog-posts__meta': {
+					...createTypographyStyles( 'meta%s', 'tablet', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'metaTabletAlign', '%s !important' ),
+				},
+			},
+			mobile: {
+				'.lmb-blog-posts__meta': {
+					...createTypographyStyles( 'meta%s', 'mobile', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'metaMobileAlign', '%s !important' ),
+				},
+			},
+		} )
+	}
+
+	// Read more.
+	const {
+		readmoreColor = '',
+	} = props.attributes
+	if ( showReadmore ) {
+		styles.push( {
+			'.lmb-blog-posts__readmore a': {
+				color: appendImportant( whiteIfDarkBlackIfLight( readmoreColor, show.columnBackground && columnBackgroundColor ) ),
+			},
+			'.lmb-blog-posts__readmore a:hover': {
+				opacity: readmoreColor && ! getValue( 'readmoreHoverColor' ) ? 0.8 : undefined, // Opacity hover if no hover color.
+				color: appendImportant( getValue( 'readmoreHoverColor' ) ),
+			},
+			'.lmb-blog-posts__readmore': {
+				...createTypographyStyles( 'readmore%s', 'desktop', props.attributes, { importantSize: true } ),
+				textAlign: getValue( 'readmoreAlign', '%s !important' ),
+			},
+			tablet: {
+				'.lmb-blog-posts__readmore': {
+					...createTypographyStyles( 'readmore%s', 'tablet', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'readmoreTabletAlign', '%s !important' ),
+				},
+			},
+			mobile: {
+				'.lmb-blog-posts__readmore': {
+					...createTypographyStyles( 'readmore%s', 'mobile', props.attributes, { importantSize: true } ),
+					textAlign: getValue( 'readmoreMobileAlign', '%s !important' ),
+				},
+			},
+		} )
+	}
+
+	// Spacing.
+	if ( show.imageSpacing ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__featured-image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	}
+	if ( show.categorySpacing ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__category', 'category%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	}
+	if ( show.titleSpacing ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	}
+	if ( show.excerptSpacing ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__excerpt', 'excerpt%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	}
+	if ( show.metaSpacing ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__meta', 'meta%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	}
+	if ( show.readmoreSpacing ) {
+		styles.push( ...createResponsiveStyles( '.lmb-blog-posts__readmore', 'readmore%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	}
+
+	return deepmerge.all( styles )
+}
+
+export default createStyles

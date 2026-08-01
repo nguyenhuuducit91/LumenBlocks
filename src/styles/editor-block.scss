@@ -1,0 +1,328 @@
+/**
+ * Core Block Styles for the editor
+ */
+@import "editor-breakpoints";
+@import "editor-block-transitions";
+@import "editor-compat";
+
+.editor-styles-wrapper .lmn-block {
+	// Position relative (required for block links) will not work properly with
+	// margin bottom resizer, make it static in the editor.
+	position: static;
+	// In the template editor, the blocks can go past their containers.
+	box-sizing: border-box;
+	[data-type^="lumen/"] {
+		width: 100%;
+		margin-inline: auto;
+	}
+}
+// Lumen blocks inside a Row block stretch the whole width.
+.editor-styles-wrapper [data-type="core/group"] > [data-type^="lumen/"] {
+	width: revert;
+	margin-inline: revert;
+}
+
+// Blocks
+.editor-styles-wrapper [data-block][data-type^="lumen/"],
+[data-type^="lumen/"] > .wp-block {
+	margin-top: 0;
+	margin-bottom: 0;
+	z-index: 1;
+}
+// The block contents may go out of bounds in tablet/mobile editor preview.
+.lmn-block-content {
+	box-sizing: border-box;
+}
+
+// Add small margin between blocks so that placing your mouse between blocks
+// will make the block appender appear.
+.is-root-container > [data-block][data-type^="lumen/"]:not([data-type^="lumen/image"], [data-type^="lumen/timeline"], [data-align="full"]) ~ [data-block][data-type^="lumen/"]:not([data-type^="lumen/image"], [data-type^="lumen/timeline"], [data-align="full"]) {
+	margin-top: 8px;
+}
+// Add small margin between blocks so that placing your mouse between blocks
+// will make the block appender appear. This is for nested blocks.
+// Nested images will not have gaps.
+:where(:not(.lmn-block-icon-label):not(.lmn-block-blockquote):not(.lmn-block-columns):not(.lmn-block-expand):not(.lmn-block-button-group) > .lmn-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block][data-type^="lumen/"]:not([data-type^="lumen/image"])) ~ [data-block][data-type^="lumen/"]:not([data-type="lumen/column"], [data-type^="lumen/image"]) {
+	margin-top: 8px;
+}
+
+// Block widths,
+.edit-widgets-block-editor .is-root-container > [data-type^="lumen/"] {
+	margin-left: auto;
+	margin-right: auto;
+}
+// Wide align, make sure the contents are centered.
+.is-root-container > [data-type^="lumen/"][data-align="wide"] {
+	margin-left: auto;
+	margin-right: auto;
+	> .wp-block[data-align] {
+		width: 100%;
+	}
+	> .wp-block[data-align="wide"] {
+		max-width: none;
+	}
+}
+// When full alignment, remove the sides.
+.is-root-container > [data-type^="lumen/"][data-align="full"] {
+	// Only remove the sides if no alignfull class that can be overwritten.
+	&:not(.alignfull) {
+		margin-left: -8px;
+		margin-right: -8px;
+	}
+	> .wp-block[data-align="full"] {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		max-width: none;
+		width: 100%;
+	}
+}
+// Make sure by default, all our inner blocks are center aligned.
+.lmn-inner-blocks.lmn-content-align {
+	margin-top: 0;
+	margin-bottom: 0;
+	&:not(.alignfull):not(.lmn-button-group) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+// Columns should occupy the entire available area.
+[data-type^="lumen/"] {
+	display: flex;
+}
+[data-type^="lumen/"] > * { // Match all elements since this can be modified by the user.
+	width: 100%;
+}
+
+/**
+ * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
+ */
+:root {
+	--lmn-block-width-default-detected: 900px;
+	--lmn-block-width-wide-detected: calc(80vw - 280px); // Make way for the inspector
+}
+
+// For wide/full width blocks, but with their contents center aligned.
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"]:is([data-align="wide"], [data-align="full"]) > .lmn-block > .lmn-inner-blocks:not(.alignwide):not(.alignfull)),
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"]:is([data-align="wide"], [data-align="full"]) [data-type^="lumen/"][data-align="center"]),
+// Dev note: add selector for carousel because it has an extra wrapper before the inner blocks.
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"]:is([data-align="wide"], [data-align="full"]) > .lmn-block-carousel > :where(.lmn-block-carousel__content-wrapper) > .lmn-inner-blocks:not(.alignwide):not(.alignfull)) {
+	// --lmn-block-default-width is a Lumen setting
+	// --lmn-block-width-default-detected is from the fallback autodetected value.
+	max-width: var(--lmn-block-default-width, var(--lmn-block-width-default-detected, 900px)) !important;
+}
+
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"]:is([data-align="wide"], [data-align="full"]) > .lmn-block > .lmn-inner-blocks.alignwide),
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"]:is([data-align="wide"], [data-align="full"]) [data-type^="lumen/"][data-align="wide"]),
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"]:is([data-align="wide"], [data-align="full"]) > .lmn-block-carousel > :where(.lmn-block-carousel__content-wrapper) > .lmn-inner-blocks.alignwide) {
+	// --lmn-block-default-width is a Lumen setting
+	// --lmn-block-width-default-detected is from the fallback autodetected value.
+	max-width: var(--lmn-block-wide-width, var(--lmn-block-width-wide-detected, calc(80vw - 280px))) !important; // Make way for the inspector
+}
+
+// If the content width is wide/full, don't limit the block's default width.
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) .lmn-inner-blocks [data-block] .wp-block:not([data-align])) {
+	max-width: none !important;
+}
+
+// If main block is centered and inner block is centered too, no max-width for the block to occupy entire centerd width.
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"][data-align="center"] [data-type^="lumen/"][data-align="center"]) {
+	max-width: none !important;
+}
+// Nested wide blocks will have their data-align wrappers limited by Gutenberg, make them occupy entire wide width of the parent.
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"] [data-type^="lumen/"][data-align="wide"]) {
+	width: 100% !important;
+}
+// If the main container is wide and the Content Width is wide too, don't set a max width so it occupies the whole space.
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"][data-align="wide"] > .lmn-block > .lmn-inner-blocks.alignwide) {
+	max-width: none !important;
+}
+:where(:is(.lmn-preview-device-desktop, .lmn-preview-device-tablet) [data-type^="lumen/"][data-align] > .lmn-block > .lmn-inner-blocks.alignfull) {
+	max-width: none !important;
+}
+
+// Some themes add margins when alignwide and alignfull are used.
+.editor-styles-wrapper {
+	> .lmn-inner-blocks.lmn-content-align.wp-block[data-align] {
+		margin: 0 auto !important;
+	}
+}
+
+/**
+ * Resizeable rows and columns
+ */
+.lmn-row > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: row !important;
+	flex-wrap: wrap;
+}
+.lmn-row > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div:not(.block-list-appender) {
+	box-sizing: border-box;
+	margin-left: 0;
+	margin-right: 0;
+	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
+	max-width: inherit;
+}
+:where(.lmn-row > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout) > div {
+	flex: 1 1 0;
+}
+// Mobile auto-collapses all columns.
+@include mobile {
+	:where(.lmn-row > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout) > div {
+		flex: 1 1 100%;
+	}
+}
+[data-type^="lumen/"] .lmn-row {
+	display: block;
+}
+:where(.lmn-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout) {
+	display: flex;
+	flex-direction: column;
+}
+
+// Inner block orientation
+.lmn--block-orientation-vertical > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: column;
+	> * { // Some native blocks can have margin left/right auto, they will center.
+		width: 100%;
+	}
+}
+.lmn--block-horizontal-flex > .block-editor-inner-blocks {
+	width: 100%;
+	> .block-editor-block-list__layout {
+		display: flex !important;
+		flex-direction: row;
+		justify-content: space-evenly; // Default justify-content for horizontal flex.
+		> * {
+			margin-top: 0;
+			margin-bottom: 0;
+			> .lmn-block {
+				margin-bottom: 0;
+			}
+		}
+		> [data-block] {
+			width: auto;
+			margin-inline: revert;
+		}
+	}
+}
+
+// Columns
+.lmn-column-resizeable {
+	height: 100% !important;
+	width: 100% !important;
+	max-width: none !important; // Don't force the max-width, we'll rely on the JS part.
+	display: flex;
+}
+
+// Columns can be collapsed for tablet and mobile only.
+@include desktop {
+	.lmn-row > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		flex-wrap: nowrap;
+	}
+}
+// Mobile auto-collapses all columns.
+@include mobile {
+	.lmn-row > * > * > .block-editor-block-list__layout > div {
+		flex: 1 1 100%;
+		max-width: 100%;
+	}
+}
+
+// Block backgrounds.
+.lmn-block-background.lmn-column {
+	overflow: auto; // Since our block background change the margin of it's contents, we need this to prevent the contents from clipping.
+}
+
+// Block inner blocks.
+.lmn-inner-blocks > * > .block-editor-block-list__layout {
+	> [data-block]:first-child {
+		margin-top: 0;
+	}
+	// Last of type since there's a .block-list-appender
+	// If the block parent is locked, there will be no appender block and data-is-drop-zone will not be present.
+	&:is([data-is-drop-zone="true"]) > [data-block]:nth-last-child(1) {
+		margin-bottom: 0;
+		&[data-type^="lumen/"] > .lmn-block {
+			margin-bottom: 0;
+		}
+	}
+	> [data-block]:first-child:last-child {
+		margin-bottom: 0;
+		&[data-type^="lumen/"] > .lmn-block {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Block appender in latest Gutenberg adds margins on the appender.
+.lmn-block .block-list-appender {
+	margin: 0px;
+}
+.lmn-block .block-editor-block-list__block .block-list-appender:only-child {
+	align-self: stretch;
+}
+
+// Block float alignment.
+[data-type^="lumen/"] {
+	&[data-align="left"] {
+		float: left;
+	}
+	&[data-align="right"] {
+		float: right;
+	}
+	&[data-align="left"],
+	&[data-align="right"] {
+		width: auto;
+		> .wp-block[data-align] {
+			height: auto;
+		}
+		// Default width for inner blocks.
+		.block-editor-block-list__layout:first-of-type > [data-type^="lumen/"] {
+			max-width: 350px;
+			width: auto;
+		}
+	}
+
+}
+
+// Headings
+// Our headings have top margins if they're not the first heading, handle the different block structures.
+.editor-styles-wrapper [data-type^="lumen/heading"]:first-child .lmn-block-heading__text {
+	margin-top: 0;
+}
+
+// Typography
+// ::spelling-error is not supported by Firefox so we need to separate it to prevent the style rule above from being invalid
+// and because :is() does not allow pseudo-elements inside it.
+.lmn--is-gradient::spelling-error,
+.lmn--is-gradient li::spelling-error,
+.lmn--is-gradient span::spelling-error,
+.lmn--is-gradient a::spelling-error {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
+}
+
+// Deprecated styles.
+@import "deprecated-editor-block";
+
+.lmn-block .lmn-button-group .block-editor-block-list__layout {
+	align-items: center;
+}
+
+[data-block] .lmn-inner-blocks {
+	flex: inherit;
+}
+
+// We vertically center the buttons, but this doesn't work properly in the editor.
+:is([data-type="lumen/button-group"], [data-type="lumen/load-more"]) .lmn-button-group.lmn-inner-blocks {
+	align-items: normal;
+	justify-content: var(--lmn-alignment-justify-content);
+}
+

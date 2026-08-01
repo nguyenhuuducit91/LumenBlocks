@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/count-up",
+	"title": "Count Up",
+	"description": "Showcase your stats. Display how many customers you have or the number of downloads of your app.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Number"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

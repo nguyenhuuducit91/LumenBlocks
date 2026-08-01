@@ -1,0 +1,19 @@
+/**
+ * Editor styles for the Heading Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.editor-styles-wrapper {
+	.lmb-heading {
+		.lmb-heading__top-line,
+		.lmb-heading__subtitle {
+			margin-bottom: 16px;
+		}
+		.lmb-heading__title {
+			margin-bottom: 8px;
+		}
+	}
+}

@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature Grid (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-button": Object {
+    "borderRadius": undefined,
+    "opacity": undefined,
+  },
+  ".lmb-button .lmb-button--inner": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-button-container": Object {
+    "marginBottom": undefined,
+    "textAlign": undefined,
+  },
+  ".lmb-button.lmb-button--has-icon.lmb-button--has-icon svg": Object {
+    "height": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": undefined,
+  },
+  ".lmb-button:before": Object {
+    "borderRadius": undefined,
+  },
+  ".lmb-button:hover": Object {
+    "opacity": undefined,
+  },
+  ".lmb-button:hover .lmb-button--inner": Object {
+    "color": undefined,
+  },
+  ".lmb-feature-grid__description": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-feature-grid__image": Object {
+    "marginBottom": undefined,
+  },
+  ".lmb-feature-grid__item": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+    "borderRadius": undefined,
+  },
+  ".lmb-feature-grid__item:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  ".lmb-feature-grid__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-img": Object {
+    "borderRadius": undefined,
+    "height": undefined,
+    "width": undefined,
+  },
+  ".lmb-img, .lmb-feature-grid__image": Object {
+    "marginLeft": undefined,
+    "marginRight": undefined,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-feature-grid__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-feature-grid__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-feature-grid__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-button .lmb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".lmb-button-container": Object {
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-feature-grid__description": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-feature-grid__image": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-feature-grid__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".lmb-feature-grid__item:before": Object {
+      "opacity": undefined,
+    },
+    ".lmb-feature-grid__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-img": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".lmb-img, .lmb-feature-grid__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-button .lmb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".lmb-button-container": Object {
+      "textAlign": undefined,
+    },
+    ".lmb-feature-grid__description": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-feature-grid__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".lmb-feature-grid__item:before": Object {
+      "opacity": undefined,
+    },
+    ".lmb-feature-grid__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-img, .lmb-feature-grid__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-feature-grid__description": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-feature-grid__image": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-feature-grid__title": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-img": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+  },
+}
+`;
+
+exports[`Feature Grid (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-feature-grid__item": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "columnBackgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": "url(columnBackgroundMediaUrl)",
+    "backgroundPosition": "columnBackgroundPosition",
+    "backgroundRepeat": "columnBackgroundRepeat",
+    "backgroundSize": "columnBackgroundSize",
+    "borderBottomWidth": "123px !important",
+    "borderColor": "#123456 !important",
+    "borderLeftWidth": "123px !important",
+    "borderRadius": "123px !important",
+    "borderRightWidth": "123px !important",
+    "borderStyle": "columnBorderType !important",
+    "borderTopWidth": "123px !important",
+  },
+  ".lmb-feature-grid__item:before": Object {
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-feature-grid__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-feature-grid__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > .lmb-feature-grid__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".lmb-feature-grid__item": Object {
+      "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
+      "backgroundPosition": "columnMobileBackgroundPosition",
+      "backgroundRepeat": "columnMobileBackgroundRepeat",
+      "backgroundSize": "columnMobileBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+    },
+    ".lmb-feature-grid__item:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .lmb-inner-block > .lmb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".lmb-feature-grid__item": Object {
+      "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
+      "backgroundPosition": "columnTabletBackgroundPosition",
+      "backgroundRepeat": "columnTabletBackgroundRepeat",
+      "backgroundSize": "columnTabletBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+    },
+    ".lmb-feature-grid__item:before": Object {
+      "opacity": 12.3,
+    },
+  },
+}
+`;

@@ -1,0 +1,127 @@
+@import "breakpoints";
+
+$_cssvars: ();
+
+// Based from: https://dev.to/felipperegazio/css-custom-properties-vars-with-sass-scss-a-practical-architecture-strategy-1m88
+
+/**
+ * Use this mixin to declare a set of CSS Custom Properties.
+ * The variables in $css_variables will be properly prefixed.
+ * The use of this mixin is encoraged to keep a good scalability.
+ *
+ * Usage:
+ *
+ * @include cssvars((
+ *  base-font-size: 65.5%,
+ *  font-family: #{"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif},
+ *
+ *  primary-color: #33b5e5,
+ *  secondary-color: #ff500a,
+ * ));
+ *
+ * Will result in
+ *
+ * root {
+ *    --prefix-var-name: value;
+ *    --prefix-var-name: value;
+ *    --prefix-var-name: value;
+ * }
+ *
+ */
+@mixin cssvars( $css_variables ) {
+	// Gather all the styles.
+	$_cssvars: map-merge($_cssvars, $css_variables) !global;
+
+	:root {
+		@each $name, $value in $css_variables {
+			--lmn-#{ $name }: #{ $value };
+		}
+	}
+}
+
+@mixin cssvars-responsive( $css_variables, $print-design-system ) {
+	$desktop: ();
+	$tablet: ();
+	$mobile: ();
+
+	@each $name, $value in $css_variables {
+		@if type-of( $value ) != map {
+			$_cssvars: map-merge($_cssvars, ( $name: $value )) !global;
+			$desktop: map-merge($desktop, ( $name: $value ));
+		} @else {
+			@if map-get( $value, "desktop" ) {
+				$_cssvars: map-merge($_cssvars, ( $name: map-get($value, "desktop") )) !global;
+				$desktop: map-merge($desktop, ( $name: map-get($value, "desktop") ));
+			}
+			@if map-get( $value, "tablet" ) {
+				$_cssvars: map-merge($_cssvars, ( #{ $name }-tablet: map-get($value, "tablet") )) !global;
+				$tablet: map-merge($tablet, ( $name: map-get($value, "tablet") ));
+			}
+			@if map-get( $value, "mobile" ) {
+				$_cssvars: map-merge($_cssvars, ( #{ $name }-mobile: map-get($value, "mobile") )) !global;
+				$mobile: map-merge($mobile, ( $name: map-get($value, "mobile") ));
+			}
+		}
+	}
+
+	// This will print out the responsive custom properties.
+	@if $print-design-system {
+		@if length( $desktop ) > 0 {
+			:root {
+				@each $name, $value in $desktop {
+					--lmn-#{ $name }: #{ $value };
+				}
+			}
+		}
+
+		@if length( $tablet ) > 0 {
+			@include tablet {
+				:root {
+					@each $name, $value in $tablet {
+						--lmn-#{ $name }: #{ $value };
+					}
+				}
+			}
+		}
+
+		@if length( $mobile ) > 0 {
+			@include mobile {
+				:root {
+					@each $name, $value in $mobile {
+						--lmn-#{ $name }: #{ $value };
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Retrieve a css variable value with prefix
+ *
+ * Usage
+ *
+ * .selector {
+ *   color: cssva(primary-color);
+ * }
+ *
+ * Will result in
+ *
+ * .selector {
+ *    color: var(--prefix-primary-color);
+ * }
+ */
+@function cssvar( $name ) {
+	@if map-get( $_cssvars, $name ) {
+		@return var(--lmn-#{ $name }, map-get( $_cssvars, $name ));
+	}
+
+	@return var(--lmn-#{ $name });
+}
+
+$lmn-has-color-schemes-selector:
+	"[class*='lmn--background-scheme']", // For custom background schemes
+	"[class*='lmn--container-scheme']", // For custom container schemes
+	".lmn--has-base-scheme", // For base scheme
+	".lmn--has-background-scheme .lmn-block-background", // For default background schemes
+	".lmn--has-container-scheme .lmn-container:not(.lmn--no-background)"; // For default container schemes

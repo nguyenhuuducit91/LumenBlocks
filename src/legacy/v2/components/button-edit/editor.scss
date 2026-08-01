@@ -1,0 +1,21 @@
+// Icon only buttons are not square/circle.
+.lmb-button.lmb-button--icon-only .lmb-svg-icon-placeholder__button {
+	display: block;
+}
+
+// Resize the button when its icon is resized
+.lmb-button.lmb-button--has-icon .lmb-svg-icon-placeholder__button {
+	height: auto;
+}
+
+// Add this to force the svg transition to follow the button.
+.lmb-button {
+	svg {
+		transition: initial !important;
+	}
+}
+
+// For custom icons, override the currentColor fill given by Gutenberg.
+.lmb-button.lmb-button--has-icon .lmb-icon-inner-svg svg.lmb-custom-icon {
+	fill: initial;
+}

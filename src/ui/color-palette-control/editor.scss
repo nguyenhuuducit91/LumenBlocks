@@ -1,0 +1,104 @@
+// Some themes and plugins can warp our color indicator.
+.lmn-color-indicator {
+	height: 20px !important;
+	width: 20px !important;
+}
+
+// Style transparent circular color option.
+.lmn-color-palette-control {
+	.components-circular-option-picker__option[style*="color:transparent"],
+	.components-circular-option-picker__option[style*="color: transparent"] {
+		background-image: linear-gradient(-45deg, #fff 49%, #f00 49%, #f00 51%, #fff 51%);
+	}
+	.components-circular-option-picker__option[style*="color:transparent"],
+	.components-circular-option-picker__option[style*="color: transparent"] {
+		&.is-pressed {
+			background-image: linear-gradient(-45deg, #fff 49%, #f1caca 49%, #f1caca 51%, #fff 51%);
+			+ svg {
+				fill: #000 !important;
+			}
+		}
+	}
+	.component-color-indicator[style*="background:transparent"],
+	.component-color-indicator[style*="background: transparent"] {
+		background-image: linear-gradient(-45deg, #fff 48%, #f00 48%, #f00 52%, #fff 52%) !important;
+	}
+	.component-color-indicator {
+		margin-left: 8px;
+	}
+
+	// Color button label outline.
+	.block-editor-tools-panel-color-gradient-settings__dropdown {
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		width: 100%; // WP 6.0 support.
+	}
+	.block-editor-panel-color-gradient-settings__dropdown {
+		height: 40px; // WP 6.0 support.
+	}
+
+	.lmn-control__reset-button {
+		margin-top: 1px;
+	}
+
+	&:has(.components-button[aria-disabled="true"]) {
+		opacity: 0.4;
+	}
+}
+
+// Popover container.
+.lmn-color-palette-control__popover-content {
+	width: 260px;
+	padding: 8px;
+	.components-color-picker,
+	.react-colorful,
+	.react-colorful__hue,
+	.react-colorful__alpha {
+		width: 100% !important;
+	}
+	.react-colorful {
+		overflow: visible !important;
+	}
+	.react-colorful__saturation {
+		height: 150px !important;
+	}
+	// These are the side paddings of the hex input.
+	.react-colorful + * > * {
+		padding-inline: 0 !important;
+	}
+}
+
+.lmn-color-palette-popup-control__tabs {
+	margin: -16px;
+	> .components-base-control__field {
+		margin-bottom: 0;
+
+		.components-button-group {
+			box-shadow: none;
+		}
+		.lmb-button-component {
+			background: none;
+			border-radius: 0;
+			padding: 16px;
+			box-shadow: none;
+
+			&:focus,
+			&:hover:not(:disabled),
+			&:hover:disabled {
+				box-shadow: none;
+				background-color: transparent !important;
+			}
+			&.components-button.is-primary {
+				box-shadow: 0px 2px 0px 0px #008de4;
+			}
+
+			&:hover:not(:disabled) .lmb-advanced-toolbar-control__text-button {
+				color: #008de4;
+			}
+
+			&:disabled .lmb-advanced-toolbar-control__text-button {
+				color: #e0e0e0;
+			}
+
+		}
+	}
+}

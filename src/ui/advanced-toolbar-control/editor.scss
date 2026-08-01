@@ -1,0 +1,58 @@
+.lmb-advanced-toolbar-control .components-button-group:not(.lmb-toolbar--small) {
+	width: 100%;
+}
+.lmb-advanced-toolbar-control .components-button-group {
+	&.lmb-toolbar--full-width {
+		display: flex;
+		flex-wrap: nowrap;
+		button {
+			min-width: auto;
+		}
+		> button {
+			width: 100% !important;
+		}
+	}
+	svg {
+		height: 20px !important;
+		width: 20px !important;
+	}
+	&.lmb-toolbar--multiline {
+		flex-wrap: wrap;
+		> button {
+			margin-top: -1px !important;
+			margin-left: -1px !important;
+		}
+		> button,
+		> button > svg {
+			width: auto !important;
+		}
+	}
+
+	&:focus-within {
+		box-shadow: 0 0 0 0.5px var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
+		border-radius: 1px;
+	}
+}
+
+.lmb-advanced-toolbar-control__text-button {
+	align-self: center;
+	width: 100%;
+}
+
+// Reset button.
+.lmb-advanced-toolbar-control .lmn-control__reset-button {
+	top: 7px;
+}
+// Reset button for small toolbars.
+.lmb-advanced-toolbar-control .lmb-toolbar--small + .lmn-control__reset-button {
+	top: 0;
+}
+
+/**
+ * backward compatibility v5.4
+ */
+body.branch-5-4 {
+	.lmb-advanced-toolbar-control .components-button-group {
+		border: 1px solid #e2e4e7;
+	}
+}

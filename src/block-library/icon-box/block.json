@@ -1,0 +1,20 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/icon-box",
+	"title": "Icon Box",
+	"description": "A small text area with an icon that can be used to summarize features or services",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-required-blocks": [
+		"lumen/icon-label",
+		"lumen/icon",
+		"lumen/heading"
+	]
+}

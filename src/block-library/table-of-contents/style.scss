@@ -1,0 +1,55 @@
+@import "common";
+
+// Important, we can't use flex since it causes issues with columns.
+.lmn-block-table-of-contents {
+	.lmn-table-of-contents__table {
+		margin: 0;
+		column-gap: 32px;
+	}
+
+	// This fixes columns breaking if a line has long text.
+	li {
+		/* autoprefixer: ignore next */
+		-webkit-column-break-inside: avoid;
+		/* autoprefixer: ignore next */
+		-moz-column-break-inside: avoid;
+		-o-column-break-inside: avoid;
+		-ms-column-break-inside: avoid;
+		/* stylelint-disable-next-line property-no-unknown */
+		column-break-inside: avoid;
+	}
+
+	:is(ul, ol) {
+		padding-inline-start: 1em;
+	}
+
+	// Prevents icons from going transparent.
+	&:is(.lmn--is-gradient) li {
+		-webkit-text-fill-color: initial;
+		-moz-text-fill-color: initial;
+		-o-text-fill-color: initial;
+	}
+
+	// Prevents block background from going transparent.
+	&:is(.lmn--has-background-overlay) {
+		background-clip: initial !important;
+	}
+
+	.lmn-table-of-contents__title {
+		margin-block-start: 0;
+		margin-block-end: 0;
+	}
+}
+
+// These are styles added from the global color schemes.
+:where(#{$lmn-has-color-schemes-selector}) {
+	.lmn-block-table-of-contents {
+		// Add this so that it inherits the color from global color schemes.
+		::marker {
+			color: var(--lmn-accent-color);
+			&:where(:hover) {
+				#{ '--lmn-accent-color' }: var(--lmn-accent-color-hover);
+			}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/feature",
+	"title": "Feature",
+	"description": "Display a product feature or a service in a large area.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/columnWrapDesktop": "columnWrapDesktop"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-required-blocks": [
+		"lumen/image"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/heading",
+		"lumen/text",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

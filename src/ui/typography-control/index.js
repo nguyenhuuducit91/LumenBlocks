@@ -1,0 +1,404 @@
+/**
+ * External dependencies
+ */
+import {
+	AdvancedRangeControl,
+	AdvancedSelectControl,
+	ButtonIconPopoverControl,
+	FontFamilyControl,
+	FontSizeControl,
+	WhenResponsiveScreen,
+} from '~lumen/ui'
+import { getDefaultFontSize } from '~lumen/utils'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { Fragment, useMemo } from '@wordpress/element'
+import { i18n } from 'lumen'
+
+const TypographyControl = props => {
+	const {
+		isAllowReset = undefined, // Optional prop
+	} = props
+
+	// Compute the font size placeholder value.
+	const placeholder = useMemo( () => {
+		if ( typeof props.placeholder === 'function' ) {
+			// If the placeholder is a function, this means that it's computed based on the detected default font size.
+			return props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag, true ) ) )
+		}
+		// Use the given placeholder, or use the detected font size.
+		 return props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag, true )
+	}, [ props.htmlTag, props.fontSize ] )
+
+	// Allow overriding, or use our original condition
+	const _allowReset = typeof isAllowReset !== undefined ? isAllowReset : (
+		props.fontFamily ||
+		props.fontSize || props.tabletFontSize || props.mobileFontSize ||
+		props.fontWeight ||
+		props.textTransform ||
+		props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
+		props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
+	)
+
+	return (
+		<Fragment>
+			<ButtonIconPopoverControl
+				label={ props.label }
+				popoverLabel={ props.popoverLabel }
+				onReset={ props.onReset }
+				allowReset={ _allowReset }
+				resetPopoverTitle={ props.resetPopoverTitle }
+				resetPopoverDescription={ props.resetPopoverDescription }
+				className={ props.className }
+				help={ props.help }
+			>
+				{ props.onChangeFontFamily && (
+					<FontFamilyControl
+						label={ __( 'Font Family', i18n ) }
+						onChange={ props.onChangeFontFamily }
+						value={ props.fontFamily }
+						defaultValue={ props?.defaultFontFamily }
+						placeholder={ __( 'Default', i18n ) }
+						helpTooltip={ {
+							video: 'typography-family',
+							description: __( 'Sets the font set to be used for the element', i18n ),
+						} }
+					/>
+				) }
+				{ props.onChangeFontSize && (
+					<Fragment>
+						<WhenResponsiveScreen>
+							<FontSizeControl
+								label={ __( 'Size', i18n ) }
+								onChange={ props.onChangeFontSize }
+								value={ props.fontSize }
+								allowReset={ true }
+								unit={ props.fontSizeUnit }
+								onChangeUnit={ props.onChangeFontSizeUnit }
+								{ ...props.fontSizeProps }
+								placeholder={ placeholder }
+								helpTooltip={ {
+									// TODO: Add a working video.
+									title: __( 'Font size', i18n ),
+									description: __( 'Sets the size of text characters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<FontSizeControl
+								label={ __( 'Size', i18n ) }
+								onChange={ props.onChangeTabletFontSize }
+								value={ props.tabletFontSize }
+								allowReset={ true }
+								unit={ props.tabletFontSizeUnit }
+								onChangeUnit={ props.onChangeTabletFontSizeUnit }
+								{ ...props.fontSizeProps }
+								helpTooltip={ {
+									// TODO: Add a working video.
+									title: __( 'Font size', i18n ),
+									description: __( 'Sets the size of text characters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<FontSizeControl
+								label={ __( 'Size', i18n ) }
+								onChange={ props.onChangeMobileFontSize }
+								value={ props.mobileFontSize }
+								allowReset={ true }
+								unit={ props.mobileFontSizeUnit }
+								onChangeUnit={ props.onChangeMobileFontSizeUnit }
+								{ ...props.fontSizeProps }
+								helpTooltip={ {
+									// TODO: Add a working video.
+									title: __( 'Font size', i18n ),
+									description: __( 'Sets the size of text characters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+					</Fragment>
+				) }
+				{ props.onChangeFontWeight && (
+					<AdvancedSelectControl
+						label={ __( 'Weight', i18n ) }
+						options={ [
+							{ label: '100', value: '100' },
+							{ label: '200', value: '200' },
+							{ label: '300', value: '300' },
+							{ label: '400', value: '400' },
+							{ label: '500', value: '500' },
+							{ label: '600', value: '600' },
+							{ label: '700', value: '700' },
+							{ label: '800', value: '800' },
+							{ label: '900', value: '900' },
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'Normal', i18n ), value: 'normal' },
+							{ label: __( 'Bold', i18n ), value: 'bold' },
+						] }
+						onChange={ props.onChangeFontWeight }
+						value={ props.fontWeight }
+						helpTooltip={ {
+							video: 'typography-weight',
+							title: __( 'Font weight', i18n ),
+							description: __( 'Sets the thinness or thickness of text characters', i18n ),
+						} }
+					/>
+				) }
+				{ props.onChangeTextTransform && (
+					<AdvancedSelectControl
+						label={ __( 'Transform', i18n ) }
+						options={ [
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'Uppercase', i18n ), value: 'uppercase' },
+							{ label: __( 'Lowercase', i18n ), value: 'lowercase' },
+							{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
+							{ label: __( 'None', i18n ), value: 'none' },
+						] }
+						onChange={ props.onChangeTextTransform }
+						value={ props.textTransform }
+						helpTooltip={ {
+							video: 'typography-transform',
+							title: __( 'Transform', i18n ),
+							description: __( 'Sets the usage of upper or lower case', i18n ),
+						} }
+					/>
+				) }
+				{ props.onChangeLineHeight && (
+					<Fragment>
+						<WhenResponsiveScreen>
+							<AdvancedRangeControl
+								label={ __( 'Line-Height', i18n ) }
+								units={ props.lineHeightUnits }
+								min={ [ 1, 0.1 ] }
+								max={ [ 100, 10 ] }
+								step={ [ 1, 0.1 ] }
+								placeholder={ [ 30, 1.5 ] }
+								allowReset={ true }
+								value={ props.lineHeight }
+								onChange={ props.onChangeLineHeight }
+								unit={ props.lineHeightUnit }
+								onChangeUnit={ props.onChangeLineHeightUnit }
+								initialPosition={ [ 37, 1.8 ] }
+								helpTooltip={ {
+									video: 'typography-line-height',
+									title: __( 'Line height', i18n ),
+									description: __( 'Sets the vertical distance between lines of text', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedRangeControl
+								label={ __( 'Line-Height', i18n ) }
+								units={ [ 'px', 'em' ] }
+								min={ [ 1, 0.1 ] }
+								max={ [ 100, 10 ] }
+								step={ [ 1, 0.1 ] }
+								placeholder={ [ 30, 1.5 ] }
+								allowReset={ true }
+								value={ props.tabletLineHeight }
+								onChange={ props.onChangeTabletLineHeight }
+								unit={ props.tabletLineHeightUnit }
+								onChangeUnit={ props.onChangeTabletLineHeightUnit }
+								initialPosition={ [ 37, 1.8 ] }
+								helpTooltip={ {
+									video: 'typography-line-height',
+									title: __( 'Line height', i18n ),
+									description: __( 'Sets the vertical distance between lines of text', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedRangeControl
+								label={ __( 'Line-Height', i18n ) }
+								units={ [ 'px', 'em' ] }
+								min={ [ 1, 0.1 ] }
+								max={ [ 100, 10 ] }
+								step={ [ 1, 0.1 ] }
+								placeholder={ [ 30, 1.5 ] }
+								allowReset={ true }
+								value={ props.mobileLineHeight }
+								onChange={ props.onChangeMobileLineHeight }
+								unit={ props.mobileLineHeightUnit }
+								onChangeUnit={ props.onChangeMobileLineHeightUnit }
+								initialPosition={ [ 37, 1.8 ] }
+								helpTooltip={ {
+									video: 'typography-line-height',
+									title: __( 'Line height', i18n ),
+									description: __( 'Sets the vertical distance between lines of text', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+					</Fragment>
+				) }
+				{ props.onChangeLetterSpacing && (
+					<Fragment>
+						<WhenResponsiveScreen>
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								onChange={ props.onChangeLetterSpacing }
+								value={ props.letterSpacing }
+								placeholder="0"
+								helpTooltip={ {
+									video: 'typography-letter-spacing',
+									title: __( 'Letter spacing', i18n ),
+									description: __( 'Sets the distance or space between letters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								value={ props.tabletLetterSpacing }
+								onChange={ props.onChangeTabletLetterSpacing }
+								placeholder="0"
+								helpTooltip={ {
+									video: 'typography-letter-spacing',
+									title: __( 'Letter spacing', i18n ),
+									description: __( 'Sets the distance or space between letters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								value={ props.mobileLetterSpacing }
+								onChange={ props.onChangeMobileLetterSpacing }
+								placeholder="0"
+								helpTooltip={ {
+									video: 'typography-letter-spacing',
+									title: __( 'Letter spacing', i18n ),
+									description: __( 'Sets the distance or space between letters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+					</Fragment>
+
+				) }
+			</ButtonIconPopoverControl>
+			{ /* A second font size option. */ }
+			{ props.showSecondFontSize && props.onChangeFontSize && (
+				<Fragment>
+					<WhenResponsiveScreen>
+						<FontSizeControl
+							label={ __( 'Size', i18n ) }
+							onChange={ props.onChangeFontSize }
+							value={ props.fontSize }
+							allowReset={ true }
+							unit={ props.fontSizeUnit }
+							onChangeUnit={ props.onChangeFontSizeUnit }
+							{ ...props.fontSizeProps }
+							placeholder={ placeholder }
+							helpTooltip={ {
+								// TODO: Add a working video.
+								title: __( 'Font size', i18n ),
+								description: __( 'Sets the size of text characters', i18n ),
+							} }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="tablet">
+						<FontSizeControl
+							label={ __( 'Size', i18n ) }
+							onChange={ props.onChangeTabletFontSize }
+							value={ props.tabletFontSize }
+							allowReset={ true }
+							unit={ props.tabletFontSizeUnit }
+							onChangeUnit={ props.onChangeTabletFontSizeUnit }
+							{ ...props.fontSizeProps }
+							helpTooltip={ {
+								// TODO: Add a working video.
+								title: __( 'Font size', i18n ),
+								description: __( 'Sets the size of text characters', i18n ),
+							} }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="mobile">
+						<FontSizeControl
+							label={ __( 'Size', i18n ) }
+							onChange={ props.onChangeMobileFontSize }
+							value={ props.mobileFontSize }
+							allowReset={ true }
+							unit={ props.mobileFontSizeUnit }
+							onChangeUnit={ props.onChangeMobileFontSizeUnit }
+							{ ...props.fontSizeProps }
+							helpTooltip={ {
+								 // TODO: Add a working video.
+								title: __( 'Font size', i18n ),
+								description: __( 'Sets the size of text characters', i18n ),
+							} }
+						/>
+					</WhenResponsiveScreen>
+				</Fragment>
+			) }
+		</Fragment>
+	)
+}
+
+TypographyControl.defaultProps = {
+	label: __( 'Typography', i18n ),
+	popoverLabel: undefined,
+	showSecondFontSize: true,
+	fontFamily: '',
+	fontSize: '',
+	tabletFontSize: '',
+	mobileFontSize: '',
+	fontSizeUnit: 'px',
+	tabletFontSizeUnit: 'px',
+	mobileFontSizeUnit: 'px',
+	fontWeight: '',
+	textTransform: '',
+	lineHeight: '',
+	tabletLineHeight: '',
+	mobileLineHeight: '',
+	lineHeightUnit: 'em',
+	lineHeightUnits: [ 'px', 'em' ],
+	tabletLineHeightUnit: 'em',
+	mobileLineHeightUnit: 'em',
+	letterSpacing: '',
+	tabletLetterSpacing: '',
+	mobileLetterSpacing: '',
+	fontSizeProps: {},
+	resetPopoverTitle: '',
+	resetPopoverDescription: '',
+	// Font size placeholder. If not provided, the detected font size for the
+	// htmlTag is used. If a function is provided, then the detected font size
+	// is passed to the function to create the placeholder.
+	placeholder: '',
+	htmlTag: 'p', // If placeholder is blank, this is used to determine the placeholder font size.
+	onReset: () => {},
+	onChangeFontFamily: () => {},
+	onChangeFontSize: () => {},
+	onChangeTabletFontSize: () => {},
+	onChangeMobileFontSize: () => {},
+	onChangeFontSizeUnit: () => {},
+	onChangeTabletFontSizeUnit: () => {},
+	onChangeMobileFontSizeUnit: () => {},
+	onChangeFontWeight: () => {},
+	onChangeTextTransform: () => {},
+	onChangeLineHeight: () => {},
+	onChangeTabletLineHeight: () => {},
+	onChangeMobileLineHeight: () => {},
+	onChangeLineHeightUnit: () => {},
+	onChangeTabletLineHeightUnit: () => {},
+	onChangeMobileLineHeightUnit: () => {},
+	onChangeLetterSpacing: () => {},
+	onChangeTabletLetterSpacing: () => {},
+	onChangeMobileLetterSpacing: () => {},
+}
+
+export default TypographyControl
+

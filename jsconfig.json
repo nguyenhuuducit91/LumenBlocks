@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@wordpress/*": ["./node_modules/@wordpress/*"],
+			"~lumen/*": ["./src/*"]
+		}
+	},
+	"include": [
+		"./src/**/*"
+	],
+	"typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

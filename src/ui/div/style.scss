@@ -1,0 +1,43 @@
+// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
+.lmn--has-background-overlay {
+	position: relative;
+	z-index: 1;
+	background-size: cover;
+	background-position: center;
+	overflow: hidden;
+	&::before {
+		content: "" !important;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+	}
+	> *:not(.lmn-video-background) {
+		position: relative;
+		z-index: 3;
+	}
+
+	// Having a background image and a block link makes the link hug the
+	// contents only and not the entire block.
+	> .lmn-container:has(> .lmn-block-link) {
+		position: static;
+	}
+	&:has(> .lmn-container > .lmn-block-link)::before {
+		z-index: -1;
+	}
+}
+
+.lmn-video-background {
+	max-width: none !important;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	object-fit: cover;
+}

@@ -1,0 +1,115 @@
+
+// NOTE: The animation of the opening/closing of the accordion is implemented in
+// JavaScript.
+@import "common";
+
+.lmn-block-accordion {
+	box-sizing: border-box;
+
+	summary {
+		cursor: pointer;
+
+		// Remove the default arrow.
+		list-style: none;
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		--lmn-block-margin-bottom: 0;
+		--lmn-icon-size: 16px;
+
+		// Alignment of icons when the icons are left or on the right.
+		.lmn-block-icon:first-child {
+			justify-content: flex-start;
+		}
+		.lmn-block-icon:last-child {
+			justify-content: flex-end;
+		}
+	}
+
+	// Remove outline on focus, but keep it for keyboard navigation.
+	summary.lmn-block-column:focus:not(:focus-visible) {
+		outline: none;
+	}
+
+	// Gap between icon and the title.
+	.lmn-block-accordion__heading {
+		.lmn-block-icon-label .lmn-block-heading {
+			flex: 1;
+		}
+		.lmn-block-icon-label .lmn-block-icon {
+			flex: 0 0 40px;
+		}
+		// Unset the width to avoid content overflow in safari.
+		.lmn-block-column__content {
+			width: unset;
+		}
+	}
+	.lmn-block-accordion__content > .lmn-container {
+		padding: cssvar(container-padding);
+	}
+
+	// Rotate the icon when the accordion opens.
+	summary {
+		.lmn--svg-wrapper {
+			@include transition();
+		}
+	}
+	&[open] > summary {
+		.lmn--svg-wrapper:not(.lmn--has-icon2) {
+			transform: rotate(180deg);
+		}
+	}
+
+	// If another icon was used, don't rotate the icon, show the other icon when
+	// the accordion opens.
+	&[open] > summary {
+		.lmn--svg-wrapper.lmn--has-icon2 {
+			.lmn--inner-svg {
+				display: none;
+			}
+		}
+		.lmn--icon-2 {
+			display: block !important;
+		}
+	}
+
+	// Make sure the contents of the accordion
+	.lmn-block-accordion__content {
+		overflow: hidden;
+		transform: translateY(0);
+		opacity: 1;
+		height: 100%;
+		> * > * { // Prevent blocks inside from overlapping because of the small height when transitioning.
+			flex-shrink: 0;
+		}
+	}
+
+	// the transform property causes the background-attachment: fixed to not work as expected.
+	// remove it to prevent timeline block lines to be glitchy.
+	// see similar issue: https://www.sitepoint.com/community/t/background-attachment-fixed-not-working-as-expected/35374/4
+	.lmn-block-accordion__content:has(.lmn-block-timeline) {
+		transform: initial;
+	}
+
+	// Accordion content shows up in the front end.
+	&:not([open]) .lmn-block-accordion__content {
+		max-height: 0;
+		transform: translateY(25px);
+		opacity: 0;
+	}
+
+	// Prevent inside columns from being re-ordered when a parent column block
+	// has custom ordering.
+	> .lmn-block-column {
+		order: initial !important;
+	}
+}
+
+// This is for the column hack. Remove margin for the wrapper div if accordion is inside a columns block
+.lmn-inner-blocks > .lmn-block-accordion__wrapper:last-child {
+	margin-bottom: 0;
+	> * {
+		margin-bottom: 0;
+	}
+}

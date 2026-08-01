@@ -1,0 +1,20 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/feature-grid",
+	"title": "Feature Grid",
+	"description": "Display multiple product features or services. You can use Feature Grids one after another.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/columnWrapDesktop": "columnWrapDesktop"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-substitution-blocks": [
+		"lumen/image",
+		"lumen/heading",
+		"lumen/text",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

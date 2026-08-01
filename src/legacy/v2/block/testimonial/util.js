@@ -1,0 +1,26 @@
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+export const showOptions = blockProps => {
+	const {
+		design = 'basic',
+		showTestimonial = true,
+		showImage = true,
+		showName = true,
+		showPosition = true,
+	} = blockProps.attributes
+
+	return applyFilters( 'lumen.testimonial.show', {
+		columnBackground: design !== 'plain',
+		borderRadius: design !== 'plain',
+		border: design !== 'plain' && design !== 'bubble',
+		shadow: design !== 'plain',
+		imageAsBackground: false,
+		testimonialSpacing: showTestimonial,
+		imageSpacing: showImage && ! [ 'background', 'vertical', 'vertical-inverse' ].includes( design ),
+		nameSpacing: showName,
+		positionSpacing: showPosition,
+	}, blockProps )
+}

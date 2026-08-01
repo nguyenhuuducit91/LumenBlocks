@@ -1,0 +1,4 @@
+:where(.lmn-has-block-style-inheritance.lmn--is-tove-theme) :is(.lmn-block-button, .lmn-block-icon-button, .lmn-block-pagination):is(.is-style-plain) .lmn-button {
+	border-width: 0;
+	box-shadow: none;
+}

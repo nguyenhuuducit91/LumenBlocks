@@ -1,0 +1,22 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/testimonial",
+	"title": "Testimonial",
+	"description": "Showcase what your users say about your product or service.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-required-blocks": [
+		"lumen/image-box"
+	],
+	"lmn-substitution-blocks": [
+		"lumen/image",
+		"lumen/heading",
+		"lumen/subtitle",
+		"lumen/text"
+	]
+}

@@ -1,0 +1,231 @@
+/**
+ * Internal dependencies
+ */
+import SVGUploadIcon from './images/upload.svg'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
+import { ResetButton } from '../base-control2/reset-button'
+import Button from '../button'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import {
+	i18n, cimo, isPro,
+} from 'lumen'
+import {
+	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
+} from '~lumen/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import {
+	Fragment, memo, useEffect, useState,
+} from '@wordpress/element'
+import { MediaUpload } from '@wordpress/block-editor'
+import { currentUserHasCapability } from '~lumen/utils'
+
+const ImageControl = memo( props => {
+	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
+	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
+	const attrWidthAttribute = useAttributeName( `${ props.attribute }HeightAttribute`, props.responsive, props.hover )
+	const attrHeightAttribute = useAttributeName( `${ props.attribute }WidthAttribute`, props.responsive, props.hover )
+	const attrAlt = useAttributeName( `${ props.attribute }Alt`, props.responsive, props.hover )
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			[ attrNameId ]: attributes[ attrNameId ],
+			[ attrNameUrl ]: attributes[ attrNameUrl ],
+		}
+	} )
+	const setAttributes = useBlockSetAttributesContext()
+
+	const _onChange = image => {
+		setAttributes( {
+			[ attrNameId ]: image.id,
+			[ attrNameUrl ]: image.url,
+			[ attrWidthAttribute ]: image.width || '',
+			[ attrHeightAttribute ]: image.height || '',
+			[ attrAlt ]: image.alt || '',
+		} )
+	}
+
+	const onChange = typeof props.onChange !== 'undefined' ? props.onChange : _onChange
+
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
+
+	const onChangeReset = url => {
+		return onChange( {
+			url,
+			id: '',
+			width: '',
+			height: '',
+			alt: '',
+		} )
+	}
+
+	const dynamicContentProps = useDynamicContentControlProps( {
+		onChange: onChangeReset,
+		value: attributes[ attrNameUrl ],
+	} )
+
+	const imageId = typeof props.imageId !== 'undefined' ? props.imageId : attributes[ attrNameId ]
+	const imageUrl = typeof props.imageURL !== 'undefined' ? props.imageURL : dynamicContentProps.value || attributes[ attrNameUrl ]
+
+	const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
+
+	const onRemove = () => {
+		onChange( {
+			url: '',
+			id: '',
+			height: '',
+			width: '',
+			alt: '',
+		} )
+	}
+
+	const [ CimoDownloadNotice, setCimoDownloadNotice ] = useState( null )
+
+	useEffect( () => {
+		// Skip displaying the Cimo notice if the plugin is already activated or the user has chosen to hide the notice
+		if ( isPro || ! cimo || cimo.hideNotice || cimo.status === 'activated' ) {
+			return
+		}
+
+		const userCanInstall = currentUserHasCapability( 'install_plugins' )
+		const userCanActivate = currentUserHasCapability( 'activate_plugins' )
+		// Show the Cimo notice only if the user has permissions to install or activate plugins
+		if ( ( cimo.status === 'not_installed' && userCanInstall ) || ( cimo.status === 'installed' && userCanActivate ) ) {
+			const loadNotice = async () => {
+				try {
+					// Import the Cimo notice component with explicit chunk naming
+					const { default: CimoNoticeComponent } = await import(
+						/* webpackChunkName: "cimo-download-notice" */
+						/* webpackMode: "lazy" */
+						'../../ui-lazy/cimo'
+					)
+					setCimoDownloadNotice( () => CimoNoticeComponent )
+				} catch ( err ) {
+					// eslint-disable-next-line no-console
+					console.error( 'Failed to load Cimo download notice component:', err )
+				}
+			}
+			loadNotice()
+		}
+	}, [] )
+
+	return ( <>
+		<AdvancedControl
+			{ ...controlProps }
+			valueCheckAttribute={ props.attribute + 'Url' }
+			className={ classnames( 'lmb-image-control', props.className ) }
+		>
+			{ imageUrl &&
+				<MediaUpload
+					onSelect={ onChange }
+					allowedTypes={ props.allowedTypes }
+					value={ imageId }
+					render={ obj => {
+						return (
+							<Fragment>
+								<div className="lmb-image-preview-wrapper">
+									{ type === 'video' && (
+										<video
+											className="lmb-image-preview"
+											autoPlay
+											muted
+											loop
+											src={ imageUrl }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+										/>
+									) }
+									{ type === 'image' && (
+										// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+										<img
+											className="lmb-image-preview"
+											draggable="false"
+											src={ imageUrl }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+											alt={ __( 'preview', i18n ) }
+										/>
+									) }
+								</div>
+							</Fragment>
+						)
+					} }
+				/>
+			}
+			<DynamicContentControl
+				enable={ props.isDynamic }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
+				type="image-url"
+				{ ...dynamicContentProps }
+			>
+				<MediaUpload
+					onSelect={ onChange }
+					allowedTypes={ props.allowedTypes }
+					value={ imageId }
+					render={ obj => {
+						return (
+							<Fragment>
+								<Button
+									className="lmb-image-upload"
+									onClick={ obj.open }
+									icon={ <SVGUploadIcon viewBox="0 0 20 20" /> }
+									isSecondary
+									onKeyDown={ event => {
+										if ( event.keyCode === 13 ) {
+											obj.open()
+										}
+									} }
+								>
+									<span className="lmb-image-upload__label">{ ! imageUrl ? __( 'Upload', i18n ) : __( 'Replace', i18n ) } </span>
+								</Button>
+							</Fragment>
+						)
+					} }
+				/>
+			</DynamicContentControl>
+
+			<ResetButton
+				allowReset={ props.allowReset && ! props.dynamic }
+				value={ imageUrl }
+				default={ props.default }
+				onChange={ onRemove }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
+			/>
+		</AdvancedControl>
+		{ CimoDownloadNotice && <CimoDownloadNotice onDismiss={ () => setCimoDownloadNotice( null ) } /> }
+	</>
+	)
+} )
+
+ImageControl.defaultProps = {
+	label: '',
+
+	attribute: '',
+	allowedTypes: [ 'image' ],
+	responsive: false,
+	hover: false,
+	isDynamic: true,
+
+	value: undefined,
+	onChange: undefined,
+	allowReset: true,
+
+	hasPanelModifiedIndicator: true,
+}
+
+export default ImageControl

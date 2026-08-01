@@ -1,0 +1,13 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/icon-list-item",
+	"title": "Icon List Item",
+	"description": "A single list entry in the Icon List block",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation", "lumen/ordered", "lumen/uniqueId" ],
+	"keywords": [],
+	"parent": [
+		"lumen/icon-list"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "hidden"}

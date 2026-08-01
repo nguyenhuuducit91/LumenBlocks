@@ -1,0 +1,53 @@
+/**
+ * Editor styles for the Icon List Block.
+ *
+ * Enqueued in the editor only.
+ */
+@import "common";
+
+// UL is a child when in block form, remove the bullets.
+.lmb-icon-list ul {
+	list-style: none !important;
+	li::before {
+		cursor: pointer;
+	}
+}
+
+// Last in the list should have no margin bottom.
+.lmb-icon-list.lmb-icon-list li:last-child {
+	margin-bottom: 0 !important;
+}
+
+// Apply this class for textAlign right
+.lmb-icon-list__right-align li {
+	width: fit-content !important;
+	width: -moz-fit-content !important;
+	margin-left: auto !important;
+}
+
+// Apply this class for textAlign center
+.lmb-icon-list__center-align li {
+	width: fit-content !important;
+	width: -moz-fit-content !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+// Apply this class for textAlign center
+.lmb-icon-list__left-align li {
+	width: fit-content !important;
+	width: -moz-fit-content !important;
+	margin-right: auto !important;
+}
+
+// Ensure columns collapse in the editor.
+@media screen and (max-width: $break-small) {
+	.lmb-icon-list.lmb-icon-list--display-grid ul { // Ensure our columns get applied.
+		grid-template-columns: 1fr !important;
+	}
+}
+@media screen and (max-width: $break-small) {
+	.lmb-icon-list.lmb-icon-list ul { // Ensure our columns get applied.
+		columns: 1 !important;
+	}
+}

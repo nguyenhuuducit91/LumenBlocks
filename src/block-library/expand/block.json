@@ -1,0 +1,18 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/expand",
+	"title": "Expand / Show More",
+	"description": "Display a small snippet of text. Your readers can toggle it to show more information.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Hide",
+		"Less"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/text",
+    	"lumen/button-group|button"
+	]
+}

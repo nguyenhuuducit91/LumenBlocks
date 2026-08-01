@@ -1,0 +1,25 @@
+@import "common";
+
+.lmb-panel--top-separator .lmb-design-panel-item__image {
+	transform: scaleY(-1);
+}
+
+[data-type^="lumen"] .lmn-block.lmn-has-top-separator {
+	padding-top: 200px;
+}
+
+[data-type^="lumen"] .lmn-block.lmn-has-bottom-separator {
+	padding-bottom: 200px;
+}
+
+@include mobile {
+	[data-type^="lumen"] .lmn-block.lmn-has-top-separator {
+		padding-top: 78px;
+	}
+	[data-type^="lumen"] .lmn-block.lmn-has-bottom-separator {
+		padding-bottom: 78px;
+	}
+	[data-type^="lumen"] .lmn-block .lmn-separator__wrapper {
+		height: 78px;
+	}
+}

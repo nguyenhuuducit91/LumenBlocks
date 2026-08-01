@@ -1,0 +1,110 @@
+/**
+ * Frontend styles for the Testimonial Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-testimonial--v3.lmb-testimonial {
+	.lmb-block-content {
+		text-align: center;
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+	}
+	.lmb-testimonial__item {
+		@include box();
+		display: flex;
+		flex-direction: column;
+	}
+
+	.lmb-testimonial__image {
+		height: auto;
+		width: 75px;
+	}
+	.lmb-testimonial__position {
+		font-size: 0.75em;
+		text-transform: uppercase;
+		color: #aaa;
+	}
+
+	.lmb-testimonial__image {
+		margin: 0 auto $text-margin-bottom;
+	}
+	.lmb-testimonial__body,
+	.lmb-testimonial__name {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.lmb-testimonial__position {
+		margin-bottom: 0;
+	}
+}
+
+.lmb-testimonial.lmb-testimonial--v3.lmb-testimonial--design-plain {
+	.lmb-testimonial__item {
+		background: none;
+		padding: 0;
+		box-shadow: none;
+		border-radius: 0;
+	}
+}
+
+.lmb-testimonial.lmb-testimonial--v3 {
+	@media screen and (max-width: $break-large) {
+		&.lmb-testimonial--columns-3 {
+			.lmb-block-content {
+				grid-template-columns: minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.lmb-testimonial.lmb-testimonial--v3 {
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
+// IE 11 grid styles
+.lmb-testimonial--v3.lmb-testimonial {
+	&.lmb-testimonial--columns-3 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-testimonial__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-testimonial__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.lmb-testimonial--columns-2 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-testimonial__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.lmb-block-content {
+				display: block !important;
+			}
+			.lmb-testimonial__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}

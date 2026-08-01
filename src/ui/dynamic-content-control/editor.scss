@@ -1,0 +1,99 @@
+@import "common";
+
+.lumen-dynamic-content__popover {
+	> .components-popover__content {
+		width: 250px;
+	}
+	&.lmn-dynamic-content__popover--is-premium {
+		> .components-popover__content {
+			width: 300px;
+			padding: 16px;
+		}
+		.lmb-design-control-pro-note__logo {
+			width: 100px;
+		}
+	}
+}
+
+.lmn-dynamic-content-control {
+	display: flex;
+	align-items: flex-start;
+
+	&.lmn--has-control-tooltip {
+		overflow: visible;
+	}
+
+	.lmn-dynamic-content-control__button {
+		height: 100%;
+		min-width: unset;
+		padding-left: 4px;
+		padding-right: 4px;
+		width: 30px;
+		max-width: 30px;
+		flex: 0 0 auto;
+		height: 30px;
+		margin-left: 4px;
+
+		[data-icon="database"] {
+			width: 14px;
+			height: 16px;
+		}
+	}
+
+	.components-base-control {
+		margin-bottom: 0;
+		flex: 1;
+
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+
+	.components-base-control.lmb-advanced-text-control {
+		width: 100%;
+		margin-bottom: 0;
+		.components-text-control__input {
+			margin-inline: 0;
+		}
+	}
+
+	.block-editor-url-input__input {
+		width: 100% !important;
+	}
+}
+
+.lmb-image-control {
+	.lmn-dynamic-content-control {
+		display: block;
+		> .lmb-image-preview-wrapper,
+		.lmb-placeholder {
+			margin-top: 0;
+		}
+	}
+
+
+	.lmn-dynamic-content-control__button {
+		position: absolute;
+		z-index: 3;
+		top: 0;
+		right: 0;
+
+		&:not(.is-pressed) {
+			background: #fff;
+		}
+
+		height: 30px;
+		width: 30px !important;
+
+		.dashicon {
+			margin: 0;
+		}
+	}
+}
+
+// Dynamic content fields in the popover are too close together.
+.lumen-dynamic-content__popover-content {
+	.components-base-control {
+		margin-bottom: 16px;
+	}
+}

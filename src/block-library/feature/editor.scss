@@ -1,0 +1,16 @@
+@import "common";
+
+.lmn-block-feature > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	column-gap: var(--lmn-column-gap, 0);
+	row-gap: var(--lmn-row-gap, 0);
+}
+
+.lmn-block.lmn-block-feature:is(.is-style-default, .is-style-horizontal) > .lmn-inner-blocks.lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	@include mobile {
+		flex-direction: column-reverse;
+	}
+}
+
+.editor-styles-wrapper .lmn-block-feature > .lmn-inner-blocks {
+	flex-direction: row;
+}

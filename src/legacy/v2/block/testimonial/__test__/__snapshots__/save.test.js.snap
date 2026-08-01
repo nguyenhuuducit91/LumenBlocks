@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testimonial (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-testimonial lmb-testimonial--v3 lmb-testimonial--columns-2 lmb-testimonial--design-basic lmb-main-block"
+>
+  <style>
+    .lmb-img{-webkit-mask-image:url('data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=');mask-image:url('data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=')}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-testimonial__item lmb-testimonial__item1"
+      >
+        <div
+          class="lmb-testimonial__body-wrapper"
+        >
+          <p
+            class="lmb-testimonial__body"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+        </div>
+        <div
+          class="lmb-testimonial__person"
+        >
+          
+          <h4
+            class="lmb-testimonial__name"
+          >
+            <div>
+              Name
+            </div>
+          </h4>
+          <p
+            class="lmb-testimonial__position"
+          >
+            <div>
+              Position
+            </div>
+          </p>
+        </div>
+      </div>
+      <div
+        class="lmb-testimonial__item lmb-testimonial__item2"
+      >
+        <div
+          class="lmb-testimonial__body-wrapper"
+        >
+          <p
+            class="lmb-testimonial__body"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+        </div>
+        <div
+          class="lmb-testimonial__person"
+        >
+          
+          <h4
+            class="lmb-testimonial__name"
+          >
+            <div>
+              Name
+            </div>
+          </h4>
+          <p
+            class="lmb-testimonial__position"
+          >
+            <div>
+              Position
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Testimonial (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-testimonial lmb-testimonial--v3 lmb-testimonial--columns-3 lmb-testimonial--design-wave-2 lmb-main-block"
+>
+  <style>
+    .lmb-testimonial__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.lmb-testimonial__item:before{background-color:#123456 !important;opacity:12.3}@media screen and (max-width:1025px){.lmb-testimonial__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.lmb-testimonial__item:before{opacity:12.3}}@media screen and (max-width:768px){.lmb-testimonial__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.lmb-testimonial__item:before{opacity:12.3}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-testimonial__item lmb-testimonial__item1 lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-testimonial__body-wrapper"
+        />
+        <div
+          class="lmb-testimonial__person"
+        />
+      </div>
+      <div
+        class="lmb-testimonial__item lmb-testimonial__item2 lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-testimonial__body-wrapper"
+        />
+        <div
+          class="lmb-testimonial__person"
+        />
+      </div>
+      <div
+        class="lmb-testimonial__item lmb-testimonial__item3 lmb--shadow-123 lmb--has-background-overlay"
+      >
+        <div
+          class="lmb-testimonial__body-wrapper"
+        />
+        <div
+          class="lmb-testimonial__person"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,12 @@
+.lmn-block-heading__top-line,
+.lmn-block-heading__bottom-line {
+	width: 100px;
+	height: 4px;
+	background-color: #000;
+}
+// Don't follow theme margins.
+.lmn-block-heading--v2 {
+	.lmn-block-heading__text:not(.lmn-block-heading--use-theme-margins) {
+		margin: 0 !important;
+	}
+}

@@ -1,0 +1,25 @@
+.lmn--column-flex {
+	height: 100%;
+}
+
+// If a direct inner block has a top/bottom margin-auto, then we need to set the
+// height to full (similar to .lmn--column-flex) so the margin auto would take
+// effect.
+:is(.lmn-block-content, .lmn-inner-blocks):not(.lmn--column-flex):has(> :is(.lmn--block-margin-top-auto, .lmn--block-margin-bottom-auto)) {
+	height: 100%;
+}
+.lmn-container:has(> .lmn--column-flex) {
+	display: flex;
+	flex-direction: column;
+}
+
+/**
+ * Polyfill for browsers which do not support the `:has()` selector.
+ */
+:is(.lmn-block-content, .lmn-inner-blocks):not(.lmn--column-flex).lmn--height-100-polyfill {
+	height: 100%;
+}
+.lmn-container.lmn-container--has-child-column-flex-polyfill {
+	display: flex;
+	flex-direction: column;
+}

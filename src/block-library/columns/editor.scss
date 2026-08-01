@@ -1,0 +1,43 @@
+.lmn-control .lmn-control-columns__settings-button {
+	width: 24px;
+	height: 24px;
+	padding: 0 !important;
+	min-width: auto;
+	justify-content: center !important;
+	.dashicon {
+		font-size: 16px;
+		margin: 0 !important;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+.lmn-control-columns__settings-button {
+	justify-content: center !important;
+	.dashicon {
+		margin: 0 !important;
+	}
+}
+
+.editor-styles-wrapper .lmn--flex > * > * > [data-type="lumen/column"] {
+	width: fit-content !important;
+	flex: 0 1 auto !important;
+	min-width: 24px;
+	max-width: none;
+}
+
+.lmn-block-columns > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	column-gap: var(--lmn-column-gap, 0px);
+}
+
+// These are styles added from the global spacing and borders.
+:where(.lmn-has-design-system-spacing-and-borders) {
+	.lmn-block-columns > .lmn-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		row-gap: var(--lmn-columns-row-gap, 0px);
+	}
+}
+
+// For Firefox polyfill
+[data-type="lumen/columns"] .lmn-block.lmn-block-columns.lmn-block-columns--has-single-block-polyfill {
+	--lmn-columns-spacing: 0;
+}

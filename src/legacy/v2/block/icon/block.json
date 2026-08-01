@@ -1,0 +1,10 @@
+{
+	"name": "lmb/icon",
+	"title": "Icon",
+	"description": "Pick an icon or upload your own SVG icon to decorate your content.",
+	"category": "lumen-v2",
+	"keywords": [
+		"SVG"
+	],
+	"textdomain": "lumen-blocks"
+}

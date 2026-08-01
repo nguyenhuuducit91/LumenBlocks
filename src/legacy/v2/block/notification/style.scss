@@ -1,0 +1,172 @@
+/**
+ * Frontend styles for the Notification Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-notification.lmb-notification--v2 {
+	.lmb-notification__item {
+		@include box();
+		padding: $box-hori-padding;
+		display: flex;
+		flex-direction: column;
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.lmb-notification__icon,
+	.lmb-notification__title,
+	.lmb-notification__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+
+	&.lmb-notification--design-basic,
+	&.lmb-notification--design-large-icon {
+		.lmb-notification__item {
+			background-color: #40ba7b;
+		}
+		.lmb-notification__icon,
+		.lmb-notification__title,
+		.lmb-notification__description {
+			color: #fff;
+		}
+		.lmb-notification__close-button svg,
+		.lmb-notification__icon {
+			fill: #fff;
+		}
+		&.lmb-notification--type-error {
+			.lmb-notification__item {
+				background-color: #d9534f;
+			}
+		}
+		&.lmb-notification--type-info {
+			.lmb-notification__item {
+				background-color: #2091e1;
+			}
+		}
+		&.lmb-notification--type-warning {
+			.lmb-notification__item {
+				background-color: #ffdd57;
+			}
+			.lmb-notification__icon,
+			.lmb-notification__title,
+			.lmb-notification__description {
+				color: #424242;
+			}
+			.lmb-notification__close-button svg,
+			.lmb-notification__icon {
+				fill: #424242;
+			}
+		}
+	}
+
+	// Plain design.
+	&.lmb-notification--design-plain {
+		.lmb-notification__item {
+			background: none;
+			border-radius: 0;
+			box-shadow: none;
+		}
+		.lmb-notification__icon,
+		.lmb-notification__title,
+		.lmb-notification__description,
+		.lmb-button--inner {
+			color: #40ba7b;
+		}
+		.lmb-notification__close-button svg,
+		.lmb-notification__icon {
+			fill: #40ba7b;
+		}
+		.lmb-button {
+			border-color: #40ba7b;
+		}
+
+		&.lmb-notification--type-error {
+			.lmb-notification__icon,
+			.lmb-notification__title,
+			.lmb-notification__description,
+			.lmb-button--inner {
+				color: #d9534f;
+			}
+			.lmb-notification__close-button svg,
+			.lmb-notification__icon {
+				fill: #d9534f;
+			}
+			.lmb-button {
+				border-color: #d9534f;
+			}
+		}
+
+		&.lmb-notification--type-info {
+			.lmb-notification__icon,
+			.lmb-notification__title,
+			.lmb-notification__description,
+			.lmb-button--inner {
+				color: #2091e1;
+			}
+			.lmb-notification__close-button svg,
+			.lmb-notification__icon {
+				fill: #2091e1;
+			}
+			.lmb-button {
+				border-color: #2091e1;
+			}
+		}
+
+		&.lmb-notification--type-warning {
+			.lmb-notification__icon,
+			.lmb-notification__title,
+			.lmb-notification__description,
+			.lmb-button--inner {
+				color: #ff6f2f;
+			}
+			.lmb-notification__close-button svg,
+			.lmb-notification__icon {
+				fill: #ff6f2f;
+			}
+			.lmb-button {
+				border-color: #ff6f2f;
+			}
+		}
+	}
+
+	&.lmb-notification--dismissible {
+		// Hide at the start, JS will show it to avoid flickering.
+		display: none;
+
+		.lmb-notification__item {
+			position: relative;
+			padding-right: $box-vert-padding;
+		}
+	}
+}
+
+.lmb-notification__icon {
+	&,
+	svg {
+		width: 30px;
+		height: 30px;
+	}
+}
+.lmb-notification__close-button {
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	z-index: 2;
+	margin-right: 30px;
+	margin-top: 30px;
+	font-size: 8px;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	padding: 0.3rem 0 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	svg {
+		width: 100%;
+		height: auto;
+	}
+}

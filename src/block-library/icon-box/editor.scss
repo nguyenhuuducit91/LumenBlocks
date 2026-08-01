@@ -1,0 +1,22 @@
+.lmn-block-icon-box__content {
+	// Revert our frontend style for padding left.
+	> .block-editor-inner-blocks {
+		padding-left: 0;
+	}
+
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		// Apply padding left on Lumen block children.
+		> [data-block]:not([data-type="lumen/icon-label"]) {
+			> .lmn-block {
+				padding-left: 64px;
+			}
+		}
+		// Also apply the padding left on non-Lumen blocks.
+		> [data-block]:not([data-type^="lumen/"]) {
+			padding-left: 64px;
+		}
+	}
+}
+.editor-styles-wrapper .lmn-block-icon-box__content [data-block] {
+	max-width: none;
+}

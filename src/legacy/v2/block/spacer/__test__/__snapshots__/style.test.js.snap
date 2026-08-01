@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-spacer--inner": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+  },
+  ".lmb-spacer--inner:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  "desktopTablet": Object {
+    ".lmb-spacer": Object {
+      "height": undefined,
+    },
+  },
+  "mobile": Object {
+    ".lmb-spacer": Object {
+      "height": undefined,
+    },
+    ".lmb-spacer--inner": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".lmb-spacer--inner:before": Object {
+      "opacity": undefined,
+    },
+  },
+  "tablet": Object {
+    ".lmb-spacer--inner": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".lmb-spacer--inner:before": Object {
+      "opacity": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-spacer": Object {
+      "height": undefined,
+    },
+  },
+}
+`;
+
+exports[`Spacer (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-spacer--inner": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "backgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": "url(backgroundMediaUrl)",
+    "backgroundPosition": "backgroundPosition",
+    "backgroundRepeat": "backgroundRepeat",
+    "backgroundSize": "backgroundSize",
+  },
+  ".lmb-spacer--inner:before": Object {
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  "desktopTablet": Object {
+    ".lmb-spacer": Object {
+      "height": "123heightUnit !important",
+    },
+  },
+  "mobile": Object {
+    ".lmb-spacer": Object {
+      "height": "123mobileHeightUnit !important",
+    },
+    ".lmb-spacer--inner": Object {
+      "backgroundImage": "url(mobileBackgroundMediaUrl)",
+      "backgroundPosition": "mobileBackgroundPosition",
+      "backgroundRepeat": "mobileBackgroundRepeat",
+      "backgroundSize": "mobileBackgroundSize",
+    },
+    ".lmb-spacer--inner:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "tablet": Object {
+    ".lmb-spacer--inner": Object {
+      "backgroundImage": "url(tabletBackgroundMediaUrl)",
+      "backgroundPosition": "tabletBackgroundPosition",
+      "backgroundRepeat": "tabletBackgroundRepeat",
+      "backgroundSize": "tabletBackgroundSize",
+    },
+    ".lmb-spacer--inner:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-spacer": Object {
+      "height": "123tabletHeightUnit !important",
+    },
+  },
+}
+`;

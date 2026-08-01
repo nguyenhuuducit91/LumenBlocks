@@ -1,0 +1,143 @@
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~lumen/utils'
+
+/**
+ * Internal dependencies
+ */
+import SVGCloseIconV112 from './images/close-icon-v1-12.svg'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { RichText } from '@wordpress/block-editor'
+
+const deprecatedSchema_1_17 = {
+	text: {
+		source: 'html',
+		selector: 'p',
+		default: descriptionPlaceholder( 'long' ),
+	},
+	color: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	notifType: {
+		type: 'string',
+		default: 'success',
+	},
+	dismissible: {
+		type: 'boolean',
+		default: false,
+	},
+	borderRadius: {
+		type: 'number',
+		default: 12,
+	},
+	shadow: {
+		type: 'number',
+		default: 3,
+	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
+}
+
+const deprecatedSave_1_17 = props => {
+	const { className } = props
+	const {
+		text,
+		color,
+		textColor,
+		notifType,
+		dismissible,
+		borderRadius = 12,
+		shadow = 3,
+		design = '',
+	} = props.attributes
+
+	const mainClasses = classnames( [
+		className,
+		'lmb-notification',
+		`lmb-notification--type-${ notifType }`,
+	], applyFilters( 'lumen.notification.mainclasses_1_17', {
+		'lmb-notification--dismissible': dismissible,
+		[ `lmb--shadow-${ shadow }` ]: shadow !== 3,
+	}, design, props ) )
+
+	const mainStyles = {
+		backgroundColor: color,
+		color: textColor,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
+	return (
+		<div className={ mainClasses } style={ mainStyles }>
+			{ applyFilters( 'lumen.notification.save.output.before_1_17', null, design, props ) }
+			{ dismissible && (
+				<span className="lmb-notification__close-button" role="button" tabIndex="0">
+					<SVGCloseIconV112 style={ { fill: textColor } } />
+				</span>
+			) }
+			<RichText.Content
+				tagName="p"
+				style={ { color: textColor } }
+				value={ text }
+			/>
+		</div>
+	)
+}
+
+const deprecated = [
+	{
+		attributes: deprecatedSchema_1_17,
+		save: deprecatedSave_1_17,
+		migrate: attributes => {
+			// Update the custom CSS since the structure has changed.
+			const updateCSS = css => ( css || '' )
+				.replace( /\n\.lmb-notification(\s*{)/g, '\n.lmb-notification__item$1' )
+				.replace( /\n\.lmb-notification p(\s*{)/g, '\n.lmb-notification__description$1' )
+
+			return {
+				...attributes,
+
+				// Custom CSS.
+				customCSS: updateCSS( attributes.customCSS ),
+				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
+
+				description: attributes.text,
+				columnBackgroundColor: attributes.color,
+				iconColor: attributes.textColor,
+				titleColor: attributes.textColor,
+				descriptionColor: attributes.textColor,
+				showTitle: false,
+				showButton: false,
+			}
+		},
+	},
+]
+
+export default deprecated
+
+// Backward compatibility with < 2.6. With our new Icons, the dismissible icon
+// can be detected as the notification icon. Strip it out during the svg
+// extraction process.
+addFilter( 'lumen.svg-icon.extract-svg', 'lumen/notification-2.6', htmlString => {
+	return htmlString.replace( /<span[^>]*lmb-notification__close-button.*?<svg.*?\/svg>.*?<\/span>/, '' )
+} )

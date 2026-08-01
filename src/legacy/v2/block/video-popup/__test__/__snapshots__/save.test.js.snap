@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Video Popup (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-video-popup lmb-video-popup--v3 lmb-main-block"
+>
+  <style>
+    .lmb-video-popup__wrapper{background-color:#000000}.lmb-video-popup__wrapper:before{background-color:#000000}.lmb-video-popup__wrapper:hover:before{opacity:0.2}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-video-popup__wrapper"
+        data-video=""
+      >
+        <button
+          aria-label="Play"
+          class="lmb-video-popup__overlay"
+        >
+          <span
+            class="lmb-video-popup__play-button"
+          >
+            <svg
+              class="lmb-play-button-normal"
+              height="30"
+              width="30"
+            />
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Video Popup (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-video-popup lmb-video-popup--v3 lmb-main-block"
+>
+  <style>
+    .lmb-video-popup__wrapper{max-width:123px;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;height:123px !important;border-radius:123px;background-color:#123456;background-attachment:fixed;background-image:url(previewBackgroundMediaUrl);background-position:previewBackgroundPosition;background-repeat:previewBackgroundRepeat;background-size:previewBackgroundSize;background-blend-mode:previewBackgroundImageBlendMode}.lmb-video-popup__play-button svg{fill:#123456 !important;height:123px;width:123px;opacity:123}.lmb-video-popup__wrapper:before{background-color:#123456;opacity:12.3}.lmb-video-popup__wrapper:hover:before{opacity:12}@media screen and (max-width:1025px){.lmb-video-popup__wrapper{max-width:123px;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;height:123px !important;background-image:url(previewTabletBackgroundMediaUrl);background-position:previewTabletBackgroundPosition;background-repeat:previewTabletBackgroundRepeat;background-size:previewTabletBackgroundSize}.lmb-video-popup__wrapper:before{opacity:12.3}}@media screen and (max-width:768px){.lmb-video-popup__wrapper{max-width:123px;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;height:123px !important;background-image:url(previewMobileBackgroundMediaUrl);background-position:previewMobileBackgroundPosition;background-repeat:previewMobileBackgroundRepeat;background-size:previewMobileBackgroundSize}.lmb-video-popup__wrapper:before{opacity:12.3}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-video-popup__wrapper lmb--shadow-123 lmb--has-background-overlay"
+        data-video="videoID"
+      >
+        <button
+          aria-label="Play"
+          class="lmb-video-popup__overlay"
+        >
+          <span
+            class="lmb-video-popup__play-button"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,38 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/button-group",
+	"title": "Button Group",
+	"description": "Add a customizable button.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Link"
+	],
+	"lmn-variants": [
+		{
+			"name": "icon-button",
+			"title": "Icon Button",
+			"description": "Add a customizable button.",
+			"category": "lumen",
+			"lmn-type": "essential"},
+		{
+			"name": "button",
+			"title": "Button",
+			"description": "Add a customizable button.",
+			"category": "lumen",
+			"lmn-type": "essential"},
+		{
+			"name": "social-buttons",
+			"title": "Social Buttons",
+			"description": "Add social buttons.",
+			"category": "lumen",
+			"lmn-type": "special",
+			"lmn-required-blocks": [
+				"lumen/button-group|icon-button"
+			]
+		}
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "hidden"
+
+}

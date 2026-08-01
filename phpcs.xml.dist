@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<ruleset name="Lumen Blocks">
+	<description>WordPress Coding Standards for the Lumen Blocks plugin.</description>
+
+	<file>.</file>
+
+	<!-- Third-party or generated code we do not own. -->
+	<exclude-pattern>/freemius/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/build/*</exclude-pattern>
+	<exclude-pattern>/dist/*</exclude-pattern>
+	<exclude-pattern>/docs/*</exclude-pattern>
+	<exclude-pattern>/src/__*/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="parallel" value="8"/>
+	<arg value="sp"/>
+
+	<config name="minimum_supported_wp_version" value="6.8.2"/>
+	<config name="testVersion" value="7.4-"/>
+
+	<rule ref="WordPress">
+		<!-- Translator strings are emitted with the LUMEN_I18N constant and are
+		     rewritten to the literal 'lumen-blocks' domain by the gulp
+		     translation tasks, so the literal-domain sniff cannot see them. -->
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain"/>
+		<!-- Inherited formatting from the upstream source; not a correctness issue. -->
+		<exclude name="Squiz.Commenting.FileComment"/>
+		<exclude name="Squiz.Commenting.FunctionComment"/>
+		<exclude name="Squiz.Commenting.ClassComment"/>
+		<exclude name="Generic.Commenting.DocComment"/>
+	</rule>
+
+	<!-- Every global symbol must carry one of the plugin prefixes. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="lumen"/>
+				<element value="LUMEN"/>
+				<element value="lmn"/>
+				<element value="LMN"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- The plugin text domain. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="lumen-blocks"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

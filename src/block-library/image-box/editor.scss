@@ -1,0 +1,40 @@
+.lmn-block-image-box {
+	// Don't make the column clickable, just so we can easily click the image behind it.
+	[data-type="lumen/column"] {
+		pointer-events: none;
+		[data-block],
+		.block-list-appender {
+			pointer-events: all;
+		}
+	}
+
+	// Don't show the image resizer since we can't click on it.
+	.lmn-resizer-tooltip {
+		display: none !important;
+	}
+
+	> div > div > .block-editor-block-list__layout {
+		display: grid;
+		> [data-block] {
+			grid-column: 1 / 2;
+			grid-row: 1 / 2;
+		}
+	}
+}
+
+// Slower transitions
+.editor-styles-wrapper .lmn-block-image-box {
+	.lmn-block,
+	.lmn-img-wrapper img {
+		transition-duration: var(--lmn-transition-duration, 0.32s);
+	}
+}
+
+.editor-styles-wrapper .lmn-block-image-box__content [data-block] {
+	max-width: none;
+}
+
+// Because of the new column height 100%, the image box columns are no longer centered.
+.lmn-block-image-box .lmn-block-column__content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	justify-content: center;
+}

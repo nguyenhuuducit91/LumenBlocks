@@ -1,0 +1,12 @@
+.lmb-image-shape-control .lmb-design-control {
+	padding: 8px;
+	margin: 16px 0;
+	border: 1px solid #efefef;
+	.components-radio-control__option {
+		width: 25%;
+	}
+}
+
+.lmb-image-shape-control--is-premium .lmb-design-control {
+	height: fit-content !important;
+}

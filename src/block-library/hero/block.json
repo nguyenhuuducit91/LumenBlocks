@@ -1,0 +1,27 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/hero",
+	"title": "Hero",
+	"description": "A large hero area. Typically used at the very top of a page.",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"keywords": [
+		"Header"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-substitution-blocks": [
+		"lumen/heading",
+		"lumen/text",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

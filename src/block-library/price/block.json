@@ -1,0 +1,23 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/price",
+	"title": "Price",
+	"description": "Show a price of a product or service with currency and a suffix styled with different weights",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"keywords": [
+		"Currency",
+		"Pricing",
+		"Number"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/text"
+	]
+}

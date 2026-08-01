@@ -1,0 +1,33 @@
+@import "common";
+
+.lmn-block-number-box__container,
+div.lmn-block-number-box__text {
+	display: inline-flex;
+	justify-content: var(--lmn-alignment-justify-content, center);
+	align-items: center;
+	font-weight: bold;
+	font-size: 56px;
+	flex: 0 1 auto;
+}
+.lmn-block-number-box.lmn--has-shape {
+	.lmn-block-number-box__container,
+	div.lmn-block-number-box__text {
+		background: cssvar(button-background-color);
+		color: #fff;
+		border-radius: 100%;
+		width: 96px;
+		height: 96px;
+	}
+}
+
+// These are styles added from the global color schemes.
+:where(#{$lmn-has-color-schemes-selector}) .lmn-block-number-box.lmn--has-shape {
+	.lmn-block-number-box__container,
+	div.lmn-block-number-box__text {
+		color: var(--lmn-button-text-color, #fff);
+		&:where(:hover) {
+			background: var(--lmn-button-background-color-hover, cssvar(button-background-color));
+			color: var(--lmn-button-text-color-hover, var(--lmn-button-text-color, #fff));
+		}
+	}
+}

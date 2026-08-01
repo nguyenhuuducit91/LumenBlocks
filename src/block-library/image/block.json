@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/image",
+	"title": "Image",
+	"description": "An image with advanced controls to make a visual statement.",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "essential"}

@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-button lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-button-container"
+      >
+        <a
+          class="lmb-button1 lmb-button lmb-button--size-normal"
+          href=""
+          rel=""
+          title=""
+        >
+          
+          <span
+            class="lmb-button--inner"
+          >
+            <div>
+              Button text
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Button (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-button lmb-button--collapse-collapseOn lmb-main-block"
+>
+  <style>
+    .lmb-block-content .lmb-button{border-radius:123px}.lmb-button1 .lmb-button--inner{font-family:"button1FontFamily",Sans-serif !important;font-size:123button1FontSizeUnit !important;font-weight:button1FontWeight !important;text-transform:button1TextTransform !important;letter-spacing:123px !important;line-height:123button1LineHeightUnit !important}.lmb-button1{opacity:123;border-radius:123px !important}.lmb-button1:before{border-radius:123px !important}.lmb-button1:hover{opacity:123}.lmb-button1.lmb-button--has-icon.lmb-button--has-icon svg{margin-right:123px;width:123px;height:123px}.lmb-button2 .lmb-button--inner{font-family:"button2FontFamily",Sans-serif !important;font-size:123button2FontSizeUnit !important;font-weight:button2FontWeight !important;text-transform:button2TextTransform !important;letter-spacing:123px !important;line-height:123button2LineHeightUnit !important}.lmb-button2{opacity:123;border-radius:123px !important}.lmb-button2:before{border-radius:123px !important}.lmb-button2:hover{opacity:123}.lmb-button2.lmb-button--has-icon.lmb-button--has-icon svg{margin-right:123px;width:123px;height:123px}.lmb-button3 .lmb-button--inner{font-family:"button3FontFamily",Sans-serif !important;font-size:123button3FontSizeUnit !important;font-weight:button3FontWeight !important;text-transform:button3TextTransform !important;letter-spacing:123px !important;line-height:123button3LineHeightUnit !important}.lmb-button3{opacity:123;border-radius:123px !important}.lmb-button3:before{border-radius:123px !important}.lmb-button3:hover{opacity:123}.lmb-button3.lmb-button--has-icon.lmb-button--has-icon svg{margin-right:123px;width:123px;height:123px}@media screen and (max-width:1025px){.lmb-button1 .lmb-button--inner{line-height:123button1TabletLineHeightUnit !important;font-size:123button1TabletFontSizeUnit !important}.lmb-button2 .lmb-button--inner{line-height:123button2TabletLineHeightUnit !important;font-size:123button2TabletFontSizeUnit !important}.lmb-button3 .lmb-button--inner{line-height:123button3TabletLineHeightUnit !important;font-size:123button3TabletFontSizeUnit !important}}@media screen and (max-width:768px){.lmb-block-content{flex-direction:column}.lmb-button1 .lmb-button--inner{line-height:123button1MobileLineHeightUnit !important;font-size:123button1MobileFontSizeUnit !important}.lmb-button2 .lmb-button--inner{line-height:123button2MobileLineHeightUnit !important;font-size:123button2MobileFontSizeUnit !important}.lmb-button3 .lmb-button--inner{line-height:123button3MobileLineHeightUnit !important;font-size:123button3MobileFontSizeUnit !important}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-button-container"
+      >
+        <a
+          class="lmb-button1 lmb-button lmb-button--size-button1Size lmb-button--ghost-to-normal-effect lmb--hover-effect-button1HoverEffect lmb-button--design-button1Design lmb-button--has-icon lmb-button--icon-position-button1IconPosition"
+          href="button1Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        >
+          <div
+            class="lmb-icon-inner-svg"
+          />
+          <span
+            class="lmb-button--inner"
+          >
+            <div>
+              button1Text
+            </div>
+          </span>
+        </a>
+      </div>
+      <div
+        class="lmb-button-container"
+      >
+        <a
+          class="lmb-button2 lmb-button lmb-button--size-button2Size lmb-button--ghost-to-normal-effect lmb--hover-effect-button2HoverEffect lmb-button--design-button2Design lmb-button--has-icon lmb-button--icon-position-button2IconPosition"
+          href="button2Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        >
+          <div
+            class="lmb-icon-inner-svg"
+          />
+          <span
+            class="lmb-button--inner"
+          >
+            <div>
+              button2Text
+            </div>
+          </span>
+        </a>
+      </div>
+      <div
+        class="lmb-button-container"
+      >
+        <a
+          class="lmb-button3 lmb-button lmb-button--size-button3Size lmb-button--ghost-to-normal-effect lmb--hover-effect-button3HoverEffect lmb-button--design-button3Design lmb-button--has-icon lmb-button--icon-position-button3IconPosition"
+          href="button3Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        >
+          <div
+            class="lmb-icon-inner-svg"
+          />
+          <span
+            class="lmb-button--inner"
+          >
+            <div>
+              button3Text
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+.editor-styles-wrapper .lmn-block-hero__content [data-block] {
+	max-width: none;
+}
+
+.lmn-block-hero__content.lmn--column-flex > .block-editor-inner-blocks {
+	&,
+	> .block-editor-block-list__layout {
+		min-height: inherit;
+	}
+}
+.lmn-block-hero__content.lmn--column-flex:not(.lmn--block-horizontal-flex) > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	justify-content: center;
+}

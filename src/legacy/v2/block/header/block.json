@@ -1,0 +1,10 @@
+{
+	"name": "lmb/header",
+	"title": "Header",
+	"description": "A large header title area. Typically used at the very top of a page.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Hero"
+	],
+	"textdomain": "lumen-blocks"
+}

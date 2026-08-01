@@ -1,0 +1,16 @@
+.lmn-block.lmn-block-blockquote {
+	:is(.lmn-container.lmn-block-blockquote__content, .lmn-inner-blocks) {
+		flex-direction: row;
+	}
+}
+
+.lmn-block-blockquote__content {
+	max-width: none !important;
+}
+.lmn-block-blockquote {
+	.lmn-block-icon {
+		flex: 0;
+		width: auto;
+		margin-inline-end: 16px;
+	}
+}

@@ -1,0 +1,97 @@
+/**
+ * Internal dependencies
+ */
+import {
+	appendImportant, appendImportantAll, getFontFamily,
+} from '../'
+import { __getValue, clampInheritedStyle } from '../styles'
+
+/**
+ * External dependencies
+ */
+import { camelCase } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
+import { sprintf } from '@wordpress/i18n'
+
+const isCSSVarValue = value => {
+	return typeof value === 'string' && value.startsWith( 'var' )
+}
+
+export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
+	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
+	const getValue = __getValue( blockAttributes, getAttrName, '' )
+
+	const {
+		importantSize = false,
+		important = true,
+		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
+		inheritMax = 50, // If provided & inherit is true, clamp the inherited value in tablet and mobile to this.
+		inheritMin,
+	} = options
+
+	let styles = {}
+
+	const desktopFontSize = getValue( 'FontSize' )
+	const tabletFontSize = getValue( 'TabletFontSize' )
+	const mobileFontSize = getValue( 'MobileFontSize' )
+
+	const desktopFontSizeUnit = isCSSVarValue( desktopFontSize ) ? '' : getValue( 'FontSizeUnit' ) || 'px'
+	const tabletFontSizeUnit = isCSSVarValue( tabletFontSize ) ? '' : getValue( 'TabletFontSizeUnit' ) || 'px'
+	const mobileFontSizeUnit = isCSSVarValue( mobileFontSize ) ? '' : getValue( 'MobileFontSizeUnit' ) || 'px'
+
+	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
+		styles = {
+			fontFamily: getValue( 'FontFamily' ) !== '' ? getFontFamily( getValue( 'FontFamily' ) ) : undefined,
+			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ desktopFontSizeUnit }`, importantSize ) : undefined,
+			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
+			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,
+			letterSpacing: getValue( 'LetterSpacing' ) !== '' ? `${ getValue( 'LetterSpacing' ) }px` : undefined,
+			lineHeight: getValue( 'LineHeight' ) !== '' ? `${ getValue( 'LineHeight' ) }${ getValue( 'LineHeightUnit' ) || 'em' }` : undefined,
+		}
+	} else if ( screen === 'tablet' ) { // Tablet.
+		styles = {
+			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
+			letterSpacing: getValue( 'TabletLetterSpacing' ) !== '' ? `${ getValue( 'TabletLetterSpacing' ) }px` : undefined,
+		}
+
+		if ( inherit ) {
+			const clampDesktopValue = clampInheritedStyle( desktopFontSize, { min: inheritMin, max: inheritMax } )
+			if ( clampDesktopValue ) {
+				styles.fontSize = `${ clampDesktopValue }${ getValue( 'FontSizeUnit' ) || 'px' }`
+			}
+		}
+		if ( tabletFontSize ) {
+			styles.fontSize = getValue( 'TabletFontSize', `%s${ tabletFontSizeUnit }` )
+		}
+	} else { // Mobile.
+		styles = {
+			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
+			letterSpacing: getValue( 'MobileLetterSpacing' ) !== '' ? `${ getValue( 'MobileLetterSpacing' ) }px` : undefined,
+		}
+
+		if ( inherit ) {
+			const clampDesktopValue = clampInheritedStyle( desktopFontSize, { min: inheritMin, max: inheritMax } )
+			if ( clampDesktopValue ) {
+				styles.fontSize = `${ clampDesktopValue }${ getValue( 'FontSizeUnit' ) || 'px' }`
+			}
+
+			const clampTabletValue = clampInheritedStyle( tabletFontSize, { min: inheritMin, max: inheritMax } )
+			if ( clampTabletValue ) {
+				styles.fontSize = `${ clampTabletValue }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`
+			} else if ( clampDesktopValue || tabletFontSize ) {
+				// If we have a desktop value clamped, and there's a tablet value, don't do anything.
+				styles.fontSize = undefined
+			}
+		}
+		if ( mobileFontSize ) {
+			styles.fontSize = getValue( 'MobileFontSize', `%s${ mobileFontSizeUnit }` )
+		}
+	}
+
+	return important ? appendImportantAll( styles ) : styles
+}
+
+export default createTypographyStyles

@@ -1,0 +1,21 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/team-member",
+	"title": "Team Member",
+	"description": "Display members of your team or your office. Use multiple Team Member blocks if you have a large team.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "section",
+	"lmn-substitution-blocks": [
+		"lumen/image",
+		"lumen/heading",
+		"lumen/subtitle",
+		"lumen/text",
+		"lumen/button-group",
+		"lumen/button"
+	]
+}

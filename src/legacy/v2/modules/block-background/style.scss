@@ -1,0 +1,37 @@
+@import "common";
+
+// Lots of alignfulls to force our margins!
+.lmb-main-block.lmb--has-block-background.alignfull.alignfull.alignfull.alignfull {
+	margin-top: 0;
+	margin-bottom: 0;
+
+	padding-top: 70px;
+	padding-bottom: 70px;
+
+	&.lmb-main-block--inner-center {
+		@media screen and (min-width: $break-large) {
+			> .lmb-inner-block {
+				max-width: 900px;
+				max-width: var(--content-width);
+			}
+		}
+	}
+	&.lmb-main-block--inner-wide {
+		@media screen and (min-width: $break-wide) {
+			> .lmb-inner-block {
+				width: 75vw;
+				min-width: 1200px;
+			}
+		}
+	}
+	&.lmb-main-block--inner-full {
+		> .lmb-inner-block {
+			width: 100%;
+		}
+	}
+}
+
+:where(.lmb-main-block).lmb--has-block-background {
+	background-size: cover;
+	background-position: center;
+}

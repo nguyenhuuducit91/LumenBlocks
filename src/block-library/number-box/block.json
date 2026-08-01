@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/number-box",
+	"title": "Number Box",
+	"description": "Display steps or methods that your users will do in your service.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Steps"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

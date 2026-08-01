@@ -1,0 +1,21 @@
+/**
+ * Editor styles for the Number Box Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+.lmb-number-box {
+	.lmb-number-box__number[data-is-placeholder-visible="true"] {
+		transition: none;
+		height: 2.5em;
+		width: 2.5em;
+		left: calc(50% - 2.5em / 2); // Prevent transitions.
+	}
+	// Ensure the number is behind.
+	.lmb-number-box__item > *:not(.lmb-number-box__content) {
+		z-index: 3 !important;
+	}
+	.lmb-number-box__item > .lmb-number-box__content {
+		z-index: 4 !important;
+	}
+}

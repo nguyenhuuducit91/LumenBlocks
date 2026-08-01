@@ -1,0 +1,203 @@
+/**
+ * Internal dependencies
+ */
+import { getDefault, onClassChange } from './block-layout-utils'
+
+/**
+ * WordPress dependencies
+ */
+import { useSelect } from '@wordpress/data'
+import { useEffect, useState } from '@wordpress/element'
+import { addFilter } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
+import { compact } from 'lodash'
+import { useBlockHoverState, useBlockLayoutDefaults } from '~lumen/hooks'
+
+function appendUnitIfNeeded( value, unit ) {
+	return ( typeof value === 'string' && value.trim().startsWith( 'var' ) ) ? value : `${ value }${ unit }`
+}
+
+export const renderGlobalBlockLayoutStyles = (
+	blockLayouts,
+	blockLayoutDefaults,
+	setStyles,
+	currentHoverState,
+	blockUniqueId,
+	parentHoverBlock,
+	returnCss = false,
+	breakDesktop = 1024,
+	breakTablet = 768
+) => {
+	if ( Object.keys( blockLayouts ).length === 0 ) {
+		setStyles( '' )
+		return
+	}
+	let css = ''
+
+	const deviceCss = {
+		desktop: [],
+		tablet: [],
+		mobile: [],
+	}
+
+	const getUnit = ( property, state ) => {
+		return blockLayouts[ property ][ `${ state }Unit` ] ?? 'px'
+	}
+
+	const getValue = ( _property, device, state, value, unit ) => {
+		let property = '--lmn-' + _property
+
+		if ( state === 'parent-hover' && currentHoverState === 'parent-hover' && blockUniqueId && parentHoverBlock ) {
+			property += '-hover'
+		} else if ( state !== 'normal' ) {
+			property += `-${ state }`
+		}
+
+		let style = ''
+		if ( typeof value === 'string' && isNaN( Number( value ) ) ) {
+			style = `${ property }: ${ value };`
+		} else if ( typeof value === 'object' ) {
+			let defaultValue = getDefault( blockLayoutDefaults, _property, device )
+
+			// In case the default value is a number (same value for all sides)
+			if ( typeof defaultValue !== 'object' ) {
+				const _defaultValue = defaultValue
+				defaultValue = {
+					top: _defaultValue,
+					right: _defaultValue,
+					bottom: _defaultValue,
+					left: _defaultValue,
+				}
+			}
+
+			const top = value.top !== undefined ? value.top : defaultValue.top
+			const right = value.right !== undefined ? value.right : defaultValue.right
+			const bottom = value.bottom !== undefined ? value.bottom : defaultValue.bottom
+			const left = value.left !== undefined ? value.left : defaultValue.left
+
+			style = `${ property }: ${ appendUnitIfNeeded( top, unit ) } ${ appendUnitIfNeeded( right, unit ) } ${ appendUnitIfNeeded( bottom, unit ) } ${ appendUnitIfNeeded( left, unit ) };`
+		} else {
+			style = `${ property }: ${ value }${ unit };`
+		}
+
+		if ( currentHoverState === 'parent-hover' && state === 'parent-hover' && blockUniqueId && parentHoverBlock ) {
+			style = `.lmn--is-hovered.lmn-${ blockUniqueId }{ ${ style } }`
+		}
+
+		return style
+	}
+
+	Object.keys( blockLayouts ).forEach( property => {
+		const values = Object.keys( blockLayouts[ property ] )
+			.filter( key => key.indexOf( 'Unit' ) === -1 )
+			.reduce( ( _blockLayouts, key ) => {
+		  return {
+					..._blockLayouts,
+					[ key ]: blockLayouts[ property ][ key ],
+		  }
+			}, {} )
+
+		Object.entries( values ).forEach( ( [ state, value ] ) => {
+			const unit = getUnit( property, state )
+
+			const device = state.includes( 'desktop' ) ? 'desktop' : ( state.includes( 'tablet' ) ? 'tablet' : 'mobile' )
+			const hoverState = state.includes( 'ParentHover' ) ? 'parent-hover' : ( state.includes( 'Hover' ) ? 'hover' : 'normal' )
+
+			deviceCss[ device ].push( getValue( property, device, hoverState, value, unit ) )
+
+			// This is for backward compatibility. Add a custom property for the icon size of custom icons.
+			// This is to ensure that for custom icons that don't have iconSize attribute,
+			// their icon size won't change after upgrading.
+			// The custom property allows us to also apply the global icon size setting to custom icons.
+			if ( property === 'button-icon-size' || property === 'icon-size' ) {
+				deviceCss[ device ].push( getValue( `custom-${ property }`, device, hoverState, value, unit ) )
+			}
+		} )
+	} )
+
+	if ( deviceCss.desktop.length > 0 ) {
+		css += `:root { ${ compact( deviceCss.desktop ).join( '' ) }}`
+	}
+
+	if ( deviceCss.tablet.length > 0 ) {
+		css += `@media screen and (max-width: ${ breakDesktop - 1 }px){ :root { ${ compact( deviceCss.tablet ).join( '' ) }}}`
+	}
+
+	if ( deviceCss.mobile.length > 0 ) {
+		css += `@media screen and (max-width: ${ breakTablet - 1 }px){:root { ${ compact( deviceCss.mobile ).join( '' ) }}}`
+	}
+
+	if ( returnCss ) {
+		return css
+	}
+
+	setStyles( css )
+}
+
+export const useBlockLayoutEditorLoader = ( storeName, classSuffix ) => {
+	const {
+		blockLayouts, selectedBlockUniqueId, SelectedParentHoverBlock,
+	} = useSelect( select => ( {
+		blockLayouts: select( storeName ).getBlockLayouts() || [],
+		selectedBlockUniqueId: select( 'core/block-editor' ).getSelectedBlock()?.attributes?.uniqueId,
+		SelectedParentHoverBlock: select( 'lumen/hover-state' ).getSelectedParentHoverBlock(),
+	} ), [] )
+
+	const [ currentHoverState ] = useBlockHoverState( { forceUpdateHoverState: true } )
+	const editorEl = useSelect( select => {
+		return select( 'lumen/editor-dom' ).getEditorDom()
+	}, [] )
+	const [ styles, setStyles ] = useState( '' )
+
+	const { defaults: blockLayoutDefaults } = useBlockLayoutDefaults()
+
+	useEffect( () => {
+		if ( blockLayouts && typeof blockLayouts === 'object' ) {
+			renderGlobalBlockLayoutStyles(
+				blockLayouts,
+				blockLayoutDefaults,
+				setStyles,
+				currentHoverState,
+				selectedBlockUniqueId,
+				SelectedParentHoverBlock,
+			)
+		}
+	}, [ blockLayouts, currentHoverState, SelectedParentHoverBlock ] )
+
+	// Adds a class to the editor body DOM to indicate that there are global styles for `spacing and borders` or `buttons and icons`.
+	useEffect( () => {
+		if ( editorEl ) {
+			const className = `lmn-has-design-system-${ classSuffix }`
+			if ( styles !== '' && editorEl.classList.contains( className ) === false ) {
+				editorEl.classList.add( className )
+				addFilter( 'lumen.global-styles.classnames', `lumen/global-settings.${ classSuffix }`, classnames => {
+					classnames.push( className )
+					return classnames
+				} )
+			}
+			if ( styles === '' ) {
+				editorEl.classList.remove( className )
+			}
+
+			const mo = onClassChange( editorEl, () => {
+				if ( styles !== '' && editorEl?.classList.contains( className ) === false ) {
+					editorEl?.classList.add( className )
+					addFilter( 'lumen.global-styles.classnames', `lumen/global-settings.${ classSuffix }`, classnames => {
+						classnames.push( className )
+						return classnames
+					} )
+				}
+				if ( styles === '' ) {
+					editorEl?.classList.remove( className )
+				}
+			} )
+
+			return () => mo.disconnect()
+		}
+	}, [ editorEl, styles ] )
+
+	return styles
+}

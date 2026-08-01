@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Posts (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-blog-posts lmb-blog-posts--v2 lmb-blog-posts--design-basic lmb-blog-posts--columns-2 lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    />
+  </div>
+</div>
+`;
+
+exports[`Posts (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-blog-posts lmb-blog-posts--v2 lmb-blog-posts--design-wave-2 lmb-blog-posts--columns-3 lmb-blog-posts--cat-highlighted lmb-blog-posts--has-bg-color lmb-main-block"
+  data-id=""
+  data-load-items="123"
+>
+  <style>
+    .lmb-blog-posts__contentOrder{order:1 !important}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-button-container lmb-blog-posts__load-more-button"
+      >
+        <a
+          class="lmb-button lmb-button--size-loadMoreButtonSize lmb-button--ghost-to-normal-effect lmb--hover-effect-loadMoreButtonHoverEffect lmb-button--design-loadMoreButtonDesign lmb-button--has-icon lmb-button--icon-position-loadMoreButtonIconPosition"
+          href="#0"
+          rel=""
+          role="button"
+          title=""
+        >
+          <div
+            class="lmb-icon-inner-svg"
+          />
+          <span
+            class="lmb-button--inner"
+          >
+            <div>
+              loadMoreButtonText
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

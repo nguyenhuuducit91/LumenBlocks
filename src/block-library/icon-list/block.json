@@ -1,0 +1,18 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/icon-list",
+	"title": "Icon List",
+	"description": "An unordered list with icons. You can use this as a list of features or benefits.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Checklist",
+		"Bullets",
+		"Number list"
+	],
+	"providesContext": {
+		"lumen/ordered": "ordered",
+		"lumen/uniqueId": "uniqueId"
+	},
+	"textdomain": "lumen-blocks",
+	"lmn-type": "essential"}

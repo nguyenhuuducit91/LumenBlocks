@@ -1,0 +1,75 @@
+/**
+ * External dependencies
+ */
+import { urlIsVideo, __getValue } from '~lumen/utils'
+import { camelCase } from 'lodash'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { Fragment } from '@wordpress/element'
+import { sprintf } from '@wordpress/i18n'
+
+export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
+	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
+	const getValue = __getValue( blockProps.attributes, getAttrName, '' )
+
+	const mediaUrl = getValue( 'BackgroundMediaUrl' )
+	const tabletMediaUrl = getValue( 'TabletBackgroundMediaUrl' )
+	const mobileMediaUrl = getValue( 'MobileBackgroundMediaUrl' )
+
+	const desktopClassNames = classnames( [
+		'lmb-video-background',
+	], {
+		'lmb--video-hide-tablet': tabletMediaUrl,
+		'lmb--video-hide-mobile': mobileMediaUrl,
+	} )
+	const tabletClassNames = classnames( [
+		'lmb-video-background',
+	], {
+		'lmb--video-hide-desktop': true,
+		'lmb--video-hide-mobile': mobileMediaUrl,
+	} )
+	const mobileClassNames = classnames( [
+		'lmb-video-background',
+	], {
+		'lmb--video-hide-desktop': true,
+		'lmb--video-hide-tablet': true,
+	} )
+
+	return (
+		<Fragment>
+			{ urlIsVideo( mediaUrl ) &&
+				<video
+					className={ desktopClassNames }
+					autoPlay
+					muted
+					loop
+					playsinline
+					src={ mediaUrl }
+				/>
+			}
+			{ urlIsVideo( tabletMediaUrl ) &&
+				<video
+					className={ tabletClassNames }
+					autoPlay
+					muted
+					loop
+					playsinline
+					src={ tabletMediaUrl }
+				/>
+			}
+			{ urlIsVideo( mobileMediaUrl ) &&
+				<video
+					className={ mobileClassNames }
+					autoPlay
+					muted
+					loop
+					playsinline
+					src={ mobileMediaUrl }
+				/>
+			}
+		</Fragment>
+	)
+}

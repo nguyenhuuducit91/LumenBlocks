@@ -1,0 +1,110 @@
+import { DEFAULT_PROGRESS } from './schema'
+
+import {
+	BlockDiv,
+	CustomCSS,
+	Typography,
+	getResponsiveClasses,
+	getTypographyClasses,
+	getAlignmentClasses,
+} from '~lumen/features'
+import { version as VERSION } from 'lumen'
+import { withVersion } from '~lumen/hoc'
+import classnames from 'classnames'
+import striptags from 'striptags'
+
+import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
+
+export const Save = props => {
+	const { className, attributes } = props
+	const responsiveClass = getResponsiveClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const textClasses = getTypographyClasses( attributes )
+
+	const blockClassNames = classnames( [
+		className,
+		'lmn-block-progress-circle',
+		responsiveClass,
+	] )
+
+	const containerClassNames = classnames( [
+		className,
+		'lmn-block-progress-circle__container',
+		blockAlignmentClass,
+	] )
+
+	const textClassNames = classnames( [
+		'lmn-progress-circle__inner-text',
+		textClasses,
+	] )
+
+	const divClassNames = classnames( [
+		'lmn-progress-circle',
+		{
+			'lmn--with-animation': attributes.progressAnimate,
+		},
+	] )
+
+	// Check if progressValue is an int/float/empty, if NaN, assume its dynamic content
+	let progressValue = attributes.progressValue
+	if ( attributes.progressValue === '' ) {
+		progressValue = DEFAULT_PROGRESS
+	} else if ( attributes.progressValue?.match( /^[\d.]+$/ ) ) {
+		progressValue = parseFloat( progressValue )
+	}
+
+	const label = `${ attributes.progressValuePrefix }${ progressValue }${ attributes.progressValueSuffix }`.trim()
+
+	return (
+		<BlockDiv.Content
+			className={ blockClassNames }
+			attributes={ attributes }
+			version={ props.version }
+		>
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
+			<CustomCSS.Content attributes={ attributes } />
+			<div className={ containerClassNames }>
+				<div
+					className={ divClassNames }
+					role="progressbar"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={ progressValue }
+					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
+					aria-label={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
+					{ ...applyFilters( 'lumen.progress-circle.div-props', {}, props ) }
+				>
+					<svg>
+						{ attributes.progressColorType === 'gradient' && (
+							<defs>
+								<linearGradient
+									id={ `gradient-${ attributes.uniqueId }` }
+									gradientTransform={ attributes.progressColorGradientDirection ? `rotate(${ attributes.progressColorGradientDirection })` : undefined }
+								>
+									<stop offset="0%" stopColor={ attributes.progressColor1 } />
+									<stop offset="100%" stopColor={ attributes.progressColor2 } />
+								</linearGradient>
+							</defs>
+						) }
+						<circle className="lmn-progress-circle__background"></circle>
+						<circle className="lmn-progress-circle__bar"></circle>
+					</svg>
+					{ attributes.showText && (
+						<div className="lmn-number">
+							<Typography.Content
+								tagName="span"
+								className={ textClassNames }
+								value={ label }
+							/>
+						</div>
+					) }
+				</div>
+			</div>
+		</BlockDiv.Content>
+	)
+}
+
+export default compose(
+	withVersion( VERSION )
+)( Save )

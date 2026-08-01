@@ -1,0 +1,198 @@
+/**
+ * Internal dependencies
+ */
+import blockStyles from './style'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { version as VERSION, i18n } from 'lumen'
+import {
+	InspectorTabs, AlignButtonsControl, useBlockCssGenerator,
+} from '~lumen/ui'
+import {
+	BlockDiv,
+	Image,
+	Advanced,
+	CustomCSS,
+	Responsive,
+	CustomAttributes,
+	EffectsAnimations,
+	ConditionalDisplay,
+	MarginBottom,
+	Transform,
+	getAlignmentClasses,
+	Link,
+	Alignment,
+	Typography,
+	getTypographyClasses,
+} from '~lumen/features'
+import {
+	withBlockAttributeContext,
+	withBlockStyleContext,
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
+} from '~lumen/hoc'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { compose } from '@wordpress/compose'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import {
+	memo, useState, useEffect,
+} from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
+
+const heightUnit = [ 'px', 'vh', '%' ]
+
+const Edit = props => {
+	const {
+		clientId,
+		className,
+	} = props
+
+	const figcaptionClassnames = classnames(
+		getTypographyClasses( props.attributes, 'figcaption%s' ),
+		'lmn-img-figcaption'
+	)
+
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { parentBlock } = useSelect( select => {
+		const { getBlockRootClientId, getBlock } = select( 'core/block-editor' )
+		const parentClientId = getBlockRootClientId( clientId )
+		return {
+			parentBlock: getBlock( parentClientId ),
+		}
+	}, [ clientId ] )
+
+	// Allow special or layout blocks to disable the link for the image block,
+	// e.g. image box doesn't need the image to have a link since it has it's
+	// own link.
+	const enableLink = applyFilters( 'lumen.edit.image.enable-link', true, parentBlock )
+
+	const blockClassNames = classnames( [
+		className,
+		'lmn-block-image',
+		blockAlignmentClass,
+	] )
+
+	// This is used to track whether or not the user has manually changed the
+	// dimensions of the image.  If not, then when the user changes the image
+	// size, the dimensions will be automatically calculated.
+	const [ hasManuallyChangedDimensions, setHasManuallyChangedDimensions ] = useState( !! props.attributes.imageWidth )
+	useEffect( () => {
+		setHasManuallyChangedDimensions( !! props.attributes.imageWidth )
+	}, [ props.attributes.imageWidth ] )
+
+	// Generate the CSS styles for the block.
+	const blockCss = useBlockCssGenerator( {
+		attributes: props.attributes,
+		blockStyles,
+		clientId: props.clientId,
+		context: props.context,
+		setAttributes: props.setAttributes,
+		blockState: props.blockState,
+		version: VERSION,
+	} )
+
+	return (
+		<>
+			<InspectorControls
+				enableLink={ enableLink }
+				hasManuallyChangedDimensions={ hasManuallyChangedDimensions }
+			/>
+
+			{ blockCss && <style key="block-css">{ blockCss }</style> }
+			<CustomCSS mainBlockClass="lmn-block-image" />
+
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				<Image
+					showTooltips
+					heightUnits={ heightUnit }
+					defaultWidth="100"
+					defaultHeight="auto"
+					hasManuallyChangedDimensions={ hasManuallyChangedDimensions }
+				/>
+				{ props.attributes.figcaptionShow &&
+					<Typography
+						className={ figcaptionClassnames }
+						attrNameTemplate="figcaption%s"
+						placeholder={ __( 'Image Caption', i18n ) }
+					/>
+				}
+			</BlockDiv>
+			{ props.isHovered && <MarginBottom /> }
+		</>
+	)
+}
+
+const InspectorControls = memo( props => {
+	return (
+		<>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<Image.InspectorControls
+				// { ...props }
+				initialOpen={ true }
+				heightUnits={ heightUnit }
+				hasLightbox
+				hasManuallyChangedDimensions={ props.hasManuallyChangedDimensions }
+			/>
+			{ props.enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
+			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="lmn-block-image" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+			<Typography.InspectorControls
+				label={ __( 'Caption', i18n ) }
+				attrNameTemplate="figcaption%s"
+				hasToggle={ true }
+				hasTextTag={ false }
+				hasTextContent={ true }
+				initialOpen={ false }
+			/>
+		</>
+	)
+} )
+
+export default compose(
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockStyleContext( blockStyles ),
+)( Edit )
+
+addFilter( 'lumen.block-component.typography.before', 'lumen/image', ( output, props ) => {
+	const { name } = useBlockEditContext()
+
+	if ( name !== 'lumen/image' ) {
+		return output
+	}
+
+	if ( props.attrNameTemplate !== 'figcaption%s' ) {
+		return output
+	}
+
+	return (
+		<>
+			<AlignButtonsControl
+				label={ __( 'Caption Alignment', i18n ) }
+				attribute="figcaptionAlignment"
+			/>
+		</>
+	)
+} )

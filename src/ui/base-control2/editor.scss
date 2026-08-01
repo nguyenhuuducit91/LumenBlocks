@@ -1,0 +1,103 @@
+$right-space: 28px;
+.lmn-control {
+	&:not(.lmn--no-padding) {
+		padding-right: $right-space !important;
+	}
+}
+
+.lmn-control-label {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	margin-bottom: 8px;
+	align-items: center;
+	.components-base-control__label {
+		display: flex;
+		margin-bottom: 0;
+		align-items: center;
+		h3 {
+			margin: 0 !important;
+			font-size: 13px !important;
+		}
+		&:not(:empty) {
+			height: 24px; // Prevent the label from changing sizes if toggle disappears.
+		}
+	}
+	&.lmn-control-label--bold {
+		margin-bottom: 16px;
+	}
+	.lmn-control-label__toggles {
+		display: flex;
+		flex-direction: row;
+	}
+}
+
+.lmn-control {
+	.components-base-control__field {
+		position: relative;
+	}
+}
+
+.lmn-control-content {
+	position: relative;
+	> .components-base-control {
+		margin-bottom: 16px;
+	}
+}
+
+.lmn-control__reset-wrapper {
+	flex: 1;
+	position: relative;
+}
+
+.lmn-control__reset-button {
+	position: absolute;
+	right: -28px;
+	top: 7px;
+	margin: 0;
+	width: 24px !important;
+	padding: 0 !important;
+	min-width: auto !important;
+	color: var(--wp-admin-theme-color, #00669b);
+	justify-self: flex-end;
+	.dashicon {
+		font-size: 12px;
+		display: flex !important;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.lmn-control-label__after {
+	display: flex;
+	align-items: center;
+}
+
+// If the responsive and hover state toggle are on the top of a popover, they
+// will be clipped, be sure that the toggle always opens downward.
+.components-popover__content .components-panel__body > .lmn-control:first-child {
+	.lmn-label-unit-toggle__wrapper.is-open {
+		transform: none !important;
+	}
+}
+
+// Disabled controls in tablet/mobile
+.lmn-control.lmn-control--disabled .lmn-control-content {
+	opacity: 0.3 !important;
+	pointer-events: none !important;
+}
+
+// Smaller spacing betweek controls.
+.lmn-control {
+	margin-bottom: 12px !important;
+}
+
+// Tooltip labels
+.lmn-control__label--has-tooltip {
+	cursor: help;
+	user-select: none;
+	&:hover {
+		color: #d97706;
+		text-decoration: #d97706 underline dashed 1px;
+		text-underline-offset: 3px;
+	}
+}

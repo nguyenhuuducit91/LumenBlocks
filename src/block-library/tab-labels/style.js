@@ -1,0 +1,189 @@
+/**
+ * External dependencies
+ */
+import {
+	BlockDiv,
+	Advanced,
+	Typography,
+	Alignment,
+	EffectsAnimations,
+	Transform,
+	Icon,
+	Button,
+} from '~lumen/features'
+import { BlockStyleGenerator } from '~lumen/ui'
+
+const blockStyles = new BlockStyleGenerator( {
+	versionAdded: '3.0.0',
+	versionDeprecated: '',
+} )
+
+blockStyles.addBlockStyles( 'tabAlignment', [ {
+	selector: '.lmn-block-tab-labels__wrapper',
+	styleRule: 'justifyContent',
+	attrName: 'tabAlignment',
+	key: 'tabAlignment',
+	responsive: 'all',
+} ] )
+
+blockStyles.addBlockStyles( 'fullWidth', [ {
+	selector: '.lmn-block-content.lmn-block-tabs--horizontal .%s',
+	styleRule: '--tabs-flex',
+	attrName: 'fullWidth',
+	key: 'fullWidth',
+	valuePreCallback: value => {
+		return value ? '1 1 auto' : undefined
+	},
+} ] )
+
+blockStyles.addBlockStyles( 'columnGap', [ {
+	selector: '',
+	styleRule: '--tabs-column-gap',
+	attrName: 'columnGap',
+	key: 'columnGap',
+	responsive: 'all',
+	format: '%spx',
+} ] )
+
+blockStyles.addBlockStyles( 'rowGap', [ {
+	selector: '',
+	styleRule: '--tabs-row-gap',
+	attrName: 'rowGap',
+	key: 'rowGap',
+	responsive: 'all',
+	format: '%spx',
+} ] )
+
+{ /* Icon */ }
+blockStyles.addBlockStyles( 'iconPosition', [ {
+	selector: '.lmn-block-tabs__tab',
+	styleRule: 'flex-direction',
+	attrName: 'iconPosition',
+	key: 'iconPosition',
+	valueCallback: value => {
+		if ( value === 'right' ) {
+			return 'row-reverse'
+		} else if ( value === 'top' ) {
+			return 'column'
+		} else if ( value === 'bottom' ) {
+			return 'column-reverse'
+		}
+	},
+} ] )
+
+{ /* Icon alignment */ }
+blockStyles.addBlockStyles( 'contentAlign', [ {
+	selector: '.lmn-block-tabs__tab',
+	styleRuleCallback: getAttribute => {
+		return getAttribute( 'iconPosition' ) === '' || getAttribute( 'iconPosition' ) === 'right'
+			? 'justifyContent'
+			 : 'alignItems'
+	},
+	attrName: 'contentAlign',
+	key: 'iconAlignment-iconPosition',
+	enabledCallback: getAttribute => getAttribute( 'fullWidth' ) !== undefined || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom',
+	valueCallback: ( value, getAttribute ) => {
+		let newValue = value
+		if ( value === '' || value === 'left' ) {
+			newValue = 'flex-start'
+		} else if ( value === 'center' ) {
+			newValue = 'center'
+		} else {
+			newValue = 'flex-end'
+		}
+
+		// If right icon position, then we need to reverse the alignment.
+		if ( getAttribute( 'iconPosition' ) === 'right' ) {
+			if ( newValue === 'flex-start' ) {
+				newValue = 'flex-end'
+			} else if ( newValue === 'flex-end' ) {
+				newValue = 'flex-start'
+			}
+		}
+
+		return newValue
+	},
+	responsive: 'all',
+	dependencies: [
+		'fullWidth',
+		'iconPosition',
+	],
+} ] )
+
+blockStyles.addBlockStyles( 'iconGap', [ {
+	selector: '.lmn-block-tabs__tab',
+	styleRule: 'gap',
+	attrName: 'iconGap',
+	key: 'iconGap',
+	format: '%spx',
+} ] )
+
+{ /* Tab text colors */ }
+blockStyles.addBlockStyles( 'tabTextColor1', [ {
+	selector: '.lmn-block-tabs__tab',
+	hoverSelector: '.lmn-block-tabs__tab:hover',
+	styleRule: 'color',
+	attrName: 'tabTextColor1',
+	key: 'tabTextColor',
+	hover: 'all',
+} ] )
+
+blockStyles.addBlockStyles( 'activeTabTextColor', [ {
+	selector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active .lmn-block-tab-labels__text',
+	hoverSelector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active:hover .lmn-block-tab-labels__text',
+	styleRule: 'color',
+	attrName: 'activeTabTextColor',
+	key: 'activeTabTextColor',
+	hover: 'all',
+} ] )
+
+{ /* Enable labels layout to more customizable */ }
+blockStyles.addBlockStyles( 'fixedIconPosition', [ {
+	enabledCallback: getAttribute => getAttribute( 'iconPosition' ) === '' || getAttribute( 'iconPosition' ) === 'right',
+	selector: '.lmn-block-tab-labels__wrapper .lmn-block-tab-labels__text',
+	styleRule: 'width',
+	attrName: 'fixedIconPosition',
+	valueCallback: value => {
+		return value ? '100%' : undefined
+	},
+	key: 'fixedIconPosition',
+	responsive: 'all',
+	dependencies: [
+		'iconPosition',
+	],
+} ] )
+
+Alignment.addStyles( blockStyles )
+BlockDiv.addStyles( blockStyles )
+Advanced.addStyles( blockStyles )
+Transform.addStyles( blockStyles )
+Typography.addStyles( blockStyles, {
+	selector: '.lmn-block-tab-labels__text',
+	hoverSelector: '.lmn-block-tabs__tab:hover .lmn-block-tab-labels__text',
+	attrNameTemplate: 'tab%s',
+} )
+Icon.addStyles( blockStyles, {
+	selector: '.lmn-block-tabs__tab',
+	hoverSelector: '.lmn-block-tabs__tab:hover',
+	hasIconGap: false,
+} )
+EffectsAnimations.addStyles( blockStyles )
+Button.addStyles( blockStyles, {
+	selector: '.lmn-block-tabs__tab',
+	hoverSelector: '.lmn-block-tabs__tab:not(.lmn-block-tabs__tab--active):hover',
+	backgroundSelector: '.lmn-block-tabs__tab',
+	borderSelector: '.lmn-block-tabs__tab',
+	borderHoverSelector: '.lmn-block-tabs__tab:not(.lmn-block-tabs__tab--active):hover',
+	attrNameTemplate: 'tab%s',
+} )
+Button.addStyles( blockStyles, {
+	selector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active',
+	hoverSelector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active:hover',
+	backgroundSelector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active',
+	borderSelector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active',
+	borderHoverSelector: '.lmn-block-tabs__tab.lmn-block-tabs__tab--active:hover',
+	borderEnabledCallback: null, // If this is enabled, then we should be able to render the border attributes for the active tab.
+	attrNameTemplate: 'activeTab%s',
+} )
+
+export default blockStyles

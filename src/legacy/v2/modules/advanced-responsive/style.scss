@@ -1,0 +1,22 @@
+@import "common";
+
+// Desktop only.
+@media screen and (min-width: #{ $break-large + 1 }) {
+	.lmb--hide-desktop {
+		display: none !important;
+	}
+}
+
+// Tablet only.
+@media screen and (min-width: #{ $break-small + 1 }) and (max-width: $break-large) {
+	.lmb--hide-tablet {
+		display: none !important;
+	}
+}
+
+// Mobile only.
+@media screen and (max-width: $break-small) {
+	.lmb--hide-mobile {
+		display: none !important;
+	}
+}

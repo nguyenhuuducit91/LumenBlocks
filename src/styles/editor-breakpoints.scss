@@ -1,0 +1,32 @@
+/**
+ * Mimics the breakpoint mixins in breakpoints.scss, but uses the classes used
+ * by useDeviceEditorClasses.
+ */
+
+@mixin desktop {
+	.lmn-preview-device-desktop {
+		@content;
+	}
+}
+@mixin desktop-tablet {
+	.lmn-preview-device-desktop,
+	.lmn-preview-device-tablet {
+		@content;
+	}
+}
+@mixin tablet {
+	.lmn-preview-device-tablet {
+		@content;
+	}
+}
+@mixin tablet-mobile {
+	.lmn-preview-device-tablet,
+	.lmn-preview-device-mobile {
+		@content;
+	}
+}
+@mixin mobile {
+	.lmn-preview-device-mobile {
+		@content;
+	}
+}

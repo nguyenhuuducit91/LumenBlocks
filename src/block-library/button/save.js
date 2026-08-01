@@ -1,0 +1,77 @@
+/**
+ * External dependencies
+ */
+import { withVersion } from '~lumen/hoc'
+import classnames from 'classnames'
+import { version as VERSION } from 'lumen'
+import {
+	getTypographyClasses,
+	BlockDiv,
+	CustomCSS,
+	Button,
+	Typography,
+	getResponsiveClasses,
+	CustomAttributes,
+	getAlignmentClasses,
+} from '~lumen/features'
+
+/**
+ * WordPress dependencies
+ */
+import { compose } from '@wordpress/compose'
+import { useBlockProps } from '@wordpress/block-editor'
+
+export const Save = props => {
+	const {
+		className,
+		...propsToPass
+	} = props
+
+	const responsiveClass = getResponsiveClasses( props.attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
+
+	const typographyInnerClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
+	const blockClassNames = classnames( [
+		className,
+		'lmn-block-button',
+		blockAlignmentClass,
+		responsiveClass,
+	] )
+
+	const typographyInnerClassNames = classnames( [
+		typographyInnerClasses,
+		'lmn-button__inner-text',
+	] )
+
+	return (
+		<BlockDiv.Content
+			{ ...useBlockProps.save( { className: blockClassNames } ) }
+			attributes={ props.attributes }
+			applyCustomAttributes={ false }
+			version={ props.version }
+		>
+			{ props.attributes.generatedCss && <style>{ props.attributes.generatedCss }</style> }
+			<CustomCSS.Content attributes={ props.attributes } />
+			<Button.Content
+				{ ...propsToPass }
+				attributes={ props.attributes }
+				buttonProps={ {
+					id: props.attributes.anchorId || undefined,
+					...customAttributes,
+				} }
+			>
+				<Typography.Content
+					attributes={ props.attributes }
+					tagName="span"
+					className={ typographyInnerClassNames }
+				/>
+			</Button.Content>
+		</BlockDiv.Content>
+	)
+}
+
+export default compose(
+	withVersion( VERSION )
+)( Save )

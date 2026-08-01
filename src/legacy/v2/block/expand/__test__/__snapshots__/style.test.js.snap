@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Expand / Show More (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".lmb-expand__less-text p, .lmb-expand__more-text p": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-expand__less-text, .lmb-expand__more-text": Object {
+    "marginBottom": undefined,
+  },
+  ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-expand__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".lmb-expand__toggle-wrapper": Object {
+    "textAlign": undefined,
+  },
+  "mobile": Object {
+    ".lmb-expand__less-text p, .lmb-expand__more-text p": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-expand__less-text, .lmb-expand__more-text": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+    },
+    ".lmb-expand__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-expand__toggle-wrapper": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tablet": Object {
+    ".lmb-expand__less-text p, .lmb-expand__more-text p": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+      "lineHeight": undefined,
+    },
+    ".lmb-expand__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".lmb-expand__toggle-wrapper": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-expand__less-text, .lmb-expand__more-text": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+      "marginBottom": undefined,
+    },
+    ".lmb-expand__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Expand / Show More (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".lmb-expand__less-text p, .lmb-expand__more-text p": Object {
+    "color": "#123456",
+    "fontFamily": "\\"textFontFamily\\", Sans-serif !important",
+    "fontSize": "123textFontSizeUnit !important",
+    "fontWeight": "textFontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123textLineHeightUnit !important",
+    "textAlign": "textAlign",
+    "textTransform": "textTextTransform !important",
+  },
+  ".lmb-expand__less-text, .lmb-expand__more-text": Object {
+    "marginBottom": "123px !important",
+  },
+  ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+    "color": "#123456",
+    "fontFamily": "\\"linkFontFamily\\", Sans-serif !important",
+    "fontSize": "123linkFontSizeUnit !important",
+    "fontWeight": "linkFontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123linkLineHeightUnit !important",
+    "marginBottom": "123px !important",
+    "textTransform": "linkTextTransform !important",
+  },
+  ".lmb-expand__toggle-wrapper": Object {
+    "textAlign": "linkAlign !important",
+  },
+  "mobile": Object {
+    ".lmb-expand__less-text p, .lmb-expand__more-text p": Object {
+      "fontSize": "123textMobileFontSizeUnit !important",
+      "lineHeight": "123textMobileLineHeightUnit !important",
+      "textAlign": "textMobileAlign",
+    },
+    ".lmb-expand__less-text, .lmb-expand__more-text": Object {
+      "marginBottom": "123px !important",
+    },
+    ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+      "fontSize": "123linkMobileFontSizeUnit !important",
+      "lineHeight": "123linkMobileLineHeightUnit !important",
+      "marginBottom": "123px !important",
+    },
+    ".lmb-expand__toggle-wrapper": Object {
+      "textAlign": "linkMobileAlign !important",
+    },
+  },
+  "tablet": Object {
+    ".lmb-expand__less-text p, .lmb-expand__more-text p": Object {
+      "fontSize": "123textTabletFontSizeUnit !important",
+      "lineHeight": "123textTabletLineHeightUnit !important",
+      "textAlign": "textTabletAlign",
+    },
+    ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+      "fontSize": "123linkTabletFontSizeUnit !important",
+      "lineHeight": "123linkTabletLineHeightUnit !important",
+    },
+    ".lmb-expand__toggle-wrapper": Object {
+      "textAlign": "linkTabletAlign !important",
+    },
+  },
+  "tabletOnly": Object {
+    ".lmb-expand__less-text, .lmb-expand__more-text": Object {
+      "marginBottom": "123px !important",
+    },
+    ".lmb-expand__more-toggle-text, .lmb-expand__less-toggle-text": Object {
+      "marginBottom": "123px !important",
+    },
+  },
+}
+`;

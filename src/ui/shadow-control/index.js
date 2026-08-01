@@ -1,0 +1,359 @@
+/**
+ * External dependencies
+ */
+import { i18n } from 'lumen'
+import { compact, isEqual } from 'lodash'
+import {
+	AdvancedRangeControl, AdvancedToggleControl, ColorPaletteControl, Popover,
+} from '~lumen/ui'
+import AdvancedControl, { extractControlProps } from '~lumen/ui/base-control2'
+import { useControlHandlers } from '~lumen/ui/base-control2/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n'
+import {
+	useState,
+	useRef,
+	useEffect,
+	memo,
+} from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
+import { Button, Dashicon } from '@wordpress/components'
+
+export const getShadows = () => {
+	return applyFilters( 'lumen.shadows', [
+		'none',
+		'0 0 0 1px #7878781a',
+		'0 0 0 2px #7878781a',
+		'0 5px 5px 0 #123f5209',
+		'0px 2px 20px #99999933',
+		'0 5px 30px -10px #123f524d',
+		'0px 10px 30px #0000000d',
+		'7px 5px 30px #48497927',
+		'0px 10px 60px #0000001a',
+		'0px 70px 90px -20px #4849794d',
+	] )
+}
+
+const FILTERS = [
+	{
+		component: AdvancedToggleControl,
+		key: 'inset',
+		props: {
+			label: __( 'Inset', i18n ),
+		},
+		default: false,
+	},
+	{
+		component: AdvancedRangeControl,
+		key: 'horizontalOffset',
+		props: {
+			label: __( 'Horizontal Offset', i18n ),
+			placeholder: 0,
+			sliderMin: -100,
+			sliderMax: 100,
+		},
+		format: '%spx',
+		default: '0px',
+	},
+	{
+		component: AdvancedRangeControl,
+		key: 'verticalOffset',
+		props: {
+			label: __( 'Vertical Offset', i18n ),
+			placeholder: 0,
+			sliderMin: -100,
+			sliderMax: 100,
+		},
+		format: '%spx',
+		default: '0px',
+	},
+	{
+		component: AdvancedRangeControl,
+		key: 'blur',
+		props: {
+			label: __( 'Blur', i18n ),
+			placeholder: 0,
+			sliderMin: 0,
+			sliderMax: 100,
+		},
+		format: '%spx',
+		default: '0px',
+	},
+	{
+		component: AdvancedRangeControl,
+		key: 'shadowSpread',
+		props: {
+			label: __( 'Shadow Spread', i18n ),
+			placeholder: 0,
+			sliderMin: 0,
+			sliderMax: 100,
+		},
+		format: '%spx',
+		default: '0px',
+		show: props => ! props.isFilter,
+	},
+	{
+		component: ColorPaletteControl,
+		key: 'shadowColor',
+		props: {
+			label: __( 'Shadow Color', i18n ),
+		},
+		default: '#000000',
+	},
+]
+
+const filterToValue = ( props, filters ) => {
+	const newValue = compact( FILTERS.map( filterItem => {
+		const { key } = filterItem
+
+		if ( key === 'inset' ) {
+			return filters[ key ] ? 'inset' : ''
+		}
+
+		if ( filterItem.show && ! filterItem.show( props ) ) {
+			return undefined
+		}
+
+		if ( filterItem.format && filters[ key ] !== undefined && filters[ key ] !== '' ) {
+			return sprintf( filterItem.format, filters[ key ] )
+		}
+
+		return filters[ key ] || filterItem.default || ''
+	} ) )
+
+	return newValue.join( ' ' )
+}
+
+const ShadowFilterControl = props => {
+	const [ filters, setFilters ] = useState( {} )
+	const [ filtersPlaceholder, setFiltersPlaceholder ] = useState( {} )
+
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
+	const [ _, controlProps ] = extractControlProps( props )
+
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+
+	// Split string into 5 parts, the last part contains the rest of the string.
+	const splitStringIntoParts = ( str, splitTo = 5 ) => {
+		const parts = str.split( ' ' )
+		const result = []
+		for ( let i = 0; i < splitTo - 1; i++ ) {
+			if ( parts.length ) {
+				result.push( parts.shift() )
+			} else {
+				result.push( '' )
+			}
+		}
+		result.push( parts.join( ' ' ) )
+		return result
+	}
+	const updateFilters = ( __value, _filters, _setFilters, isFilter ) => {
+		if ( __value ) {
+			let _value = __value.trim()
+			if ( _value.startsWith( 'inset' ) ) {
+				_filters.inset = true
+				_value = _value.replace( /^inset\s*/, '' )
+			} else {
+				_filters.inset = false
+			}
+
+			const [ horizontalOffset, verticalOffset, blur, spread, color ] = splitStringIntoParts( _value, isFilter ? 4 : 5 )
+			_filters.horizontalOffset = isNaN( parseInt( horizontalOffset ) ) ? 0 : parseInt( horizontalOffset )
+			_filters.verticalOffset = isNaN( parseInt( verticalOffset ) ) ? 0 : parseInt( verticalOffset )
+			_filters.blur = isNaN( parseInt( blur ) ) ? 0 : parseInt( blur )
+			_filters.shadowSpread = isNaN( parseInt( spread ) ) ? 0 : parseInt( spread )
+			_filters.shadowColor = color || ''
+
+			if ( isFilter ) {
+				_filters.shadowSpread = ''
+				_filters.shadowColor = spread
+			}
+
+			_setFilters( { ..._filters } )
+		}
+	}
+
+	useEffect( () => {
+		updateFilters( value, filters, setFilters, props.isFilter )
+	}, [ value, props.isFilter ] )
+
+	useEffect( () => {
+		updateFilters( props.placeholder, filtersPlaceholder, setFiltersPlaceholder, props.isFilter )
+	}, [ props.placeholder, props.isFilter ] )
+
+	return (
+		<Popover
+			placement="top-start"
+			className="shadow-control__popover"
+			anchorRect={ props.anchorRect }
+			onEscape={ props.onEscape }
+		>
+			<div className="components-panel__body is-opened">
+				<AdvancedControl
+					{ ...controlProps }
+					label={ __( 'Advanced Shadow Options', i18n ) }
+					boldLabel={ true }
+				>
+					{ FILTERS.map( filter => {
+						if ( ! props.hasInset && filter.key === 'inset' ) {
+							return null
+						}
+
+						const propsToPass = { ...filter.props }
+
+						const Component = filter.component
+						if ( filter.show && ! filter.show( props.parentProps ) ) {
+							return null
+						}
+
+						if ( filter.key === 'inset' ) {
+							propsToPass.checked = !! filters[ filter.key ]
+						}
+
+						if ( filter.key === 'shadowColor' ) {
+							propsToPass.default = filtersPlaceholder[ filter.key ] || ''
+							propsToPass.value = filters[ filter.key ] || filtersPlaceholder[ filter.key ] || ''
+						}
+
+						return (
+							<Component
+								key={ filter.key }
+								allowReset={ true }
+								value={ filters[ filter.key ] || '' }
+								{ ...propsToPass }
+								placeholder={ filtersPlaceholder[ filter.key ] || '' }
+								onChange={ value => {
+									const newValue = ( filter.changeCallback || ( v => v ) )( value )
+									filters[ filter.key ] = newValue
+									setFilters( { ...filters } )
+									onChange( filterToValue( props.parentProps, filters ) )
+								} }
+							/>
+						)
+					} ) }
+				</AdvancedControl>
+			</div>
+		</Popover>
+	)
+}
+
+ShadowFilterControl.defaultProps = {
+	hasInset: true,
+	isFilter: false,
+}
+
+const ShadowControl = memo( props => {
+	const {
+		options,
+		label,
+		..._props
+	} = props
+
+	const shadows = options || getShadows()
+	const buttonRef = useRef( null )
+	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
+
+	const valueCallback = value => {
+		return value ? shadows.indexOf( value ) === -1 ? 'custom' : shadows.indexOf( value ) : ''
+	}
+
+	const changeCallback = index => {
+		return index !== '' ? shadows[ index ] : index
+	}
+
+	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
+	const value = typeof props.value === 'undefined' ? _value : props.value
+
+	const [ propsToPass, controlProps ] = extractControlProps( _props )
+
+	useEffect( () => {
+		const clickOutsideListener = event => {
+			if ( isPopoverOpen ) {
+				if ( ! event.target.closest( '.shadow-control__popover' ) &&
+					 ! event.target.closest( '.lmn-shadow-control__more-button' ) &&
+					 ! event.target.closest( '.components-color-picker' ) &&
+					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) &&
+					 ! event.target.closest( '.components-dropdown__content' ) ) {
+					setIsPopoverOpen( false )
+				}
+			}
+		}
+
+		document.body.addEventListener( 'mousedown', clickOutsideListener )
+		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
+	}, [ isPopoverOpen ] )
+
+	useEffect( () => {
+		if ( isPopoverOpen ) {
+		}
+	}, [ value, isPopoverOpen ] )
+
+	return (
+		<>
+			<AdvancedRangeControl
+				{ ...propsToPass }
+				{ ...controlProps }
+				attribute={ props.attribute }
+				label={ label }
+				value={ value }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				min={ 0 }
+				max={ shadows.length - 1 }
+				allowReset={ true }
+				helpTooltip={ props.helpTooltip }
+				hover={ props.hover }
+				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : valueCallback( props.placeholder ) }
+				after={ (
+					<Button
+						className="lmn-shadow-control__more-button"
+						ref={ buttonRef }
+						isSmall
+						isTertiary
+						isPressed={ isPopoverOpen || value === 'custom' }
+						label={ __( 'Shadow Settings', i18n ) }
+						onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
+						icon={ <Dashicon icon="admin-generic" /> }
+					/>
+				) }
+			/>
+			{ isPopoverOpen && (
+				<ShadowFilterControl
+					{ ...controlProps }
+					anchorRect={ buttonRef.current?.getBoundingClientRect() }
+					attribute={ props.attribute }
+					responsive={ props.responsive }
+					placeholder={ props.placeholder }
+					hover={ props.hover }
+					parentProps={ props }
+					hasInset={ props.hasInset }
+					isFilter={ props.isFilter }
+					onEscape={ () => setIsPopoverOpen( false ) }
+					value={ props.shadowFilterValue }
+					onChange={ props.shadowFilterOnChange }
+				/>
+			) }
+		</>
+	)
+}, isEqual )
+
+ShadowControl.defaultProps = {
+	attribute: '',
+	label: __( 'Shadow / Outline', i18n ),
+	placeholder: '',
+	options: null,
+	valueCallback: null,
+	changeCallback: null,
+	isFilter: false, // If the style rule is `filter`, disable spread.
+	hasInset: true,
+	helpTooltip: {
+		video: 'general-shadow',
+		title: __( 'Shadow/Outline', i18n ),
+		description: __( 'Adjusts the intensity of the shadow/outline of the block and the appearance of the block border', i18n ),
+	},
+}
+
+export default ShadowControl

@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/divider",
+	"title": "Divider",
+	"description": "Add a pause between your content.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Horizontal Rule",
+		"HR"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"
+}

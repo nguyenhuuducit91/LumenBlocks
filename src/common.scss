@@ -1,0 +1,45 @@
+/**
+ * Common SCSS
+*/
+
+// Initialize the design system, but don't print it out.
+@import "styles/block-design-system";
+@import "styles/cssvars";
+@include cssvars-responsive( $block-design-system, true );
+
+@import "styles/block-design-system-blocks";
+@import "styles/block";
+
+@mixin transition($property: all) {
+	transition: $property 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
+}
+
+// Make sure all our blocks are at the same level. Mainly for our separator to work.
+.lmn-block {
+	z-index: 1;
+}
+
+// Fix for iOS fixed background attachments do not convert to scroll.
+@supports (-webkit-touch-callout: inherit) {
+	.lmn-block.lmn-block,
+	.lmn-container.lmn-container {
+		background-attachment: scroll !important;
+	}
+}
+
+// Some themes may force pseudo elements on our blocks and this will destroy our column layouts.
+.lmn-block:not(.lmn--has-background-overlay)::before,
+.lmn-block::after {
+	content: none !important;
+}
+
+// Utility class to easily add an overlay button on an element
+.lmn--transparent-overlay {
+	all: unset !important; // We need to unset since we want to ensure that this is invisible.
+	position: absolute !important;
+	inset: 0 !important;
+	width: 100% !important;
+	background: transparent !important;
+	cursor: pointer !important;
+	z-index: 3 !important;
+}

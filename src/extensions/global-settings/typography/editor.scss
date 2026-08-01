@@ -1,0 +1,143 @@
+// Fix the alignment of the preview.
+.lmb-global-settings-typography-control {
+	.lmb-base-control-multi-label {
+		padding-right: 8px;
+
+		&__label {
+			overflow: hidden;
+		}
+
+		.components-base-control__label {
+			overflow: hidden;
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-size: revert;
+				text-transform: unset;
+				font-weight: unset;
+			}
+		}
+	}
+	> .components-base-control__field {
+		margin-bottom: 16px;
+		> .lmn-inspector-control__reset-button {
+			bottom: unset;
+		}
+		> .components-base-control__label {
+			min-height: 25px;
+			width: calc(100% - 88px);
+			margin-bottom: 0 !important;
+			pointer-events: none;
+		}
+	}
+	&.lmb-global-settings-typography-control--with-description {
+		> .components-base-control__field {
+			margin-bottom: 32px;
+		}
+	}
+}
+.lmb-global-typography-preview {
+	position: relative;
+	.block-editor-block-list__layout,
+	.block-editor-block-list__block,
+	.editor-styles-wrapper {
+		margin: 0 !important;
+		padding: 0 !important;
+		overflow: hidden !important;
+		white-space: nowrap !important;
+		background: transparent !important;
+		&::before,
+		&::after {
+			display: none !important;
+		}
+	}
+	.editor-styles-wrapper {
+		display: flex !important;
+		gap: 12px;
+		align-items: center;
+	}
+	.dashicons-editor-help {
+		display: flex !important;
+	}
+	// Themes may cut the preview of the heading text.
+	> .editor-styles-wrapper {
+		width: auto !important;
+	}
+}
+.lmb-global-typography-preview__label {
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1.4 !important;
+}
+.lmb-global-typography-preview__description {
+	margin: 0 !important;
+	padding: 0 !important;
+	font-size: 12px !important;
+	width: 270px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.lmb-global-settings-font-pair__heading {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 4px;
+	h3 {
+		margin: 0;
+	}
+}
+
+.lmb-global-settings-font-pair-control {
+	.components-base-control__field {
+		border: 1px solid #ddd;
+		padding: 12px;
+		margin-bottom: 8px;
+		gap: 8px;
+		cursor: pointer;
+		.lmb-base-control-multi-label {
+			margin-bottom: 0px;
+		}
+	}
+}
+
+.lmb-global-settings-font-pair__container {
+	max-height: 270px;
+	overflow: auto;
+	border: 1px solid #ddd;
+	border: none;
+	padding: 0;
+	width: calc(100% - 16px);
+	margin: 0;
+	margin-bottom: 24px;
+	.lmb-global-settings-font-pair__selected {
+		.components-base-control__field {
+			border: 2px solid #000;
+		}
+	}
+	.lmb-global-settings-font-pair__label {
+		font-size: 1.2rem;
+		display: block;
+		margin-bottom: 6px;
+		line-height: 1.2;
+	}
+	.lmb-global-settings-font-pair__sub-label {
+		font-size: 1rem;
+		display: block;
+		line-height: 1;
+	}
+}
+
+.lmb-global-typography__panel {
+	.lmn-inspector-sub-header {
+		margin-bottom: 16px;
+	}
+	.lmn-toggle-control {
+		margin-top: 28px;
+	}
+}

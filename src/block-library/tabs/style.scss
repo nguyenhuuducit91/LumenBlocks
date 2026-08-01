@@ -1,0 +1,44 @@
+@import "common";
+
+.lmn-block-tabs {
+	--tabs-gap: 16px;
+	> .lmn-inner-blocks {
+		display: grid;
+		gap: var(--tabs-gap, 16px);
+
+		// For mobile, the tabs should be vertical.
+		@include desktop-tablet {
+			&.lmn-block-tabs--vertical {
+				grid-template-columns: auto 1fr auto;
+				> .lmn-block-tab-labels:first-child {
+					grid-column: 1 / 2;
+				}
+				> .lmn-block-tab-content:last-child {
+					grid-column: 2 / 4;
+				}
+				> .lmn-block-tab-content:first-child {
+					grid-column: 1 / 3;
+				}
+				> .lmn-block-tab-labels:last-child {
+					grid-column: 3 / 4;
+				}
+			}
+		}
+
+		// On mobile, make the grid vertical
+		@include mobile {
+			grid-template-columns: 1fr;
+			> .lmn-block-tab-labels:last-child {
+				grid-row: 1 / 2;
+			}
+		}
+	}
+}
+
+// Initially (when JS hasn't initialized the tabs block yet), all tab panels are
+// visible, just make the initial one visible.
+@for $i from 1 through 10 {
+	.lmn-block-tabs[data-initial-tab="#{ $i }"] > * > .lmn-block-tab-content > * > .lmn-column:not([aria-labelledby]):not(:nth-child(#{ $i })) {
+		display: none;
+	}
+}

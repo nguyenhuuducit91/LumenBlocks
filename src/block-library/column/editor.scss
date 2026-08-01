@@ -1,0 +1,71 @@
+// Add a slightly higher z-index so that the column resize handlers are visible
+// and on top of the other overlapping column.
+.editor-styles-wrapper [data-block][data-type="lumen/column"]:not(:first-child:last-child):hover {
+	z-index: 2;
+}
+
+// Fixes horizontal scrolling on content align
+.editor-styles-wrapper .lmn-block.lmn-block-column .lmn-column-wrapper {
+	width: auto;
+}
+.editor-styles-wrapper .lmn-column-wrapper > .block-editor-inner-blocks {
+	width: 100%;
+}
+
+// Align the last block to the bottom.
+.lmn-block .lmn--align-last-block-to-bottom {
+	height: auto;
+	> .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:nth-last-child(2) {
+		margin-top: auto;
+	}
+}
+
+// Ensure that only directly hovered columns will show their resizer. Nested
+// columns should not show their resizer if they are not directly hovered.
+.components-resizable-box__container.has-show-handle {
+	.components-resizable-box__container:not(.has-show-handle) {
+		.components-resizable-box__handle {
+			display: none !important;
+		}
+	}
+}
+
+// FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
+// // We need this to make position sticky to work inside columns.
+// .lmn-block.lmn-block-column > .lmn-inner-blocks {
+// 	height: auto;
+// }
+// .lmn-block.lmn-block-column > .lmn-inner-blocks > .block-editor-inner-blocks,
+// .lmn-block.lmn-block-column > .lmn-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+// 	height: 100%;
+// }
+// .lmn-block.lmn-block-column > .lmn-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+// 	display: flex;
+// 	flex-direction: column;
+// }
+// // The inserter now goes in the middle, this fixes it.
+// .lmn-block.lmn-block-column > .lmn-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
+// 	align-self: auto;
+// }
+
+// Allow columns to shrink below their content size (If you add a horizontal
+// scroller block inside a column, the horizontal scroller will be too wide.)
+// @see https://dfmcphee.com/flex-items-and-min-width-0/
+.wp-block-lumen-column {
+	min-width: 0;
+}
+
+/**
+* Add support for native image block alignment inside inner column
+* using margin, since it uses display: block in the editor.
+*
+*/
+.wp-block-lumen-column .wp-block-image {
+	.components-resizable-box__container {
+		&,
+		img {
+			margin-left: var(--lmn-alignment-margin-left, auto);
+			margin-right: var(--lmn-alignment-margin-right, auto);
+		}
+	}
+}

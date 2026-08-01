@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/progress-circle",
+	"title": "Progress Circle",
+	"description": "Visualize a progress value or percentage in a circle.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"percentage status"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

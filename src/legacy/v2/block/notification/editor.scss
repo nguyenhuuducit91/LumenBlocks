@@ -1,0 +1,24 @@
+/**
+ * Editor styles for the Notification Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+[data-type="lmb/notification"] {
+
+	// Always show.
+	.lmb-notification.lmb-notification--dismissible {
+		display: flex !important;
+	}
+	.lmb-notification__item > *:last-child {
+		&,
+		[role="textbox"] {
+			margin-bottom: 0;
+		}
+	}
+
+	.lmb-svg-icon-placeholder__button {
+		display: block;
+		width: 100%;
+	}
+}

@@ -1,0 +1,183 @@
+/**
+ * Frontend styles for the Button Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+:where(.lmb-button-wrapper) .lmb-block-content {
+	justify-content: center;
+}
+.lmb-button-wrapper .lmb-block-content {
+	display: flex !important;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+	width: calc(100% + 1em);
+	.lmb-button {
+		margin: 0 0.5em 0.5em;
+		display: block;
+	}
+	.lmb-button.lmb-button--has-icon,
+	.lmb-button.lmb-has-icon {
+		display: flex;
+	}
+}
+.lmb-button-wrapper {
+	&.lmb-button--design-spread .lmb-block-content {
+		justify-content: space-between;
+		// Responsive go centered
+		@media screen and (max-width: $break-small) {
+			justify-content: center;
+		}
+	}
+	&.lmb-button--design-grouped-1 .lmb-block-content {
+		justify-content: space-evenly;
+		> *:nth-child(2) {
+			margin-right: auto;
+		}
+		> *:nth-child(3) {
+			margin-left: auto;
+		}
+		// Responsive left align
+		@media screen and (max-width: $break-small) {
+			justify-content: flex-start;
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+	}
+	&.lmb-button--design-grouped-2 .lmb-block-content {
+		justify-content: space-evenly;
+		> *:nth-child(2) {
+			margin-left: auto;
+		}
+		> *:nth-child(1) {
+			margin-right: auto;
+		}
+		// Responsive right align
+		@media screen and (max-width: $break-small) {
+			justify-content: flex-end;
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+	&.lmb-button--design-fullwidth .lmb-block-content {
+		flex-wrap: nowrap;
+		> * {
+			width: 100%;
+		}
+		.lmb-button {
+			text-align: center;
+		}
+		@media screen and (max-width: $break-small) {
+			flex-wrap: wrap;
+		}
+	}
+}
+
+// Override the design, when alignments are set for tablet or mobile.
+@media screen and (max-width: $break-js-tablet) {
+	.lmb-button-wrapper.lmb-button--tablet-aligned {
+		&.lmb-button--design-grouped-1 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.lmb-button--design-grouped-2 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+@media screen and (max-width: $break-js-mobile) {
+	.lmb-button-wrapper.lmb-button--mobile-aligned {
+		&.lmb-button--design-grouped-1 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.lmb-button--design-grouped-2 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $break-js-tablet) {
+	.lmb-button-wrapper.lmb-button--collapse-tablet {
+		&.lmb-button--design-grouped-1 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.lmb-button--design-grouped-2 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+@media screen and (max-width: $break-js-mobile) {
+	.lmb-button-wrapper.lmb-button--collapse-mobile {
+		&.lmb-button--design-grouped-1 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.lmb-button--design-grouped-2 .lmb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+// Only add paddings to the link/button if there's another button before it.
+.lmb-button-wrapper .lmb-button.lmb-button--design-plain,
+.lmb-button-wrapper .lmb-button.lmb-plain-button {
+	margin-left: 0.75em;
+	margin-right: 0.75em;
+}
+
+// Only add paddings to the link/button if there's another button before it.
+.lmb-button-wrapper .lmb-button.lmb-button--design-link,
+.lmb-button-wrapper .lmb-button.lmb-link-button {
+	margin-left: 0.75em;
+	margin-right: 0.75em;
+}

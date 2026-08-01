@@ -1,0 +1,25 @@
+@import "common";
+
+[data-type="lumen/tab-content"] {
+	margin-top: 0 !important;
+}
+
+@include mobile {
+	.wp-block-lumen-tab-labels {
+		width: 100% !important;
+	}
+	.lmn-block.lmn-block-tab-labels:not(.lmn-block-tab-labels--wrap-mobile) {
+		overflow-x: auto !important;
+		width: 100%;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+		}
+		.lmn-block-tab-labels__wrapper {
+			flex-wrap: nowrap;
+			width: max-content;
+			min-width: -moz-available;
+			min-width: -webkit-fill-available;
+			min-width: fill-available;
+		}
+	}
+}

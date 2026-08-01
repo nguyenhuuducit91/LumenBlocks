@@ -1,0 +1,31 @@
+.lmn-block-video-popup {
+	.lmn-inner-blocks {
+		display: grid;
+		max-width: none !important;
+		.lmn-block {
+			grid-column: 1 / 2;
+			grid-row: 1 / 2;
+			margin: 0;
+		}
+	}
+	.lmn-block-icon {
+		justify-self: center;
+		align-self: center;
+		width: auto;
+		z-index: 2;
+	}
+	.lmn-img-wrapper {
+		height: 100%;
+	}
+	:is(.lmn-block-icon, .lmn-block-image) {
+		--lmn-block-margin-bottom: 0;
+	}
+}
+.lmn-block-video-popup__overlay {
+	all: unset;
+	cursor: pointer;
+	margin: 0 auto;
+	display: grid;
+	width: 100% !important;
+	background-color: transparent !important;
+}

@@ -1,0 +1,3 @@
+.lmn-block > *:where(:not(.lmn-row, .lmn-inner-blocks, .lmn--svg-wrapper, .lmn-block-number-box__text)) {
+	flex: 1;
+}

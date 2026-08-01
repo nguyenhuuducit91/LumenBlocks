@@ -1,0 +1,7 @@
+// Force the transitions to be disabled in the editor while visual guides are
+// enabled because they will lag.
+.editor-styles-wrapper {
+	.lmn-block.lmn-has-visual-guide {
+		--lmn-transition-duration: 0s !important;
+	}
+}

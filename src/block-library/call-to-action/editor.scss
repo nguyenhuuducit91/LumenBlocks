@@ -1,0 +1,11 @@
+.lmn-block-call-to-action__content {
+	> .block-editor-inner-blocks {
+		width: 100%;
+	}
+}
+.editor-styles-wrapper .lmn-block-call-to-action__content [data-block] {
+	max-width: none;
+}
+.lmn-block-call-to-action__content.lmn--column-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	justify-content: center;
+}

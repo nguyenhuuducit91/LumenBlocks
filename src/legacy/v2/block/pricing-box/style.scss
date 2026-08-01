@@ -1,0 +1,145 @@
+// stylelint-disable declaration-property-unit-allowed-list
+/**
+ * Frontend styles for the Pricing Box Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-pricing-box.lmb-pricing-box--v3 {
+	.lmb-block-content {
+		text-align: center;
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+		align-items: center;
+	}
+	.lmb-pricing-box__item {
+		@include box();
+		display: flex;
+		flex-direction: column;
+	}
+	.lmb-pricing-box__feature-list {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.lmb-pricing-box__price-line {
+		display: flex;
+		justify-content: center;
+	}
+	.lmb-pricing-box__price-prefix {
+		align-self: flex-start;
+		font-size: 1.2em;
+	}
+	.lmb-pricing-box__price-suffix {
+		align-self: flex-end;
+		font-size: 1.5em;
+	}
+
+	.lmb-pricing-box__price {
+		font-size: 3.5em;
+		line-height: 100% !important;
+	}
+	.lmb-pricing-box__subprice {
+		font-size: 0.75em;
+		color: #ddd;
+		text-transform: uppercase;
+		line-height: 100%;
+	}
+
+	.lmb-pricing-box__image {
+		margin-left: auto;
+		margin-right: auto;
+		width: 100%;
+		.lmb-img {
+			margin: 0 auto;
+			display: block;
+		}
+	}
+	.lmb-pricing-box__image,
+	.lmb-pricing-box__title,
+	.lmb-pricing-box__price-wrapper,
+	.lmb-pricing-box__subprice,
+	.lmb-pricing-box__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.lmb-pricing-box__button {
+		margin-top: #{ $text-margin-bottom * 2 };
+		margin-bottom: #{ $text-margin-bottom * 2 };
+	}
+}
+
+.lmb-pricing-box.lmb-pricing-box--v3.lmb-pricing-box--design-plain {
+	.lmb-pricing-box__item {
+		background: none;
+		padding: 0;
+		box-shadow: none;
+		border-radius: 0;
+	}
+}
+
+.lmb-pricing-box.lmb-pricing-box--v3 {
+	@media screen and (max-width: $break-large) {
+		&.lmb-pricing-box--columns-3 {
+			.lmb-block-content {
+				grid-template-columns: minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.lmb-pricing-box.lmb-pricing-box--v3 {
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
+// IE 11 grid styles
+.lmb-pricing-box.lmb-pricing-box--v3 {
+	.lmb-pricing-box__image {
+		min-height: 1px;
+	}
+	&.lmb-pricing-box--columns-3 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-pricing-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-pricing-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.lmb-pricing-box--columns-2 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-pricing-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.lmb-block-content {
+				display: block !important;
+			}
+			.lmb-pricing-box__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}

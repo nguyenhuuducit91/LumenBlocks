@@ -1,0 +1,13 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/timeline",
+	"title": "Timeline",
+	"description": "Show events in chronological order",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"history",
+		"milestone"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

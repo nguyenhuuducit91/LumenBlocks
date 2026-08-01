@@ -1,0 +1,42 @@
+.lmn--svg-wrapper {
+	position: relative;
+	/**
+	 * Add flexbox to
+	 * make the height and
+	 * width equal.
+	 */
+	display: inline-block;
+	> .lmn--inner-svg {
+		z-index: 1;
+		display: flex;
+	}
+
+	.lmn--shape-icon {
+		position: absolute;
+		z-index: -1;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		height: 100%;
+		width: 100%;
+	}
+}
+// Using inline-block above shows a space, remove it.
+.lmn-block-icon {
+	font-size: 0;
+}
+
+.lmn-block {
+	.lmn--inner-svg svg:last-child {
+		.fa-secondary {
+			fill: var(--fa-secondary-color, currentColor);
+			opacity: 0.4;
+			opacity: var(--fa-secondary-opacity, 0.4);
+		}
+		.fa-primary {
+			fill: var(--fa-primary-color, currentColor);
+			opacity: 1;
+			opacity: var(--fa-primary-opacity, 1);
+		}
+	}
+}

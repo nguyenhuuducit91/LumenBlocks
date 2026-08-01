@@ -1,0 +1,7 @@
+{
+	"name": "lmb/feature",
+	"title": "Feature",
+	"description": "Display a product feature or a service in a large area.",
+	"category": "lumen-v2",
+	"textdomain": "lumen-blocks"
+}

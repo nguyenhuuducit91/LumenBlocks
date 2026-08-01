@@ -1,0 +1,286 @@
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { Button } from '~lumen/ui'
+import {
+	sortableContainer, sortableElement, sortableHandle,
+} from 'react-sortable-hoc'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	BaseControl,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalHStack as HStack,
+	Dashicon,
+	Dropdown,
+} from '@wordpress/components'
+import {
+	useState, useEffect, forwardRef,
+} from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+import { ResetButton } from '../base-control2/reset-button'
+
+const addItemPopoverProps = {
+	placement: 'left-start',
+	offset: 236,
+	shift: true,
+}
+
+const popoverProps = {
+	placement: 'left-start',
+	offset: 36,
+	shift: true,
+}
+
+// We need to define these because 13 (return key) is not included in the
+// default keyCodes to initiate a drag.
+const DRAG_KEYCODES = {
+	lift: [ 32, 13 ],
+	drop: [ 32, 13 ],
+	cancel: [ 27 ],
+	up: [ 38, 37 ],
+	down: [ 40, 39 ],
+}
+
+const SortablePicker = forwardRef( ( props, ref ) => {
+	const {
+		nonSortableItems = [],
+		editableName = true,
+		items,
+		dropdownOnAdd = false,
+		onChangeItem,
+		onDeleteItem,
+		handleAddItem,
+		onSortEnd,
+		AddItemPopover = null,
+		enableAddItem = true,
+	} = props
+	const [ isSorting, setIsSorting ] = useState( false )
+
+	const classNames = classnames(
+		'lmb-global-settings-color-picker',
+		'components-circular-option-picker',
+		'editor-color-palette-control__color-palette',
+		props.className
+	)
+
+	return (
+		<BaseControl className={ classNames } label={ props.label } __nextHasNoMarginBottom>
+			{ enableAddItem && <Dropdown
+				popoverProps={ addItemPopoverProps }
+				renderToggle={ ( { onToggle, isOpen } ) => (
+					<Button
+						className="lmb-global-settings-color-picker__add-button"
+						onClick={ dropdownOnAdd ? onToggle : handleAddItem }
+						icon="plus-alt2"
+						aria-expanded={ isOpen }
+					/>
+				) }
+				renderContent={ ( { onClose } ) => (
+					<AddItemPopover onClose={ onClose } onChange={ handleAddItem } />
+				) }
+			/> }
+			<div
+				ref={ ref }
+				className={ classnames(
+					'lmb-global-settings-color-picker__color-indicators',
+					{ 'is-sorting': isSorting }
+				) }
+			>
+				<SortableContainer
+					items={ items }
+					onSortStart={ () => setIsSorting( true ) }
+					onSortEnd={ ( { oldIndex, newIndex } ) => onSortEnd( {
+						oldIndex, newIndex, setIsSorting,
+					} ) }
+					axis="y"
+					useDragHandle
+					keyCodes={ DRAG_KEYCODES }
+				>
+					{ nonSortableItems?.map( ( item, i ) => (
+						<LabeledItemIndicator
+							key={ i }
+							item={ item }
+							onDelete={ () => onDeleteItem( item ) }
+							onChange={ item => onChangeItem( item ) }
+							ItemPreview={ props.ItemPreview }
+							ItemPicker={ props.ItemPicker }
+							updateOnBlur={ props.updateOnBlur }
+							sortable={ false }
+							editableName={ editableName }
+							className={ props.buttonClassName }
+							onItemClick={ props.onItemClick }
+							showReset={ props.showResetCallback ? props.showResetCallback( item ) : true }
+							showDelete={ props.showDeleteCallback ? props.showDeleteCallback( item ) : false }
+						/> )
+					 ) }
+					{ items?.map( ( item, i ) => (
+						<SortableItem
+							key={ i }
+							index={ i }
+							item={ item }
+							onDelete={ () => onDeleteItem( item ) }
+							onChange={ item => onChangeItem( item ) }
+							ItemPreview={ props.ItemPreview }
+							ItemPicker={ props.ItemPicker }
+							updateOnBlur={ props.updateOnBlur }
+							editableName={ editableName }
+							className={ props.buttonClassName }
+							onItemClick={ props.onItemClick }
+						/> ) ) }
+				</SortableContainer>
+			</div>
+		</BaseControl>
+	)
+} )
+
+SortablePicker.defaultProps = {
+	className: '',
+	label: '',
+	onReset: () => {},
+}
+
+export default SortablePicker
+
+const SortableItem = sortableElement( props => <LabeledItemIndicator { ...props } /> )
+
+const SortableContainer = sortableContainer( ( { children } ) => {
+	return <div>{ children }</div>
+} )
+
+const DragHandle = sortableHandle( () => <Dashicon
+	icon="menu"
+	size="16"
+	tabIndex="0"
+/> )
+
+const LabeledItemIndicator = props => {
+	const {
+		item,
+		onDelete,
+		onChange,
+		ItemPreview = null,
+		ItemPicker = null,
+		updateOnBlur = false, // If true, onChange will be called only when the input is blurred.
+		sortable = true,
+		editableName = true,
+		showReset = true,
+		showDelete = true,
+	} = props
+
+	const [ isFocused, setIsFocused ] = useState( false )
+	const [ debouncedText, setDebouncedText ] = useState( item.name )
+
+	// Updates the debounced text when the items get resorted.
+	useEffect( () => {
+		if ( item.name !== debouncedText ) {
+			setDebouncedText( item.name )
+		}
+	}, [ item.name ] )
+
+	const buttonClassNames = classnames(
+		'block-editor-panel-color-gradient-settings__dropdown',
+		props.className
+	)
+
+	return (
+		<HStack justify="space-between" className="lmn-global-settings-color-picker__color-indicator-wrapper">
+			<Dropdown
+				popoverProps={ popoverProps }
+				// This is so that when we click on the label to edit it, the input doesn't lose focus.
+				focusOnMount={ ! isFocused ? 'firstElement' : false }
+				renderToggle={ ( { onToggle, isOpen } ) => {
+					return (
+						<Button
+							className={ buttonClassNames }
+							onClick={ () => {
+								if ( props.onItemClick ) {
+									props.onItemClick( item )
+									return
+								}
+
+								if ( ItemPicker && ! isFocused ) {
+									onToggle()
+								}
+							} }
+							isPressed={ isOpen }
+							data-item-key={ item.key || item.slug || item.name }
+						>
+							<HStack justify="flex-start">
+								<ItemPreview item={ item } />
+								{ editableName ? <input
+									className="components-input-control__input"
+									value={ isFocused ? debouncedText : item.name }
+									onChange={ ev => {
+										setDebouncedText( ev.target.value )
+
+										// If we're not updating on blur, update the value immediately.
+										if ( ! updateOnBlur ) {
+											onChange( {
+												...item,
+												name: ev.target.value,
+											} )
+										}
+									} }
+									onFocus={ () => setIsFocused( true ) }
+									onBlur={ ev => {
+										if ( updateOnBlur ) {
+											onChange( {
+												...item,
+												name: debouncedText,
+											} )
+										}
+
+										// Update isFocused after a delay to ensure onChange has finished if updating on blur.
+										setTimeout( () => {
+											setIsFocused( false )
+										}, 100 )
+
+										if ( ItemPicker && isOpen && ! ev.relatedTarget?.closest( '.components-popover' ) ) {
+											onToggle()
+										}
+									} }
+									onClick={ () => {
+										if ( ItemPicker && ! isOpen ) {
+											onToggle()
+										}
+									} }
+									onKeyDown={ ev => {
+									// On enter, blur the input.
+										if ( ev.keyCode === 13 ) {
+											ev.target.blur()
+										}
+									} }
+								/>
+									: <p className="lmn-sortable-picker__item-name">{ item.name }</p>
+								}
+								{ sortable && <DragHandle /> }
+							</HStack>
+						</Button>
+					)
+				} }
+				renderContent={ ( { onClose } ) => {
+					return <> { ItemPicker && <ItemPicker item={ item } onChange={ onChange } onClose={ onClose } /> } </>
+				} }
+			/>
+			{ showDelete &&
+				<Button
+					aria-label="Delete"
+					className="lmn-global-settings-color-picker__delete-button"
+					icon="trash"
+					isSmall
+					isTertiary
+					onClick={ onDelete }
+				/>
+			}
+			{ ! showDelete && <ResetButton
+				showReset={ showReset }
+				onChange={ onDelete }
+			/>
+			}
+		</HStack>
+	)
+}

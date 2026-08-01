@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-lmb-feature lmb-feature--v2 lmb-feature--design-plain lmb-main-block"
+>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-feature__item"
+      >
+        <div
+          class="lmb-feature__content"
+        >
+          <h2
+            class="lmb-feature__title"
+          >
+            <div>
+              Title for This Block
+            </div>
+          </h2>
+          <p
+            class="lmb-feature__description"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="lmb-button-container"
+          >
+            <a
+              class="lmb-button lmb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="lmb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div
+          class="lmb-feature__image-side"
+        >
+          <img
+            alt=""
+            class="lmb-feature__image lmb-img lmb-image--shape-stretch"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Feature (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-lmb-feature lmb-feature--v2 lmb-feature--design-wave-2 lmb-feature--invert lmb-main-block"
+>
+  <style>
+    .lmb-feature__content{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition !important;background-repeat:columnBackgroundRepeat !important;background-size:columnBackgroundSize !important;background-blend-mode:columnBackgroundImageBlendMode}.lmb-feature__content:before{background-color:#123456 !important;opacity:12.3}.lmb-img{-webkit-mask-image:url('data:image/svg+xml;base64,');mask-image:url('data:image/svg+xml;base64,')}@media screen and (min-width:768px){.lmb-img{width:123px;height:123px !important}}@media screen and (max-width:1025px){.lmb-feature__content{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition !important;background-repeat:columnTabletBackgroundRepeat !important;background-size:columnTabletBackgroundSize !important}.lmb-feature__content:before{opacity:12.3}}@media screen and (min-width:768px) and (max-width:1025px){.lmb-img{width:123px;height:123px !important}}@media screen and (max-width:768px){.lmb-feature__content{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition !important;background-repeat:columnMobileBackgroundRepeat !important;background-size:columnMobileBackgroundSize !important}.lmb-feature__content:before{opacity:12.3}.lmb-img{width:123px;height:123px !important}}
+  </style>
+  <div
+    class="lmb-inner-block"
+  >
+    <div
+      class="lmb-block-content"
+    >
+      <div
+        class="lmb-feature__item"
+      >
+        <div
+          class="lmb-feature__content lmb--shadow-123 lmb--has-background-overlay"
+        />
+        <div
+          class="lmb-feature__image-side"
+        >
+          <img
+            alt="imageAlt"
+            class="lmb-feature__image lmb-feature__image-has-shape lmb-img wp-image-123 lmb-img--shape"
+            height="123"
+            src="imageUrl"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

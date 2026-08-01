@@ -1,0 +1,173 @@
+/**
+ * Internal dependencies
+ */
+import { attributes } from './schema'
+import { Save } from './save'
+
+/**
+ * External dependencies
+ */
+import { withVersion } from '~lumen/hoc'
+import compareVersions from 'compare-versions'
+import {
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyFontSize, deprecateBlockHeight,
+} from '~lumen/features'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter } from '@wordpress/hooks'
+
+addFilter( 'lumen.table-of-contents.save.blockClasses', 'lumen/classesNotRendered', ( output, textClasses, props ) => {
+	if ( compareVersions( props.version, '3.6.2' ) === 0 ) {
+		output.push( textClasses )
+		return output
+	}
+
+	return output
+} )
+
+addFilter( 'lumen.table-of-contents.save.tableOfContentsClasses', 'lumen/classesNotRendered', ( output, props ) => {
+	if ( compareVersions( props.version, '3.6.2' ) === 0 ) {
+		return 'lmn-table-of-contents__table'
+	}
+	return output
+} )
+
+const deprecated = [
+	{
+		// Handle the migration of shadow attributes with the change of type in 3.15.3
+		attributes: attributes( '3.16.2' ),
+		save: withVersion( '3.16.2' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
+		// Support the change of type for fontSize and blockHeight
+		attributes: attributes( '3.15.3' ),
+		save: withVersion( '3.15.3' )( Save ),
+		isEligible: attributes => {
+			const hasNumberFontSize = deprecateTypographyFontSize.isEligible( 'title%s' )( attributes )
+			const hasNumberBlockHeight = deprecateBlockHeight.isEligible( attributes )
+			return hasNumberFontSize || hasNumberBlockHeight
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyFontSize.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockHeight.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			if ( ( typeof attributes?.titleFontSize === 'string' ||
+				typeof attributes?.titleFontSizeTablet === 'string' ||
+				typeof attributes?.titleFontSizeMobile === 'string' ||
+				typeof attributes?.blockHeight === 'string' ||
+				typeof attributes?.blockHeightTablet === 'string' ||
+				typeof attributes?.blockHeightMobile === 'string' )
+			) {
+				return false
+			}
+
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	// Support the new combined opacity and color.
+	{
+		attributes: attributes( '3.11.9' ),
+		save: withVersion( '3.11.9' )( Save ),
+		isEligible: attributes => {
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const hasTextGradient = deprecateTypographyGradientColor.isEligible( '%s' )( attributes )
+			const hasTitleGradient = deprecateTypographyGradientColor.isEligible( 'title%s' )( attributes )
+
+			return hasContainerOpacity || hasBlockOpacity || hasTextGradient || hasTitleGradient
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
+	// Support new margin-top/bottom classes.
+	{
+		attributes: attributes( '3.7.9' ),
+		save: withVersion( '3.7.9' )( Save ),
+		migrate: attributes => {
+			let newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+		},
+	},
+	 {
+		 attributes: attributes( '3.6.2' ),
+		 migrate: attributes => {
+			return {
+				 ...attributes,
+				 titleShow: false,
+			 }
+		 },
+		 save: withVersion( '3.6.2' )( Save ),
+	 },
+]
+
+export default deprecated
+

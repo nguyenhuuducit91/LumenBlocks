@@ -1,0 +1,104 @@
+/**
+ * An updated version of the BaseControlMultiLabel, which includes a reset button.
+ */
+
+/**
+ * Internal dependencies
+ */
+import BaseControlMultiLabel from '../base-control-multi-label'
+import Button from '../button'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { BaseControl as _BaseControl, Dashicon } from '@wordpress/components'
+import { i18n } from 'lumen'
+import { __ } from '@wordpress/i18n'
+
+const BaseControl = props => {
+	const className = classnames( [
+		'lmn-inspector-control',
+		props.className,
+	], {
+		'lmn-inspector-control--allow-reset': props.allowReset,
+		'lmn--is-small': props.isSmall,
+	} )
+
+	const showReset = props.showReset !== null
+		? props.showReset
+		: ( typeof props.value !== 'undefined' && props.value !== props.defaultValue && props.value !== props.placeholder )
+
+	return (
+		<_BaseControl
+			help={ props.help }
+			className={ className }
+			__nextHasNoMarginBottom
+			__next40pxDefaultSize
+		>
+			{ props.hasLabel &&
+				<BaseControlMultiLabel
+					label={ props.label }
+					units={ props.units }
+					unit={ props.unit }
+					onChangeUnit={ props.onChangeUnit }
+					screens={ props.screens }
+					afterButton={ props.afterButton }
+					helpTooltip={ props.helpTooltip }
+				/>
+			}
+			{ props.children }
+			{ props.allowReset && showReset &&
+				<Button
+					className={ classnames(
+						'lmn-inspector-control__reset-button',
+						{ 'lmn-control__reset-button--no-modified': ! props.hasPanelModifiedIndicator },
+					) }
+					isSmall
+					isTertiary
+					aria-label={ __( 'Reset', i18n ) }
+					onClick={ () => {
+						if ( props.onReset ) {
+							props.onReset()
+						} else {
+							props.onChange( props.defaultValue )
+						}
+					} }
+					icon={ (
+						<Dashicon
+							icon="image-rotate"
+						/>
+					) }
+				/>
+			}
+		</_BaseControl>
+	)
+}
+
+BaseControl.defaultProps = {
+	className: '',
+	help: '',
+	id: '',
+	screens: [ 'desktop' ],
+	units: null,
+	unit: 'px',
+	onChangeUnit: () => {},
+	value: '',
+	onChange: () => {},
+	allowReset: false,
+	showReset: null,
+	defaultValue: '',
+	onReset: null,
+	isLinked: true,
+	onLink: () => {},
+	afterButton: null,
+	isSmall: false,
+	hasLabel: true,
+	hasPanelModifiedIndicator: true,
+}
+
+export default BaseControl

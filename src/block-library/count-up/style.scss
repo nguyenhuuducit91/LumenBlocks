@@ -1,0 +1,6 @@
+.lmn-block-count-up__text {
+	font-size: 48px;
+	&:not(.lmn--count-up-active) {
+		opacity: 0;
+	}
+}

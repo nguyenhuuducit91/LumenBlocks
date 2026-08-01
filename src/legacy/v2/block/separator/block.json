@@ -1,0 +1,10 @@
+{
+	"name": "lmb/separator",
+	"title": "Separator",
+	"description": "A fancy separator to be placed between content.",
+	"category": "lumen-v2",
+	"keywords": [
+		"Svg Divider"
+	],
+	"textdomain": "lumen-blocks"
+}

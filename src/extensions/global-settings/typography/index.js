@@ -1,0 +1,631 @@
+/**
+ * Internal dependencies
+ */
+import { GlobalTypographyStyles } from './editor-loader'
+import TypographyPicker from './typography-picker'
+import { getThemeStyles } from './get-theme-styles'
+import FREE_FONT_PAIRS from './font-pairs.json'
+import {
+	getDevicePropertyKey,
+	getAppliedTypeScale,
+	cleanTypographyStyle,
+	getTypographyTypeScale,
+} from './utils'
+import './store'
+
+/**
+ * External dependencies
+ */
+import {
+	PanelAdvancedSettings,
+	AdvancedSelectControl,
+	ControlSeparator,
+	FontPairPicker,
+	ProControlButton,
+	AdvancedToggleControl,
+} from '~lumen/ui'
+import { fetchSettings } from '~lumen/utils'
+import { useDeviceType } from '~lumen/hooks'
+import {
+	i18n, isPro, showProNotice,
+} from 'lumen'
+import {
+	head, isEqual, cloneDeep,
+} from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	Fragment, useEffect, useRef, useState,
+} from '@wordpress/element'
+import { models } from '@wordpress/api'
+import {
+	addFilter, applyFilters, doAction,
+} from '@wordpress/hooks'
+import { __, sprintf } from '@wordpress/i18n'
+import { dispatch, useSelect } from '@wordpress/data'
+
+export { GlobalTypographyStyles }
+
+const TYPOGRAPHY_TAGS = [
+	{
+		label: sprintf( __( 'Heading %d', i18n ), 1 ),
+		selector: 'h1',
+		presetName: '5XL',
+		presetSlug: 'xxxxx-large',
+	},
+	{
+		label: sprintf( __( 'Heading %d', i18n ), 2 ),
+		selector: 'h2',
+		presetName: '4XL',
+		presetSlug: 'xxxx-large',
+	},
+	{
+		label: sprintf( __( 'Heading %d', i18n ), 3 ),
+		selector: 'h3',
+		presetName: '3XL',
+		presetSlug: 'xxx-large',
+	},
+	{
+		label: sprintf( __( 'Heading %d', i18n ), 4 ),
+		selector: 'h4',
+		presetName: '2XL',
+		presetSlug: 'xx-large',
+	},
+	{
+		label: sprintf( __( 'Heading %d', i18n ), 5 ),
+		selector: 'h5',
+		presetName: 'XL',
+		presetSlug: 'x-large',
+	},
+	{
+		label: sprintf( __( 'Heading %d', i18n ), 6 ),
+		selector: 'h6',
+		presetName: 'L',
+		presetSlug: 'large',
+	},
+	{
+		label: __( 'Body Text', i18n ),
+		selector: 'p',
+		presetName: 'M',
+		presetSlug: 'medium',
+	},
+	{
+		label: __( 'Subtitle', i18n ),
+		selector: '.lmn-subtitle',
+		presetName: 'S',
+		presetSlug: 'small',
+		help: (
+			<>
+				{ sprintf( __( "To apply this typography style, just add `%s` in your block\'s Additional CSS classes. Also make sure that `%s` tag is set to avoid conflict with other typography styles", i18n ), 'lmn-subtitle', 'p' ) }
+			</> ),
+	},
+	{
+		label: __( 'Button', i18n ),
+		selector: '.lmn-button__inner-text',
+	},
+]
+
+const TYPE_SCALE = [
+	{
+		label: __( 'None', i18n ),
+		value: 'none',
+	},
+	{
+		label: __( 'Custom', i18n ),
+		value: 'custom',
+		disabled: true,
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.067', __( 'Minor Second', i18n ) ),
+		value: '1.067',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.125', __( 'Major Second', i18n ) ),
+		value: '1.125',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.2', __( 'Minor Third', i18n ) ),
+		value: '1.2',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.25', __( 'Major Third', i18n ) ),
+		value: '1.25',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.333', __( 'Perfect Fourth', i18n ) ),
+		value: '1.333',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.414', __( 'Augmented Fourth', i18n ) ),
+		value: '1.414',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.5', __( 'Perfect Fifth', i18n ) ),
+		value: '1.5',
+	},
+	{
+		label: sprintf( __( '%s - %s', i18n ), '1.618', __( 'Golden Ratio', i18n ) ),
+		value: '1.618',
+	},
+]
+
+let saveTypographyThrottle = null
+let saveSelectedFontPairThrottle = null
+let saveCustomFontPairsThrottle = null
+
+addFilter( 'lumen.global-settings.inspector', 'lumen/global-typography', output => {
+	const { useTypographyAsPresets } = useSelect( select => {
+		const _useTypographyAsPresets = select( 'lumen/global-preset-controls.custom' )?.getUseTypographyAsPresets() ?? false
+		return { useTypographyAsPresets: _useTypographyAsPresets }
+	}, [] )
+	const deviceType = useDeviceType()?.toLowerCase() || 'desktop'
+
+	const FONT_PAIRS = applyFilters( 'lumen.global-settings.typography.font-pairs.premium-font-pairs', FREE_FONT_PAIRS )
+
+	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
+	const [ typographySettings, setTypographySettings ] = useState( [] )
+	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
+	const [ customFontPairs, setCustomFontPairs ] = useState( [] )
+	const [ selectedFontPairName, setSelectedFontPairName ] = useState( '' )
+	const [ isEditingFontPair, setIsEditingFontPair ] = useState( false )
+	const [ selectedTypeScale, setSelectedTypeScale ] = useState( {
+		desktop: 'none',
+		tablet: 'none',
+		mobile: 'none',
+	} )
+	const [ isApplyBodyToHTML, setIsApplyBodyToHTML ] = useState( false )
+
+	const fontPairContainerRef = useRef( null )
+
+	useEffect( () => {
+		fetchSettings().then( response => {
+			// Get settings.
+			const _typographySettings = ( head( response.lumen_global_typography ) ) || {}
+
+			setTypographySettings( _typographySettings )
+			setApplySettingsTo( response.lumen_global_typography_apply_to || 'blocks-lumen-native' )
+			setCustomFontPairs( response.lumen_custom_font_pairs || [] )
+			setSelectedFontPairName( response.lumen_selected_font_pair || 'theme-heading-default/theme-body-default' )
+			setIsApplyBodyToHTML( response.lumen_is_apply_body_to_html || false )
+
+			// Reversely compute initial typescale for highlighting
+			const typeScaleDesktop = getTypographyTypeScale( _typographySettings, 'desktop' )
+			const typeScaleTablet = getTypographyTypeScale( _typographySettings, 'tablet' )
+			const typeScaleMobile = getTypographyTypeScale( _typographySettings, 'mobile' )
+			setSelectedTypeScale( {
+				desktop: typeScaleDesktop, tablet: typeScaleTablet, mobile: typeScaleMobile,
+			} )
+
+			dispatch( 'lumen/global-typography' ).updateSettings( _typographySettings )
+		} )
+	}, [] )
+
+	useEffect( () => {
+		const typeScale = getTypographyTypeScale( typographySettings, deviceType )
+		setSelectedTypeScale( prev => ( { ...prev, [ deviceType ]: typeScale } ) )
+	}, [ deviceType, typographySettings ] )
+
+	useEffect( () => {
+		// When typography styles are changed, trigger our editor style generator to update.
+		// This also triggers updating presets with typography, and applying body font size to html.
+		doAction( 'lumen.global-settings.typography.update-trigger',
+			typographySettings, applySettingsTo, useTypographyAsPresets, isApplyBodyToHTML, TYPOGRAPHY_TAGS,
+		)
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, useTypographyAsPresets, isApplyBodyToHTML ] )
+
+	// Scroll to the selected font pair when Global Typography tab is toggled
+	useEffect( () => {
+		const container = fontPairContainerRef?.current
+		if ( container && isPanelOpen ) {
+			const selectedElement = container.querySelector( '.lmb-global-settings-font-pair__selected' )
+			if ( selectedElement ) {
+				const containerRect = container.getBoundingClientRect()
+				const selectedRect = selectedElement.getBoundingClientRect()
+
+				const offset = selectedRect.top - containerRect.top
+				const scrollOffset = offset - ( container.clientHeight / 2 ) + ( selectedElement.clientHeight / 2 )
+				container.scrollTop += scrollOffset
+			}
+		}
+	}, [ isPanelOpen ] )
+
+	const getCurrentFontPair = () => {
+		return [ ...FONT_PAIRS, ...customFontPairs ].find( fontPair => fontPair.name === selectedFontPairName )
+	}
+
+	const updateTypography = newSettings => {
+		setTypographySettings( newSettings )
+
+		clearTimeout( saveTypographyThrottle )
+		saveTypographyThrottle = setTimeout( () => {
+			const model = new models.Settings( {
+				lumen_global_typography: [ newSettings ], // eslint-disable-line
+			} )
+			model.save()
+		}, 500 )
+
+		dispatch( 'lumen/global-typography' ).updateSettings( newSettings )
+	}
+
+	const updateSelectedFontPair = name => {
+		setSelectedFontPairName( name )
+
+		clearTimeout( saveSelectedFontPairThrottle )
+		saveSelectedFontPairThrottle = setTimeout( () => {
+			const model = new models.Settings( {
+				lumen_selected_font_pair: name, // eslint-disable-line
+			} )
+			model.save()
+		}, 500 )
+	}
+
+	const updateCustomFontPairs = fontPairs => {
+		setCustomFontPairs( fontPairs )
+
+		clearTimeout( saveCustomFontPairsThrottle )
+		saveCustomFontPairsThrottle = setTimeout( () => {
+			const model = new models.Settings( {
+				lumen_custom_font_pairs: [ ...fontPairs ] , // eslint-disable-line
+			} )
+			model.save()
+		}, 500 )
+	}
+
+	const changeApplySettingsTo = value => {
+		setApplySettingsTo( value )
+		const model = new models.Settings( {
+			lumen_global_typography_apply_to: value, // eslint-disable-line
+		} )
+		model.save()
+	}
+
+	const changeIsApplyBodyToHTML = value => {
+		setIsApplyBodyToHTML( value )
+		const model = new models.Settings( {
+			lumen_is_apply_body_to_html: value, // eslint-disable-line
+		} )
+		model.save()
+	}
+
+	const updateTypeScale = value => {
+		if ( value === 'none' ) {
+			const selectors = TYPOGRAPHY_TAGS.map( tag => tag.selector )
+			const fontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+			const fontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+
+			const newSettings = selectors.reduce( ( acc, selector ) => {
+				acc[ selector ] = {
+					[ fontSizeKey ]: '',
+					[ fontSizeUnitKey ]: '',
+				}
+				return acc
+			}, {} )
+
+			changeStyles( newSettings )
+			return
+		}
+
+		// If value is valid type scale, apply to the styles
+		const newSettings = getAppliedTypeScale( value, deviceType )
+		changeStyles( newSettings )
+	}
+
+	const changeStyles = _typography => {
+		setTypographySettings( prevTypographySettings => {
+			const typography = cloneDeep( _typography )
+			const newSettings = { ...prevTypographySettings }
+
+			Object.entries( typography ).forEach( ( [ selector, styles ] ) => {
+				if ( ! selector || typeof styles !== 'object' ) {
+					return
+				}
+
+				// Merge the new styles with the previous, while overwritting similar styles.
+				// This allow adding styles without removing the previous ones.
+				// Check if the object is empty, used for resetting the whole setting.
+				if ( Object.keys( styles ).length !== 0 ) {
+					styles = { ...newSettings[ selector ], ...styles }
+				}
+				/**
+				 * Delete the object keys with empty strings.
+				 * Otherwise, the API will throw an error code 400
+				 * because of incompatible schema type.
+				 */
+				const cleanStyles = cleanTypographyStyle( styles ) || {}
+
+				newSettings[ selector ] = cleanStyles
+			} )
+
+			// Update the global styles immediately when reset font size is triggered.
+			if ( Object.values( typography ).some( styles => styles && ! styles.fontSize ) ) {
+				doAction( 'lumen.global-settings.typography-update-global-styles', newSettings )
+			}
+
+			updateTypography( newSettings )
+			return newSettings
+		} )
+	}
+
+	const resetStyles = selector => {
+		let newSettings = {}
+
+		const deviceFontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+		const deviceFontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+		const deviceLineHeightKey = getDevicePropertyKey( 'lineHeight', deviceType )
+		const deviceLetterSpacingKey = getDevicePropertyKey( 'letterSpacing', deviceType )
+
+		newSettings = {
+			...typographySettings,
+			[ selector ]: {
+				...typographySettings[ selector ],
+				fontFamily: getDefaultFontFamily( selector ),
+				fontWeight: '',
+				textTransform: '',
+				// Only reset the properties on to the current device type values
+				[ deviceFontSizeKey ]: '',
+				[ deviceFontSizeUnitKey ]: '',
+				[ deviceLineHeightKey ]: '',
+				[ deviceLetterSpacingKey ]: '',
+			},
+		}
+
+		// Remove the keys with empty string
+		 newSettings[ selector ] = cleanTypographyStyle( newSettings[ selector ] ) || {}
+
+		doAction( 'lumen.global-settings.typography-update-global-styles', newSettings )
+
+		updateTypography( newSettings )
+	}
+
+	const getDefaultFontFamily = selector => {
+		const currentFontPair = getCurrentFontPair()
+		if ( ! isEditingFontPair && currentFontPair ) {
+			return currentFontPair.typography[ selector ]?.fontFamily ?? ''
+		}
+	}
+
+	const getIsAllowReset = selector => {
+		const currentFontPair = getCurrentFontPair()
+		const typographyStyle = typographySettings[ selector ]
+
+		const deviceFontSizeKey = getDevicePropertyKey( 'fontSize', deviceType )
+		const deviceFontSizeUnitKey = getDevicePropertyKey( 'fontSizeUnit', deviceType )
+		const deviceLineHeightKey = getDevicePropertyKey( 'lineHeight', deviceType )
+		const deviceLetterSpacingKey = getDevicePropertyKey( 'letterSpacing', deviceType )
+
+		// Create a temporary typography style on the current device type for comparison
+		const typographyStyleOnCurrentDevice = cleanTypographyStyle( {
+			fontFamily: typographyStyle?.fontFamily || '',
+			fontWeight: typographyStyle?.fontWeight || '',
+			textTransform: typographyStyle?.textTransform || '',
+			[ deviceFontSizeKey ]: typographyStyle?.[ deviceFontSizeKey ] || '',
+			[ deviceFontSizeUnitKey ]: typographyStyle?.[ deviceFontSizeUnitKey ] || '',
+			[ deviceLineHeightKey ]: typographyStyle?.[ deviceLineHeightKey ] || '',
+			[ deviceLetterSpacingKey ]: typographyStyle?.[ deviceLetterSpacingKey ] || '',
+		} ) || {}
+
+		if ( ! isEditingFontPair && currentFontPair ) {
+			// Clean style object to be consistent with changeStyles operation
+			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
+			if ( ! isEqual( fontPairStyle, typographyStyleOnCurrentDevice ) &&
+				! Array.isArray( typographyStyleOnCurrentDevice )
+			) {
+				return true
+			}
+			return false
+		} else if ( typographyStyleOnCurrentDevice && ( typographyStyleOnCurrentDevice.fontFamily ||
+			typographyStyleOnCurrentDevice[ deviceFontSizeKey ] ||
+			typographyStyleOnCurrentDevice[ deviceFontSizeUnitKey ] ||
+			typographyStyleOnCurrentDevice[ deviceLineHeightKey ] ||
+			typographyStyleOnCurrentDevice[ deviceLetterSpacingKey ] ||
+			typographyStyleOnCurrentDevice.fontWeight ||
+			typographyStyleOnCurrentDevice.textTransform ) ) {
+			return true
+		}
+		return false
+	}
+
+	const getIsFontPairChangeConfirmed = () => {
+		// No need to confirm when the current font pair is custom
+		// since changes are saved
+		if ( customFontPairs.find( fontPair => fontPair.name === selectedFontPairName ) ) {
+			return true
+		}
+
+		// The confirmation should only occur if the font family has been edited
+		// since selecting font pair only changes font family
+		const currentFontPair = getCurrentFontPair()
+		const isDirty = TYPOGRAPHY_TAGS.some( ( { selector } ) => {
+			if ( isEditingFontPair || ! currentFontPair ) {
+				return false
+			}
+			// Clean style object to be consistent with changeStyles operation
+			const fontPairStyle = cleanTypographyStyle( currentFontPair.typography?.[ selector ] ) || {}
+			const typographyStyle = cleanTypographyStyle( typographySettings[ selector ] ) || {}
+
+			if ( ! Array.isArray( typographyStyle ) &&
+				fontPairStyle.fontFamily &&
+				fontPairStyle.fontFamily !== typographyStyle.fontFamily ) {
+				return true
+			}
+			return false
+		} )
+
+		if ( isDirty ) {
+		// eslint-disable-next-line no-alert
+			const confirmChange = window.confirm( __( 'Picking a new font pair will overwrite the existing typography settings. Are you sure?', i18n ) )
+			return confirmChange
+		}
+		return true
+	}
+
+	const CustomFontPairPickers = applyFilters(
+		'lumen.global-settings.typography.font-pairs.customPicker',
+		Fragment,
+	)
+
+	const EditingFontPairPanel = applyFilters(
+		'lumen.global-settings.typography.font-pairs.editingFontPairPanel',
+		Fragment,
+	)
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelAdvancedSettings
+				title={ __( 'Global Typography', i18n ) }
+				className="lmb-global-typography__panel"
+				onToggle={ () => {
+					setIsPanelOpen( prev => ! prev )
+				} }
+			>
+				<style> { getThemeStyles() } </style>
+				{ ! isEditingFontPair &&
+					<>
+						<p className="components-base-control__help">
+							{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
+						</p>
+						<AdvancedSelectControl
+							label={ __( 'Apply Typography Styles to', i18n ) }
+							options={ [
+								{ value: 'blocks-lumen-native', label: __( 'Lumen and native blocks only', i18n ) },
+								{ value: 'blocks-lumen', label: __( 'Lumen blocks only', i18n ) },
+								{ value: 'blocks-all', label: __( 'Lumen and all other blocks', i18n ) },
+							] }
+							value={ applySettingsTo }
+							onChange={ changeApplySettingsTo }
+							default="blocks-lumen-native"
+						/>
+						<ControlSeparator />
+
+						<div className="lmb-global-settings-font-pair__heading">
+							<h3>{ __( 'Preset Font Pairs', i18n ) }</h3>
+							{ isPro && applyFilters(
+								'lumen.global-settings.typography.font-pairs.addFontPair',
+								[ ...FONT_PAIRS, ...customFontPairs ],
+								selectedFontPairName,
+								newFontPair => {
+									setIsEditingFontPair( true )
+									updateSelectedFontPair( newFontPair.name )
+									updateCustomFontPairs( [ newFontPair, ...customFontPairs ] )
+								}
+							) }
+						</div>
+
+						<div className="lmb-global-settings-font-pair__container" ref={ fontPairContainerRef }>
+							{ /* Theme Default */ }
+							<FontPairPicker
+								key={ FONT_PAIRS[ 0 ].name }
+								fontPair={ FONT_PAIRS[ 0 ] }
+								isSelected={ selectedFontPairName === FONT_PAIRS[ 0 ].name }
+								onClick={ () => {
+									if ( ! getIsFontPairChangeConfirmed() ) {
+										return
+									}
+									updateSelectedFontPair( FONT_PAIRS[ 0 ].name )
+									changeStyles( FONT_PAIRS[ 0 ].typography )
+								} }
+							/>
+							{ /* Custom Font Pairs */ }
+							<CustomFontPairPickers
+								customFontPairs={ customFontPairs }
+								selected={ selectedFontPairName }
+								onClick={ ( name, typography ) => {
+									if ( ! getIsFontPairChangeConfirmed() ) {
+										return
+									}
+									updateSelectedFontPair( name )
+									changeStyles( typography )
+								} }
+								onEdit={ ( name, typography ) => {
+									setIsEditingFontPair( true )
+									updateSelectedFontPair( name )
+									changeStyles( typography )
+								} }
+							/>
+							{ /* Font Pair Presets */ }
+							{ FONT_PAIRS.slice( 1 ).map( fontPair => {
+								return <FontPairPicker
+									key={ fontPair.name }
+									fontPair={ fontPair }
+									isSelected={ selectedFontPairName === fontPair.name }
+									onClick={ () => {
+										if ( ! getIsFontPairChangeConfirmed() ) {
+											return
+										}
+										updateSelectedFontPair( fontPair.name )
+										changeStyles( fontPair.typography )
+									} }
+								/>
+							} ) }
+						</div>
+						{ showProNotice && <ProControlButton type="font-pairs" /> }
+						<ControlSeparator />
+
+						<h3>{ __( 'Typography Settings', i18n ) }</h3>
+						<AdvancedSelectControl
+							label={ __( 'Type Scale', i18n ) }
+							options={ TYPE_SCALE }
+							value={ selectedTypeScale[ deviceType ] }
+							onChange={ updateTypeScale }
+							responsive="all"
+							default="none"
+							hasTabletValue={ selectedTypeScale.tablet !== 'none' }
+							hasMobileValue={ selectedTypeScale.mobile !== 'none' }
+						/>
+						{ TYPOGRAPHY_TAGS.map( ( {
+							label, selector, help,
+						}, index ) => {
+							return (
+								<TypographyPicker
+									help={ help }
+									key={ index }
+									label={ label }
+									selector={ selector }
+									value={ ( typographySettings[ selector ] ) || {} }
+									defaultFontFamily={ getDefaultFontFamily( selector ) }
+									isAllowReset={ getIsAllowReset( selector ) }
+									onChange={ styles => {
+										changeStyles( { [ selector ]: styles } )
+									} }
+									onReset={ () => {
+										resetStyles( selector )
+									} }
+								/>
+							)
+						} ) }
+					</>
+				}
+
+				{ isPro && isEditingFontPair &&
+					<EditingFontPairPanel
+						TypographyPicker={ TypographyPicker }
+						TYPOGRAPHY_TAGS={ TYPOGRAPHY_TAGS }
+						typographySettings={ typographySettings }
+						customFontPairs={ customFontPairs }
+						selectedFontPairName={ selectedFontPairName }
+						changeStyles={ changeStyles }
+						updateTypography={ updateTypography }
+						updateCustomFontPairs={ updateCustomFontPairs }
+						setIsEditingFontPair={ setIsEditingFontPair }
+						onDelete={ updatedCustomFontPairs => {
+							setIsEditingFontPair( false )
+							updateSelectedFontPair( '' )
+							updateCustomFontPairs( updatedCustomFontPairs )
+						} }
+						getIsAllowReset={ getIsAllowReset }
+					/>
+				}
+				<AdvancedToggleControl
+					label={ __( 'Apply Body to HTML Tag', i18n ) }
+					help={ __( 'Adds the body text settings to the main HTML tag.', i18n ) }
+					defaultValue={ false }
+					checked={ isApplyBodyToHTML }
+					onChange={ changeIsApplyBodyToHTML }
+				/>
+			</PanelAdvancedSettings>
+		</Fragment>
+	)
+}, 6 )

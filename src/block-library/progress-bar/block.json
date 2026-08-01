@@ -1,0 +1,12 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/progress-bar",
+	"title": "Progress Bar",
+	"description": "Visualize a progress value or percentage in a bar.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId" , "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"percentage status"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"}

@@ -1,0 +1,22 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/icon-label",
+	"title": "Icon Label",
+	"description": "An Icon and Heading paired together.",
+	"category": "lumen",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"lumen/innerBlockOrientation"
+	],
+	"keywords": [
+		"SVG"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special",
+	"lmn-required-blocks": [
+		"lumen/icon",
+    	"lumen/heading"
+	]
+}

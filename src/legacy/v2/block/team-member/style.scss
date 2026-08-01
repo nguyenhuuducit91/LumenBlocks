@@ -1,0 +1,145 @@
+/**
+ * Frontend styles for the Team Member Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.lmb-team-member.lmb-team-member--v3 {
+	.lmb-block-content {
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.lmb-team-member__item {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+	}
+	&.lmb-team-member--design-half,
+	&.lmb-team-member--design-horizontal {
+		.lmb-team-member__content {
+			flex: 1;
+		}
+	}
+	.lmb-team-member__content {
+		display: flex;
+		flex-direction: column;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.lmb-team-member__image {
+		width: 300px;
+		max-width: 100%;
+		height: auto;
+		margin: 0 auto;
+		background-size: cover;
+		background-position: center;
+	}
+	.lmb-img {
+		margin: 0 auto;
+	}
+	&.lmb-team-member--columns-2 .lmb-team-member__image {
+		width: 220px;
+	}
+	&.lmb-team-member--columns-3 .lmb-team-member__image {
+		width: 150px;
+	}
+
+	.lmb-team-member__image {
+		margin-bottom: #{ $text-margin-bottom * 1.5 };
+	}
+	.lmb-team-member__position,
+	.lmb-team-member__description,
+	.lmb-team-member__buttons {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.lmb-team-member__name {
+		margin-bottom: #{ $text-margin-bottom * 0.5 };
+	}
+	.lmb-team-member__position {
+		color: #aaa;
+	}
+
+	.lmb-team-member__buttons {
+		margin-left: -4px;
+		margin-right: -4px;
+		.lmb-button-container {
+			display: inline-block;
+			margin: 0 4px 4px;
+		}
+	}
+
+	&.lmb-team-member--design-basic {
+		.lmb-team-member__item {
+			@include box();
+		}
+	}
+}
+
+.lmb-team-member.lmb-team-member--v3 {
+	@media screen and (max-width: $break-large) {
+		&.lmb-team-member--columns-3 {
+			.lmb-block-content {
+				grid-template-columns: minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.lmb-team-member.lmb-team-member--v3 {
+	@media screen and (max-width: $break-small) {
+		.lmb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
+// IE 11 grid styles
+.lmb-team-member.lmb-team-member--v3 {
+	.lmb-team-member__image {
+		min-height: 1px;
+	}
+	&.lmb-team-member--columns-3 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-team-member__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.lmb-team-member__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.lmb-team-member--columns-2 {
+		.lmb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.lmb-team-member__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.lmb-block-content {
+				display: block !important;
+			}
+			.lmb-team-member__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}
