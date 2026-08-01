@@ -46,6 +46,7 @@ export const Edit = props => {
 					showModifiedIndicator={ !! customCSS }
 				>
 					<CodeTextareaControl
+						attribute="customCSS"
 						label={ __( 'Custom CSS', i18n ) }
 						value={ customCSS }
 						onChange={ value => setAttributes( {

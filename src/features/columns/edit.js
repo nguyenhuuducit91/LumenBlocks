@@ -101,9 +101,10 @@ export const Controls = props => {
 	let hasTabletColumnWidths = false
 	let hasMobileColumnWidths = false
 
-	// The unit is a property of the row rather than of one column, so it is read
-	// from the first and written to all of them.
-	let columnWidthUnit = ''
+	// Every column carries its own unit — `columnWidthUnit` has always been an
+	// attribute of the column block and column/style.js reads it per column —
+	// so the units are collected as a list, in the same order as the widths.
+	const columnWidthUnits = []
 
 	innerBlocks.forEach( ( { clientId } ) => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
@@ -115,9 +116,7 @@ export const Controls = props => {
 			columnWidthsTablet.push( attributes.columnWidthTablet )
 			columnWidthsMobile.push( attributes.columnWidthMobile )
 
-			if ( ! columnWidthUnit ) {
-				columnWidthUnit = attributes[ getAttributeName( 'columnWidthUnit', deviceType ) ] || ''
-			}
+			columnWidthUnits.push( attributes[ getAttributeName( 'columnWidthUnit', deviceType ) ] || '%' )
 
 			if ( attributes.columnWidthTablet ) {
 				hasTabletColumnWidths = true
@@ -127,6 +126,44 @@ export const Controls = props => {
 			}
 		}
 	} )
+
+	const currentColumnWidths = deviceType === 'Desktop' ? columnWidths
+		: deviceType === 'Tablet' ? columnWidthsTablet
+			: columnWidthsMobile
+
+	/*
+	 * Which columns share a row is worked out by adding widths up until they
+	 * pass 100 — arithmetic that only means something while every width in the
+	 * row is a percentage. As soon as one column is measured in px, rem or em,
+	 * the browser is the one deciding what fits, so the count is left unset for
+	 * the whole row and the gap compensation in column/style.js never runs.
+	 */
+	const getAdjacentCounts = ( widths, units ) => {
+		if ( units.some( unit => ( unit || '%' ) !== '%' ) ) {
+			return widths.map( () => '' )
+		}
+
+		const columnRows = getRowsFromColumns( widths )
+		return widths.map( ( _, i ) => columnRows.filter( n => n === columnRows[ i ] ).length )
+	}
+
+	// Writes per-index attributes to this block's columns, or to the columns of
+	// every selected Columns block when there is a multi-selection.
+	const updateColumnAttributes = getAttributesForIndex => {
+		const clientIds = []
+		const attributes = {}
+		const blockLists = hasMultiSelectedBlocks ? Object.values( multiInnerBlocks ) : [ innerBlocks ]
+
+		blockLists.forEach( blocks => {
+			blocks.forEach( ( block, i ) => {
+				clientIds.push( block.clientId )
+				attributes[ block.clientId ] = getAttributesForIndex( i )
+			} )
+		} )
+
+		dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line lumen/no-update-block-attributes
+		setColumnsUpdate( Math.random() )
+	}
 
 	const defaultArrangement = range( numInnerBlocks ).map( i => ( i + 1 ).toString() ).join( ',' )
 	const sortValues = deviceType === 'Desktop' ? defaultArrangement
@@ -183,75 +220,46 @@ export const Controls = props => {
 			{ numInnerBlocks > 1 && ( deviceType === 'Tablet' || deviceType === 'Mobile' || attributes.columnWrapDesktop ) &&
 				<ColumnsWidthMultiControl
 					columns={ numInnerBlocks }
-					values={ deviceType === 'Desktop' ? columnWidths
-						: deviceType === 'Tablet' ? columnWidthsTablet
-						 : columnWidthsMobile }
+					values={ currentColumnWidths }
 					responsive="all"
 					hasTabletValue={ hasTabletColumnWidths }
 					hasMobileValue={ hasMobileColumnWidths }
-					placeholders={ deviceType === 'Mobile' ? Array( numInnerBlocks ).fill( '100' ) : columnWidths }
+					// A mobile column fills the row unless told otherwise, but
+					// only a percentage can say "fills the row".
+					placeholders={ deviceType === 'Mobile'
+						? columnWidthUnits.map( unit => ( ( unit || '%' ) === '%' ? '100' : '' ) )
+						: columnWidths }
 					allowReset={ true }
 					units={ [ '%', 'px', 'rem', 'em' ] }
-					unit={ columnWidthUnit || '%' }
-					onChangeUnit={ unit => {
+					unit={ columnWidthUnits }
+					onChangeUnit={ ( unit, index ) => {
 						const unitName = getAttributeName( 'columnWidthUnit', deviceType )
-						const clientIds = []
-						const attributes = {}
+						const columnAdjacentCount = getAttributeName( 'columnAdjacentCount', deviceType )
 
-						innerBlocks.forEach( block => {
-							clientIds.push( block.clientId )
-							attributes[ block.clientId ] = {
-								// '%' is stored as empty, so a row that has never
-								// left percentages keeps writing exactly the CSS
-								// it wrote before units existed.
-								[ unitName ]: unit === '%' ? '' : unit,
-							}
-						} )
+						// One column leaving percentages changes what the row
+						// adds up to, so the counts are recomputed for all of
+						// them, not just for the column that was changed.
+						const newUnits = [ ...columnWidthUnits ]
+						newUnits[ index ] = unit
+						const adjacentCounts = getAdjacentCounts( currentColumnWidths, newUnits )
 
-						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line lumen/no-update-block-attributes
-						setColumnsUpdate( Math.random() )
+						updateColumnAttributes( i => ( {
+							[ columnAdjacentCount ]: adjacentCounts[ i ],
+							// '%' is stored as empty, so a column that has never
+							// left percentages keeps writing exactly the CSS it
+							// wrote before units existed.
+							...( i === index ? { [ unitName ]: unit === '%' ? '' : unit } : {} ),
+						} ) )
 					} }
 					onChange={ columnWidths => {
-						/*
-						 * Which columns share a row is worked out by adding
-						 * widths up until they pass 100 — arithmetic that only
-						 * means anything for percentages. With a fixed unit the
-						 * browser decides what fits, and the gap compensation
-						 * that this count drives must not happen at all, so the
-						 * count is left unset.
-						 */
-						const isPercent = ( columnWidthUnit || '%' ) === '%'
-						const columnRows = isPercent ? getRowsFromColumns( columnWidths ) : null
-
-						const clientIds = []
-						const attributes = {}
 						const columnWidthName = getAttributeName( 'columnWidth', deviceType )
 						const columnAdjacentCount = getAttributeName( 'columnAdjacentCount', deviceType )
-						if ( hasMultiSelectedBlocks ) {
-							Object.values( multiInnerBlocks ).forEach( innerBlocks => {
-								innerBlocks.forEach( ( block, i ) => {
-									clientIds.push( block.clientId )
-									attributes[ block.clientId ] = {
-										[ columnWidthName ]: columnWidths[ i ],
-										[ columnAdjacentCount ]: columnRows
-											? columnRows.filter( n => n === columnRows[ i ] ).length
-											: '',
-									}
-								} )
-							} )
-						} else {
-							innerBlocks.forEach( ( block, i ) => {
-								clientIds.push( block.clientId )
-								attributes[ block.clientId ] = {
-									[ columnWidthName ]: columnWidths[ i ],
-									[ columnAdjacentCount ]: columnRows
-										? columnRows.filter( n => n === columnRows[ i ] ).length
-										: '',
-								}
-							} )
-						}
-						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line lumen/no-update-block-attributes
-						setColumnsUpdate( Math.random() )
+						const adjacentCounts = getAdjacentCounts( columnWidths, columnWidthUnits )
+
+						updateColumnAttributes( i => ( {
+							[ columnWidthName ]: columnWidths[ i ],
+							[ columnAdjacentCount ]: adjacentCounts[ i ],
+						} ) )
 					} }
 				/>
 			}

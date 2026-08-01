@@ -499,6 +499,7 @@ const InspectorControls = memo( props => {
 					/>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
+					attribute="showMarker"
 					className={ classnames( 'lmn--needs-api-key', { 'lmn--uses-api-key': props.apiKey } ) }
 					title={ __( 'Map Marker', i18n ) }
 					initialOpen={ false }

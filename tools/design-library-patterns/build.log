@@ -1,0 +1,73 @@
+• lumen-hero-centred        ✓ 8 blocks, 7 with css, 4172b
+• lumen-hero-night          ✓ 8 blocks, 7 with css, 4129b
+• lumen-hero-split          ✓ 11 blocks, 9 with css, 7289b
+• lumen-hero-with-stats     ✓ 19 blocks, 14 with css, 9098b
+• lumen-hero-minimal        ✓ 6 blocks, 5 with css, 3135b
+• lumen-hero-badge-night    ✓ 8 blocks, 7 with css, 4807b
+• lumen-hero-checklist      ✓ 13 blocks, 11 with css, 7783b
+• lumen-hero-rose-centred   ✓ 8 blocks, 7 with css, 4104b
+• lumen-features-three-up   ✓ 24 blocks, 17 with css, 15916b
+• lumen-features-four-grid  ✓ 30 blocks, 21 with css, 19931b
+• lumen-features-six-night  ✓ 42 blocks, 29 with css, 28094b
+• lumen-feature-alternating ✓ 11 blocks, 9 with css, 6834b
+• lumen-features-two-large  ✓ 13 blocks, 11 with css, 9542b
+• lumen-features-checklist-split✓ 12 blocks, 11 with css, 7693b
+• lumen-features-numbered   ✓ 17 blocks, 16 with css, 10559b
+• lumen-features-compact-row✓ 17 blocks, 13 with css, 12256b
+• lumen-features-dark-cards ✓ 19 blocks, 13 with css, 13140b
+• lumen-detail-tabs         ✓ 11 blocks, 6 with css, 5775b
+• lumen-detail-scroller     ✓ 13 blocks, 7 with css, 6277b
+• lumen-detail-progress-circles✓ 14 blocks, 10 with css, 7889b
+• lumen-stats-band          ✓ 13 blocks, 9 with css, 5983b
+• lumen-stats-night         ✓ 14 blocks, 10 with css, 6875b
+• lumen-stats-cards         ✓ 10 blocks, 10 with css, 7004b
+• lumen-stats-three-large   ✓ 13 blocks, 9 with css, 6493b
+• lumen-pricing-three-tier  ✓ 48 blocks, 38 with css, 25302b
+• lumen-pricing-two-tier    ✓ 33 blocks, 26 with css, 17540b
+• lumen-pricing-night       ✓ 47 blocks, 37 with css, 24775b
+• lumen-pricing-single      ✓ 21 blocks, 17 with css, 11647b
+• lumen-testimonial-single  ✓ 7 blocks, 6 with css, 5940b
+• lumen-testimonials-three  ✓ 20 blocks, 16 with css, 11776b
+• lumen-testimonial-night   ✓ 7 blocks, 6 with css, 5935b
+• lumen-testimonials-two    ✓ 11 blocks, 9 with css, 6704b
+• lumen-team-three          ✓ 38 blocks, 31 with css, 44498b
+• lumen-team-four           ✓ 49 blocks, 40 with css, 58149b
+• lumen-team-night          ✓ 38 blocks, 31 with css, 44411b
+• lumen-cta-banner          ✓ 7 blocks, 5 with css, 4230b
+• lumen-cta-night-band      ✓ 7 blocks, 6 with css, 3700b
+• lumen-cta-split           ✓ 8 blocks, 6 with css, 3981b
+• lumen-cta-newsletter      ✓ 7 blocks, 7 with css, 5433b
+• lumen-cta-with-checklist  ✓ 12 blocks, 10 with css, 7365b
+• lumen-cta-minimal         ✓ 5 blocks, 4 with css, 2692b
+• lumen-cta-violet-boxed    ✓ 7 blocks, 7 with css, 4310b
+• lumen-faq-accordion       ✓ 34 blocks, 20 with css, 22031b
+• lumen-faq-two-column      ✓ 35 blocks, 20 with css, 22317b
+• lumen-faq-night           ✓ 27 blocks, 16 with css, 17373b
+• lumen-faq-with-cta        ✓ 25 blocks, 16 with css, 15399b
+• lumen-steps-numbered      ✓ 17 blocks, 16 with css, 10558b
+• lumen-steps-timeline      ✓ 22 blocks, 16 with css, 11058b
+• lumen-steps-night         ✓ 17 blocks, 16 with css, 10458b
+• lumen-steps-progress      ✓ 12 blocks, 10 with css, 7167b
+• lumen-checklist-split     ✓ 12 blocks, 11 with css, 7670b
+• lumen-content-two-column  ✓ 7 blocks, 5 with css, 3523b
+• lumen-notice-highlight    ✓ 8 blocks, 6 with css, 7508b
+• lumen-expand-longform     ✓ 8 blocks, 6 with css, 4801b
+• lumen-content-quote-callout✓ 8 blocks, 6 with css, 6250b
+• lumen-content-icon-list-pair✓ 19 blocks, 18 with css, 12813b
+• lumen-content-night-statement✓ 5 blocks, 4 with css, 2755b
+• lumen-content-three-text  ✓ 14 blocks, 10 with css, 6717b
+• lumen-content-divider-lead✓ 8 blocks, 6 with css, 3803b
+• lumen-content-featured-panel✓ 7 blocks, 6 with css, 5370b
+• lumen-contact-details     ✓ 23 blocks, 16 with css, 15178b
+• lumen-contact-split       ✓ 13 blocks, 11 with css, 7735b
+• lumen-contact-night       ✓ 7 blocks, 6 with css, 3613b
+• lumen-logos-row           ✓ 14 blocks, 8 with css, 13021b
+• lumen-proof-quote-stats   ✓ 15 blocks, 11 with css, 9628b
+• lumen-proof-night-band    ✓ 14 blocks, 10 with css, 6901b
+• lumen-compare-two         ✓ 19 blocks, 18 with css, 12848b
+• lumen-compare-three-plans ✓ 25 blocks, 24 with css, 16076b
+• lumen-closing-links       ✓ 22 blocks, 19 with css, 13045b
+• lumen-closing-signoff     ✓ 5 blocks, 4 with css, 3893b
+
+70/70 hợp lệ
+node exit=0

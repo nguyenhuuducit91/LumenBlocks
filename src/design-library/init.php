@@ -240,12 +240,26 @@ if ( ! class_exists( 'Lumen_Design_Library' ) ) {
 
 			$designs = get_transient( $transient_name );
 
+			$cdn_url = self::get_cdn_url();
+
+			/*
+			 * With no CDN configured there is nothing to request. Asking anyway
+			 * produced a relative URL, which fails, and the failure was then
+			 * cached for a week and surfaced to the editor as "an error has
+			 * occurred" — on a library that is simply not pointed anywhere yet.
+			 * Return an empty set instead and let the filter below fill it.
+			 */
+			if ( empty( $cdn_url ) ) {
+				$designs = array( self::API_VERSION => array() );
+				return apply_filters( 'lumen_design_library', $designs, $type );
+			}
+
 			// Fetch designs.
 			if ( empty( $designs ) ) {
 				$designs = array();
 				$content = null;
 
-				$response = wp_remote_get( self::get_cdn_url() . 'library-v4/' . $filename );
+				$response = wp_remote_get( $cdn_url . 'library-v4/' . $filename );
 
 				if ( is_wp_error( $response ) ) {
 					// Add our error message so we can see it in the network tab.
@@ -273,10 +287,9 @@ if ( ! class_exists( 'Lumen_Design_Library' ) ) {
 				set_transient( $transient_name, $designs, 7 * DAY_IN_SECONDS );
 			}
 
-			if ( $type === 'pages' ) {
-				return $designs;
-			}
-			return apply_filters( 'lumen_design_library', $designs );
+			// `$type` is passed so a filter can tell patterns from pages. Existing
+			// callbacks take one argument and are unaffected.
+			return apply_filters( 'lumen_design_library', $designs, $type );
 		}
 
 		/**

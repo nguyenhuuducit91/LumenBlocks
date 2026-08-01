@@ -481,6 +481,7 @@ const InspectorControls = memo( props => {
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
+					attribute="showArrows"
 					title={ __( 'Arrows', i18n ) }
 					id="arrows"
 					hasToggle={ true }
@@ -635,6 +636,7 @@ const InspectorControls = memo( props => {
 				</PanelAdvancedSettings>
 
 				<PanelAdvancedSettings
+					attribute="showDots"
 					title={ __( 'Dots', i18n ) }
 					id="dots"
 					hasToggle={ true }

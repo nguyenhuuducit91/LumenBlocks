@@ -273,17 +273,33 @@ div.lmb-modal-design-library__enable-background {
 	outline: 1px dashed #777;
 }
 
-// Design library top tabs, switch between block categories, ui kit and wireframe.
+/**
+ * Design library top tabs — Patterns / Pages.
+ *
+ * A segmented pill, matching the tab strip on the plugin's admin screens.
+ *
+ * It used to be a full-bleed underlined tab: the strip took
+ * `height: calc(100% + 1px)` and the buttons `height: 100%`, so the underline
+ * would land exactly on the header's bottom hairline. That only holds if the
+ * percentage resolves against the header, and here it does not — the button
+ * measured 60px inside a 58px header and started 6.5px above it, so the tab
+ * poked out of the top of the modal and its underline floated in mid-header
+ * with a pale panel hanging off it.
+ *
+ * A pill sizes to its own content and is centred by the header's own flexbox,
+ * so there is no height relationship left to get wrong.
+ */
 .lmn-design-library-tabs {
 	margin: 0 auto;
 	margin-bottom: 0 !important;
-	height: calc(100% + 1px);
+	height: auto;
+	align-self: center;
 
 	.components-base-control__field {
 		&,
 		.lmn-control-content,
 		.components-button-group {
-			height: 100%;
+			height: auto;
 		}
 	}
 
@@ -291,30 +307,67 @@ div.lmb-modal-design-library__enable-background {
 	.lmn-control-label {
 		margin: 0;
 	}
-	.components-button-group {
-		box-shadow: none !important;
-	}
 
-	.components-button {
-		height: 100%;
+	.components-button-group {
+		display: inline-flex;
+		gap: 2px;
+		padding: 3px;
+		border: 1px solid #e4e4e7;
+		border-radius: 999px;
+		background: rgba(244, 244, 245, 0.85);
 		box-shadow: none !important;
-		padding: 4px 24px;
-		border-radius: 0 !important;
-		border: none;
-		color: #777;
-		&:focus-visible {
-			outline: 1px solid #f59e0b;
-			outline-offset: 2px;
-		}
-		&:hover {
-			color: #111;
-		}
-		&.is-primary,
-		&.is-primary:hover {
-			color: #111;
-			font-weight: bold;
-			background: #e5437610;
-			box-shadow: inset 0 -3px 0 #f59e0b !important;
+
+		/**
+		 * Nested one level deeper than it needs to be, on purpose.
+		 *
+		 * Meta Box ships
+		 * `.components-modal__header .components-button { width: 60px; height: 60px }`,
+		 * which matches every button in any modal header on the site — including
+		 * these tabs. It carries the same specificity as a two-class rule here and
+		 * loads after us, so it wins a tie: the tab grew to 60px tall inside a
+		 * 58px header, and stayed 60px wide with its label spilling out past the
+		 * pill. Going through `.components-button-group` puts us a class ahead,
+		 * which settles both without `!important` and without depending on
+		 * stylesheet order.
+		 *
+		 * Width belongs here rather than on `.is-primary` alone — the inactive tab
+		 * is clipped by the same rule.
+		 */
+		.components-button {
+			width: auto;
+			min-width: 0;
+			height: auto;
+			min-height: 0;
+			box-shadow: none !important;
+			padding: 7px 16px;
+			border-radius: 999px !important;
+			border: none;
+			color: #52525b;
+			font-size: 13px;
+			font-weight: 500;
+			line-height: 1.4;
+			white-space: nowrap;
+			transition: background-color 0.14s ease, color 0.14s ease, box-shadow 0.14s ease;
+
+			&:focus-visible {
+				outline: 2px solid #f59e0b;
+				outline-offset: 1px;
+			}
+
+			&:hover {
+				color: #d97706;
+				background: rgba(255, 255, 255, 0.7);
+			}
+
+			&.is-primary,
+			&.is-primary:hover {
+				color: #d97706;
+				font-weight: 600;
+				background: #fff;
+				box-shadow:
+					0 1px 2px rgba(16, 24, 40, 0.08),
+					0 0 0 1px rgba(217, 119, 6, 0.22) !important;
+			}
 		}
 	}
 }

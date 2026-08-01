@@ -146,6 +146,7 @@ export const Edit = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
+				attribute="topSeparatorShow"
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
 				hasToggle={ true }
@@ -156,6 +157,7 @@ export const Edit = props => {
 				{ PremiumTopSeparatorControls && <PremiumTopSeparatorControls { ...props } /> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
+				attribute="bottomSeparatorShow"
 				title={ __( 'Bottom Separator', i18n ) }
 				id="bottom-separator"
 				hasToggle={ true }

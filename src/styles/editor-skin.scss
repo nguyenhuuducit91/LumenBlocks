@@ -93,7 +93,8 @@
 	.lmn-label-unit-toggle__wrapper {
 		border-radius: 2px !important;
 	}
-	.lmn-control-label__units.lmn-label-unit-toggle {
+	.lmn-control-label__units.lmn-label-unit-toggle,
+	.lmn-columns-width-multi-control__range__units.lmn-label-unit-toggle {
 		background-color: var(--lmn-skin-bg-secondary);
 		color: var(--lmn-skin-dark);
 	}

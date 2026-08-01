@@ -671,6 +671,7 @@ const InspectorControls = memo( props => {
 				</PanelAdvancedSettings>
 
 				<PanelAdvancedSettings
+					attribute="showIcon"
 					title={ __( 'Icon', i18n ) }
 					initialOpen={ false }
 					hasToggle={ true }

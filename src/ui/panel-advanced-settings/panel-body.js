@@ -51,6 +51,7 @@ const PanelBody = (
 		title,
 		id = '', // Used for remembering whether this is currently open or closed
 		// Toggle options.
+		attribute = '',
 		checked,
 		hasToggle = undefined,
 		onChange = noop,
@@ -85,9 +86,18 @@ const PanelBody = (
 		}
 	}
 
+	/*
+	 * `attribute` names what this panel's header toggle switches on and off.
+	 *
+	 * Those toggles are the one setting in the inspector that is not a control:
+	 * they live in the panel's title bar. Without this marker the applied-
+	 * settings list could see "Show Top Line" was set and had nowhere to send
+	 * an author who clicked it.
+	 */
 	const classes = classnames( 'components-panel__body', 'lmb-toggle-panel-body', className, {
 		'is-opened': isOpened,
 		[ `lmb-panel--${ id }` ]: id,
+		[ `lmn-panel--attr-${ attribute }` ]: attribute,
 	} )
 
 	return (

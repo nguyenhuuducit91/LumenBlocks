@@ -78,6 +78,14 @@ export const Edit = () => {
 					showModifiedIndicator={ !! type }
 				>
 					<AdvancedSelectControl
+						/*
+						 * Every control in this panel edits one key of the same
+						 * `displayCondition` object, so none of them can claim
+						 * the attribute through the usual `attribute` prop. The
+						 * first one carries the marker on behalf of the panel,
+						 * which is where a jump should land anyway.
+						 */
+						className="lmn-control--attr-displayCondition"
 						label={ __( 'Show this block when', i18n ) }
 						options={ CONDITIONS }
 						value={ type }

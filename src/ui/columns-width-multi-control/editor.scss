@@ -26,3 +26,9 @@
 .lmn-columns-width-multi-control__range__suffix {
 	font-size: 12px;
 }
+.lmn-columns-width-multi-control__range__units {
+	// The row spaces its children itself, so the margin the toggle carries for
+	// sitting next to a label would only double that up.
+	margin-left: 0;
+	flex: 0 0 auto;
+}

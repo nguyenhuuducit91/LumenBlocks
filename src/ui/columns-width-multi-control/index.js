@@ -4,6 +4,7 @@
 import { AdvancedRangeControl } from '~lumen/ui'
 import { BaseControl } from '../base-control2'
 import { ResetButton } from '../base-control2/reset-button'
+import ControlIconToggle from '../control-icon-toggle'
 
 /**
  * WordPress dependencies
@@ -18,9 +19,18 @@ import { i18n } from 'lumen'
 import { range } from 'lodash'
 
 const ColumnsWidthMultiControl = props => {
+	/*
+	 * The unit can be given either as one string for the whole row, which puts
+	 * a single picker beside the label, or as one string per column, which puts
+	 * a picker on every row in place of the suffix. Which one the caller passes
+	 * is what decides where the picker goes.
+	 */
+	const hasUnitPerColumn = Array.isArray( props.unit )
+
 	// Empty means per cent, which is what these widths have always been.
-	const unit = props.unit || props.units?.[ 0 ] || '%'
-	const isPercent = unit === '%'
+	const unitAt = i => ( hasUnitPerColumn ? props.unit[ i ] : props.unit ) || props.units?.[ 0 ] || '%'
+
+	const unitOptions = ( props.units || [] ).map( unit => ( { value: unit } ) )
 
 	return (
 		<BaseControl
@@ -30,11 +40,14 @@ const ColumnsWidthMultiControl = props => {
 			responsive={ props.responsive }
 			hasTabletValue={ props.hasTabletValue }
 			hasMobileValue={ props.hasMobileValue }
-			units={ props.units }
-			unit={ unit }
-			onChangeUnit={ props.onChangeUnit }
+			units={ hasUnitPerColumn ? null : props.units }
+			unit={ hasUnitPerColumn ? '' : unitAt( 0 ) }
+			onChangeUnit={ hasUnitPerColumn ? null : props.onChangeUnit }
 		>
 			{ range( props.columns ).map( i => {
+				const unit = unitAt( i )
+				const isPercent = unit === '%'
+
 				return (
 					<div key={ i } className="lmn-columns-width-multi-control__range">
 						<span className="lmn-columns-width-multi-control__range__icon">{ i + 1 }</span>
@@ -72,7 +85,21 @@ const ColumnsWidthMultiControl = props => {
 								/>
 							) }
 						</div>
-						<span className="lmn-columns-width-multi-control__range__suffix">{ unit }</span>
+						{ hasUnitPerColumn && props.onChangeUnit && unitOptions.length > 1
+							? (
+								<ControlIconToggle
+									className="lmn-columns-width-multi-control__range__units"
+									value={ unit }
+									options={ unitOptions }
+									onChange={ newUnit => props.onChangeUnit( newUnit, i ) }
+									buttonLabel={ __( 'Unit', i18n ) }
+									hasLabels={ false }
+									hasColors={ false }
+									labelPosition="left"
+								/>
+							)
+							: <span className="lmn-columns-width-multi-control__range__suffix">{ unit }</span>
+						}
 					</div>
 				)
 			} ) }
@@ -91,8 +118,8 @@ ColumnsWidthMultiControl.defaultProps = {
 	placeholders: null,
 
 	units: null, // e.g. [ '%', 'px' ]. Null keeps the control on percentages.
-	unit: '',
-	onChangeUnit: null,
+	unit: '', // A string puts one picker beside the label; an array of one unit per column puts a picker on each row.
+	onChangeUnit: null, // ( unit, index ). The index is only given when the units are per column.
 
 	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
 	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.

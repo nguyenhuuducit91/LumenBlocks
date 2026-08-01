@@ -118,6 +118,7 @@ const InspectorControls = memo( props => {
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
+					attribute="hasShape"
 					title={ __( 'Shape', i18n ) }
 					id="shape"
 					initialOpen={ true }

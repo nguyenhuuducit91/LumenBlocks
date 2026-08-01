@@ -16,6 +16,7 @@ import { getBlockSupport } from '@wordpress/blocks'
 import { useSelect } from '@wordpress/data'
 import { BlockStylesControl } from '../block-styles-control'
 import BlockChangesPanel, { useAppliedSettings } from '../block-changes-panel'
+import InspectorSearch from '../inspector-search'
 
 /**
  * The applied-settings panel, with the count in its own title.
@@ -114,21 +115,34 @@ const InspectorTabs = props => {
 				 * "Default" and a button that does nothing.
 				 */ }
 				{ !! hasBlockStyles && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
+
+				{ /*
+				 * What this block currently sets, above the tabs rather than on
+				 * one of them.
+				 *
+				 * It used to sit on Advanced, which put the answer to "what have
+				 * I changed on this block" behind a tab — and the settings it
+				 * lists are spread across all three. Above the strip it belongs
+				 * to the block rather than to a tab, and the row you click can
+				 * take you to any of them without you having navigated back
+				 * first.
+				 */ }
+				<AppliedSettingsPanel />
+
+				{ /*
+				 * The search sits between the list and the tabs, and belongs to
+				 * neither. It used to be rendered inside the tab strip, which
+				 * tied a box that searches all three tabs to the one thing on
+				 * screen that is about choosing between them.
+				 */ }
+				<InspectorSearch />
+
 				<PanelTabs
 					tabs={ props.tabs }
 					initialTab={ activeTab }
 					onClick={ setActiveTab }
 				/>
 			</InspectorControls>
-
-			{ /*
-			 * What this block currently sets, at the top of Advanced. With
-			 * hundreds of attributes per block it is the only way to find a
-			 * value again — or to undo one without undoing everything since.
-			 */ }
-			<InspectorAdvancedControls>
-				<AppliedSettingsPanel />
-			</InspectorAdvancedControls>
 
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>

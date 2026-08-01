@@ -20,7 +20,8 @@
  * WordPress dependencies
  */
 import { useMemo, memo } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
+import { useSelect, useDispatch } from '@wordpress/data'
+import { store as noticesStore } from '@wordpress/notices'
 import { store as blockEditorStore, useBlockEditContext } from '@wordpress/block-editor'
 import { getBlockType } from '@wordpress/blocks'
 import { __, sprintf } from '@wordpress/i18n'
@@ -32,7 +33,6 @@ import { Button } from '@wordpress/components'
 import { i18n } from 'lumen'
 import { startCase } from 'lodash'
 import { useBlockSetAttributesContext } from '~lumen/hooks'
-import { requestSearch } from '../inspector-search'
 import { goToAttribute } from '../inspector-navigation'
 
 /**
@@ -55,6 +55,24 @@ const HIDDEN = [
 	'modifiedBlockStyle',
 	'customAttributes',
 	'generatedCss',
+
+	/*
+	 * What the author wrote, rather than how it is styled.
+	 *
+	 * These are edited by typing in the canvas, so they have no control in the
+	 * sidebar to go to — a row for them could only ever be a dead end. They are
+	 * also not what anybody means by "what have I changed on this block": the
+	 * words are the point of the block, not a setting on it.
+	 *
+	 * Exact names only. `text` is content; `textAlign`, `textColor` and
+	 * `textTag` are settings, and a prefix test would have taken them too.
+	 */
+	'text',
+	'text2',
+	'content',
+	'title',
+	'subtitle',
+	'description',
 ]
 
 // Suffixes that say which viewport or state an attribute belongs to.
@@ -183,6 +201,7 @@ export const useAppliedSettings = () => {
 
 const BlockChangesPanel = () => {
 	const setAttributes = useBlockSetAttributesContext()
+	const { createNotice } = useDispatch( noticesStore ) || {}
 	const applied = useAppliedSettings()
 
 	if ( ! applied.length ) {
@@ -208,10 +227,13 @@ const BlockChangesPanel = () => {
 					<li key={ setting.name } className="lmn-block-changes__row">
 						{ /*
 						 * Straight to the control that owns this attribute —
-						 * right tab, right panel, right device — rather than to
-						 * a search for its name, which landed on whatever else
-						 * happened to share a word with it. The search is the
-						 * fallback for the few attributes no control edits.
+						 * right tab, right panel, right device.
+						 *
+						 * When nothing owns it the row says so rather than
+						 * typing the name into the search box, which is what it
+						 * used to do: that left the author looking at a filtered
+						 * sidebar they did not ask for, wondering what had
+						 * happened to their click.
 						 */ }
 						<button
 							type="button"
@@ -220,7 +242,18 @@ const BlockChangesPanel = () => {
 								const found = await goToAttribute( setting.name )
 
 								if ( ! found ) {
-									requestSearch( setting.label )
+									createNotice?.(
+										'info',
+										sprintf(
+											/* translators: %s: the name of the setting. */
+											__( '%s is not set from the sidebar — look on the block toolbar or in the block itself.', i18n ),
+											setting.label
+										),
+										{
+											type: 'snackbar',
+											isDismissible: true,
+										}
+									)
 								}
 							} }
 							aria-label={ sprintf(

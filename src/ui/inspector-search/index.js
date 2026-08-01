@@ -204,7 +204,11 @@ const InspectorSearch = () => {
 	 * @return {boolean} Whether to leave it alone.
 	 */
 	const isFurniture = panel => panel.contains( root.current ) ||
-		panel.classList.contains( 'lmb-panel-tabs' )
+		panel.classList.contains( 'lmb-panel-tabs' ) ||
+		// The applied-settings list is not a setting; it is the summary of them
+		// all, and it sits above the tabs precisely so it is always there. A
+		// search hiding it left the author with no way back to their own values.
+		!! panel.querySelector( '.lmn-block-changes, .lmn-block-changes__empty' )
 
 	/**
 	 * The panels of the tab currently on screen.
@@ -267,6 +271,13 @@ const InspectorSearch = () => {
 				.forEach( control => {
 					control.style.display = ''
 				} )
+
+			// The panel's own children too: separators, headings and the wrappers
+			// features render around groups of controls are hidden as well, and
+			// they have to come back the same way.
+			Array.from( panel.children ).forEach( child => {
+				child.style.display = ''
+			} )
 		} )
 
 		/*
@@ -306,6 +317,37 @@ const InspectorSearch = () => {
 					found++
 				}
 			} )
+
+			/*
+			 * Everything else in the panel that is not a control.
+			 *
+			 * A panel is not a flat list of controls: features render separators,
+			 * sub-headings and wrappers around groups of them. Hiding only the
+			 * controls left those behind as empty boxes stacked above the one
+			 * matching row — the search looked broken even when it had worked.
+			 *
+			 * A child is kept only if something visible survived inside it.
+			 */
+			if ( panelMatches && ! titleMatches ) {
+				Array.from( panel.children ).forEach( child => {
+					if ( child.classList.contains( 'components-panel__body-title' ) ) {
+						return
+					}
+
+					const keeps = Array.from(
+						child.querySelectorAll( '.components-base-control, .lmn-control' )
+					).some( control => control.style.display !== 'none' )
+
+					const isVisibleControl =
+						( child.classList.contains( 'components-base-control' ) ||
+							child.classList.contains( 'lmn-control' ) ) &&
+						child.style.display !== 'none'
+
+					if ( ! keeps && ! isVisibleControl ) {
+						child.style.display = 'none'
+					}
+				} )
+			}
 
 			panel.style.display = panelMatches ? '' : 'none'
 		} )
@@ -490,27 +532,35 @@ const InspectorSearch = () => {
 
 	return (
 		<div className="lmn-inspector-search" ref={ root }>
-			<Icon className="lmn-inspector-search__icon" icon={ search } />
+			{ /*
+			 * The icon and the clear button sit inside this row rather than
+			 * inside the whole control: the status line below makes the control
+			 * taller, and anything centred against it ended up level with the
+			 * wrong thing.
+			 */ }
+			<div className="lmn-inspector-search__field">
+				<Icon className="lmn-inspector-search__icon" icon={ search } />
 
-			<input
-				type="search"
-				className="lmn-inspector-search__input"
-				value={ query }
-				placeholder={ __( 'Find a setting…', i18n ) }
-				aria-label={ __( 'Find a setting', i18n ) }
-				onChange={ event => setQuery( event.target.value ) }
-			/>
+				<input
+					type="search"
+					className="lmn-inspector-search__input"
+					value={ query }
+					placeholder={ __( 'Find a setting…', i18n ) }
+					aria-label={ __( 'Find a setting', i18n ) }
+					onChange={ event => setQuery( event.target.value ) }
+				/>
 
-			{ !! query && (
-				<button
-					type="button"
-					className="lmn-inspector-search__clear"
-					aria-label={ __( 'Clear the search', i18n ) }
-					onClick={ () => setQuery( '' ) }
-				>
-					<Icon icon={ closeSmall } />
-				</button>
-			) }
+				{ !! query && (
+					<button
+						type="button"
+						className="lmn-inspector-search__clear"
+						aria-label={ __( 'Clear the search', i18n ) }
+						onClick={ () => setQuery( '' ) }
+					>
+						<Icon icon={ closeSmall } />
+					</button>
+				) }
+			</div>
 
 			{ !! status() && (
 				<p className="lmn-inspector-search__status" aria-live="polite">

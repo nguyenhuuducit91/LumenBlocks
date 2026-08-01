@@ -84,6 +84,7 @@ export const Edit = memo( props => {
 			</InspectorBlockControls>
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
+					attribute="hasBackground"
 					title={ __( 'Background', i18n ) }
 					id="background"
 					hasToggle={ true }

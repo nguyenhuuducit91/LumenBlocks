@@ -182,6 +182,7 @@ const InspectorControls = memo( props => {
 			{ !! applyFilters( 'lumen.heading.edit.top-bottom-line.enable-handlers', true, props.parentBlock ) && (
 				<InspectorStyleControls>
 					<PanelAdvancedSettings
+						attribute="showTopLine"
 						title={ __( 'Top Line', i18n ) }
 						id="top-line"
 						hasToggle={ true }
@@ -227,6 +228,7 @@ const InspectorControls = memo( props => {
 
 					</PanelAdvancedSettings>
 					<PanelAdvancedSettings
+						attribute="showBottomLine"
 						title={ __( 'Bottom Line', i18n ) }
 						id="bottom-line"
 						hasToggle={ true }

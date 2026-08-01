@@ -216,6 +216,7 @@ const InspectorControls = memo( props => {
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
+					attribute="showScrollbar"
 					title={ __( 'Scrollbar', i18n ) }
 					initialOpen={ false }
 					hasToggle

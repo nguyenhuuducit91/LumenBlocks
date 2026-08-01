@@ -179,6 +179,7 @@ const InspectorControls = memo( props => {
 					/>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
+					attribute="isDismissible"
 					title={ __( 'Dismissible', i18n ) }
 					id="dismissible"
 					hasToggle={ true }

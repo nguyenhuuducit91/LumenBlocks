@@ -17,7 +17,11 @@ const CodeTextareaControl = props => {
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'lmn-code-textarea-control', props.className ) }
+			className={ classnames( 'lmn-code-textarea-control', 'lmn-control', props.className, {
+				// So the applied-settings list can find this control by the
+				// attribute it edits, like every other control.
+				[ `lmn-control--attr-${ props.attribute }` ]: !! props.attribute,
+			} ) }
 			__nextHasNoMarginBottom
 		>
 			<BaseControlMultiLabel
@@ -34,6 +38,7 @@ const CodeTextareaControl = props => {
 }
 
 CodeTextareaControl.defaultProps = {
+	attribute: '',
 	help: '',
 	className: '',
 	value: '',

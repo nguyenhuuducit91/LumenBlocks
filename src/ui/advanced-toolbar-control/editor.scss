@@ -28,9 +28,11 @@
 		}
 	}
 
+	// No radius of its own: the focus ring has to follow whatever shape the group
+	// already has. Forcing 1px squared off the design library's pill tabs the
+	// moment they took focus.
 	&:focus-within {
 		box-shadow: 0 0 0 0.5px var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
-		border-radius: 1px;
 	}
 }
 

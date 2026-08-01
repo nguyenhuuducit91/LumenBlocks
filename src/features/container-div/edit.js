@@ -56,6 +56,7 @@ export const Edit = props => {
 		<>
 			<InspectorBlockControls>
 				<PanelAdvancedSettings
+					attribute="hasContainer"
 					title={ __( 'Container', i18n ) }
 					id="container-size"
 					hasToggle={ true }

@@ -71,6 +71,7 @@ export const Edit = () => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
+				attribute="hasDivider"
 				title={ __( 'Separator', i18n ) }
 				id="divider"
 				hasToggle={ true }
