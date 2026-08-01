@@ -55,6 +55,7 @@ const HIDDEN = [
 	'modifiedBlockStyle',
 	'customAttributes',
 	'generatedCss',
+	'lmnQueryId',
 
 	/*
 	 * What the author wrote, rather than how it is styled.
@@ -262,15 +263,27 @@ const BlockChangesPanel = () => {
 								setting.label
 							) }
 						>
+							{ /*
+							 * Three siblings rather than a name with things
+							 * inside it: the row is one line, and the name is
+							 * the part of it that has to survive being narrow.
+							 * With the device chip inside the name it was the
+							 * chip that got cut — "Title Text Transform Mo…" —
+							 * which is the one word that says why the same
+							 * setting is listed twice.
+							 */ }
 							<span className="lmn-block-changes__label">
 								{ setting.label }
-								{ setting.context && (
-									<span className="lmn-block-changes__context">
-										{ setting.context }
-									</span>
-								) }
 							</span>
-							<span className="lmn-block-changes__value">
+							{ setting.context && (
+								<span className="lmn-block-changes__context">
+									{ setting.context }
+								</span>
+							) }
+							<span
+								className="lmn-block-changes__value"
+								title={ format( setting.value ) }
+							>
 								{ format( setting.value ) }
 							</span>
 						</button>

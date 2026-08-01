@@ -30,6 +30,7 @@ export const Edit = () => {
 				id="custom-attributes"
 			>
 				<CustomAttributesControl
+					className="lmn-control--attr-customAttributes"
 					label={ __( 'Custom Attributes', i18n ) }
 					value={ customAttributes }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }

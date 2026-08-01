@@ -36,12 +36,14 @@ export const LinkControls = props => {
 		<>
 			{ ( hasLink || getAttribute( 'hasLink' ) ) && (
 				<LinkControl
+					className="lmn-control--attr-linkUrl"
 					label={ __( 'Link / URL', i18n ) }
 					value={ getAttribute( 'url' ) }
 					onChange={ updateAttributeHandler( 'url' ) }
 				/>
 			) }
 			<AdvancedToggleControl
+				className="lmn-control--attr-linkNewTab"
 				label={ __( 'Open in new tab', i18n ) }
 				checked={ getAttribute( 'newTab' ) }
 				onChange={ updateAttributeHandler( 'newTab' ) }
@@ -49,6 +51,7 @@ export const LinkControls = props => {
 			{ hasLightbox && (
 				<>
 					<AdvancedToggleControl
+						className="lmn-control--attr-linkHasLightbox"
 						label={ __( 'Open Link in Lightbox', i18n ) }
 						help={ lightboxHelp }
 						checked={ getAttribute( 'hasLightbox' ) }
@@ -64,6 +67,7 @@ export const LinkControls = props => {
 				</>
 			) }
 			<AdvancedTextControl
+				className="lmn-control--attr-linkRel"
 				label={ __( 'Link rel', i18n ) }
 				help={ __( 'Link relationship keywords, e.g. nofollow noreferrer prefetch', i18n ) }
 				value={ getAttribute( 'rel' ) }
@@ -71,6 +75,7 @@ export const LinkControls = props => {
 			/>
 			{ ( hasTitle || getAttribute( 'hasTitle' ) ) && (
 				<AdvancedTextControl
+					className="lmn-control--attr-linkTitle"
 					label={ __( 'Link Title', i18n ) }
 					value={ getAttribute( 'title' ) }
 					onChange={ updateAttributeHandler( 'title' ) }

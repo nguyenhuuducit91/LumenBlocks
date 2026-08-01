@@ -46,6 +46,18 @@ export const isSafeWidth = value => {
 		return false
 	}
 
+	/*
+	 * A number on its own is not a length.
+	 *
+	 * `60` looks harmless and passes every character test above, but CSS drops
+	 * the whole declaration for it — so a column would silently lose its width
+	 * and the author would be looking at a value that is set and ignored. Only
+	 * `0` is a length without a unit, and it is not a useful column width.
+	 */
+	if ( /^-?[\d.]+$/.test( width ) ) {
+		return false
+	}
+
 	// Brackets have to balance, or the declaration runs into the next one.
 	let depth = 0
 

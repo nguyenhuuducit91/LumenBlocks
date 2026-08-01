@@ -143,6 +143,13 @@ export const Edit = () => {
 					{ PARTS.map( part => (
 						<AdvancedRangeControl
 							key={ part.key }
+							/*
+							 * All four sliders edit the one `transform` value, so
+							 * they all carry its name: an applied-settings row for
+							 * `transform` lands on the first of them, which is the
+							 * right place to arrive.
+							 */
+							className="lmn-control--attr-transform"
 							label={ part.label }
 							value={ readPart( transform, part ) }
 							min={ part.min }

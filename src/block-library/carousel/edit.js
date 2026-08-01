@@ -420,6 +420,7 @@ const InspectorControls = memo( props => {
 				/>
 				{ props.carouselType === 'slide' &&
 					<AdvancedToggleControl
+						className="lmn-control--attr-infiniteScroll"
 						label={ __( 'Infinite Scrolling', i18n ) }
 						checked={ props.infiniteScroll }
 						onChange={ infiniteScroll => props.setAttributes( { infiniteScroll } ) }
@@ -460,6 +461,7 @@ const InspectorControls = memo( props => {
 				<ControlSeparator />
 
 				<AdvancedToggleControl
+					className="lmn-control--attr-autoplay"
 					label={ __( 'Autoplay', i18n ) }
 					checked={ props.autoplay }
 					onChange={ autoplay => props.setAttributes( { autoplay } ) }
@@ -623,6 +625,7 @@ const InspectorControls = memo( props => {
 						placeholder="0.9"
 					/>
 					<AdvancedToggleControl
+						className="lmn-control--attr-showArrowsOnMobile"
 						label={ sprintf(
 							// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
 							__( 'Show %s on mobile', i18n ),
@@ -716,6 +719,7 @@ const InspectorControls = memo( props => {
 					/>
 
 					<AdvancedToggleControl
+						className="lmn-control--attr-showDotsOnMobile"
 						label={ sprintf(
 							// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
 							__( 'Show %s on mobile', i18n ),

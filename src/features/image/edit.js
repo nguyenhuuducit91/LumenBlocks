@@ -367,6 +367,7 @@ const Controls = props => {
 
 			{ props.hasAlt && (
 				<ImageAltControl
+					className="lmn-control--attr-imageAlt"
 					label={ __( 'Image Alt', i18n ) }
 					value={ attributes.imageAlt }
 					onChange={ imageAlt => setAttributes( { imageAlt } ) }
@@ -519,6 +520,7 @@ const Controls = props => {
 
 			{ props.hasShape &&
 				<ButtonIconPopoverControl
+					className="lmn-control--attr-imageShape"
 					label={ __( 'Image Shape', i18n ) }
 					onReset={ () => {
 						setAttributes( {
@@ -536,6 +538,7 @@ const Controls = props => {
 					}
 				>
 					<ImageShapeControl
+						className="lmn-control--attr-imageShape"
 						selected={ attributes.imageShape }
 						onChange={ imageShape => setAttributes( { imageShape } ) }
 						helpTooltip={ {
@@ -561,6 +564,7 @@ const Controls = props => {
 			}
 
 			<ButtonIconPopoverControl
+				className="lmn-control--attr-imageFilter"
 				label={ __( 'Image Filter', i18n ) }
 				popoverLabel=""
 				onReset={ () => {
@@ -611,11 +615,23 @@ export const Edit = props => {
 				initialOpen={ props.initialOpen }
 				hasToggle={ props.hasToggle }
 				{ ...( props.hasToggle ? {
+					// Named so the applied-settings list can send an author to
+					// this switch; it is a setting like any other, it just lives
+					// in a panel's title bar rather than in its body.
+					attribute: 'imageShow',
 					checked: imageShow,
 					onChange: imageShow => setAttributes( { imageShow } ),
 				} : {} ) }
 			>
 				<Controls { ...props } />
+
+				{ /*
+				 * A block using this panel can add settings of its own to it —
+				 * the Posts block puts its "no image" fallback here, which
+				 * belongs beside the image settings rather than in a panel of
+				 * its own three screens away.
+				 */ }
+				{ props.children }
 			</PanelAdvancedSettings>
 
 		</InspectorStyleControls>

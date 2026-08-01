@@ -37,16 +37,19 @@ export const Edit = () => {
 					initialOpen={ false }
 				>
 					<AdvancedToggleControl
+						className="lmn-control--attr-hideDesktop"
 						label={ __( 'Hide on Desktop', i18n ) }
 						checked={ hideDesktop }
 						onChange={ hideDesktop => setAttributes( { hideDesktop } ) }
 					/>
 					<AdvancedToggleControl
+						className="lmn-control--attr-hideTablet"
 						label={ __( 'Hide on Tablet', i18n ) }
 						checked={ hideTablet }
 						onChange={ hideTablet => setAttributes( { hideTablet } ) }
 					/>
 					<AdvancedToggleControl
+						className="lmn-control--attr-hideMobile"
 						label={ __( 'Hide on Mobile', i18n ) }
 						checked={ hideMobile }
 						onChange={ hideMobile => setAttributes( { hideMobile } ) }

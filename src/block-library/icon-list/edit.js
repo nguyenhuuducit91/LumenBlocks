@@ -357,6 +357,7 @@ const InspectorControls = memo( props => {
 						/>
 
 						<ToggleControl
+							className="lmn-control--attr-useCustomIconColor"
 							label={ __( 'Use Custom Icon Color', i18n ) }
 							checked={ props.useCustomIconColor }
 							onChange={ useCustomIconColor => props.setAttributes( { useCustomIconColor } ) }

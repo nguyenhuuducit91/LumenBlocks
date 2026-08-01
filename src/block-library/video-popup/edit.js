@@ -246,11 +246,13 @@ const InspectorControls = memo( props => {
 						<ControlSeparator />
 						<p>{ __( 'Note: The following attributes are used to create the video schema.', i18n ) }</p>
 						<AdvancedTextControl
+							className="lmn-control--attr-videoName"
 							label={ __( 'Video name', i18n ) }
 							value={ props.videoName }
 							onChange={ videoName => props.setAttributes( { videoName } ) }
 						/>
 						<AdvancedTextControl
+							className="lmn-control--attr-videoDescription"
 							label={ __( 'Video description', i18n ) }
 							value={ props.videoDescription }
 							onChange={ videoDescription => props.setAttributes( { videoDescription } ) }
@@ -267,6 +269,7 @@ const InspectorControls = memo( props => {
 							readOnly={ true }
 						/>
 						<DateTimePicker
+							className="lmn-control--attr-videoUploadDate"
 							currentDate={ props.videoUploadDate }
 							is12Hour={ true }
 							onChange={ videoUploadDate => props.setAttributes( { videoUploadDate } ) }

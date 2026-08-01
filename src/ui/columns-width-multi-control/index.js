@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { AdvancedRangeControl, AdvancedTextControl } from '~lumen/ui'
-import { isSafeWidth } from '~lumen/features/column/width-value'
+import { isSafeWidth } from '~lumen/features'
 import { BaseControl } from '../base-control2'
 import { ResetButton } from '../base-control2/reset-button'
 import ControlIconToggle from '../control-icon-toggle'

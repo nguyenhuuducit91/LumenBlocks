@@ -18,8 +18,15 @@
 		column-gap: var(--lmn-column-gap, 0);
 		row-gap: 0;
 
-		// All contents should have bottom margins
-		:is([class*="lmn-block-posts__"], .lmn-img-wrapper):not(.lmn-block-posts__item) {
+		/*
+		 * All contents should have bottom margins.
+		 *
+		 * The columns of a custom item layout are not contents — they hold it.
+		 * Without excluding them they pick up this margin as well, and it is
+		 * added to whatever the grid already puts between the rows, so the
+		 * columns sit lower than the widths and gaps the author set.
+		 */
+		:is([class*="lmn-block-posts__"], .lmn-img-wrapper):not(.lmn-block-posts__item):not(.lmn-block-posts__cols):not(.lmn-block-posts__col) {
 			margin-bottom: cssvar(block-margin-bottom);
 			&:last-child {
 				margin-bottom: 0;
@@ -113,5 +120,33 @@
 	.lmn-container-padding {
 		flex: 1;
 		box-sizing: border-box;
+	}
+}
+
+/**
+ * A post laid out in columns of its own.
+ *
+ * The columns are real elements so that each one stacks its own contents. The
+ * grid itself is written per block by the style generator; this is only what
+ * every such row needs whatever the author chose.
+ */
+.lmn-block-posts__cols {
+	width: 100%;
+
+	> .lmn-block-posts__col {
+		min-width: 0; // Long words must wrap rather than widen the column.
+		display: flex;
+		flex-direction: column;
+
+		/*
+		 * The column carries no spacing of its own.
+		 *
+		 * It exists to group the parts inside it, and the gap between columns is
+		 * already set by the grid. A margin here — a theme's, or one inherited
+		 * from whatever this div would otherwise be styled as — is added on top
+		 * of that gap, so the columns drift out of line with the widths the
+		 * author set.
+		 */
+		margin: 0;
 	}
 }

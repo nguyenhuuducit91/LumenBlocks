@@ -144,6 +144,7 @@ class TaxonomyControl extends Component {
 				 * site with custom post types could not point the block at them.
 				 */ }
 				<AdvancedSelectControl
+					className="lmn-control--attr-type"
 					label={ __( 'Post Type', i18n ) }
 					options={ postTypeOptions }
 					value={ this.props.postType }
@@ -162,6 +163,7 @@ class TaxonomyControl extends Component {
 				/>
 				{ taxonomyTypeOptions.length > 0 &&
 					<AdvancedSelectControl
+						className="lmn-control--attr-taxonomyType"
 						label={ __( 'Filter by Taxonomy', i18n ) }
 						options={ taxonomyTypeOptions }
 						value={ this.props.taxonomyType }
@@ -176,6 +178,7 @@ class TaxonomyControl extends Component {
 				{ taxonomyTypeOptions.length > 0 &&
 					<Fragment>
 						<AdvancedSelectControl
+							className="lmn-control--attr-taxonomyFilterType"
 							label={ __( 'Taxonomy Filter Type', i18n ) }
 							allowReset={ allowReset }
 							options={ [
@@ -203,6 +206,7 @@ class TaxonomyControl extends Component {
 				}
 				{ taxonomyTypeOptions.length > 0 &&
 					<AdvancedSelectControl
+						className="lmn-control--attr-taxonomyTypeToDisplay"
 						label={ __( 'Taxonomy to Display', i18n ) }
 						options={ taxonomyTypeOptions }
 						value={ this.props.taxonomyTypeToDisplay }

@@ -207,6 +207,7 @@ const InspectorControls = memo( props => {
 
 			<BlockControls>
 				<AlignmentToolbar
+					className="lmn-control--attr-contentAlign"
 					value={ props.contentAlign }
 					onChange={ contentAlign => props.setAttributes( { contentAlign } ) }
 					alignmentControls={ TOOLBAR_ALIGN_OPTIONS }

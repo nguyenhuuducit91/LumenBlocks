@@ -112,6 +112,7 @@ export const Controls = props => {
 			{ applyFilters( 'lumen.block-component.typography.before', null, props ) }
 			{ hasTextContent && (
 				<AdvancedTextControl
+					className="lmn-control--attr-text"
 					label={ __( 'Content', i18n ) }
 					hasPanelModifiedIndicator={ false }
 					isMultiline={ isMultiline }
@@ -363,6 +364,9 @@ export const Edit = memo( props => {
 				initialOpen={ initialOpen }
 				hasToggle={ hasToggle }
 				{ ...( hasToggle ? {
+					// The real attribute name, template and all — `titleShow`,
+					// `categoryShow` — so the applied-settings list can reach it.
+					attribute: getAttrNameFunction( attrNameTemplate )( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 					checked: getAttribute( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 					onChange: updateAttributeHandler( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 				} : {} ) }
@@ -380,6 +384,13 @@ export const Edit = memo( props => {
 					hasTextShadow={ hasTextShadow }
 					blockState={ blockState }
 				/>
+
+				{ /*
+				 * A block using this panel can add settings of its own to it.
+				 * The Posts block puts each part's margin and padding here, where
+				 * the rest of that part's styling already lives.
+				 */ }
+				{ props.children }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)

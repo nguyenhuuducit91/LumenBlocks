@@ -251,6 +251,7 @@ addFilter( 'lumen.block-component.icon.after', 'lumen/blockquote', output => {
 			<>
 				{ output }
 				<IconControl
+					className="lmn-control--attr-icon2"
 					label={ __( 'Open Icon', i18n ) }
 					value={ icon2 }
 					defaultValue={ defaultValue }

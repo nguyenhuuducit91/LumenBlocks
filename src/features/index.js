@@ -27,3 +27,8 @@ export * from './transform'
 export * from './typography'
 export * from './helpers'
 export * from './progress-bar'
+
+// The width checker, so blocks can validate a hand-written column width too.
+// Deep paths into this bundle do not resolve — it is an external mapped to a
+// global — so anything a block needs has to be named here.
+export { isSafeWidth, safeWidth } from './column/width-value'

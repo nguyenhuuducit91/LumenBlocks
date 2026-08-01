@@ -147,6 +147,7 @@ export const Edit = memo( props => {
 		<>
 			<BlockControls>
 				<AlignmentToolbar
+					className="lmn-control--attr-contentAlign"
 					value={ contentAlign }
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
 					alignmentControls={ props.hasContentJustify ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY }

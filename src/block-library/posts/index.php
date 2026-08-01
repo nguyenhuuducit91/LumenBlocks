@@ -20,6 +20,10 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 	function generate_render_item_from_lumen_posts_block( $post, $attributes, $template ) {
 		$image_size = $attributes['imageSize'];
 		$excerpt_length = $attributes['excerptLength'];
+		// Missing means an older post saved before this setting existed. Those
+		// were rendered with whatever markup the excerpt carried, but the
+		// default is to strip it, so they follow the default too.
+		$excerpt_strip_html = ! isset( $attributes['excerptStripHtml'] ) || $attributes['excerptStripHtml'];
 		$readmore_text = $attributes['readmoreText'];
 		$meta_separator = $attributes['metaSeparator'];
 		$category_highlighted = $attributes['categoryHighlighted'];
@@ -44,9 +48,61 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 				}
 			}
 
-			// If the featured_image is empty, remove the markup.
-			if ( empty( $featured_image ) ) {
+			/*
+			 * A post with no picture of its own.
+			 *
+			 * The author can ask for a placeholder instead of a gap — without
+			 * one, a single post missing its featured image makes a whole grid
+			 * go ragged. Only the `src` of the image already in the template is
+			 * replaced, so it keeps the classes and sizing the block gave it.
+			 */
+			if ( empty( $featured_image ) && ! empty( $attributes['imageFallbackShow'] ) ) {
+				$fallback = ! empty( $attributes['imageFallbackUrl'] )
+					? $attributes['imageFallbackUrl']
+					: lumen_posts_no_image_src();
+
+				$new_template = preg_replace_callback(
+					'/<img[^>]*>/',
+					function ( $match ) use ( $fallback ) {
+						$img = preg_replace( '/\ssrc="[^"]*"/', '', $match[0] );
+						$img = preg_replace( '/\salt="[^"]*"/', '', $img );
+
+						/*
+						 * `esc_url` is the wrong tool for the built-in
+						 * placeholder: `data:` is not one of the protocols it
+						 * allows, so it returns an empty string and the image
+						 * silently breaks. An author's own URL still goes
+						 * through it.
+						 */
+						$src = 0 === strpos( $fallback, 'data:image/svg+xml' )
+							? esc_attr( $fallback )
+							: esc_url( $fallback );
+
+						return str_replace(
+							'<img',
+							'<img src="' . $src . '" alt=""',
+							$img
+						);
+					},
+					$new_template
+				);
+			} elseif ( empty( $featured_image ) ) {
 				$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
+
+				/*
+				 * And the link that wrapped it.
+				 *
+				 * The figure sits inside an anchor when the image links to the
+				 * post, and removing only the figure left an empty `<a>` behind:
+				 * a link with nothing in it for a screen reader to announce, and
+				 * — now that a post can be laid out as a grid — an invisible
+				 * element occupying a cell and pushing the real content sideways.
+				 */
+				$new_template = preg_replace(
+					'/<a[^>]*class="[^"]*lmn-block-posts__image-link[^"]*"[^>]*>\s*<\/a>/',
+					'',
+					$new_template
+				);
 			} else {
 				$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
 			}
@@ -132,6 +188,18 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 		if ( strpos( $new_template, '!#excerpt!#' ) !== false ) {
 			$excerpt = Lumen_Posts_Block::get_excerpt_by_post_id( $post_id, $post, (int) $excerpt_length );
 
+			/*
+			 * Plain text, if that is what was asked for.
+			 *
+			 * `the_excerpt` wraps what it is given in a paragraph and leaves any
+			 * links and formatting in place, and inside this block that markup
+			 * brings its own margins and colours to a card whose typography is
+			 * set in the inspector.
+			 */
+			if ( $excerpt_strip_html && ! empty( $excerpt ) ) {
+				$excerpt = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( $excerpt ) ) );
+			}
+
 			// Trim the excerpt.
 			if ( ! empty( $excerpt ) ) {
 				$excerpt = wp_kses_post( $excerpt );
@@ -153,6 +221,33 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 		}
 
 		return $new_template;
+	}
+}
+
+if ( ! function_exists( 'lumen_posts_no_image_src' ) ) {
+	/**
+	 * The picture a post gets when it has none of its own.
+	 *
+	 * A data URI rather than a file: the build packages only the PHP out of
+	 * `src/`, so an SVG shipped there would resolve while developing and 404
+	 * once installed — a bug the way we work would never show us.
+	 *
+	 * `src/block-library/posts/no-image.js` carries the same drawing for the
+	 * editor. If one changes, change the other.
+	 *
+	 * @return {string} A data URI.
+	 */
+	function lumen_posts_no_image_src() {
+		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-hidden="true">'
+			. '<rect width="400" height="300" fill="#f0f0f1"/>'
+			. '<g fill="none" stroke="#c3c4c7" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">'
+			. '<rect x="90" y="80" width="220" height="150" rx="10"/>'
+			. '<path d="M110 205l55-55 40 40 30-30 55 45"/>'
+			. '</g>'
+			. '<circle cx="250" cy="120" r="16" fill="#c3c4c7"/>'
+			. '</svg>';
+
+		return 'data:image/svg+xml;charset=utf-8,' . rawurlencode( $svg );
 	}
 }
 
@@ -337,6 +432,7 @@ if ( ! class_exists( 'Lumen_Posts_Block' ) ) {
 				'postInclude' => '',
 				'imageSize' => 'full',
 				'excerptLength' => 55,
+				'excerptStripHtml' => true,
 				'readmoreText' => __( 'Continue Reading', LUMEN_I18N ),
 				'metaSeparator' => 'dot',
 				'categoryHighlighted' => false,

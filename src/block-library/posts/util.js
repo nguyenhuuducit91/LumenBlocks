@@ -12,6 +12,7 @@ import {
 	getTypographyClasses,
 } from '~lumen/features'
 import { getBlockStyle } from '~lumen/hooks'
+import { getNoImageSrc } from './no-image'
 import { META_SEPARATORS } from '~lumen/utils'
 
 /**
@@ -55,6 +56,101 @@ export const CONTENTS = [
 	},
 ]
 
+/**
+ * Which column each part of a post was put in.
+ *
+ * Deliberately not responsive. This decides the markup — which parts are
+ * children of which column — and markup cannot differ per device. What the
+ * columns then *look like* at each width is CSS, and that part stays
+ * responsive: their widths, their gaps, and whether they stack at all.
+ */
+const COLUMN_OF = {
+	'featured-image': 'itemColumnFeaturedImage',
+	category: 'itemColumnCategory',
+	title: 'itemColumnTitle',
+	meta: 'itemColumnMeta',
+	excerpt: 'itemColumnExcerpt',
+	readmore: 'itemColumnReadmore',
+}
+
+/**
+ * Lays the parts of a post out in real columns.
+ *
+ * Placing them with CSS grid alone put a part in the right column but on a row
+ * it shared with the other columns, so three parts stacked in column one were
+ * pulled apart by the height of whatever sat beside them. Columns have to be
+ * real elements for their contents to stack independently — the same reason the
+ * Columns block nests rather than places.
+ *
+ * Parts marked `full` are not in any column; they sit above or below the row of
+ * columns, keeping their place in the content order.
+ *
+ * @param {Object} attributes    Block attributes.
+ * @param {Array}  ordered       The parts, in content order, as [ key, node ].
+ * @param {Function} wrap        Builds an element: ( tag, className, children, key ).
+ * @return {Array} The children of the post.
+ */
+export const buildItemColumns = ( attributes, ordered, wrap ) => {
+	const count = parseInt( attributes.itemColumns, 10 ) || 2
+	const columns = []
+
+	for ( let i = 0; i < count; i++ ) {
+		columns.push( [] )
+	}
+
+	const before = []
+	const after = []
+	let seenColumn = false
+
+	ordered.forEach( ( [ key, node ] ) => {
+		const assigned = attributes[ COLUMN_OF[ key ] ] || ''
+		const index = parseInt( assigned, 10 )
+
+		if ( assigned && assigned !== 'full' && index >= 1 && index <= count ) {
+			columns[ index - 1 ].push( node )
+			seenColumn = true
+
+			return
+		}
+
+		// `full`, or no column of its own: above the row until one has been
+		// seen, below it afterwards, so the content order still reads.
+		if ( seenColumn ) {
+			after.push( node )
+		} else {
+			before.push( node )
+		}
+	} )
+
+	const row = wrap(
+		'div',
+		'lmn-block-posts__cols',
+		columns.map( ( parts, i ) => wrap( 'div', 'lmn-block-posts__col', parts, `col-${ i }` ) ),
+		'cols'
+	)
+
+	return [ ...before, row, ...after ]
+}
+
+/**
+ * The text of some markup.
+ *
+ * Parsed rather than assigned to an element: an excerpt is somebody else's
+ * content, and `innerHTML` on a detached `<div>` still fetches images — which
+ * is how an `onerror` handler in a post excerpt would end up running in the
+ * editor. `DOMParser` builds an inert document that loads nothing.
+ *
+ * @param {string} html The markup.
+ * @return {string} The text in it, with runs of whitespace collapsed.
+ */
+const stripHtml = html => {
+	const text = new window.DOMParser()
+		.parseFromString( String( html || '' ), 'text/html' )
+		.body.textContent || ''
+
+	return text.replace( /\s+/g, ' ' ).trim()
+}
+
 export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 	const {
 		className = '',
@@ -66,10 +162,13 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 		dateShow = true,
 		commentsShow = true,
 		imageShow = true,
+		imageFallbackShow = false,
+		imageFallbackUrl = '',
 		categoryShow = true,
 		titleShow = true,
 		metaShow = true,
 		excerptShow = true,
+		excerptStripHtml = true,
 		readmoreShow = true,
 		contentOrder = [],
 	} = attributes
@@ -118,7 +217,14 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 			post_excerpt_lumen: postExcerptLumen,
 		} = post
 
-		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
+		/*
+		 * A post with no picture of its own gets the fallback, if the author
+		 * asked for one. Without it a grid of posts goes ragged the moment one
+		 * of them has no featured image.
+		 */
+		const ownImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
+		const featuredImgSrc = ownImgSrc ||
+			( imageFallbackShow ? ( imageFallbackUrl || getNoImageSrc() ) : '' )
 
 		const enableHeight = ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( style?.name )
 		const enableWidth = [ 'list', 'horizontal', 'horizontal-2' ].includes( style?.name )
@@ -192,19 +298,33 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 		)
 		const comments = <span>{ commentsNum }</span>
 
+		/*
+		 * Strip first, then trim.
+		 *
+		 * The words are counted by splitting on spaces, and `<p>` and `<a
+		 * href="…">` count as words that way — an excerpt could lose half its
+		 * text to its own markup. Doing it in this order also means the count
+		 * matches what PHP produces for the same post on the front end.
+		 */
+		const excerptSource = excerptStripHtml ? stripHtml( postExcerptLumen ) : postExcerptLumen
+
 		// Trim the excerpt.
-		let excerptString = postExcerptLumen.split( ' ' )
+		let excerptString = excerptSource.split( ' ' )
 		if ( excerptString.length > ( excerptLength || 55 ) ) {
 			excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
 		} else {
-			excerptString = post.post_excerpt_lumen
+			excerptString = excerptSource
 		}
 
 		const excerpt = excerptString && (
-			<div
-				className={ excerptClassNames }
-				dangerouslySetInnerHTML={ { __html: excerptString } }
-			/>
+			excerptStripHtml
+				? <div className={ excerptClassNames }>{ excerptString }</div>
+				: (
+					<div
+						className={ excerptClassNames }
+						dangerouslySetInnerHTML={ { __html: excerptString } }
+					/>
+				)
 		)
 
 		const readmore = (
@@ -241,9 +361,21 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 			return comp
 		} )
 
+		const wrap = ( tag, className, children, key ) => (
+			<div className={ className } key={ key }>{ children }</div>
+		)
+
+		const children = attributes.itemLayout === 'custom'
+			? buildItemColumns(
+				attributes,
+				contentOrder.map( key => [ key, contentFactory[ key ] ] ).filter( ( [ , node ] ) => node ),
+				wrap
+			)
+			: compact( contents )
+
 		let output = (
 			<article>
-				{ compact( contents ).map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
+				{ children.map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
 			</article>
 		)
 
@@ -409,9 +541,21 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 		return comp
 	} )
 
+	const wrap = ( tag, className, children, key ) => (
+		<div className={ className } key={ key }>{ children }</div>
+	)
+
+	const children = attributes.itemLayout === 'custom'
+		? buildItemColumns(
+			attributes,
+			contentOrder.map( key => [ key, contentFactory[ key ] ] ).filter( ( [ , node ] ) => node ),
+			wrap
+		)
+		: compact( contents )
+
 	let output = (
 		<article>
-			{ compact( contents ).map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
+			{ children.map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
 		</article>
 	)
 

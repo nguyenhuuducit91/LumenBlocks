@@ -208,6 +208,7 @@ const InspectorControls = memo( props => {
 
 			<InspectorLayoutControls>
 				<AdvancedToggleControl
+					className="lmn-control--attr-alignLastBlockToBottom"
 					label={ __( 'Align Last Block to Bottom', i18n ) }
 					checked={ props.alignLastBlockToBottom }
 					onChange={ alignLastBlockToBottom => props.setAttributes( { alignLastBlockToBottom } ) }
