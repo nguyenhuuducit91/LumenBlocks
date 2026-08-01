@@ -225,7 +225,19 @@ export const usePreviewRenderer = (
 		let _parsedBlocksForInsertion = null
 		const initialize = async () => {
 			const _content = template
-			if ( selectedTab === 'patterns' ) {
+
+			/*
+			 * A design is either self-contained markup or a list of references to
+			 * other designs, which are fetched and concatenated. That is a property
+			 * of the template, not of the tab it is being shown on — but this used
+			 * to branch on the tab, so a page could only ever be assembled from
+			 * patterns already in the catalogue. Anything shipping a page as its own
+			 * markup hit `_content.map is not a function` and span forever.
+			 *
+			 * Branching on the shape keeps the reference form working exactly as
+			 * before and simply stops rejecting the other one.
+			 */
+			if ( selectedTab === 'patterns' || typeof _content === 'string' ) {
 				const categorySlug = getCategorySlug( designId )
 
 				// For preview: always replace placeholders (ignore dev mode)

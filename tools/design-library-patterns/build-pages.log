@@ -1,0 +1,37 @@
+• lumen-page-home-corporate ✓ 65 blocks, 45 with css, 42371b
+• lumen-page-home-saas      ✓ 69 blocks, 50 with css, 46818b
+• lumen-page-home-agency    ✓ 58 blocks, 48 with css, 37568b
+• lumen-page-home-consulting✓ 56 blocks, 45 with css, 32306b
+• lumen-page-home-industrial✓ 74 blocks, 50 with css, 45328b
+• lumen-page-home-startup   ✓ 54 blocks, 41 with css, 33677b
+• lumen-page-about          ✓ 47 blocks, 35 with css, 23361b
+• lumen-page-about-values   ✓ 46 blocks, 36 with css, 30860b
+• lumen-page-team           ✓ 78 blocks, 64 with css, 89980b
+• lumen-page-about-night    ✓ 31 blocks, 23 with css, 15090b
+• lumen-page-services       ✓ 55 blocks, 45 with css, 35126b
+• lumen-page-service-detail ✓ 54 blocks, 40 with css, 32515b
+• lumen-page-solutions      ✓ 54 blocks, 39 with css, 37124b
+• lumen-page-services-night ✓ 50 blocks, 35 with css, 33016b
+• lumen-page-product        ✓ 60 blocks, 46 with css, 35575b
+• lumen-page-product-features✓ 55 blocks, 41 with css, 34698b
+• lumen-page-integrations   ✓ 47 blocks, 35 with css, 28614b
+• lumen-page-pricing        ✓ 91 blocks, 68 with css, 53360b
+• lumen-page-pricing-night  ✓ 71 blocks, 53 with css, 39860b
+• lumen-page-contact        ✓ 50 blocks, 38 with css, 29808b
+• lumen-page-demo           ✓ 38 blocks, 33 with css, 25245b
+• lumen-page-contact-night  ✓ 37 blocks, 28 with css, 23867b
+• lumen-page-careers        ✓ 64 blocks, 50 with css, 38555b
+• lumen-page-job            ✓ 48 blocks, 37 with css, 30195b
+• lumen-page-work           ✓ 56 blocks, 41 with css, 37872b
+• lumen-page-case-study     ✓ 52 blocks, 39 with css, 28267b
+• lumen-page-faq            ✓ 54 blocks, 35 with css, 35088b
+• lumen-page-press          ✓ 43 blocks, 31 with css, 25489b
+• lumen-page-partners       ✓ 52 blocks, 37 with css, 38320b
+• lumen-page-sustainability ✓ 46 blocks, 36 with css, 24586b
+• lumen-page-webinar        ✓ 61 blocks, 50 with css, 59368b
+• lumen-page-launch         ✓ 31 blocks, 23 with css, 19165b
+• lumen-page-thanks         ✓ 27 blocks, 25 with css, 17099b
+• lumen-page-legal          ✓ 53 blocks, 38 with css, 32033b
+
+34/34 hợp lệ
+node exit=0

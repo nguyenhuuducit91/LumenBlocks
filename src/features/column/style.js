@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import { safeWidth } from './width-value'
+
+/**
  * External dependencies
  */
 import { __getValue } from '~lumen/utils'
@@ -22,6 +27,7 @@ const readWidthUnit = ( getAttribute, device ) => {
 	return {
 		unit,
 		isPercent: unit === '%',
+		isCustom: unit === 'custom',
 	}
 }
 
@@ -37,7 +43,26 @@ const readWidthUnit = ( getAttribute, device ) => {
  * @param {string} unit  The unit to use.
  * @return {string} The value in the right unit.
  */
-const withUnit = ( value, unit ) => ( unit === '%' ? value : value.replace( /%$/, unit ) )
+const withUnit = ( value, unit ) => {
+	if ( unit === '%' ) {
+		return value
+	}
+
+	/*
+	 * A written-out width already carries its own units, so the `%` the format
+	 * string appended is taken off and nothing is put in its place.
+	 */
+	return value.replace( /%$/, unit === 'custom' ? '' : unit )
+}
+
+/**
+ * Whether a written-out width is usable, and what it is.
+ *
+ * @param {Function} getAttribute Attribute reader.
+ * @param {string}   device       Which viewport.
+ * @return {string|undefined} The width, or undefined when it will not do.
+ */
+const readCustomWidth = ( getAttribute, device ) => safeWidth( getAttribute( 'columnWidth', device ) )
 
 export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
@@ -67,7 +92,13 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			...dependencies,
 		],
 		valueCallback: ( value, getAttribute, device ) => {
-			const { unit, isPercent } = readWidthUnit( getAttribute, device )
+			const {
+				unit, isPercent, isCustom,
+			} = readWidthUnit( getAttribute, device )
+
+			if ( isCustom && ! readCustomWidth( getAttribute, device ) ) {
+				return undefined
+			}
 
 			if ( device === 'desktop' ) {
 				return withUnit( value, unit )
@@ -101,7 +132,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			...dependencies,
 		],
 		valueCallback: ( value, getAttribute, device ) => {
-			const { unit, isPercent } = readWidthUnit( getAttribute, device )
+			const {
+				unit, isPercent, isCustom,
+			} = readWidthUnit( getAttribute, device )
+
+			if ( isCustom && ! readCustomWidth( getAttribute, device ) ) {
+				return undefined
+			}
+
 			const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 
 			if ( adjacentCount && isPercent ) {
@@ -138,7 +176,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			// No need to do this in the editor since it already does this.
 			const value = device === 'desktop' && ! getAttribute( 'columnWrapDesktop' ) ? _value : _value.replace( /^var(--lmn-flex-grow, 1) 1/, '0 1' )
 
-			const { unit, isPercent } = readWidthUnit( getAttribute, device )
+			const {
+				unit, isPercent, isCustom,
+			} = readWidthUnit( getAttribute, device )
+
+			if ( isCustom && ! readCustomWidth( getAttribute, device ) ) {
+				return undefined
+			}
+
 			const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 
 			if ( adjacentCount && isPercent ) {

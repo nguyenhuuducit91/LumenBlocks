@@ -230,7 +230,10 @@ export const Controls = props => {
 						? columnWidthUnits.map( unit => ( ( unit || '%' ) === '%' ? '100' : '' ) )
 						: columnWidths }
 					allowReset={ true }
-					units={ [ '%', 'px', 'rem', 'em' ] }
+					// `custom` is the odd one out: it means the author writes the
+					// whole width, so a column can be `calc(100% - 200px)` — the
+					// rest of what is left beside a fixed one.
+					units={ [ '%', 'px', 'rem', 'em', 'custom' ] }
 					unit={ columnWidthUnits }
 					onChangeUnit={ ( unit, index ) => {
 						const unitName = getAttributeName( 'columnWidthUnit', deviceType )

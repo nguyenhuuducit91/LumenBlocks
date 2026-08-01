@@ -3,7 +3,12 @@ export const addAttributes = attrObject => {
 		attributes: {
 			columnWidth: {
 				lmnResponsive: true,
-				type: 'number',
+				/*
+				 * A number in every unit but one. With the unit set to `custom`
+				 * this holds what the author wrote — `calc(100% - 200px)` — so
+				 * the type has to allow both or the block fails to parse.
+				 */
+				type: [ 'number', 'string' ],
 				default: '',
 			},
 			/*

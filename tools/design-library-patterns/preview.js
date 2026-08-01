@@ -7,8 +7,9 @@ const fs = require( 'fs' )
 const { chromium } = require( '/media/vietis/DATA_ME/PROJECT_ME/WordpressPlugin/lumen-blocks/node_modules/playwright-core' )
 
 const DIST = '/media/vietis/DATA_ME/PROJECT_ME/WordpressPlugin/lumen-blocks/dist'
-const built = require( './built.json' )
-const only = process.argv.slice( 2 )
+const SET = process.argv.includes( '--set=pages' ) ? 'pages' : 'patterns'
+const built = require( SET === 'pages' ? './built-pages.json' : './built.json' )
+const only = process.argv.slice( 2 ).filter( a => ! a.startsWith( '--' ) )
 const list = only.length ? built.filter( b => only.includes( b.id ) ) : built
 
 const page = `<!doctype html><html><head><meta charset="utf-8">
@@ -22,6 +23,17 @@ const page = `<!doctype html><html><head><meta charset="utf-8">
   /* Stand-in for the theme's content width, which a bare page has none of. */
   .entry-content { --wp--style--global--content-size: 840px; --wp--style--global--wide-size: 1100px; }
   .alignfull { width:100%; }
+  /*
+   * Reveal the blocks that stay hidden until their own frontend JS runs.
+   * count-up, progress-bar and progress-circle ship
+   * an opacity:0 rule lifted by a scroll observer this static page never
+   * loads — so a screenshot showed the labels of a stats band with nothing
+   * above them, and the QA pass read that as a broken pattern.
+   */
+  .lmn-block-count-up__text,
+  .lmn-progress-bar__inner-text,
+  .lmn-progress-circle,
+  .lmn-progress-bar { opacity: 1 !important; }
 </style></head><body>
 ${ list.map( b => `<div class="qa-frame"><div class="qa-label">${ b.id } — ${ b.category }</div>
 <div class="entry-content">${ b.markup }</div></div>` ).join( '\n' ) }

@@ -1,18 +1,19 @@
 /**
- * Writes the built patterns into the plugin as PHP.
+ * Writes the built designs into the plugin as PHP.
  *
  * PHP rather than JSON because gulpfile's buildInclude only packages
  * `src/**\/*.php` — a JSON data file would work in the repo and then vanish
  * from the built zip.
  */
 const fs = require( 'fs' )
-const built = require( './built.json' )
+const SET = process.argv.includes( '--set=pages' ) ? 'pages' : 'patterns'
+const built = require( SET === 'pages' ? './built-pages.json' : './built.json' )
 
-const DEST = '/media/vietis/DATA_ME/PROJECT_ME/WordpressPlugin/lumen-blocks/src/design-library/patterns.php'
+const DEST = `/media/vietis/DATA_ME/PROJECT_ME/WordpressPlugin/lumen-blocks/src/design-library/${ SET }.php`
 
 const bad = built.filter( b => ! b.ok )
 if ( bad.length ) {
-	console.error( 'refusing to export, invalid patterns:', bad.map( b => b.id ).join( ', ' ) )
+	console.error( 'refusing to export, invalid:', bad.map( b => b.id ).join( ', ' ) )
 	process.exit( 1 )
 }
 
@@ -28,7 +29,7 @@ const entries = built.map( b => `	${ q( b.id ) } => array(
 
 const php = `<?php
 /**
- * Built-in design library patterns.
+ * Built-in design library ${ SET === 'pages' ? 'page templates' : 'patterns' }.
  *
  * Generated, not hand-written. Every template here was produced by running the
  * plugin's own blocks through wp.blocks.serialize() in a real editor and then
@@ -39,7 +40,7 @@ const php = `<?php
  * the upstream examples pointed their images at source.unsplash.com, which no
  * longer resolves.
  *
- * To regenerate: see tools/README for the pattern build harness.
+ * To regenerate: tools/design-library-patterns/README.md
  *
  * @package Lumen
  */

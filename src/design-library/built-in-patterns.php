@@ -1,14 +1,17 @@
 <?php
 /**
- * Ships a set of patterns with the plugin.
+ * Ships designs with the plugin, for both design library tabs.
  *
- * The design library reads from whatever CDN the site points it at, and ships
- * pointing at none — so out of the box it opened empty. These patterns are
- * merged into whatever the CDN returns (or into nothing, if there is no CDN),
- * which means a fresh install has something to insert on the first day.
+ * The library reads from whatever CDN the site points it at, and ships pointing
+ * at none — so out of the box both tabs opened empty. These designs are merged
+ * into whatever the CDN returns (or into nothing, if there is no CDN), which
+ * means a fresh install has something to insert on the first day.
  *
- * The templates live in patterns.php and are generated rather than written by
- * hand; see the header of that file.
+ * Two sets, one mechanism:
+ *   - patterns.php — single sections, for the Patterns tab.
+ *   - pages.php    — whole page templates, for the Pages tab.
+ *
+ * Both are generated rather than written by hand; see the header of either file.
  *
  * @package Lumen
  */
@@ -29,26 +32,40 @@ if ( ! class_exists( 'Lumen_Built_In_Patterns' ) ) {
 		/**
 		 * Loaded templates, kept for the life of the request.
 		 *
-		 * @var array|null
+		 * @var array Keyed by set name.
 		 */
-		private static $cache = null;
+		private static $cache = array();
 
 		public function __construct() {
 			add_filter( 'lumen_design_library', array( $this, 'add_patterns' ), 10, 2 );
 		}
 
 		/**
-		 * Reads the generated pattern file once per request.
+		 * Reads a generated design file, once per request per set.
+		 *
+		 * The two files are large and only one of them is ever needed on a given
+		 * request, so neither is loaded until the tab that shows it is opened.
+		 *
+		 * @param string $set Either `patterns` (single sections) or `pages`.
 		 *
 		 * @return array Designs keyed by id.
 		 */
-		public static function get_patterns() {
-			if ( self::$cache === null ) {
-				$file = plugin_dir_path( __FILE__ ) . 'patterns.php';
-				$patterns = file_exists( $file ) ? require $file : array();
-				self::$cache = is_array( $patterns ) ? $patterns : array();
+		public static function get_designs( $set = 'patterns' ) {
+			if ( ! isset( self::$cache[ $set ] ) ) {
+				$file = plugin_dir_path( __FILE__ ) . ( $set === 'pages' ? 'pages.php' : 'patterns.php' );
+				$designs = file_exists( $file ) ? require $file : array();
+				self::$cache[ $set ] = is_array( $designs ) ? $designs : array();
 			}
-			return self::$cache;
+			return self::$cache[ $set ];
+		}
+
+		/**
+		 * Back-compat shim for anything that called the single-set accessor.
+		 *
+		 * @return array
+		 */
+		public static function get_patterns() {
+			return self::get_designs( 'patterns' );
 		}
 
 		/**
@@ -60,13 +77,13 @@ if ( ! class_exists( 'Lumen_Built_In_Patterns' ) ) {
 		 * @return array
 		 */
 		public function add_patterns( $designs, $type = 'patterns' ) {
-			// These are sections, not whole pages. Adding them to the Pages tab
-			// would promise a layout and deliver a band.
-			if ( $type !== 'patterns' ) {
-				return $designs;
-			}
+			$set = $type === 'pages' ? 'pages' : 'patterns';
 
-			$patterns = apply_filters( 'lumen_built_in_patterns', self::get_patterns() );
+			$patterns = apply_filters(
+				'lumen_built_in_patterns',
+				self::get_designs( $set ),
+				$set
+			);
 			if ( empty( $patterns ) ) {
 				return $designs;
 			}

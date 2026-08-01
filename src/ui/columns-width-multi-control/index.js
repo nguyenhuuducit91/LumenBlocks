@@ -1,7 +1,8 @@
 /**
  * Internal dependencies
  */
-import { AdvancedRangeControl } from '~lumen/ui'
+import { AdvancedRangeControl, AdvancedTextControl } from '~lumen/ui'
+import { isSafeWidth } from '~lumen/features/column/width-value'
 import { BaseControl } from '../base-control2'
 import { ResetButton } from '../base-control2/reset-button'
 import ControlIconToggle from '../control-icon-toggle'
@@ -30,7 +31,14 @@ const ColumnsWidthMultiControl = props => {
 	// Empty means per cent, which is what these widths have always been.
 	const unitAt = i => ( hasUnitPerColumn ? props.unit[ i ] : props.unit ) || props.units?.[ 0 ] || '%'
 
-	const unitOptions = ( props.units || [] ).map( unit => ( { value: unit } ) )
+	/*
+	 * "custom" is not a unit but a mode: the author writes the whole width, so
+	 * the toggle shows `fx` rather than the word, which would not fit and would
+	 * read as a unit alongside px and rem.
+	 */
+	const unitOptions = ( props.units || [] ).map( unit => (
+		unit === 'custom' ? { value: unit, label: __( 'fx', i18n ) } : { value: unit }
+	) )
 
 	return (
 		<BaseControl
@@ -48,30 +56,52 @@ const ColumnsWidthMultiControl = props => {
 				const unit = unitAt( i )
 				const isPercent = unit === '%'
 
+				// Not a unit but the absence of one: the width is written out in
+				// full, so a slider cannot express it and a suffix would be wrong.
+				const isCustom = unit === 'custom'
+
 				return (
 					<div key={ i } className="lmn-columns-width-multi-control__range">
 						<span className="lmn-columns-width-multi-control__range__icon">{ i + 1 }</span>
 						<div className="lmn-columns-width-multi-control__range__range-control">
-							<AdvancedRangeControl
-								className="lmn--no-padding"
-								value={ props.values[ i ] }
-								/*
-								 * A percentage stops at 100; a fixed width does
-								 * not, and a slider that stopped there would put
-								 * a ceiling on a perfectly ordinary 320px column.
-								 */
-								max={ isPercent ? 100 : 1200 }
-								sliderMax={ isPercent ? 100 : 600 }
-								min={ 0 }
-								onChange={ value => {
-									const newValues = [ ...props.values ]
-									newValues[ i ] = value
-									props.onChange( newValues )
-								} }
-								allowReset={ false }
-								placeholder={ props.placeholders ? props.placeholders[ i ] : '' }
-								forcePlaceholder={ true }
-							/>
+							{ isCustom ? (
+								<AdvancedTextControl
+									className={ classnames( 'lmn--no-padding', {
+										'lmn-columns-width-multi-control__invalid':
+											props.values[ i ] && ! isSafeWidth( props.values[ i ] ),
+									} ) }
+									value={ props.values[ i ] }
+									placeholder="calc(100% - 200px)"
+									onChange={ value => {
+										const newValues = [ ...props.values ]
+										newValues[ i ] = value
+										props.onChange( newValues )
+									} }
+									allowReset={ false }
+									hasPanelModifiedIndicator={ false }
+								/>
+							) : (
+								<AdvancedRangeControl
+									className="lmn--no-padding"
+									value={ props.values[ i ] }
+									/*
+									 * A percentage stops at 100; a fixed width does
+									 * not, and a slider that stopped there would put
+									 * a ceiling on a perfectly ordinary 320px column.
+									 */
+									max={ isPercent ? 100 : 1200 }
+									sliderMax={ isPercent ? 100 : 600 }
+									min={ 0 }
+									onChange={ value => {
+										const newValues = [ ...props.values ]
+										newValues[ i ] = value
+										props.onChange( newValues )
+									} }
+									allowReset={ false }
+									placeholder={ props.placeholders ? props.placeholders[ i ] : '' }
+									forcePlaceholder={ true }
+								/>
+							) }
 							{ props.allowReset && (
 								<ResetButton
 									allowReset={ props.allowReset }
@@ -98,7 +128,10 @@ const ColumnsWidthMultiControl = props => {
 									labelPosition="left"
 								/>
 							)
-							: <span className="lmn-columns-width-multi-control__range__suffix">{ unit }</span>
+							: (
+								! isCustom &&
+									<span className="lmn-columns-width-multi-control__range__suffix">{ unit }</span>
+							)
 						}
 					</div>
 				)

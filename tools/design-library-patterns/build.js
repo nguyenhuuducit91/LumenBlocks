@@ -9,9 +9,14 @@
  */
 const fs = require( 'fs' )
 const { withEditor } = require( './lib' )
-const PATTERNS = require( './patterns' )
+const PATTERNS = require( process.argv.includes( '--set=pages' ) ? './pages' : './patterns' )
 
-const ONLY = process.argv.slice( 2 )
+// `--set=pages` builds whole-page templates instead of single sections. They
+// share every mechanism; only the source module and the output file differ.
+const ARGV = process.argv.slice( 2 )
+const SET = ( ARGV.find( a => a.startsWith( '--set=' ) ) || '--set=patterns' ).split( '=' )[ 1 ]
+const OUT = SET === 'pages' ? '/built-pages.json' : '/built.json'
+const ONLY = ARGV.filter( a => ! a.startsWith( '--' ) )
 const selected = ONLY.length ? PATTERNS.filter( p => ONLY.includes( p.id ) ) : PATTERNS
 
 ;( async () => {
@@ -214,13 +219,13 @@ const selected = ONLY.length ? PATTERNS.filter( p => ONLY.includes( p.id ) ) : P
 	let merged = results
 	if ( ONLY.length ) {
 		let prior = []
-		try { prior = JSON.parse( fs.readFileSync( __dirname + '/built.json', 'utf8' ) ) } catch ( e ) {}
+		try { prior = JSON.parse( fs.readFileSync( __dirname + OUT, 'utf8' ) ) } catch ( e ) {}
 		const byId = new Map( prior.map( r => [ r.id, r ] ) )
 		results.forEach( r => byId.set( r.id, r ) )
 		// Keep the order patterns.js declares, so the library reads in that order.
 		merged = PATTERNS.map( p => byId.get( p.id ) ).filter( Boolean )
 	}
-	fs.writeFileSync( __dirname + '/built.json', JSON.stringify( merged, null, 1 ) )
+	fs.writeFileSync( __dirname + OUT, JSON.stringify( merged, null, 1 ) )
 	const bad = results.filter( r => ! r.ok )
 	console.log( `\n${ results.length - bad.length }/${ results.length } hợp lệ` )
 	if ( bad.length ) { process.exitCode = 1 }
