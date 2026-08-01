@@ -80,6 +80,7 @@ export const BackgroundControls = props => {
 				/>
 			}
 			<ColorPaletteControl
+				visualGuide={ props.visualGuide }
 				label={ __( 'Background Color', i18n ) }
 				attribute={ getAttrName( 'backgroundColor' ) }
 				onChange={ value => {

@@ -151,6 +151,11 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 					<?php } ?>
 				<?php } ?>
 
+				<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-about' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'admin.php?page=lumen-about' ) ?>">
+					<span><?php _e( 'About', LUMEN_I18N ) ?></span>
+				</a>
+
 				<?php if ( $display_contact_tab && LUMEN_BUILD !== 'free' ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'lumen_page_lumen-contact' ? 's-active' : '' ?>"
 						href="<?php echo $contact_url ?>">

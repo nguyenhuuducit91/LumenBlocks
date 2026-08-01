@@ -70,9 +70,31 @@
 }
 
 // Color the toggle orange if we have a tablet or mobile value that's set.
+/*
+ * Says "another viewport or state holds a value here".
+ *
+ * The amber fill alone is a 14px square among grey icons, and it is missed —
+ * which matters, because the thing it warns about is the commonest mistake in
+ * a responsive builder: styling tablet while believing you are on desktop. A
+ * dot on the corner reads at a glance, and survives being colour-blind or
+ * printed in grey, which a colour change on its own does not.
+ */
 .lmn-label-unit-toggle > .lmn-label-unit-toggle__wrapper:not(.is-open):has(.has-value) {
 	button.is-active {
 		background: #ffc107;
+		position: relative;
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: -1px;
+			right: -1px;
+			width: 5px;
+			height: 5px;
+			border: 1px solid #fff;
+			border-radius: 50%;
+			background: #b26a00;
+		}
 	}
 }
 // Color the actual device button when the toggle is open.

@@ -1,0 +1,173 @@
+/**
+ * Motion effects.
+ *
+ * The per-block half of this is three custom properties written by
+ * `style.js`; everything that can be shared — the keyframes, the timing
+ * defaults, the way an animation is armed and fired — lives here, so a page
+ * with forty animated blocks still ships one copy of it.
+ *
+ * The sequence is: the script marks a block as armed, which hides it; the
+ * block scrolls into view; the script marks it visible, which runs the
+ * animation. A block whose breakpoint has no effect set has no
+ * `--lmn-entrance-start`, so arming it changes nothing and it simply shows.
+ */
+
+/**
+ * Armed, waiting to be scrolled to.
+ *
+ * The default of `1` matters: it is what a block falls back to when the
+ * script runs but the block has no effect at this width. Hiding it would be
+ * permanent, since nothing would ever come along to reveal it.
+ */
+.lmn-block.lmn--entrance-ready {
+	opacity: var(--lmn-entrance-start, 1);
+}
+
+.lmn-block.lmn--entrance-visible {
+	animation-name: var(--lmn-entrance);
+	animation-duration: var(--lmn-entrance-duration, 0.7s);
+	animation-delay: var(--lmn-entrance-delay, 0s);
+	animation-timing-function: var(--lmn-entrance-easing, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+	animation-fill-mode: both;
+}
+
+/*
+ * Motion can cause nausea and migraines for some readers, and the browser
+ * already knows who they are. They get the content, immediately, with no
+ * movement at all.
+ */
+@media (prefers-reduced-motion: reduce) {
+
+	.lmn-block.lmn--entrance-ready,
+	.lmn-block.lmn--entrance-visible {
+		opacity: 1;
+		animation: none !important;
+	}
+}
+
+@keyframes lmn-fade-in {
+
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes lmn-fade-up {
+
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes lmn-fade-down {
+
+	from {
+		opacity: 0;
+		transform: translateY(-24px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes lmn-fade-left {
+
+	from {
+		opacity: 0;
+		transform: translateX(24px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes lmn-fade-right {
+
+	from {
+		opacity: 0;
+		transform: translateX(-24px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes lmn-zoom-in {
+
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes lmn-zoom-out {
+
+	from {
+		opacity: 0;
+		transform: scale(1.1);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes lmn-flip-up {
+
+	from {
+		opacity: 0;
+		transform: perspective(800px) rotateX(-35deg);
+	}
+
+	to {
+		opacity: 1;
+		transform: perspective(800px) rotateX(0);
+	}
+}
+
+@keyframes lmn-flip-left {
+
+	from {
+		opacity: 0;
+		transform: perspective(800px) rotateY(35deg);
+	}
+
+	to {
+		opacity: 1;
+		transform: perspective(800px) rotateY(0);
+	}
+}
+
+@keyframes lmn-rise {
+
+	from {
+		opacity: 0;
+		transform: translateY(48px) scale(0.96);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}

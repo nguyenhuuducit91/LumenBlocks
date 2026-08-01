@@ -12,6 +12,7 @@ import {
 } from '@wordpress/element'
 import classNames from 'classnames'
 import { useRafState } from '~lumen/hooks'
+import { createUniqueClass } from '~lumen/utils'
 
 const VisualGuideContext = createContext( null )
 
@@ -21,7 +22,14 @@ export const useVisualGuideContext = () => {
 
 const withVisualGuideContext = createHigherOrderComponent(
 	WrappedComponent => props => {
-		const uniqueId = props.attributes.uniqueId
+		/*
+		 * A block that has never been saved has no `uniqueId` yet — it renders
+		 * with a temporary class derived from its client id instead (see
+		 * `block-div`). Reading the attribute alone produced the selector
+		 * `.lmn-` for every unsaved block, so the visual guide highlighted
+		 * nothing at all until the post had been saved once.
+		 */
+		const uniqueId = props.attributes.uniqueId || createUniqueClass( props.clientId )
 		const [ highlightStyles, setHighlightStyles ] = useRafState( null )
 
 		useEffect( () => {

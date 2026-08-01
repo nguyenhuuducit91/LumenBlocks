@@ -105,6 +105,10 @@ export const Edit = memo( props => {
 						help={ <ColorSchemesHelp /> }
 					/>
 					<BackgroundControls
+						visualGuide={ {
+							selector: '',
+							highlight: 'outline',
+						} }
 						attrNameTemplate="block%s"
 						onBackgroundEnableAttribute="hasBackground"
 						backgroundMediaAllowVideo={ backgroundMediaAllowVideo } />
@@ -115,6 +119,10 @@ export const Edit = memo( props => {
 					initialOpen={ initialOpen === 'borders' }
 				>
 					<BorderControls
+						visualGuide={ {
+							selector: '',
+							highlight: 'outline',
+						} }
 						attrNameTemplate="block%s"
 						placeholderTemplate="block-background"
 						borderTypeValue={ getPlaceholder( 'block-background-border-style' ) }

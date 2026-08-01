@@ -1,14 +1,25 @@
 /**
+ * Custom CSS.
+ *
+ * The escape hatch: whatever the panels do not offer, an author can write here.
+ * The attributes and both render points already existed — the panel held an
+ * advertisement where the editor should be.
+ *
+ * What is written is scoped to this block before it reaches the page, so a rule
+ * here cannot restyle the rest of the site. See `css.js` for how, and for what
+ * is filtered out on the way.
+ */
+
+/**
  * External dependencies
  */
+import { i18n } from 'lumen'
 import {
-	i18n, isPro, showProNotice,
-} from 'lumen'
-import {
+	CodeTextareaControl,
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
-	ProControl,
 } from '~lumen/ui'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~lumen/hooks'
 
 /**
  * WordPress dependencies
@@ -16,14 +27,15 @@ import {
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useBlockAttributesContext } from '~lumen/hooks'
+
+/**
+ * Internal dependencies
+ */
+import { filterCss, SELECTOR_TOKEN } from './css'
 
 export const Edit = props => {
-	const customCSSMinified = useBlockAttributesContext( attributes => attributes.customCSSMinified )
-
-	if ( ! showProNotice && ! isPro ) {
-		return null
-	}
+	const customCSS = useBlockAttributesContext( attributes => attributes.customCSS )
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<Fragment>
@@ -31,15 +43,31 @@ export const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Custom CSS', i18n ) }
 					id="custom-css"
-					isPremiumPanel={ ! isPro }
-					showModifiedIndicator={ !! customCSSMinified }
+					showModifiedIndicator={ !! customCSS }
 				>
-					{ ! isPro && <ProControl type="custom-css" /> }
-					{ isPro &&
-						applyFilters( 'lumen.block-component.custom-css.control', null, {
-							mainBlockClass: props.mainBlockClass,
-						} )
-					}
+					<CodeTextareaControl
+						label={ __( 'Custom CSS', i18n ) }
+						value={ customCSS }
+						onChange={ value => setAttributes( {
+							customCSS: value,
+							// Kept for the frontend, which must not have to
+							// filter anything at render time.
+							customCSSMinified: filterCss( value )
+								.replace( /\s*\n\s*/g, '' )
+								.replace( /\s{2,}/g, ' ' )
+								.trim(),
+						} ) }
+						help={ __(
+							'Write “selector” to mean this block. Anything else is treated as being inside it, so these rules cannot affect the rest of the page.',
+							i18n
+						) }
+						placeholder={ `${ SELECTOR_TOKEN } {\n\tbox-shadow: 0 20px 40px rgba(0,0,0,.15);\n}\n\n${ SELECTOR_TOKEN }:hover .lmn-button {\n\tletter-spacing: 1px;\n}` }
+						rows={ 8 }
+					/>
+
+					{ applyFilters( 'lumen.block-component.custom-css.control', null, {
+						mainBlockClass: props.mainBlockClass,
+					} ) }
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>
 		</Fragment>

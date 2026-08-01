@@ -79,6 +79,7 @@ export const BorderControls = props => {
 			{ props.hasBorderType &&
 				<AdvancedToolbarControl
 					label={ __( 'Borders', i18n ) }
+					visualGuide={ props.visualGuide }
 					controls={ borderControls }
 					className="lmb-border-controls__border-type-toolbar"
 					attribute={ getAttrName( 'borderType' ) }
@@ -91,6 +92,7 @@ export const BorderControls = props => {
 			{ props.hasBorderControls &&
 				<FourRangeControl
 					label={ __( 'Border Width', i18n ) }
+					visualGuide={ props.visualGuide }
 					attribute={ getAttrName( 'borderWidth' ) }
 					responsive="all"
 					hover="all"

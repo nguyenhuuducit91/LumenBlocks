@@ -38,14 +38,18 @@ $lmn-panel-title-offset: $lmn-editor-toolbar-height + $lmn-tab-height + $lmn-tab
 		justify-content: center;
 		align-items: center;
 		height: $lmn-tab-height;
-		padding: 0 4px !important;
-		flex: 1;
+		// 2px, not 4px: at three tabs in a 280px sidebar, "Advanced" plus its
+		// icon needs every pixel, and it was sitting hard against the edge.
+		padding: 0 2px !important;
+		// `1 1 0` rather than `1`: equal columns whatever the labels say, so
+		// the three tabs stay the same width in every translation.
+		flex: 1 1 0;
 		min-width: 0;
 		margin: 0 !important;
 		cursor: pointer;
 		color: #50575e;
 		border: 0 !important;
-		gap: 6px;
+		gap: 5px;
 		font-size: 12px;
 		line-height: 1;
 		font-weight: 500;
@@ -57,13 +61,30 @@ $lmn-panel-title-offset: $lmn-editor-toolbar-height + $lmn-tab-height + $lmn-tab
 		.dashicon,
 		svg {
 			flex: none;
-			width: 16px;
-			height: 16px;
+			width: 15px;
+			height: 15px;
+			// Dashicons carry their weight low in the em box, so a glyph
+			// centred by the box sits visibly below the middle of the label
+			// beside it. One pixel up lines the two up to the eye, which is
+			// the only judge that matters here.
+			margin-top: -1px;
 		}
+
+		// The glyph is an icon font: without this it is laid out on a text
+		// baseline inside its own box and drifts again.
+		.dashicon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+		}
+
 		.dashicon::before {
-			font-size: 16px;
-			width: 16px;
-			height: 16px;
+			display: block;
+			font-size: 15px;
+			width: 15px;
+			height: 15px;
+			line-height: 1;
 		}
 
 		// Active tab: a brand-coloured underline instead of a full outline box,

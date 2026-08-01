@@ -7,6 +7,7 @@
 /**
  * Internal dependencies
  */
+
 const context = require.context(
 	'./block-library', // Search within the src/blocks directory.
 	true, // Search recursively.

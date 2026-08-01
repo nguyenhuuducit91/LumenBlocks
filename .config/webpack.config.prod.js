@@ -163,6 +163,7 @@ module.exports = [
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block-library/horizontal-scroller/frontend-horizontal-scroller.js' ),
 		'frontend_block_tabs': path.resolve( __dirname, '../src/block-library/tabs/frontend-tabs.js' ),
 		'frontend_image_optimizer_polyfill': path.resolve( __dirname, '../src/features/image/image-optimizer-polyfill.js' ),
+		'frontend_motion_effects': path.resolve( __dirname, '../src/features/effects-animations/frontend.js' ),
 	},
 
 	output: {

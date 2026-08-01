@@ -36,8 +36,11 @@ export const ColorSchemesHelp = props => {
 
 			const colorSchemeToggle = document.querySelector( '.lmb-global-color-schemes__panel .components-panel__body-title > .components-panel__body-toggle' )
 			// Opens the color scheme panel
-			if ( colorSchemeToggle.getAttribute( 'aria-expanded' ) === 'false' ) {
-				colorSchemeToggle?.click()
+			// Guarded because the sidebar may not have finished rendering, or
+			// may not be there at all in the site editor — reading
+			// `aria-expanded` off null throws and takes the inspector with it.
+			if ( colorSchemeToggle?.getAttribute( 'aria-expanded' ) === 'false' ) {
+				colorSchemeToggle.click()
 			}
 		}, 10 )
 	}

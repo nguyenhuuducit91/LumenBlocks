@@ -268,6 +268,8 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/unique-id.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/conditional-display.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/features/effects-animations/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
@@ -315,6 +317,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/dashboard/getting-started.php' 
 if ( is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/dashboard/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/dashboard/notification.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/dashboard/about.php' );
 }
 
 if ( LUMEN_BUILD === 'premium' ) {

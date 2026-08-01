@@ -119,6 +119,21 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
     - Custom Tablet and Mobile breakpoints
 - Custom `data-*` attributes
 
+## Finding Your Way Around a Big Inspector
+
+A block carries hundreds of settings. These exist so that number never becomes your problem:
+
+- Find a setting — a search box under the tab strip that filters the panels as you type, and follows the setting onto another tab when that is where it lives
+- Applied settings — everything the block currently sets, in one list, with the viewport or state each value belongs to, a jump to its control and a reset for that one value
+- Copy & paste styling — carries what you changed, never what you wrote; settings the target block does not have are dropped rather than written into your post
+
+## Motion, CSS and Conditions
+
+- Transform & Transition — move, rotate and scale per device and per hover state, stored as CSS so hand-written transforms survive
+- Motion Effects — ten entrance animations that start when the block is scrolled to, set per device, and skipped entirely for readers who ask for reduced motion
+- Custom CSS — per block and scoped to that block, so one block's CSS cannot restyle the site; unsafe constructs are stripped
+- Conditional Display — show a block by login state, role, date range, post type, page context or device, decided on the server so a hidden block is never sent to the reader
+
 ## Fast Page Loading Speed
 
 Optimize your website’s performance, and get lightning fast page loading to make your site visitors stay. Have the chance to maximize your page speed insights and achieve high Core Web Vitals and higher SEO rankings.

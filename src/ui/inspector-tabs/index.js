@@ -13,9 +13,40 @@ import { memo } from '@wordpress/element'
 import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 import { useGlobalState } from '~lumen/utils/global-state'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
 import { BlockStylesControl } from '../block-styles-control'
+import BlockChangesPanel, { useAppliedSettings } from '../block-changes-panel'
+
+/**
+ * The applied-settings panel, with the count in its own title.
+ *
+ * A separate component because the count comes from a hook, and the panel is
+ * rendered inside `InspectorTabs` where calling it directly would run on every
+ * tab rather than only the one that shows the list.
+ *
+ * @return {Element} The panel.
+ */
+const AppliedSettingsPanel = () => {
+	const applied = useAppliedSettings()
+
+	return (
+		<PanelAdvancedSettings
+			title={ applied.length
+				? sprintf(
+					/* translators: %d: how many settings are set on this block. */
+					__( 'Applied settings (%d)', i18n ),
+					applied.length
+				)
+				: __( 'Applied settings', i18n ) }
+			id="applied-settings"
+			initialOpen={ false }
+			showModifiedIndicator={ !! applied.length }
+		>
+			<BlockChangesPanel />
+		</PanelAdvancedSettings>
+	)
+}
 
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'LumenLayoutPanel' )
 
@@ -80,6 +111,15 @@ const InspectorTabs = props => {
 					onClick={ setActiveTab }
 				/>
 			</InspectorControls>
+
+			{ /*
+			 * What this block currently sets, at the top of Advanced. With
+			 * hundreds of attributes per block it is the only way to find a
+			 * value again — or to undo one without undoing everything since.
+			 */ }
+			<InspectorAdvancedControls>
+				<AppliedSettingsPanel />
+			</InspectorAdvancedControls>
 
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>

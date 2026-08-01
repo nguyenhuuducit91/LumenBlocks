@@ -16,6 +16,7 @@ import classnames from 'classnames'
 import { i18n, settings } from 'lumen'
 import { applyFilters } from '@wordpress/hooks'
 import { Icon } from '@wordpress/components'
+import InspectorSearch from '../inspector-search'
 
 const TABS = [
 	{
@@ -207,6 +208,13 @@ class PanelTabs extends Component {
 						)
 					} ) }
 				</div>
+
+				{ /*
+				 * Rendered here rather than as its own inspector fill: the tab strip
+				 * moves itself around the sidebar, and a search box that is not part
+				 * of it ends up somewhere else entirely.
+				 */ }
+				<InspectorSearch />
 			</div>
 		)
 	}

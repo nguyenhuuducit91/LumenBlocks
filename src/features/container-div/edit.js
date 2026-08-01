@@ -111,13 +111,23 @@ export const Edit = props => {
 							attribute="triggerHoverState"
 							defaultValue={ true }
 						/>
-						<BackgroundControls attrNameTemplate="container%s" />
+						<BackgroundControls
+							attrNameTemplate="container%s"
+							visualGuide={ {
+								selector: '.lmn-%s-container',
+								highlight: 'outline',
+							} }
+						/>
 					</PanelAdvancedSettings>
 					<PanelAdvancedSettings
 						title={ __( 'Container Borders & Shadow', i18n ) }
 						id="container-size"
 					>
 						<BorderControls
+							visualGuide={ {
+								selector: '.lmn-%s-container',
+								highlight: 'outline',
+							} }
 							attrNameTemplate="container%s"
 							placeholderTemplate="container"
 							borderTypeValue={ getPlaceholder( 'container-border-style' ) }

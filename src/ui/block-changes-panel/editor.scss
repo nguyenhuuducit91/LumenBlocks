@@ -1,0 +1,88 @@
+/**
+ * Everything this block currently sets.
+ *
+ * Dense on purpose: it is a list to scan, not a form to fill in.
+ */
+.lmn-block-changes {
+
+	&__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 0;
+		border-bottom: 1px solid #f0f0f0;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	// The row itself is the way to the setting, so it takes the whole width and
+	// looks like text rather than a button until the pointer is on it.
+	&__jump {
+		flex: 1;
+		min-width: 0;
+		padding: 4px 6px;
+		border: 0;
+		border-radius: 4px;
+		background: none;
+		text-align: left;
+		cursor: pointer;
+
+		&:hover {
+			background: #f0f0f0;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--wp-admin-theme-color, #007cba);
+			outline-offset: -2px;
+		}
+	}
+
+	&__label {
+		display: block;
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	&__context {
+		margin-left: 6px;
+		padding: 0 5px;
+		border-radius: 8px;
+		background: #ffc107;
+		color: #1e1e1e;
+		font-size: 10px;
+		font-weight: 400;
+		vertical-align: 1px;
+	}
+
+	&__value {
+		display: block;
+		overflow: hidden;
+		color: #757575;
+		font-size: 11px;
+		font-family: Menlo, Consolas, monaco, monospace;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	&__reset {
+		flex: none;
+	}
+
+	&__clear {
+		margin-top: 10px;
+	}
+
+	&__empty {
+		margin: 0;
+		color: #757575;
+		font-size: 12px;
+	}
+}
