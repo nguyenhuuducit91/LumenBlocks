@@ -1,16 +1,32 @@
 /**
-* Styles used by the Getting Started section.
-*/
+ * Getting Started.
+ *
+ * The page is a single column read top to bottom: what this is, how far you
+ * have got, what there is to learn, what is here that needs no learning. It
+ * used to be a two-column grid with a video pinned to the right; the video was
+ * removed and the column was not, so a third of every screen was empty. The
+ * grid is gone with it.
+ */
+
+$lmn-gs-brand: #f59e0b;
+$lmn-gs-brand-dark: #d97706;
+
+// The column the page reads in. Cards here are wide flex rows, and past this
+// width the gap between an icon and its call to action stops being scannable.
+$lmn-gs-measure: 1080px;
 
 .toplevel_page_lumen {
-	.s-body {
-		max-width: 1200px;
+	// Scoped to the page body only. `.s-body` is also on the tab strip in the
+	// header, which must stay the width of its own pills.
+	.s-getting-started__body > .s-body {
+		max-width: $lmn-gs-measure;
 		margin: 0 auto;
+		width: 100%;
 	}
 }
 
 .s-getting-started {
-	background-color: #f0f0f1;
+	background-color: var(--lmn-welcome-canvas);
 	overflow-x: auto;
 
 	.s-getting-started__centered {
@@ -19,23 +35,37 @@
 		flex-direction: column;
 	}
 
+	/**
+	 * The hero.
+	 *
+	 * Tinted panel, not a photographic band. The heading used to inherit white
+	 * from a background image that is no longer shipped, which left it invisible
+	 * against the grey page.
+	 */
 	.tag {
-		text-align: center;
-		color: #f59e0b;
-		border: 1px solid #f59e0b33;
-		padding: 4px 16px;
-		border-radius: 30px;
-		background-color: #f59e0b33;
+		align-self: flex-start;
+		color: $lmn-gs-brand-dark;
+		border: 1px solid rgba(217, 119, 6, 0.28);
+		padding: 5px 14px;
+		border-radius: 999px;
+		background-color: rgba(245, 158, 11, 0.1);
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-align: left;
 	}
 
 	.title {
 		font-weight: 700;
-		font-size: 32px;
-		line-height: 1.2;
+		font-size: 34px;
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--lmn-welcome-ink);
+		max-width: 20ch;
 		margin: 0;
 
 		span {
-			background-image: linear-gradient(30deg, #f59e0b, #fbbf24);
+			background-image: linear-gradient(30deg, #{$lmn-gs-brand-dark}, #{$lmn-gs-brand});
 			-webkit-background-clip: text;
 			background-clip: text;
 			-webkit-text-fill-color: transparent;
@@ -43,333 +73,362 @@
 		}
 	}
 
-	.s-video-wrapper {
-		display: flex;
-		justify-content: center;
-		margin-bottom: 24px;
-
-		&.s-card-top {
-			margin: -1.5em -1.5em 1.5em;
-		}
-
-		.s-video {
-			aspect-ratio: 16/9;
-			min-width: 100%;
-		}
-
-		&.s-getting-started-video .s-video {
-			max-width: 100%;
-			min-width: unset;
-		}
-	}
-
-	.s-button-container {
-		display: flex;
-		justify-content: center;
-		margin-bottom: 56px;
-	}
-
+	// Inherits the shared button; only the shape of the getting-started CTA
+	// differs, and the `uppercase` utility on it is overridden because nothing
+	// else on these screens shouts any more.
 	.s-secondary-button {
-		background: var(--lmn-welcome-primary) !important;
-		border-radius: 4px;
+		background: $lmn-gs-brand-dark !important;
+		border-radius: var(--lmn-welcome-radius-sm);
 		font-weight: 600;
-		transition: all 0.1s ease-in-out;
+		transition: background-color 0.14s ease, box-shadow 0.14s ease;
 		text-decoration: none;
 		border: none;
 		color: #fff;
-		padding: 12px 20px;
-		letter-spacing: 1px;
-		font-size: 14px;
+		padding: 8px 16px;
+		letter-spacing: 0;
+		font-size: 13px;
 		cursor: pointer;
 		box-sizing: border-box !important;
 		display: inline-block;
 
 		&:hover {
-			opacity: 0.85;
-			box-shadow: none !important;
+			background: #b45309 !important;
+			opacity: 1;
+			box-shadow: 0 2px 8px rgba(120, 53, 15, 0.22) !important;
 		}
 
 		&.uppercase {
-			text-transform: uppercase;
+			text-transform: none;
 		}
 	}
 
-	.s-getting-started__section {
-		max-width: 1200px;
-	}
-
-	.s-card-header {
-		h2 {
-			margin: 2em 0 1em;
-			font-weight: 700;
-			font-size: 32px;
-			line-height: 1.2;
-		}
-
-		div {
-			display: flex;
-			justify-content: space-between;
-			align-items: baseline;
-			margin-bottom: 24px;
-
-			p {
-				font-weight: 300;
-			}
-
-			a {
-				text-transform: uppercase;
-				color: #000;
-			}
-		}
-	}
-
-	.s-card-container {
-		display: flex;
-		justify-content: space-between;
-		gap: 40px 32px;
-		margin-bottom: 56px;
-		flex-wrap: wrap;
-		max-width: 1200px;
-
-		&.s-card-general .s-card {
-			@include s-shadow;
-		}
-
-		.s-card-link {
-			color: #000;
-			font-weight: 300;
-			cursor: pointer;
-			text-decoration: none;
-		}
-		.s-card {
-			width: calc(30% - 32px);
-		}
-	}
-
-	.s-divider {
-		width: 150px;
-		margin: 64px auto;
-		display: block;
-	}
 }
 
+/**
+ * The hero panel itself.
+ *
+ * Full-bleed inside the column rather than `100% + 100px`, which used to hang
+ * the panel past the page padding on one side only.
+ */
 .s-getting-started__centered {
-	color: #fff;
 	box-sizing: border-box;
-	width: calc(100% + 100px);
-	background-position: center;
-	background-size: cover;
-	margin-bottom: 2.5em;
+	width: 100%;
+	color: var(--lmn-welcome-ink);
+	margin-bottom: 24px;
+	padding: 30px 36px;
+	border: 1px solid var(--lmn-welcome-light-border);
+	border-radius: var(--lmn-welcome-radius);
+	background:
+		radial-gradient(120% 160% at 8% -30%, rgba(245, 158, 11, 0.18), rgba(245, 158, 11, 0) 62%),
+		linear-gradient(180deg, var(--lmn-welcome-primary-wash), #fff);
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 0.5em;
-}
-body.settings_page_lumen-getting-started .s-body-container > .s-getting-started__centered:first-child {
-	margin-top: -40px !important;
-}
+	gap: 0.75em;
 
-@media screen and (max-width: 1200px) {
-	.s-card-container {
-		justify-content: center !important;
-	}
-	.s-card {
-		width: 330px !important;
+	@media screen and (max-width: 782px) {
+		padding: 28px 22px;
 	}
 }
 
-.s-getting-started__quick-start-wrapper {
-	h2 {
-		font-size: 1.125rem;
-		margin: 0;
-		+ p {
-			margin: 0.5em 0 1.5em;
-		}
-		span {
-			font-size: 1rem;
-			font-weight: normal;
-			color: #777;
-			margin-inline-start: 0.5em;
-		}
-	}
-}
+/**
+ * Progress.
+ *
+ * One figure and one bar. The count is promoted to the size of a number worth
+ * reading, because it is the only thing on this card that changes.
+ */
 .s-getting-started__progress {
 	margin-bottom: 2.5em;
+	padding: 22px 24px !important;
 }
+
 .s-getting-started__progress-labels-title {
-	font-weight: bold;
+	font-weight: 600;
+	font-size: 15px;
+	color: var(--lmn-welcome-ink);
 	margin: 0;
 }
+
 .s-getting-started__progress-labels {
 	display: flex;
+	align-items: baseline;
 	justify-content: space-between;
-	margin-bottom: 1em;
+	gap: 16px;
+	margin-bottom: 14px;
 }
+
+.s-getting-started__progress-labels-count {
+	margin: 0;
+	color: $lmn-gs-brand-dark;
+	font-size: 13px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
 .s-getting-started__progress-bar {
 	height: 8px;
 	background: #f4f4f5;
-	border-radius: 16px;
+	border-radius: 999px;
+	overflow: hidden;
+
 	.s-getting-started__progress-bar-fill {
-		background: #e92063;
+		background: linear-gradient(90deg, #{$lmn-gs-brand-dark}, #{$lmn-gs-brand});
 		height: 100%;
-		border-radius: 16px;
+		border-radius: 999px;
+		transition: width 0.4s ease;
 	}
 }
+
+/**
+ * Tutorials.
+ *
+ * A plain stack of category sections. Every card is a row — icon, what it is,
+ * and the way in — so the eye runs down one edge instead of hunting a grid.
+ */
+.s-getting-started__quick-start-wrapper {
+	display: block;
+	margin: 1em 0 64px;
+
+	h2 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--lmn-welcome-ink);
+		margin: 0;
+
+		// Enough room under the description for the "Start here" badge, which
+		// hangs off the top edge of the first card.
+		+ p {
+			margin: 0.4em 0 1.4em;
+			color: var(--lmn-welcome-muted);
+		}
+
+		span {
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: $lmn-gs-brand-dark;
+			background: rgba(245, 158, 11, 0.12);
+			border-radius: 999px;
+			padding: 2px 9px;
+			margin-inline-start: 0.5em;
+			vertical-align: 2px;
+		}
+	}
+
+	// Space between one category and the next, without a rule to draw it.
+	.s-guided-tours-container > section + section {
+		margin-top: 40px;
+	}
+}
+
 .s-guided-tours-container-inner {
 	display: grid;
-	gap: 12px;
-	margin-bottom: 2.5em;
+	gap: 10px;
+	margin-bottom: 0;
 }
-.s-card {
+
+/**
+ * A card.
+ *
+ * Hairline and a whisper of shadow. These sit ten to a screen, and at that
+ * count the old stacked drop shadows turned the page into corduroy.
+ */
+.s-guided-tours-container-inner .s-card {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 18px;
+	padding: 16px 20px;
+	border: 1px solid var(--lmn-welcome-light-border);
+	border-radius: var(--lmn-welcome-radius);
+	background: #fff;
+	box-shadow: var(--lmn-welcome-shadow);
 	overflow: visible;
+	transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+
+	&:hover {
+		border-color: rgba(217, 119, 6, 0.35);
+		box-shadow: var(--lmn-welcome-shadow-lifted);
+	}
+
+	h3 {
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--lmn-welcome-ink);
+		margin: 0 0 3px;
+	}
+
+	p {
+		font-size: 13px;
+		line-height: 1.55;
+		color: var(--lmn-welcome-muted);
+		margin: 0;
+	}
+
+	@media screen and (max-width: 1100px) {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
 }
+
+.s-quick-button-description {
+	flex: 1;
+	min-width: 0;
+
+	> *:first-child {
+		margin-top: 0;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	> *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.s-quick-button-button {
+	white-space: nowrap;
+
+	.s-button--disabled,
+	.s-button--disabled:hover {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/**
+ * Icons.
+ *
+ * A soft tile per category rather than a saturated square per card. The colour
+ * now says which group a card belongs to; before, it cycled every fifth card
+ * and said nothing at all.
+ */
+.s-quick-button-icon {
+	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 42px;
+	padding: 0;
+	border-radius: 11px;
+	background: var(--lmn-welcome-primary-tint);
+	color: #b45309;
+	fill: currentColor;
+
+	svg {
+		fill: currentColor;
+	}
+}
+
+.s-guided-tours-container > section {
+	&:nth-child(2) .s-quick-button-icon {
+		background: #e0f2fe;
+		color: #0369a1;
+	}
+
+	&:nth-child(3) .s-quick-button-icon {
+		background: #ede9fe;
+		color: #6d28d9;
+	}
+}
+
+/**
+ * "Start here".
+ *
+ * A badge pinned to the first card, replacing a hand-drawn arrow set in
+ * Rockwell that pointed at a button in a layout this page no longer uses.
+ */
+.s-quick-buttons-arrow {
+	position: absolute;
+	top: -10px;
+	left: 16px;
+	display: flex;
+	align-items: center;
+	margin: 0;
+	right: auto;
+	bottom: auto;
+
+	svg {
+		display: none;
+	}
+
+	span {
+		margin: 0;
+		padding: 3px 10px;
+		border-radius: 999px;
+		background: $lmn-gs-brand-dark;
+		color: #fff;
+		font-family: inherit;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		transform: none;
+		box-shadow: 0 2px 6px rgba(120, 53, 15, 0.25);
+	}
+}
+
+// Once a tour is done the badge has nothing left to point at.
 .s-card:has(.s-quick-buttons-arrow):has(.s-button--checked) .s-quick-buttons-arrow {
 	display: none !important;
 }
-.s-getting-started__quick-start-wrapper {
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-	gap: 24px;
-	margin: 1em 0 64px;
-	align-items: flex-start;
 
-	.s-getting-started-video-wrapper {
-		grid-column: 2/3;
-		grid-row: 1/-1;
-	}
-	.s-getting-started-video {
-		flex-direction: column;
-		border-radius: 16px;
-		@include s-shadow;
-		overflow: hidden;
-	}
+/**
+ * Done state.
+ *
+ * Green is the one colour on this page that is not brand — it is reporting a
+ * fact rather than decorating, and it needs to survive being glanced at.
+ */
+.s-quick-button-toggle-indicator {
+	width: 16px;
+	display: inline-block;
+	background: rgba(255, 255, 255, 0.28);
+	border-radius: 100%;
+	height: 16px;
+	vertical-align: middle;
+	margin-inline: -4px 8px;
+	margin-top: -2px;
+	box-sizing: border-box;
+	position: relative;
 
-	.s-card:not(.s-getting-started-video) {
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		gap: 24px;
-
-		@media screen and (max-width: 1200px) {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		&:nth-child(2) {
-			overflow: visible;
-		}
-	}
-	.s-quick-button-icon {
-		background: #4770f8;
-		fill: #fff;
-		display: flex;
-		padding: 8px;
-		border-radius: 8px;
-	}
-	// Succeeding icon colors are different.
-	.s-card:nth-child(5n + 3) {
-		.s-quick-button-icon {
-			background: #f59e0b;
-		}
-	}
-	.s-card:nth-child(5n + 4) {
-		.s-quick-button-icon {
-			background: #fbbf24;
-		}
-	}
-	.s-card:nth-child(5n) {
-		.s-quick-button-icon {
-			background: #f89347;
-		}
-	}
-
-	.s-card:nth-child(5n + 6) {
-		.s-quick-button-icon {
-			background: #00c49a;
-		}
-	}
-	.s-quick-button-button {
-		white-space: nowrap;
-
-		.s-button--disabled,
-		.s-button--disabled:hover {
-			opacity: 0.5;
-			cursor: not-allowed;
-		}
-	}
-
-	.s-quick-button-description {
-		flex: 1;
-		> *:first-child {
-			margin-top: 0;
-			display: inline-flex;
-			align-items: center;
-			gap: 8px;
-		}
-		> *:last-child {
-			margin-bottom: 0;
-		}
-	}
-
-	.s-quick-buttons-arrow {
+	svg {
 		position: absolute;
-		bottom: 100%;
-		display: flex;
-		flex-direction: row-reverse;
-		margin-bottom: -20px;
-		right: 69px;
-		svg {
-			width: 64px;
-			height: auto;
-			transform: scaleX(-1);
-		}
-		span {
-			margin-top: 7px;
-			font-size: 18px;
-			color: #402933;
-			transform: rotate(-4deg);
-			font-family: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", "Sitka Small", serif;
+		fill: #fff;
+		top: -3px;
+		left: -1px;
+		height: 16px;
+		width: 16px;
+	}
+}
+
+.s-button:not(.s-button--checked):not(.s-button--unlock) {
+	.s-quick-button-toggle-indicator {
+		display: none;
+	}
+}
+
+.s-getting-started {
+	.s-button.s-button--checked:not(.s-button--unlock) {
+		background: #15803d !important;
+
+		&:hover {
+			background: #166534 !important;
+			box-shadow: 0 2px 8px rgba(20, 83, 45, 0.24) !important;
 		}
 	}
 
-	.s-quick-button-toggle-indicator {
-		width: 18px;
-		display: inline-block;
-		background: #0000002b;
-		border-radius: 100%;
-		height: 18px;
-		vertical-align: middle;
-		margin-inline: -8px 12px;
-		margin-top: -3px;
-		box-sizing: border-box;
-		position: relative;
-		svg {
-			position: absolute;
-			fill: #23ff8a;
-			top: -4px;
-			left: -1px;
-			filter: drop-shadow(1px 1px 2px #0006);
-		}
+	.s-guided-tours-container-inner .s-card:has(.s-button--checked) {
+		background: #f6fdf9;
+		border-color: #bbf7d0;
 	}
-	.s-button:not(.s-button--checked):not(.s-button--unlock) {
-		.s-quick-button-toggle-indicator svg {
-			display: none;
-		}
-	}
-	.s-button.s-button--checked:not(.s-button--unlock) {
-		background: #20ac6b !important;
-		.s-quick-button-toggle-indicator {
-			background: #0000004f;
-		}
-	}
-	.s-card:has(.s-button--checked) {
-		background: #f9fcfb;
-	}
+
 	.s-button.s-button--unlock {
 		.s-quick-button-toggle-indicator {
 			background: transparent;
+
 			svg {
 				fill: #fff;
 				height: 16px;
@@ -380,9 +439,10 @@ body.settings_page_lumen-getting-started .s-body-container > .s-getting-started_
 		}
 	}
 
-	.s-card:has(.s-button--unlock) {
-		background: #fff5fa;
-		opacity: 0.8;
+	.s-guided-tours-container-inner .s-card:has(.s-button--unlock) {
+		background: var(--lmn-welcome-primary-wash);
+		opacity: 0.85;
+
 		&:hover {
 			opacity: 1;
 		}
@@ -399,5 +459,57 @@ body.settings_page_lumen-getting-started .s-body-container > .s-getting-started_
 	svg {
 		height: 16px !important;
 		width: 16px;
+		fill: currentColor;
+	}
+}
+
+/**
+ * Features that have no walkthrough.
+ *
+ * Nothing here is a task, so there is no button and no reason to keep them a
+ * full row apart. Two columns, quieter icons, and the section reads as a list
+ * of facts rather than a second pile of homework.
+ */
+.s-getting-started__also-included-wrapper {
+	margin: 0 0 64px;
+
+	h2 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--lmn-welcome-ink);
+		margin: 0;
+
+		+ p {
+			margin: 0.4em 0 1.1em;
+			color: var(--lmn-welcome-muted);
+		}
+	}
+}
+
+.s-also-included {
+	grid-template-columns: 1fr 1fr;
+	align-items: stretch;
+
+	@media screen and (max-width: 900px) {
+		grid-template-columns: 1fr;
+	}
+
+	// Back to a row inside each column: at half width the icon still fits beside
+	// two lines of text, and stacking it wasted the height twice over.
+	.s-card {
+		align-items: flex-start;
+		gap: 14px;
+	}
+
+	.s-quick-button-description {
+		flex: 1;
+	}
+
+	.s-quick-button-icon {
+		width: 36px;
+		height: 36px;
+		border-radius: var(--lmn-welcome-radius-sm);
+		background: #f4f4f5 !important;
+		color: #52525b !important;
 	}
 }

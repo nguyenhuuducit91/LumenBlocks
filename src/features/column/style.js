@@ -3,6 +3,42 @@
  */
 import { __getValue } from '~lumen/utils'
 
+/**
+ * The unit a column's width is measured in, and what that implies.
+ *
+ * Per cent is the default and the only unit the surrounding arithmetic works
+ * for. A width of `33.33%` has to have its share of the column gap subtracted
+ * or three of them overflow their row; a width of `300px` must not, because
+ * flex already accounts for the gap when it decides what fits. So the unit does
+ * not just change a suffix — it decides whether the `calc()` happens at all.
+ *
+ * @param {Function} getAttribute Attribute reader.
+ * @param {string}   device       Which viewport.
+ * @return {{unit: string, isPercent: boolean}} The unit and whether it is a percentage.
+ */
+const readWidthUnit = ( getAttribute, device ) => {
+	const unit = getAttribute( 'columnWidthUnit', device ) || '%'
+
+	return {
+		unit,
+		isPercent: unit === '%',
+	}
+}
+
+/**
+ * Appends the unit to a width that has been formatted as a percentage.
+ *
+ * The style rules are declared with `%` in their format string, which is what
+ * every column used before units existed. Rather than make three format strings
+ * dynamic — and change the CSS of every existing column in the process — the
+ * suffix is swapped here, only when it is not a percentage.
+ *
+ * @param {string} value The formatted value, ending in `%`.
+ * @param {string} unit  The unit to use.
+ * @return {string} The value in the right unit.
+ */
+const withUnit = ( value, unit ) => ( unit === '%' ? value : value.replace( /%$/, unit ) )
+
 export const addStyles = ( blockStyleGenerator, props = {} ) => {
 	const propsToPass = {
 		...props,
@@ -27,17 +63,23 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		format: '1 1 %s%',
 		dependencies: [
 			'columnAdjacentCount',
+			'columnWidthUnit',
 			...dependencies,
 		],
 		valueCallback: ( value, getAttribute, device ) => {
+			const { unit, isPercent } = readWidthUnit( getAttribute, device )
+
 			if ( device === 'desktop' ) {
-				return value
+				return withUnit( value, unit )
 			}
+
 			const adjacentCount = getAttribute( 'columnAdjacentCount', device )
-			if ( adjacentCount ) {
+
+			if ( adjacentCount && isPercent ) {
 				return value.replace( /([\d\.]+%)$/, `calc($1 - var(--lmn-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
 			}
-			return value
+
+			return withUnit( value, unit )
 		},
 	} ] )
 
@@ -55,14 +97,18 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		format: '%s%',
 		dependencies: [
 			'columnAdjacentCount',
+			'columnWidthUnit',
 			...dependencies,
 		],
 		valueCallback: ( value, getAttribute, device ) => {
+			const { unit, isPercent } = readWidthUnit( getAttribute, device )
 			const adjacentCount = getAttribute( 'columnAdjacentCount', device )
-			if ( adjacentCount ) {
+
+			if ( adjacentCount && isPercent ) {
 				return value.replace( /([\d\.]+%)$/, `calc($1 - var(--lmn-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
 			}
-			return value
+
+			return withUnit( value, unit )
 		},
 	} ] )
 
@@ -77,6 +123,7 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		format: 'var(--lmn-flex-grow, 1) 1 %s%',
 		dependencies: [
 			'columnAdjacentCount',
+			'columnWidthUnit',
 			...dependencies,
 		 ],
 		valueCallback: ( _value, getAttribute, device ) => {
@@ -91,11 +138,14 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 			// No need to do this in the editor since it already does this.
 			const value = device === 'desktop' && ! getAttribute( 'columnWrapDesktop' ) ? _value : _value.replace( /^var(--lmn-flex-grow, 1) 1/, '0 1' )
 
+			const { unit, isPercent } = readWidthUnit( getAttribute, device )
 			const adjacentCount = getAttribute( 'columnAdjacentCount', device )
-			if ( adjacentCount ) {
+
+			if ( adjacentCount && isPercent ) {
 				return value.replace( /([\d\.]+%)$/, `calc($1 - var(--lmn-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
 			}
-			return value
+
+			return withUnit( value, unit )
 		},
 	} ] )
 }

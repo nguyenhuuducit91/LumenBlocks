@@ -1,55 +1,132 @@
 /**
  * About.
  *
- * One card, centred, read top to bottom: what this is, who made it, how to say
- * thank you. Nothing here competes for attention with anything else — it is a
- * page somebody visits on purpose.
+ * One card, read top to bottom: what this is, then who made it beside how to
+ * thank them. The hero carries the brand colour so the page has a face;
+ * everything below it is deliberately quiet, because the only thing an author
+ * comes here to do is read three lines and maybe scan a QR code.
  */
+
+$lmn-about-brand: #f59e0b;
+$lmn-about-brand-dark: #d97706;
+$lmn-about-border: #e4e4e7;
+$lmn-about-muted: #6b7280;
+
 .lmn-about {
 
 	&__card {
-		max-width: 720px;
-		margin: 0 auto 40px;
-		padding: 40px 40px 24px;
-		border: 1px solid #e0e0e0;
-		border-radius: 12px;
+		max-width: 900px;
+		overflow: hidden;
+		border: 1px solid $lmn-about-border;
+		border-radius: 16px;
 		background: #fff;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+		box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
 	}
 
+	/**
+	 * The hero.
+	 *
+	 * A tinted band rather than a coloured one: at full strength the brand
+	 * amber fights the WordPress admin's own chrome, and this page is not
+	 * asking for attention.
+	 */
 	&__hero {
+		position: relative;
+		padding: 44px 40px 32px;
+		background:
+			radial-gradient(120% 140% at 50% -40%, rgba(245, 158, 11, 0.18), rgba(245, 158, 11, 0) 60%),
+			linear-gradient(180deg, #fffbeb, #fff);
+		border-bottom: 1px solid $lmn-about-border;
 		text-align: center;
 	}
 
+	&__logo-tile {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 76px;
+		height: 76px;
+		margin-bottom: 18px;
+		border-radius: 20px;
+		background: #fff;
+		box-shadow:
+			0 8px 20px rgba(217, 119, 6, 0.18),
+			0 0 0 1px rgba(217, 119, 6, 0.12);
+	}
+
 	&__logo {
-		width: 56px;
-		height: 56px;
-		margin-bottom: 12px;
+		width: 44px;
+		height: 44px;
 	}
 
 	&__title {
 		margin: 0;
-		font-size: 26px;
-		font-weight: 600;
-		line-height: 1.2;
-	}
-
-	&__version {
-		display: inline-block;
-		margin-top: 8px;
-		padding: 2px 10px;
-		border-radius: 12px;
-		background: #f0f0f0;
-		color: #50575e;
-		font-size: 12px;
-		font-weight: 500;
+		color: #111827;
+		font-size: 30px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.15;
 	}
 
 	&__tagline {
-		margin: 12px 0 0;
-		color: #50575e;
-		font-size: 14px;
-		line-height: 1.5;
+		max-width: 460px;
+		margin: 10px auto 0;
+		color: $lmn-about-muted;
+		font-size: 15px;
+		line-height: 1.6;
+	}
+
+	/**
+	 * Three figures, side by side.
+	 *
+	 * The block count is counted from disk rather than written down, so it
+	 * cannot drift away from what is installed.
+	 */
+	&__stats {
+		display: flex;
+		justify-content: center;
+		gap: 0;
+		margin: 28px 0 0;
+
+		@media screen and (max-width: 600px) {
+			flex-wrap: wrap;
+			gap: 8px 0;
+		}
+	}
+
+	&__stat {
+		flex: 0 0 auto;
+		min-width: 116px;
+		padding: 0 22px;
+
+		+ .lmn-about__stat {
+			border-left: 1px solid rgba(217, 119, 6, 0.2);
+		}
+
+		dt {
+			margin: 0 0 2px;
+			color: $lmn-about-muted;
+			font-size: 11px;
+			font-weight: 500;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+		}
+
+		dd {
+			margin: 0;
+			color: $lmn-about-brand-dark;
+			font-size: 22px;
+			font-weight: 700;
+			line-height: 1.2;
+		}
+	}
+
+	&__body {
+		padding: 32px 40px 36px;
+
+		@media screen and (max-width: 782px) {
+			padding: 24px 20px 28px;
+		}
 	}
 
 	&__chips {
@@ -57,66 +134,108 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		gap: 8px;
-		margin: 24px 0 8px;
+		margin-bottom: 32px;
 	}
 
 	&__chip {
-		padding: 4px 12px;
-		border: 1px solid #e0e0e0;
-		border-radius: 14px;
-		color: #50575e;
+		padding: 5px 13px;
+		border: 1px solid $lmn-about-border;
+		border-radius: 999px;
+		background: #fafafa;
+		color: #374151;
 		font-size: 12px;
+		line-height: 1.5;
 		white-space: nowrap;
 	}
 
-	&__section {
-		margin-top: 32px;
-		padding-top: 24px;
-		border-top: 1px solid #f0f0f0;
+	/**
+	 * Who made it, beside how to thank them.
+	 *
+	 * They stack below 900px: a contact list and two QR codes side by side stop
+	 * fitting well before the sidebar-collapsed breakpoint.
+	 */
+	&__columns {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+		align-items: stretch;
+
+		@media screen and (max-width: 900px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	&__panel {
+		padding: 22px 22px 24px;
+		border: 1px solid $lmn-about-border;
+		border-radius: 12px;
+		background: #fff;
+
+		&--donate {
+			border-color: rgba(217, 119, 6, 0.25);
+			background: linear-gradient(180deg, #fffbeb, #fff);
+			text-align: center;
+		}
 	}
 
 	&__heading {
 		display: flex;
 		align-items: center;
+		justify-content: flex-start;
 		gap: 6px;
 		margin: 0 0 16px;
-		font-size: 15px;
+		color: #111827;
+		font-size: 14px;
 		font-weight: 600;
 
 		.dashicons {
-			color: #d63638;
-			font-size: 18px;
-			width: 18px;
-			height: 18px;
+			color: #dc2626;
+			font-size: 17px;
+			width: 17px;
+			height: 17px;
 		}
+	}
+
+	&__panel--donate &__heading {
+		justify-content: center;
 	}
 
 	&__rows {
 		display: grid;
-		gap: 4px;
+		gap: 2px;
 	}
 
 	&__row {
 		display: flex;
 		align-items: center;
 		gap: 12px;
-		padding: 10px 12px;
-		border-radius: 6px;
+		padding: 10px;
+		border-radius: 8px;
 		color: inherit;
 		text-decoration: none;
+		transition: background 0.15s ease;
 
 		// Only the rows that go somewhere react to the pointer.
 		&[href]:hover {
-			background: #f6f7f7;
+			background: #fef3c7;
 		}
 	}
 
 	&__row-icon {
 		flex: none;
-		color: #757575;
-		font-size: 18px;
-		width: 18px;
-		height: 18px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		border-radius: 9px;
+		background: #f3f4f6;
+		color: $lmn-about-brand-dark;
+		font-size: 17px;
+	}
+
+	&__row[href]:hover &__row-icon {
+		background: #fff;
 	}
 
 	&__row-text {
@@ -126,18 +245,20 @@
 	}
 
 	&__row-main {
-		font-size: 14px;
+		color: #111827;
+		font-size: 13px;
+		font-weight: 500;
 		overflow-wrap: anywhere;
 	}
 
 	&__row-sub {
-		color: #757575;
-		font-size: 12px;
+		color: $lmn-about-muted;
+		font-size: 11px;
 	}
 
 	&__donate-text {
-		margin: -8px 0 20px;
-		color: #50575e;
+		margin: -6px 0 18px;
+		color: $lmn-about-muted;
 		font-size: 13px;
 		line-height: 1.6;
 	}
@@ -146,42 +267,64 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 32px;
+		gap: 18px;
 	}
 
 	&__qr-item {
 		margin: 0;
-		text-align: center;
 
 		figcaption {
 			margin-top: 8px;
-			color: #757575;
-			font-size: 12px;
+			color: $lmn-about-muted;
+			font-size: 11px;
+			font-weight: 500;
 		}
 	}
 
 	&__qr {
 		display: block;
-		width: 190px;
+		width: 148px;
 		max-width: 100%;
 		height: auto;
-		border: 1px solid #f0f0f0;
-		border-radius: 8px;
+		padding: 6px;
+		border-radius: 10px;
+		background: #fff;
+		box-shadow: 0 0 0 1px $lmn-about-border;
 	}
 
-	&__licence {
-		margin: 0;
-		color: #50575e;
-		font-size: 13px;
-		line-height: 1.6;
+	&__licence-note {
+		margin-top: 28px;
+		padding-top: 20px;
+		border-top: 1px solid #f3f4f6;
+		color: $lmn-about-muted;
+		font-size: 12px;
+		line-height: 1.7;
+
+		a {
+			color: $lmn-about-brand-dark;
+		}
 	}
 
 	&__foot {
-		margin-top: 32px;
-		padding-top: 20px;
-		border-top: 1px solid #f0f0f0;
-		color: #757575;
+		padding: 16px 40px;
+		border-top: 1px solid $lmn-about-border;
+		background: #fafafa;
+		color: $lmn-about-muted;
 		font-size: 12px;
 		text-align: center;
 	}
+}
+
+/**
+ * The card's own spacing.
+ *
+ * `admin.scss` strips the top margin off the first child of every
+ * `.s-body-container` with `!important`, at a specificity of (0,3,1). A plain
+ * `.lmn-about__card { margin: … !important }` is (0,1,0), so it lost — an
+ * `!important` only beats another one when the selector is at least as
+ * specific. This is (0,4,1), which is the whole reason it is written out longhand
+ * rather than nested with the rest of the card's styles.
+ */
+body[class*="page_lumen"] .lmn-about .s-body-container > .lmn-about__card {
+	margin: 24px 0 !important;
 }

@@ -18,6 +18,10 @@ import { i18n } from 'lumen'
 import { range } from 'lodash'
 
 const ColumnsWidthMultiControl = props => {
+	// Empty means per cent, which is what these widths have always been.
+	const unit = props.unit || props.units?.[ 0 ] || '%'
+	const isPercent = unit === '%'
+
 	return (
 		<BaseControl
 			label={ props.label }
@@ -26,6 +30,9 @@ const ColumnsWidthMultiControl = props => {
 			responsive={ props.responsive }
 			hasTabletValue={ props.hasTabletValue }
 			hasMobileValue={ props.hasMobileValue }
+			units={ props.units }
+			unit={ unit }
+			onChangeUnit={ props.onChangeUnit }
 		>
 			{ range( props.columns ).map( i => {
 				return (
@@ -35,7 +42,13 @@ const ColumnsWidthMultiControl = props => {
 							<AdvancedRangeControl
 								className="lmn--no-padding"
 								value={ props.values[ i ] }
-								max={ 100 }
+								/*
+								 * A percentage stops at 100; a fixed width does
+								 * not, and a slider that stopped there would put
+								 * a ceiling on a perfectly ordinary 320px column.
+								 */
+								max={ isPercent ? 100 : 1200 }
+								sliderMax={ isPercent ? 100 : 600 }
 								min={ 0 }
 								onChange={ value => {
 									const newValues = [ ...props.values ]
@@ -59,7 +72,7 @@ const ColumnsWidthMultiControl = props => {
 								/>
 							) }
 						</div>
-						<span className="lmn-columns-width-multi-control__range__suffix">%</span>
+						<span className="lmn-columns-width-multi-control__range__suffix">{ unit }</span>
 					</div>
 				)
 			} ) }
@@ -76,6 +89,10 @@ ColumnsWidthMultiControl.defaultProps = {
 	className: '',
 	responsive: false,
 	placeholders: null,
+
+	units: null, // e.g. [ '%', 'px' ]. Null keeps the control on percentages.
+	unit: '',
+	onChangeUnit: null,
 
 	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
 	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.

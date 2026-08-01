@@ -37,11 +37,21 @@ const EMPTY_OBJ = {}
 export const BaseControl = props => {
 	const deviceType = useDeviceType()
 
+	/*
+	 * The attribute a control edits, written into its class list.
+	 *
+	 * Nothing styles this. It exists so that something holding an attribute
+	 * name — the applied-settings list, which knows `blockPadding` and nothing
+	 * else — can find the one control that owns it. Matching on the label text
+	 * instead was guesswork: labels are worded for people, several controls can
+	 * share a word, and a humanised attribute name often matches none of them.
+	 */
 	const className = classnames( [
 		'lmn-control',
 		props.className,
 	], {
 		'lmn-control--disabled': ( props.disableTablet && deviceType === 'Tablet' ) || ( props.disableMobile && deviceType === 'Mobile' ),
+		[ `lmn-control--attr-${ props.attribute }` ]: !! props.attribute,
 	} )
 
 	const hasResponsive = !! props.responsive?.length

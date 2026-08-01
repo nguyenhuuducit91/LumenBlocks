@@ -2,9 +2,7 @@
  * External dependencies
  */
 import { PanelTabs, PanelAdvancedSettings } from '~lumen/ui'
-import {
-	i18n, isPro, showProNotice,
-} from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -15,6 +13,7 @@ import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 import { useGlobalState } from '~lumen/utils/global-state'
 import { __, sprintf } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
+import { useSelect } from '@wordpress/data'
 import { BlockStylesControl } from '../block-styles-control'
 import BlockChangesPanel, { useAppliedSettings } from '../block-changes-panel'
 
@@ -98,13 +97,23 @@ export {
 
 const InspectorTabs = props => {
 	const { name, clientId } = useBlockEditContext()
+	const hasBlockStyles = useSelect(
+		select => !! select( 'lumen/global-block-styles' )?.getBlockStyles( name )?.length,
+		[ name ]
+	)
 	const defaultTab = getBlockSupport( name, 'lmnDefaultTab' ) || 'style'
 	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( defaultTab ) ? defaultTab : 'style' )
 
 	return (
 		<>
 			<InspectorControls>
-				{ ( isPro || showProNotice ) && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
+				{ /*
+				 * Only when there is something to choose. Saving a new style
+				 * still needs a naming dialog that this build does not have, so
+				 * with no styles stored the control would be a menu containing
+				 * "Default" and a button that does nothing.
+				 */ }
+				{ !! hasBlockStyles && <BlockStylesControl blockName={ name } clientId={ clientId } /> }
 				<PanelTabs
 					tabs={ props.tabs }
 					initialTab={ activeTab }

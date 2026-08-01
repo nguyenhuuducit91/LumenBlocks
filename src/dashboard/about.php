@@ -28,7 +28,7 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 		 * thing rather than drifting apart.
 		 */
 		public const AUTHOR       = 'Nguyễn Hữu Đức';
-		public const AUTHOR_ROLE  = 'Software Developer · VIETIS';
+		public const AUTHOR_ROLE  = 'Software Developer';
 		public const AUTHOR_EMAIL = 'nguyenhuuduc.it.91@gmail.com';
 		public const AUTHOR_PHONE = '0964 589 910';
 
@@ -101,12 +101,9 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 			$block_dirs = glob( untrailingslashit( plugin_dir_path( LUMEN_FILE ) ) . '/src/block-library/*', GLOB_ONLYDIR );
 			$blocks     = is_array( $block_dirs ) ? count( $block_dirs ) : 0;
 
+			// The block count is already one of the figures in the hero, so it
+			// is not repeated here.
 			$highlights = array(
-				sprintf(
-					/* translators: %d: how many blocks the plugin provides. */
-					__( '%d blocks', LUMEN_I18N ),
-					$blocks
-				),
 				__( 'Global design system', LUMEN_I18N ),
 				__( 'Responsive controls', LUMEN_I18N ),
 				__( 'Copy & paste styling', LUMEN_I18N ),
@@ -127,68 +124,89 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 					<div class="lmn-about__card">
 
 						<header class="lmn-about__hero">
-							<img
-								class="lmn-about__logo"
-								src="<?php echo $this->image( 'lumen-icon.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
-								alt=""
-							/>
+							<div class="lmn-about__logo-tile">
+								<img
+									class="lmn-about__logo"
+									src="<?php echo $this->image( 'lumen-icon.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
+									alt=""
+								/>
+							</div>
 							<h2 class="lmn-about__title"><?php esc_html_e( 'Lumen Blocks', LUMEN_I18N ); ?></h2>
-							<span class="lmn-about__version">
-								<?php echo esc_html( 'v' . LUMEN_VERSION ); ?>
-							</span>
 							<p class="lmn-about__tagline">
-								<?php esc_html_e( 'The complete website builder for the WordPress block editor.', LUMEN_I18N ); ?>
+								<?php esc_html_e( 'A page builder that is just the block editor.', LUMEN_I18N ); ?>
 							</p>
+
+							<?php /* Three facts worth knowing before anything else. */ ?>
+							<dl class="lmn-about__stats">
+								<div class="lmn-about__stat">
+									<dt><?php esc_html_e( 'Blocks', LUMEN_I18N ); ?></dt>
+									<dd><?php echo esc_html( $blocks ); ?></dd>
+								</div>
+								<div class="lmn-about__stat">
+									<dt><?php esc_html_e( 'Version', LUMEN_I18N ); ?></dt>
+									<dd><?php echo esc_html( LUMEN_VERSION ); ?></dd>
+								</div>
+								<div class="lmn-about__stat">
+									<dt><?php esc_html_e( 'Licence', LUMEN_I18N ); ?></dt>
+									<dd>GPL-3.0</dd>
+								</div>
+							</dl>
 						</header>
 
-						<div class="lmn-about__chips">
-							<?php foreach ( $highlights as $highlight ) { ?>
-								<span class="lmn-about__chip"><?php echo esc_html( $highlight ); ?></span>
-							<?php } ?>
-						</div>
-
-						<section class="lmn-about__section">
-							<h3 class="lmn-about__heading"><?php esc_html_e( 'Developer', LUMEN_I18N ); ?></h3>
-							<div class="lmn-about__rows">
-								<?php
-								$this->row( 'admin-users', self::AUTHOR, self::AUTHOR_ROLE );
-								$this->row( 'email-alt', self::AUTHOR_EMAIL, '', 'mailto:' . self::AUTHOR_EMAIL );
-								$this->row( 'phone', self::AUTHOR_PHONE, '', 'tel:' . preg_replace( '/\s+/', '', self::AUTHOR_PHONE ) );
-								?>
+						<div class="lmn-about__body">
+							<div class="lmn-about__chips">
+								<?php foreach ( $highlights as $highlight ) { ?>
+									<span class="lmn-about__chip"><?php echo esc_html( $highlight ); ?></span>
+								<?php } ?>
 							</div>
-						</section>
 
-						<section class="lmn-about__section lmn-about__donate">
-							<h3 class="lmn-about__heading">
-								<span class="dashicons dashicons-heart"></span>
-								<?php esc_html_e( 'Support the developer', LUMEN_I18N ); ?>
-							</h3>
-							<p class="lmn-about__donate-text">
-								<?php esc_html_e( 'Lumen Blocks is free and always will be. If it saves you time, a coffee keeps it improving. Thank you!', LUMEN_I18N ); ?>
-							</p>
-							<div class="lmn-about__qr-row">
-								<figure class="lmn-about__qr-item">
-									<img
-										class="lmn-about__qr"
-										src="<?php echo $this->image( 'donate-bank.png' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
-										alt="<?php esc_attr_e( 'Bank transfer QR code', LUMEN_I18N ); ?>"
-									/>
-									<figcaption><?php esc_html_e( 'Bank transfer', LUMEN_I18N ); ?></figcaption>
-								</figure>
-								<figure class="lmn-about__qr-item">
-									<img
-										class="lmn-about__qr"
-										src="<?php echo $this->image( 'donate-paypal.png' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
-										alt="<?php esc_attr_e( 'PayPal QR code', LUMEN_I18N ); ?>"
-									/>
-									<figcaption><?php esc_html_e( 'PayPal', LUMEN_I18N ); ?></figcaption>
-								</figure>
+							<?php /*
+							 * Two columns on a wide screen: who made it beside how
+							 * to thank them. They stack below 900px, where a QR
+							 * code and a contact list side by side stop fitting.
+							 */ ?>
+							<div class="lmn-about__columns">
+								<section class="lmn-about__panel">
+									<h3 class="lmn-about__heading"><?php esc_html_e( 'Developer', LUMEN_I18N ); ?></h3>
+									<div class="lmn-about__rows">
+										<?php
+										$this->row( 'admin-users', self::AUTHOR, self::AUTHOR_ROLE );
+										$this->row( 'email-alt', self::AUTHOR_EMAIL, __( 'Email', LUMEN_I18N ), 'mailto:' . self::AUTHOR_EMAIL );
+										$this->row( 'phone', self::AUTHOR_PHONE, __( 'Phone', LUMEN_I18N ), 'tel:' . preg_replace( '/\s+/', '', self::AUTHOR_PHONE ) );
+										?>
+									</div>
+								</section>
+
+								<section class="lmn-about__panel lmn-about__panel--donate">
+									<h3 class="lmn-about__heading">
+										<span class="dashicons dashicons-heart"></span>
+										<?php esc_html_e( 'Support the developer', LUMEN_I18N ); ?>
+									</h3>
+									<p class="lmn-about__donate-text">
+										<?php esc_html_e( 'Lumen Blocks is free and always will be. If it saves you time, a coffee keeps it improving.', LUMEN_I18N ); ?>
+									</p>
+									<div class="lmn-about__qr-row">
+										<figure class="lmn-about__qr-item">
+											<img
+												class="lmn-about__qr"
+												src="<?php echo $this->image( 'donate-bank.png' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
+												alt="<?php esc_attr_e( 'Bank transfer QR code', LUMEN_I18N ); ?>"
+											/>
+											<figcaption><?php esc_html_e( 'Bank transfer', LUMEN_I18N ); ?></figcaption>
+										</figure>
+										<figure class="lmn-about__qr-item">
+											<img
+												class="lmn-about__qr"
+												src="<?php echo $this->image( 'donate-paypal.png' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in image(). ?>"
+												alt="<?php esc_attr_e( 'PayPal QR code', LUMEN_I18N ); ?>"
+											/>
+											<figcaption><?php esc_html_e( 'PayPal', LUMEN_I18N ); ?></figcaption>
+										</figure>
+									</div>
+								</section>
 							</div>
-						</section>
 
-						<section class="lmn-about__section">
-							<h3 class="lmn-about__heading"><?php esc_html_e( 'Licence and credits', LUMEN_I18N ); ?></h3>
-							<p class="lmn-about__licence">
+							<section class="lmn-about__licence-note">
 								<?php
 								printf(
 									/* translators: %s: the licence name, linked. */
@@ -196,8 +214,8 @@ if ( ! class_exists( 'Lumen_About_Page' ) ) {
 									'<a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer">GPL-3.0-or-later</a>'
 								);
 								?>
-							</p>
-						</section>
+							</section>
+						</div>
 
 						<footer class="lmn-about__foot">
 							<?php esc_html_e( 'Made with ♥ in Vietnam', LUMEN_I18N ); ?>

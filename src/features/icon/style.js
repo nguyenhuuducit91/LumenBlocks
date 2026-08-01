@@ -205,6 +205,50 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		],
 	} ] )
 
+	/*
+	 * The gradient behind an icon.
+	 *
+	 * `shapeColor1` above deliberately writes no background-color when the type
+	 * is gradient, and nothing wrote one in its place — choosing "Gradient" left
+	 * the shape with no fill at all. This is the missing half. The stops are
+	 * written as one shorthand rather than as custom properties because, unlike
+	 * the icon itself, the shape is an ordinary element and not an SVG `<defs>`.
+	 */
+	blockStyleGenerator.addBlockStyles( 'shapeColorGradient', [ {
+		...propsToPass,
+		selector: shapeSelector,
+		hoverSelector: shapeHoverSelector,
+		styleRule: 'backgroundImage',
+		attrName: 'shapeColor1',
+		key: 'shapeColorGradient',
+		hover: 'all',
+		valuePreCallback: ( value, getAttribute, device, state ) => {
+			if ( getAttribute( 'shapeColorType' ) !== 'gradient' ) {
+				return undefined
+			}
+
+			const color1 = value || getAttribute( 'shapeColor1', 'desktop', state )
+			const color2 = getAttribute( 'shapeColor2', 'desktop', state )
+
+			// One stop is not a gradient; leaving it undefined lets the plain
+			// background-color above keep whatever it had.
+			if ( ! color1 || ! color2 ) {
+				return undefined
+			}
+
+			const direction = getAttribute( 'shapeColorGradientDirection', 'desktop', state ) || 0
+
+			return `linear-gradient(${ direction }deg, ${ color1 }, ${ color2 })`
+		},
+		dependencies: [
+			'shapeColorType',
+			'shapeColor1',
+			'shapeColor2',
+			'shapeColorGradientDirection',
+			...dependencies,
+		],
+	} ] )
+
 	blockStyleGenerator.addBlockStyles( 'shapeBorderRadius', [ {
 		...propsToPass,
 		selector: shapeSelector,
@@ -308,6 +352,87 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		responsive: 'all',
 		format: '%spx',
 		valuePreCallback: value => value?.left,
+	} ] )
+
+	/*
+	 * The shape behind an icon.
+	 *
+	 * The markup for this was already rendered in both the editor and the saved
+	 * output, the positioning was already in `style.scss`, and seven attributes
+	 * were already declared — but nothing turned any of them into CSS, so the
+	 * shape could only ever appear in its default colour at its default size.
+	 * These are the rules that were missing.
+	 */
+	const backgroundShapeSelector = `${ selector } .lmn--shape-icon`
+	const backgroundShapeHoverSelector = `${ hoverSelector } .lmn--shape-icon`
+
+	blockStyleGenerator.addBlockStyles( 'backgroundShapeColor', [ {
+		...propsToPass,
+		selector: backgroundShapeSelector,
+		hoverSelector: backgroundShapeHoverSelector,
+		styleRule: 'fill',
+		attrName: 'backgroundShapeColor',
+		key: 'backgroundShapeColor',
+		hover: 'all',
+	} ] )
+
+	blockStyleGenerator.addBlockStyles( 'backgroundShapeOpacity', [ {
+		...propsToPass,
+		selector: backgroundShapeSelector,
+		hoverSelector: backgroundShapeHoverSelector,
+		styleRule: 'opacity',
+		attrName: 'backgroundShapeOpacity',
+		key: 'backgroundShapeOpacity',
+		hover: 'all',
+	} ] )
+
+	/*
+	 * Size and offset are one rule, not three.
+	 *
+	 * The shape is centred by a `translate(-50%, -50%)` in the stylesheet. A
+	 * separate `transform` for the offset would replace that centring rather
+	 * than add to it, so the whole transform is written here in one piece and
+	 * the offsets are appended to the centring instead of overwriting it.
+	 */
+	blockStyleGenerator.addBlockStyles( 'backgroundShapeSize', [
+		{
+			...propsToPass,
+			selector: backgroundShapeSelector,
+			styleRule: 'width',
+			attrName: 'backgroundShapeSize',
+			key: 'backgroundShapeSize-width',
+			format: '%s%',
+		},
+		{
+			...propsToPass,
+			selector: backgroundShapeSelector,
+			styleRule: 'height',
+			attrName: 'backgroundShapeSize',
+			key: 'backgroundShapeSize-height',
+			format: '%s%',
+		},
+	] )
+
+	blockStyleGenerator.addBlockStyles( 'backgroundShapeOffset', [ {
+		...propsToPass,
+		selector: backgroundShapeSelector,
+		styleRule: 'transform',
+		attrName: 'backgroundShapeOffsetHorizontal',
+		key: 'backgroundShapeOffset',
+		valuePreCallback: ( value, getAttribute ) => {
+			const horizontal = value || 0
+			const vertical = getAttribute( 'backgroundShapeOffsetVertical' ) || 0
+
+			if ( ! horizontal && ! vertical ) {
+				return undefined
+			}
+
+			return `translateX(calc(-50% + ${ horizontal }px)) translateY(calc(-50% + ${ vertical }px))`
+		},
+		dependencies: [
+			'backgroundShapeOffsetVertical',
+			...dependencies,
+		],
 	} ] )
 
 	doAction( 'lumen.block-component.icon.indiv-icon-style.addStyles', blockStyleGenerator )

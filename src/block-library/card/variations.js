@@ -3,14 +3,10 @@
  */
 import ImageDefault from './images/default.svg'
 import ImageDefault2 from './images/default-2.svg'
-import ImageHorizontal from './images/horizontal.svg'
-import ImageFull from './images/full.svg'
-import ImageFaded from './images/faded.svg'
-
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -135,42 +131,6 @@ const variations = applyFilters(
 					] ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal',
-			},
-			pickerTitle: __( 'Horizontal', i18n ),
-			pickerIcon: ImageHorizontal,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'full',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Full', i18n ) ),
-			attributes: {
-				className: 'is-style-full',
-			},
-			pickerTitle: __( 'Full', i18n ),
-			pickerIcon: ImageFull,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'faded',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Faded', i18n ) ),
-			attributes: {
-				className: 'is-style-faded',
-			},
-			pickerTitle: __( 'Faded', i18n ),
-			pickerIcon: ImageFaded,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

@@ -4,7 +4,7 @@
 	"private": true,
 	"description": "Page builder blocks for the WordPress block editor.",
 	"author": "Lumen Blocks",
-	"license": "GPL-3.0",
+	"license": "GPL-3.0-or-later",
 	"keywords": [
 		"WordPress",
 		"Lumen",

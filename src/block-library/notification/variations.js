@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,11 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImagePlain from './images/plain.svg'
-import ImageSide from './images/side.svg'
-import ImageBordered from './images/bordered.svg'
-import ImageOutlined from './images/outlined.svg'
-import ImageLargeIcon from './images/large-icon.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -112,54 +107,6 @@ const variations = applyFilters(
 					} ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'side',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side', i18n ) ),
-			attributes: {
-				className: 'is-style-side',
-			},
-			pickerTitle: __( 'Side', i18n ),
-			pickerIcon: ImageSide,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'bordered',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bordered', i18n ) ),
-			attributes: {
-				className: 'is-style-bordered',
-			},
-			pickerTitle: __( 'Bordered', i18n ),
-			pickerIcon: ImageBordered,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'outlined',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Outlined', i18n ) ),
-			attributes: {
-				className: 'is-style-outlined',
-			},
-			pickerTitle: __( 'Outlined', i18n ),
-			pickerIcon: ImageOutlined,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'large-icon',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Icon', i18n ) ),
-			attributes: {
-				className: 'is-style-large-icon',
-			},
-			pickerTitle: __( 'Large Icon', i18n ),
-			pickerIcon: ImageLargeIcon,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

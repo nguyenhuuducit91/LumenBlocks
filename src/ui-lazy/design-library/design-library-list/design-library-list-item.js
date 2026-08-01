@@ -9,11 +9,9 @@ import { useAutoScroll } from './use-auto-scroll'
 /**
  * External dependencies.
  */
-import { isPro, i18n } from 'lumen'
+import { i18n } from 'lumen'
 import classnames from 'classnames'
-import {
-	Tooltip, Button, ProControl,
-} from '~lumen/ui'
+import { Tooltip, Button } from '~lumen/ui'
 
 /**
  * WordPress dependencies.
@@ -34,7 +32,7 @@ const DesignLibraryListItem = memo( props => {
 	} = props
 
 	const {
-		selectedTab, selectedNum, selectedData, plan, label,
+		selectedTab, selectedNum, selectedData, label,
 	} = previewProps
 
 	const spacingSize = Array.isArray( presetMarks ) && presetMarks.length >= 2
@@ -79,7 +77,6 @@ const DesignLibraryListItem = memo( props => {
 		'lmb-design-library-item',
 		'lmb-design-library-item--toggle',
 	], {
-		[ `lmb--is-${ plan }` ]: ! isPro && plan !== 'free',
 		'lmb--is-toggled': selectedNum,
 		'lmb--is-hidden': ! shouldRender,
 	} )
@@ -101,15 +98,7 @@ const DesignLibraryListItem = memo( props => {
 			onMouseOut={ onMouseOut }
 			onMouseOver={ onMouseOver }
 		>
-			{ ! isPro && plan !== 'free' && <span className="lmn-pulsating-circle" role="presentation" /> }
 			<div style={ { position: 'relative' } } className={ `lmn-block-design__design-container ${ designPreviewSize > 100 ? 'lmn--design-preview-large' : 'lmn--design-preview-small' }` }>
-				{ ! isPro && plan !== 'free' && (
-					<ProControl
-						type="design-library"
-						showImage={ false }
-						showHideNote={ false }
-					/>
-				) }
 				<div className={ `lmn-spinner-container ${ isLoading || ! shouldRender ? '' : 'lmn-hide-spinner' }` }><Spinner /></div>
 				<div
 					className="lmn-block-design__host-container"
@@ -179,7 +168,6 @@ DesignLibraryListItem.defaultProps = {
 	label: '',
 	onClick: () => {},
 	plan: 'free',
-	premiumLabel: __( 'Go Premium', i18n ),
 }
 
 export default DesignLibraryListItem

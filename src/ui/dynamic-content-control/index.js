@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	i18n, isPro, showProNotice,
-} from 'lumen'
+import { i18n } from 'lumen'
 import {
 	isString, first, last,
 } from 'lodash'
@@ -32,7 +30,6 @@ import { select, useSelect } from '@wordpress/data'
 /**
  * Internal dependencies
  */
-import ProControl from '../pro-control'
 import Popover from '../popover'
 import SVGDatabaseIcon from './icons/database-light.svg'
 import { ResetButton } from '../base-control2/reset-button'
@@ -503,11 +500,18 @@ export const DynamicContentButton = memo( props => {
 	if ( select( 'core/customize-widgets' ) ) {
 		return null
 	}
-	if ( ! isPro && ! showProNotice ) {
+	/*
+	 * Dynamic content is not implemented here: there is no `lumen/dynamic-content`
+	 * store to resolve a field in the editor and no PHP resolver to substitute
+	 * one on the page, so a saved token would be printed to the reader verbatim.
+	 * The button appears only once something registers the component that fills
+	 * it in — everything below this line is ready for that.
+	 */
+	const DynamicContentFields = applyFilters( 'lumen.dynamic-content.component' )
+
+	if ( ! DynamicContentFields ) {
 		return null
 	}
-
-	const DynamicContentFields = applyFilters( 'lumen.dynamic-content.component' ) || Fragment
 
 	return (
 		<Fragment>
@@ -523,20 +527,15 @@ export const DynamicContentButton = memo( props => {
 			{ props.isPopoverOpen && (
 				<Popover
 					position="top right"
-					className={ classnames( 'lumen-dynamic-content__popover', { 'lmn-dynamic-content__popover--is-premium': ! isPro } ) }
+					className="lumen-dynamic-content__popover"
 					onEscape={ props.onClick }
 				>
-					{ ! isPro && <ProControl type="dynamic-attributes" /> }
-
-					{ isPro && (
-						<DynamicContentFields
-							onClose={ props.onClose }
-							onChange={ props.onChange }
-							activeAttribute={ props.activeAttribute }
-							type={ props.type }
-						/>
-					) }
-
+					<DynamicContentFields
+						onClose={ props.onClose }
+						onChange={ props.onChange }
+						activeAttribute={ props.activeAttribute }
+						type={ props.type }
+					/>
 				</Popover>
 			) }
 		</Fragment>

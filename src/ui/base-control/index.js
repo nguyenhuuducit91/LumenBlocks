@@ -21,12 +21,22 @@ import { i18n } from 'lumen'
 import { __ } from '@wordpress/i18n'
 
 const BaseControl = props => {
+	/*
+	 * The attribute a control edits, written into its class list.
+	 *
+	 * The same marker the newer base control carries, for the same reason: the
+	 * applied-settings list holds an attribute name and needs to find the one
+	 * control that owns it. Both base controls are still in use, so both have to
+	 * carry it or half the settings would be unreachable — toggles among them.
+	 */
 	const className = classnames( [
 		'lmn-inspector-control',
+		'lmn-control',
 		props.className,
 	], {
 		'lmn-inspector-control--allow-reset': props.allowReset,
 		'lmn--is-small': props.isSmall,
+		[ `lmn-control--attr-${ props.attribute }` ]: !! props.attribute,
 	} )
 
 	const showReset = props.showReset !== null
@@ -81,6 +91,7 @@ const BaseControl = props => {
 
 BaseControl.defaultProps = {
 	className: '',
+	attribute: '', // The attribute this control edits, so it can be navigated to.
 	help: '',
 	id: '',
 	screens: [ 'desktop' ],

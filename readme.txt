@@ -4,7 +4,7 @@ Requires at least: 6.8.2
 Tested up to: 7.0.2
 Requires PHP: 7.4
 Stable tag: 1.0.0
-License: GPLv3
+License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 The complete website builder for the WordPress block editor. Build professional sites faster with powerful blocks, block styles, and a global design system.
@@ -206,5 +206,5 @@ under GPL-3.0-or-later. See NOTICE.md in the plugin folder for the list of chang
 
 == Changelog ==
 
-= 3.19.10 =
+= 1.0.0 =
 * Initial release of Lumen Blocks.

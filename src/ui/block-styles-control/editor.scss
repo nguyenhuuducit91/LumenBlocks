@@ -104,16 +104,6 @@
 		}
 	}
 
-	.components-panel__body:has(.lmb-pro-control-button__wrapper:not(.lmb-pro-control-button--hidden)) > *:not(.lmb-pro-control-button__wrapper) {
-		height: 0 !important;
-		overflow: hidden !important;
-		min-height: 0 !important;
-		max-height: 0 !important;
-		opacity: 0 !important;
-		margin: 0 !important;
-		padding: 0 !important;
-	}
-
 	.components-panel__body-description {
 		margin: -12px 0 1.5em;
 	}

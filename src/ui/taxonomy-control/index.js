@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 import { AdvancedSelectControl, AdvancedTokenField } from '~lumen/ui'
 import { find, compact } from 'lodash'
 
@@ -138,22 +138,28 @@ class TaxonomyControl extends Component {
 
 		return (
 			<div className="lmn-taxonomy-control">
-				{ isPro &&
-					<AdvancedSelectControl
-						label={ __( 'Post Type', i18n ) }
-						options={ postTypeOptions }
-						value={ this.props.postType }
-						allowReset={ allowReset }
-						onChange={ value => {
-							const taxonomyTypesAvailable = Object.keys( this.state.termList[ value ].taxonomies )
-							this.props.onChangePostType( value )
-							this.props.onChangeTaxonomyType( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
-							this.props.onChangeTaxonomy( '' )
-							this.props.onChangeTaxonomyTypeToDisplay( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
-						} }
-						default="post"
-					/>
-				}
+				{ /*
+				 * Which post type to list. The value has always been carried
+				 * through to both queries; only this control was withheld, so a
+				 * site with custom post types could not point the block at them.
+				 */ }
+				<AdvancedSelectControl
+					label={ __( 'Post Type', i18n ) }
+					options={ postTypeOptions }
+					value={ this.props.postType }
+					allowReset={ allowReset }
+					onChange={ value => {
+						// A post type with no taxonomies leaves nothing to
+						// filter by, so the taxonomy fields are emptied rather
+						// than left pointing at the previous type's terms.
+						const taxonomyTypesAvailable = Object.keys( this.state.termList[ value ]?.taxonomies || {} )
+						this.props.onChangePostType( value )
+						this.props.onChangeTaxonomyType( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
+						this.props.onChangeTaxonomy( '' )
+						this.props.onChangeTaxonomyTypeToDisplay( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
+					} }
+					default="post"
+				/>
 				{ taxonomyTypeOptions.length > 0 &&
 					<AdvancedSelectControl
 						label={ __( 'Filter by Taxonomy', i18n ) }

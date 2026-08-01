@@ -21,14 +21,11 @@ import {
 	AdvancedSelectControl,
 	ControlSeparator,
 	FontPairPicker,
-	ProControlButton,
 	AdvancedToggleControl,
 } from '~lumen/ui'
 import { fetchSettings } from '~lumen/utils'
 import { useDeviceType } from '~lumen/hooks'
-import {
-	i18n, isPro, showProNotice,
-} from 'lumen'
+import { i18n, isPro } from 'lumen'
 import {
 	head, isEqual, cloneDeep,
 } from 'lodash'
@@ -561,7 +558,6 @@ addFilter( 'lumen.global-settings.inspector', 'lumen/global-typography', output 
 								/>
 							} ) }
 						</div>
-						{ showProNotice && <ProControlButton type="font-pairs" /> }
 						<ControlSeparator />
 
 						<h3>{ __( 'Typography Settings', i18n ) }</h3>

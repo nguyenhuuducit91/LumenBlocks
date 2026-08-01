@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,10 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImagePlain from './images/plain.svg'
-import ImageHorizontal from './images/horizontal.svg'
-import ImageHorizontal2 from './images/horizontal-2.svg'
-import ImageCover from './images/cover.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -100,42 +96,6 @@ const variations = applyFilters(
 				} ],
 				[ 'lumen/button-group', {}, buttonGroupInnerBlocks ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal',
-			},
-			pickerTitle: __( 'Horizontal', i18n ),
-			pickerIcon: ImageHorizontal,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal-2',
-			},
-			pickerTitle: __( 'Horizontal 2', i18n ),
-			pickerIcon: ImageHorizontal2,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'cover',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Cover', i18n ) ),
-			attributes: {
-				className: 'is-style-cover',
-			},
-			pickerTitle: __( 'Cover', i18n ),
-			pickerIcon: ImageCover,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

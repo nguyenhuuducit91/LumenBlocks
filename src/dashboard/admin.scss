@@ -2,17 +2,55 @@
  * Admin Welcome Screen
  */
 
+/**
+ * One palette for every admin screen.
+ *
+ * Amber on warm neutrals, and shape carried by hairlines rather than shadow.
+ * The screens used to lean on large drop shadows to separate anything from
+ * anything; at the density of a settings page that reads as noise, so surfaces
+ * here are told apart by a border and a tint instead.
+ */
 :root {
 	--lmn-welcome-primary: #f59e0b;
+	--lmn-welcome-primary-dark: #d97706;
+	--lmn-welcome-primary-wash: #fffbeb;
+	--lmn-welcome-primary-tint: #fef3c7;
 	--lmn-welcome-secondary: #101828;
-	--lmn-welcome-light-border: #d0d5dd;
+
+	--lmn-welcome-ink: #18181b;
+	--lmn-welcome-muted: #6b7280;
+	--lmn-welcome-light-border: #e4e4e7;
+	--lmn-welcome-hairline: #f0f0f1;
+	--lmn-welcome-canvas: #fafafa;
+
+	--lmn-welcome-radius: 14px;
+	--lmn-welcome-radius-sm: 9px;
+	--lmn-welcome-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	--lmn-welcome-shadow-lifted: 0 6px 18px rgba(16, 24, 40, 0.07);
 }
 
+/**
+ * The rule that closes a setting group's preamble.
+ *
+ * Bled to the card's edges on purpose. The hairlines between settings are inset
+ * to the content column, so a header rule that stopped at the same place read
+ * as one more row divider instead of the end of the header.
+ */
+@mixin lmn-group-rule {
+	margin: 0 -28px 18px;
+	padding: 0 28px 14px 42px;
+	border-bottom: 1px solid var(--lmn-welcome-hairline);
+}
+
+// Kept for callers that still ask for a lifted surface; far lighter than the
+// stacked shadows it replaces.
 @mixin s-shadow {
-	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-	transition: all 0.3s ease-in-out;
+	border: 1px solid var(--lmn-welcome-light-border);
+	box-shadow: var(--lmn-welcome-shadow);
+	transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 	&:hover {
-		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+		border-color: rgba(217, 119, 6, 0.35);
+		box-shadow: var(--lmn-welcome-shadow-lifted);
 	}
 }
 
@@ -42,25 +80,40 @@ body[class*="page_lmn-"] {
 	}
 }
 
+/**
+ * The bar every Lumen screen opens with.
+ *
+ * A warm wash rather than flat white, so the plugin's own chrome is legible as
+ * the plugin's and not as more of the WordPress admin. The amber hairline along
+ * the bottom is what actually does that work — the gradient above it is faint
+ * enough to read as paper.
+ */
 .s-header-wrap {
 	position: relative;
 	display: flex;
-	background-color: #fff;
+	background: linear-gradient(180deg, var(--lmn-welcome-primary-wash), #fff 78%);
 	justify-content: center;
 	align-items: flex-end;
 	margin-bottom: 40px;
 	border-bottom: 1px solid var(--lmn-welcome-light-border);
+	box-shadow: inset 0 -3px 0 -2px rgba(217, 119, 6, 0.35);
 	font-weight: 300;
 
 	&.s-header-settings {
 		margin: 0;
 	}
 
+	min-height: 64px;
+
 	.s-header {
 		padding: 0px;
 		position: absolute;
 		left: 50px;
 		align-self: center;
+		// The shared `.s-header` paints itself white for the pages that use it
+		// standalone. Inside the bar that white sits on top of the wash as a
+		// visible rectangle behind the logo.
+		background: transparent;
 		&.s-logo-logo {
 			h1 {
 				justify-content: left;
@@ -77,26 +130,27 @@ body[class*="page_lmn-"] {
 
 	.s-premium-button {
 		align-self: center;
-		background: var(--lmn-welcome-primary) !important;
-		border-radius: 4px;
+		background: var(--lmn-welcome-primary-dark) !important;
+		border-radius: var(--lmn-welcome-radius-sm);
 		font-weight: 600;
-		text-transform: unset !important;
+		text-transform: none !important;
 		text-align: center;
 		position: absolute;
 		right: 50px;
-		transition: all 0.1s ease-in-out;
+		transition: background-color 0.14s ease, box-shadow 0.14s ease;
 		text-decoration: none;
 		border: none;
 		color: #fff;
-		letter-spacing: 0.5px;
-		padding: 12px 20px;
-		text-transform: uppercase;
-		font-size: 14px;
+		letter-spacing: 0;
+		padding: 9px 18px;
+		font-size: 13px;
 		cursor: pointer;
 		box-sizing: border-box !important;
+		box-shadow: 0 1px 2px rgba(120, 53, 15, 0.18);
 		&:hover {
-			opacity: 0.85;
-			box-shadow: none !important;
+			background: #b45309 !important;
+			opacity: 1;
+			box-shadow: 0 2px 8px rgba(120, 53, 15, 0.22) !important;
 		}
 	}
 }
@@ -171,7 +225,7 @@ body[class*="page_lmn-"] {
 	padding: 1.5em;
 	display: flex;
 	flex-direction: column;
-	border-radius: 16px;
+	border-radius: var(--lmn-welcome-radius);
 	@include s-shadow;
 	background: #fff;
 	overflow: hidden;
@@ -224,8 +278,9 @@ body[class*="page_lmn-"] {
 	margin-right: -50px;
 }
 .s-settings-subtitle {
-	width: calc(95% - 250px);
-	margin: 0.5em 0 40px;
+	max-width: 68ch;
+	width: auto;
+	margin: 0.5em 0 24px;
 }
 .s-settings-field,
 .lmb-admin-setting {
@@ -251,21 +306,32 @@ body[class*="page_lmn-"] {
 	[type="time"],
 	[type="url"],
 	select {
-		padding: 0.5em 1em;
+		padding: 7px 12px;
 		max-width: 400px;
 		width: 100%;
-		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
-		border: 1px solid rgba(0, 0, 0, 0.1);
+		border: 1px solid var(--lmn-welcome-light-border);
+		border-radius: var(--lmn-welcome-radius-sm);
+		box-shadow: none;
 		margin: 0;
+		transition: border-color 0.14s ease, box-shadow 0.14s ease;
+		&:focus {
+			border-color: var(--lmn-welcome-primary);
+			box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+			outline: none;
+		}
 	}
 	&.s-settings-field-small {
 		[type="text"] {
 			width: 300px;
 		}
 	}
+	// Help text, not an aside. Italics at this size were doing the work a
+	// lighter colour does more legibly.
 	p {
-		font-style: italic;
-		margin-top: 4px;
+		font-style: normal;
+		color: var(--lmn-welcome-muted);
+		font-size: 12px;
+		margin-top: 6px;
 	}
 }
 .s-custom-fields-settings-header {
@@ -291,16 +357,18 @@ body[class*="page_lmn-"] {
 }
 
 .s-settings-error {
-	color: #ff5a7f;
+	color: #dc2626;
 }
 .s-notice-good {
-	padding: 30px;
-	border-radius: 12px;
-	background: linear-gradient(to left, #e4f5ef, #ccf3cd);
+	padding: 20px 24px;
+	border: 1px solid #bbf7d0;
+	border-radius: var(--lmn-welcome-radius-sm);
+	background: #f0fdf4;
+	color: #14532d;
 	margin-bottom: 1em;
 }
 .s-notice-bad {
-	color: #ff5a7f;
+	color: #dc2626;
 }
 .s-notice--with-icon {
 	margin: 2em 0;
@@ -314,11 +382,11 @@ body[class*="page_lmn-"] {
 		top: 0;
 	}
 	path {
-		fill: #f5305c;
+		fill: var(--lmn-welcome-primary-dark);
 		opacity: 1;
 	}
 	path:first-child {
-		fill: #ffda00;
+		fill: var(--lmn-welcome-primary);
 		opacity: 0.6;
 	}
 }
@@ -353,56 +421,66 @@ body[class*="page_lmn-"] {
 	}
 }
 
+/**
+ * Navigation as a segmented control, not underlined tabs.
+ *
+ * The active item is a raised pill on a sunken track. Underlines sit on the
+ * same hairline the header already draws, so the two kept reading as one smudge
+ * at the bottom of the bar; lifting the selection off the edge separates them.
+ */
 .s-tabs {
-	padding: 0 4px;
-	display: flex;
+	display: inline-flex;
 	justify-content: flex-start;
+	align-self: center;
 	gap: 2px;
-	height: 52px;
+	height: auto;
+	margin-bottom: 10px;
+	padding: 3px;
+	border: 1px solid var(--lmn-welcome-light-border);
+	border-radius: 999px;
+	background: rgba(244, 244, 245, 0.85);
+
 	.s-tab {
-		padding: 0 14px;
+		padding: 7px 16px;
 		list-style: none;
 		margin: 0 !important;
 		display: flex;
 		align-items: center;
-		border-radius: 6px 6px 0 0;
+		border-radius: 999px;
 		font-size: 13px;
 		font-weight: 500;
+		white-space: nowrap;
 		cursor: pointer;
-		color: #50575e !important;
+		color: #52525b !important;
 		text-decoration: none !important;
-		transition: background-color 0.12s ease, color 0.12s ease;
+		transition: background-color 0.14s ease, color 0.14s ease, box-shadow 0.14s ease;
+
 		&:hover {
-			background: rgba(0, 0, 0, 0.04);
-			color: #1e1e1e !important;
+			color: var(--lmn-welcome-primary-dark) !important;
+			background: rgba(255, 255, 255, 0.7);
 		}
+
 		&[aria-selected="true"],
 		&.s-active {
 			position: relative;
 			font-weight: 600;
-			color: var(--lmn-welcome-primary) !important;
-			&::before {
-				content: "";
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				height: 2px;
-				background-color: var(--lmn-welcome-primary);
-			}
+			color: var(--lmn-welcome-primary-dark) !important;
+			background: #fff;
+			box-shadow:
+				0 1px 2px rgba(16, 24, 40, 0.08),
+				0 0 0 1px rgba(217, 119, 6, 0.22);
 		}
-		&:hover {
-			color: var(--lmn-welcome-primary) !important;
-		}
+
 		&.s-tab-premium {
-			color: #bd2f9a !important;
+			color: var(--lmn-welcome-primary-dark) !important;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--lmn-welcome-primary);
+			outline-offset: 1px;
 		}
 		&:focus {
 			box-shadow: none;
-
-			span {
-				box-shadow: 0 0 0 1px #4f94d4, 0 0 2px 1px rgba(79, 148, 212, 0.8);
-			}
 		}
 	}
 }
@@ -458,9 +536,9 @@ body[class*="page_lmn"] {
 		overflow: hidden;
 		padding: 30px;
 		overflow: visible;
-		box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
+		box-shadow: var(--lmn-welcome-shadow);
 		border: 0;
-		transition: all 0.3s ease;
+		transition: box-shadow 0.2s ease;
 		position: relative;
 		&.s-box-spaced {
 			padding-left: 4vw;
@@ -487,41 +565,71 @@ body[class*="page_lmn"] {
 		}
 	}
 
+	/**
+	 * Buttons.
+	 *
+	 * Solid amber, sentence case, one radius. The uppercase gradient pill these
+	 * replace read as a marketing button on screens that are almost entirely
+	 * settings, and shouting every label made the real primary action — Save —
+	 * impossible to pick out of a page full of them.
+	 */
 	.s-button {
-		background: linear-gradient(135deg, #d97706, #f59e0b);
-		transition: all 0.1s ease-in-out;
+		background: var(--lmn-welcome-primary-dark);
+		transition: background-color 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease;
 		text-decoration: none;
-		border: none;
+		border: 1px solid transparent;
+		border-radius: var(--lmn-welcome-radius-sm);
 		color: #fff;
-		padding: 12px 20px;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		font-size: 14px;
+		padding: 9px 18px;
+		text-transform: none;
+		letter-spacing: 0;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.4;
 		cursor: pointer;
 		box-sizing: border-box !important;
 		display: inline-block;
+		box-shadow: 0 1px 2px rgba(120, 53, 15, 0.18);
 		&:hover {
-			opacity: 0.85;
-			box-shadow: none !important;
+			background: #b45309;
+			opacity: 1;
+			box-shadow: 0 2px 8px rgba(120, 53, 15, 0.22) !important;
+		}
+		&:active {
+			transform: translateY(1px);
+		}
+		&:focus-visible {
+			outline: 2px solid var(--lmn-welcome-primary);
+			outline-offset: 2px;
 		}
 		&:disabled {
-			background: #888;
-			opacity: 0.4;
+			background: #d4d4d8;
+			color: #71717a;
+			box-shadow: none;
+			opacity: 1;
 		}
 		&.s-button-left {
 			margin-left: 0;
 		}
 		&.s-button--ghost {
-			border: 1px solid linear-gradient(135deg, #d97706, #f59e0b);
-			border: 1px solid #d97706;
-			color: linear-gradient(135deg, #d97706, #f59e0b);
-			color: #d97706;
+			border: 1px solid var(--lmn-welcome-light-border);
+			color: #3f3f46;
 			background: #fff;
+			box-shadow: var(--lmn-welcome-shadow);
+			&:hover {
+				border-color: rgba(217, 119, 6, 0.4);
+				background: var(--lmn-welcome-primary-wash);
+				color: var(--lmn-welcome-primary-dark);
+			}
 		}
 		&.s-button--plain {
-			color: linear-gradient(135deg, #d97706, #f59e0b);
-			color: #d97706;
-			background: #fff;
+			color: var(--lmn-welcome-primary-dark);
+			background: transparent;
+			box-shadow: none;
+			&:hover {
+				background: var(--lmn-welcome-primary-wash);
+				box-shadow: none !important;
+			}
 		}
 	}
 	.s-box.s-left-align h3 {
@@ -559,12 +667,16 @@ body[class*="page_lmn"] {
 	#settings-content {
 		position: relative;
 		display: grid;
-		grid-template-columns: 244px 1fr;
+		grid-template-columns: 252px 1fr;
 		// Tinted canvas so the setting cards read as cards.
-		background: #f6f7f7;
+		background: var(--lmn-welcome-canvas);
 		// Give the cards room to breathe away from the nav rail.
 		> .s-box {
-			padding: 24px 28px;
+			padding: 28px 32px;
+		}
+
+		@media screen and (max-width: 960px) {
+			grid-template-columns: 1fr;
 		}
 	}
 	.s-sidenav {
@@ -649,26 +761,35 @@ body[class*="page_lmn"] {
 		// This is a button, render this in the bottom of the side bar
 		// The side bar is a flex container, so this will be at the bottom.
 		.s-save-changes {
-			background: linear-gradient(135deg, #d97706, #f59e0b);
+			background: var(--lmn-welcome-primary-dark);
 			width: 100%;
 			margin: 0;
-			transition: all 0.1s ease-in-out;
+			transition: background-color 0.14s ease, box-shadow 0.14s ease;
 			text-decoration: none;
 			border: none;
+			border-radius: var(--lmn-welcome-radius-sm);
 			color: #fff;
 			padding: 12px 20px;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			font-size: 14px;
+			text-transform: none;
+			letter-spacing: 0;
+			font-size: 13px;
+			font-weight: 600;
 			cursor: pointer;
 			box-sizing: border-box !important;
-			min-height: 55px;
+			min-height: 44px;
+			box-shadow: 0 1px 2px rgba(120, 53, 15, 0.18);
 			&:hover {
-				opacity: 0.85;
-				box-shadow: none !important;
+				background: #b45309;
+				opacity: 1;
+				box-shadow: 0 2px 8px rgba(120, 53, 15, 0.22) !important;
 			}
+			// Nothing to save: read as an inert control rather than a washed-out
+			// version of the live one.
 			&:not(.s-button-has-unsaved-changes) {
-				filter: saturate(0);
+				background: #e4e4e7;
+				color: #a1a1aa;
+				box-shadow: none;
+				filter: none;
 			}
 		}
 		.s-save-changes-note {
@@ -680,15 +801,33 @@ body[class*="page_lmn"] {
 			text-align: center;
 		}
 	}
+	/**
+	 * Search sits above the groups, in the flow.
+	 *
+	 * It used to be absolutely positioned against the panel, which put it on
+	 * top of the first group's heading now that groups are cards with their own
+	 * padding rather than flush bands.
+	 */
 	.s-search-setting {
 		display: flex;
 		justify-content: flex-end;
-		position: absolute;
-		right: 30px;
+		position: static;
+		margin: 0 0 18px;
 		.s-search-setting__input {
 			margin: 0;
-			padding: 0.5em 1em;
+			padding: 7px 12px;
 			width: 250px;
+			border: 1px solid var(--lmn-welcome-light-border);
+			border-radius: 999px;
+			background: #fff;
+			box-shadow: none;
+			transition: border-color 0.14s ease, box-shadow 0.14s ease, width 0.18s ease;
+			&:focus {
+				width: 300px;
+				border-color: var(--lmn-welcome-primary);
+				box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+				outline: none;
+			}
 		}
 	}
 
@@ -703,7 +842,7 @@ body[class*="page_lmn"] {
 	.s-confirm-modal {
 		.components-button {
 			--wp-admin-theme-color: #f59e0b;
-			--wp-admin-theme-color-darker-10: #c40056;
+			--wp-admin-theme-color-darker-10: #b45309;
 		}
 	}
 
@@ -712,23 +851,71 @@ body[class*="page_lmn"] {
 	.s-setting-group {
 		background: #fff;
 		border: 1px solid var(--lmn-welcome-light-border);
-		border-radius: 10px;
+		border-radius: var(--lmn-welcome-radius);
 		padding: 24px 28px 28px;
 		margin-bottom: 20px;
-		box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+		box-shadow: var(--lmn-welcome-shadow);
 		&:first-child h2 {
 			margin-top: 0;
 		}
 		h2 {
-			font-size: 1.15em;
+			position: relative;
+			font-size: 1.05em;
 			font-weight: 600;
 			letter-spacing: -0.01em;
-			margin: 0 0 4px;
-			padding-bottom: 12px;
-			border-bottom: 1px solid #f0f0f1;
+			color: var(--lmn-welcome-ink);
+			margin: 0 0 6px;
+			padding: 0 0 0 14px;
+			border-bottom: 0;
+			// A short amber tick in the margin marks where a group starts. Cheaper
+			// to scan down than a row of identically-weighted headings.
+			&::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 2px;
+				width: 4px;
+				height: 1em;
+				border-radius: 2px;
+				background: var(--lmn-welcome-primary);
+			}
+
+			// The rule belongs under whatever ends the group's preamble. With the
+			// subtitle below it the heading looked ruled off from its own
+			// description.
+			&:not(:has(+ .s-settings-subtitle)) {
+				@include lmn-group-rule;
+			}
 		}
 		.s-settings-subtitle {
-			margin-top: 12px;
+			@include lmn-group-rule;
+			max-width: none;
+			color: var(--lmn-welcome-muted);
+		}
+
+		/**
+		 * Row density.
+		 *
+		 * 48px of nothing between one setting and the next is a long way to
+		 * scroll past in a group that holds eight of them. Half that, with a
+		 * hairline, and a row is still unmistakably one row.
+		 */
+		.lmb-admin-setting:not(:last-child):not(.lmb-admin-setting--small) {
+			padding-bottom: 18px;
+			margin-bottom: 18px;
+			border-bottom: 1px solid var(--lmn-welcome-hairline);
+		}
+
+		.lmb-admin-setting__label {
+			font-weight: 600;
+			font-size: 13px;
+			color: var(--lmn-welcome-ink);
+		}
+
+		.lmb-admin-setting__help {
+			color: var(--lmn-welcome-muted);
+			font-size: 12px;
+			line-height: 1.55;
 		}
 	}
 

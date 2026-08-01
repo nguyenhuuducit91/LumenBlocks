@@ -6,7 +6,6 @@ import SVGQuickButtonsArrow from './images/quick-buttons-arrow.svg'
 import SVGCheck from './images/check.svg'
 import SVGStateHoverIcon from '../ui/base-control2/images/state-hover.svg'
 import SVGStateParentHoverIcon from '../ui/base-control2/images/state-parent-hover.svg'
-import SVGProIcon from './images/pro-icon.svg'
 
 /**
  * WordPress dependencies
@@ -24,17 +23,18 @@ import {
 	column as columnIcon,
 	copy as copyIcon,
 	filter as filterIcon,
-	reusableBlock as reusableBlockIcon,
 	symbol as symbolIcon,
-	archive as archiveIcon,
 	globe as globeIcon,
+	search as searchIcon,
+	listView as listViewIcon,
+	moveTo as moveIcon,
 } from '@wordpress/icons'
 
 /**
  * External dependencies
  */
 import {
-	i18n, guidedTourStates, isPro,
+	i18n, guidedTourStates, cdnUrl,
 } from 'lumen'
 import classNames from 'classnames'
 
@@ -50,6 +50,12 @@ const QUICK_BUTTONS = [
 				description: __( 'Jump straight into our Design Library and insert polished, pre-built sections; no more blank-page overwhelm.', i18n ),
 				link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=design-library`,
 				cta: __( 'Try Now', i18n ),
+				/*
+				 * The library reads from whatever CDN the site points it at, and
+				 * ships pointing at none. Offering this as the first thing to do
+				 * would open an empty modal.
+				 */
+				display: !! cdnUrl,
 			},
 			{
 				id: 'blocks',
@@ -106,15 +112,6 @@ const QUICK_BUTTONS = [
 				link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=advanced-hover-states`,
 				cta: __( 'Try Now', i18n ),
 			},
-			{
-				id: 'motion-effects',
-				icon: symbolIcon,
-				title: __( 'Motion Effects', i18n ),
-				description: __( 'Add animations and transitions to your blocks for a more engaging and interactive user experience.', i18n ),
-				link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=motion-effects` : '',
-				cta: __( 'Try Now', i18n ),
-				premium: true,
-			},
 		],
 	},
 	{
@@ -146,58 +143,54 @@ const QUICK_BUTTONS = [
 				link: `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=global-color-schemes`,
 				cta: __( 'Try Now', i18n ),
 			},
-			{
-				id: 'block-styles',
-				icon: reusableBlockIcon,
-				title: __( 'Re-using Block Styles', i18n ),
-				description: __( 'Re-use block styles sitewide for consistent branding. Save and quickly apply your favorite style combinations to any block.', i18n ),
-				link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=block-styles` : '',
-				cta: __( 'Try Now', i18n ),
-				premium: true,
-			},
-			{
-				id: 'copy-paste-styles',
-				icon: copyIcon,
-				title: __( 'Copy & Paste Styles', i18n ),
-				description: __( 'Quickly apply styles from one block to another for consistent design and branding.', i18n ),
-				link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=copy-paste-styles` : '',
-				cta: __( 'Try Now', i18n ),
-				premium: true,
-			},
 		],
 	},
+]
+
+/**
+ * Features that have no guided tour.
+ *
+ * They used to sit in the list above with an "Unlock" button, which was wrong
+ * twice over: there is nothing to unlock, and four of them were already
+ * working. They are listed here as what they are — things the plugin does —
+ * rather than as tutorials that do not exist, so the progress bar above counts
+ * only walkthroughs somebody can actually take.
+ */
+const ALSO_INCLUDED = [
 	{
-		title: __( 'Advanced Functionality', i18n ),
-		description: __( 'Unlock more advanced features and controls for your site.', i18n ),
-		items: [
-			{
-				id: 'dynamic-content',
-				icon: archiveIcon,
-				title: __( 'Dynamic Content', i18n ),
-				description: __( 'Dynamically display content based on user interactions, site conditions, or time-based triggers.', i18n ),
-				link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=dynamic-content` : '',
-				cta: __( 'Try Now', i18n ),
-				premium: true,
-			},
-			{
-				id: 'conditional-display',
-				icon: cogIcon,
-				title: __( 'Conditional Display', i18n ),
-				description: __( 'Show or hide blocks based on specific conditions, such as user roles, device type, or custom criteria.', i18n ),
-				link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=conditional-display` : '',
-				cta: __( 'Try Now', i18n ),
-				premium: true,
-			},
-			{
-				id: 'custom-css',
-				icon: filterIcon,
-				title: __( 'Applying CSS per Block', i18n ),
-				description: __( 'Add custom CSS to your blocks for precise control over their appearance and behavior.', i18n ),
-				link: isPro ? `/wp-admin/post-new.php?post_type=page&content=${ __( 'Welcome to Lumen', i18n ) }&tour=custom-css` : '',
-				cta: __( 'Try Now', i18n ),
-				premium: true,
-			},
-		],
+		icon: searchIcon,
+		title: __( 'Find a setting', i18n ),
+		description: __( 'Search the block inspector. It filters the panels as you type and follows a setting onto whichever tab it lives on.', i18n ),
+	},
+	{
+		icon: listViewIcon,
+		title: __( 'Applied settings', i18n ),
+		description: __( 'Everything a block currently sets, in one list on the Advanced tab, with a jump to each control and a reset for one value at a time.', i18n ),
+	},
+	{
+		icon: copyIcon,
+		title: __( 'Copy & paste styling', i18n ),
+		description: __( 'Copy what you changed on one block and paste it onto another, even a different block type. Content never travels with it.', i18n ),
+	},
+	{
+		icon: symbolIcon,
+		title: __( 'Motion effects', i18n ),
+		description: __( 'Ten entrance animations that run when a block is scrolled to, set per device, and skipped for readers who ask for reduced motion.', i18n ),
+	},
+	{
+		icon: moveIcon,
+		title: __( 'Transform & transition', i18n ),
+		description: __( 'Move, rotate and scale a block per device and per hover state, and decide how long the change takes.', i18n ),
+	},
+	{
+		icon: filterIcon,
+		title: __( 'Custom CSS per block', i18n ),
+		description: __( 'Write CSS for one block. It is scoped to that block, so it cannot restyle the rest of the site by accident.', i18n ),
+	},
+	{
+		icon: cogIcon,
+		title: __( 'Conditional display', i18n ),
+		description: __( 'Show a block by login state, role, date range, post type, page context or device — decided on the server, so a hidden block is never sent to the reader.', i18n ),
 	},
 ]
 
@@ -205,9 +198,6 @@ let totalGuidedTours = 0
 let totalDone = 0
 QUICK_BUTTONS.forEach( category => {
 	category.items.forEach( item => {
-		if ( item.premium && ! isPro ) {
-			return
-		}
 		if ( item.display === false ) {
 			return
 		}
@@ -310,7 +300,6 @@ export const GettingStarted = () => {
 												</div>
 												<div className="s-quick-button-description">
 													<h3 id={ cardTitleId }>
-														{ ! isPro && item.premium && <span className="lmn-pulsating-circle" role="presentation" /> }
 														<span>{ item.title }</span>
 													</h3>
 													<p id={ cardDescId }>{ item.description }</p>
@@ -319,30 +308,18 @@ export const GettingStarted = () => {
 													<a
 														id={ buttonId }
 														href={ item.link }
-														// aria-disabled={ item.premium && ! isPro }
 														className={ classNames( 's-button s-secondary-button uppercase', {
 															's-button--checked': guidedTourStates?.includes( item.id ),
-															's-button--unlock': item.premium && ! isPro,
-															// 's-button--disabled': item.premium && ! isPro,
 														} ) }
 														role="button"
 														tabIndex={ 0 }
 														aria-pressed={ !! guidedTourStates?.includes( item.id ) }
-														aria-label={
-															`${ item.title }: ${ item.description }` +
-															( item.premium && ! isPro ? ` (${ __( 'Pro required', i18n ) })` : '' )
-														}
+														aria-label={ `${ item.title }: ${ item.description }` }
 													>
 														<span className="s-quick-button-toggle-indicator" aria-hidden="true">
-															{ item.premium && ! isPro
-																? <SVGProIcon />
-																: <SVGCheck />
-															}
+															<SVGCheck />
 														</span>
-														{ item.premium && ! isPro
-															? __( 'Unlock', i18n )
-															: guidedTourStates?.includes( item.id ) ? __( 'Done', i18n ) : item.cta
-														}
+														{ guidedTourStates?.includes( item.id ) ? __( 'Done', i18n ) : item.cta }
 													</a>
 												</div>
 											</article>
@@ -353,6 +330,26 @@ export const GettingStarted = () => {
 						)
 					} ) }
 				</div>
+			</div>
+
+			<div className="s-getting-started__also-included-wrapper" role="region" aria-labelledby="also-included-title">
+				<section aria-labelledby="also-included-title" role="group">
+					<h2 id="also-included-title">{ __( 'Also included', i18n ) }</h2>
+					<p>{ __( 'These need no walkthrough — they are where you would expect them, in the block inspector.', i18n ) }</p>
+					<div className="s-guided-tours-container-inner s-also-included" role="list">
+						{ ALSO_INCLUDED.map( item => (
+							<article className="s-card" key={ item.title } role="listitem">
+								<div className="s-quick-button-icon" aria-hidden="true">
+									<Icon icon={ item.icon } />
+								</div>
+								<div className="s-quick-button-description">
+									<h3><span>{ item.title }</span></h3>
+									<p>{ item.description }</p>
+								</div>
+							</article>
+						) ) }
+					</div>
+				</section>
 			</div>
 
 		</div>

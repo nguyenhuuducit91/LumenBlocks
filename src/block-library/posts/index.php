@@ -156,6 +156,31 @@ if ( ! function_exists( 'generate_render_item_from_lumen_posts_block' ) ) {
 	}
 }
 
+if ( ! function_exists( 'lumen_posts_to_ids' ) ) {
+	/**
+	 * Reads a comma-separated list of post ids.
+	 *
+	 * Anything that is not a positive number is dropped rather than passed on.
+	 * WP_Query turns a stray word into `0`, and a query for post 0 comes back
+	 * empty — which an author reads as "there are no posts" rather than as a
+	 * typo in the field above.
+	 *
+	 * @param string $value What was typed.
+	 * @return array Post ids.
+	 */
+	function lumen_posts_to_ids( $value ) {
+		if ( empty( $value ) ) {
+			return array();
+		}
+
+		$ids = array_map( 'intval', explode( ',', (string) $value ) );
+
+		return array_values( array_filter( $ids, function ( $id ) {
+			return $id > 0;
+		} ) );
+	}
+}
+
 if ( ! function_exists( 'generate_post_query_from_lumen_posts_block' ) ) {
 	/**
 	 * Query generator for 'lumen/posts' block.
@@ -186,6 +211,36 @@ if ( ! function_exists( 'generate_post_query_from_lumen_posts_block' ) ) {
 				'numberposts' => $context['numberOfItems'],
 				'suppress_filters' => false,
 		);
+
+		/**
+		 * Which posts to skip, name and take.
+		 *
+		 * The attributes for these have always existed; only the controls were
+		 * missing. The ids are filtered to integers rather than passed through:
+		 * WP_Query turns a stray word into `0`, and a query for post 0 comes
+		 * back empty, which reads as "there are no posts" rather than as a typo.
+		 */
+		if ( ! empty( $context['postOffset'] ) ) {
+			$post_query['offset'] = absint( $context['postOffset'] );
+		}
+
+		$include = lumen_posts_to_ids( $context['postInclude'] );
+
+		if ( ! empty( $include ) ) {
+			$post_query['post__in'] = $include;
+		}
+
+		$exclude = lumen_posts_to_ids( $context['postExclude'] );
+
+		// The post being read is only meaningful on a singular view; anywhere
+		// else there is nothing to leave out.
+		if ( ! empty( $context['excludeCurrentPost'] ) && is_singular() ) {
+			$exclude[] = get_the_ID();
+		}
+
+		if ( ! empty( $exclude ) ) {
+			$post_query['post__not_in'] = array_values( array_unique( $exclude ) );
+		}
 
 		if ( ! empty( $context['taxonomy'] ) && ! empty( $context['taxonomyType'] ) ) {
 			// Categories.

@@ -54,7 +54,6 @@ const PanelBody = (
 		checked,
 		hasToggle = undefined,
 		onChange = noop,
-		isPremiumPanel = false,
 		showModifiedIndicator = false,
 	},
 	ref
@@ -89,7 +88,6 @@ const PanelBody = (
 	const classes = classnames( 'components-panel__body', 'lmb-toggle-panel-body', className, {
 		'is-opened': isOpened,
 		[ `lmb-panel--${ id }` ]: id,
-		'lmn--premium-panel': isPremiumPanel,
 	} )
 
 	return (
@@ -103,7 +101,6 @@ const PanelBody = (
 				hasToggle={ typeof hasToggle === 'undefined' ? !! onChange : hasToggle }
 				onChange={ onChange }
 				setIsOpened={ setIsOpened }
-				isPremiumPanel={ isPremiumPanel }
 				showModifiedIndicator={ showModifiedIndicator }
 				{ ...buttonProps }
 			/>
@@ -116,7 +113,7 @@ const PanelBody = (
 
 const PanelBodyTitle = forwardRef(
 	( {
-		isOpened, icon, title, isPremiumPanel, showModifiedIndicator,
+		isOpened, icon, title, showModifiedIndicator,
 		checked, hasToggle, onChange, setIsOpened, // For the toggle.
 		...props
 	}, ref ) => {
@@ -167,9 +164,6 @@ const PanelBodyTitle = forwardRef(
 						'lmn-panel-modified-indicator',
 						{ 'lmn--visible': showModifiedIndicator },
 					] ) } />
-					{ isPremiumPanel && (
-						<div className="lmn-pulsating-circle" />
-					) }
 					{ icon && (
 						<Icon
 							icon={ icon }

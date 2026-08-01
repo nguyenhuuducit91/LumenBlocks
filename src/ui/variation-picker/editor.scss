@@ -9,15 +9,6 @@
 		fill: revert !important;
 	}
 
-	.is-premium {
-		pointer-events: none;
-		~ span {
-			color: #888;
-		}
-		svg {
-			fill: #d8d8d8 !important;
-		}
-	}
 	.block-editor-block-variation-picker__variation {
 		background: #fff !important;
 		height: 42px;

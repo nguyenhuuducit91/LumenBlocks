@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	i18n, showProNotice, isPro,
-} from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * Internal dependencies
@@ -16,9 +14,8 @@ import {
 	IconControl,
 	AdvancedSelectControl,
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	FourRangeControl,
-	ProControlButton,
-	ProControl,
 } from '~lumen/ui'
 import { getAttrNameFunction } from '~lumen/utils'
 import {
@@ -33,6 +30,18 @@ import { Fragment, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { dispatch } from '@wordpress/data'
 
+/**
+ * The shapes that can sit behind an icon.
+ *
+ * The same three the plugin ships for image masks; a site that adds its own
+ * through `lumen.image.shape.svgs` gets them here too.
+ */
+const BACKGROUND_SHAPES = [
+	{ value: '', label: __( 'Blob', i18n ) },
+	{ value: 'circle', label: __( 'Circle', i18n ) },
+	{ value: 'square', label: __( 'Square', i18n ) },
+]
+
 export const Edit = props => {
 	const {
 		hasShape,
@@ -42,8 +51,8 @@ export const Edit = props => {
 		iconSizeProps = {},
 		iconControlHelp,
 		initialOpen,
-		hasMultiColor,
 		hasGradient,
+		hasShapeGradient,
 		wrapInPanels = true,
 		responsive = 'all',
 		hover = 'all',
@@ -65,6 +74,7 @@ export const Edit = props => {
 			icon: attributes.icon,
 			iconColorType: attributes.iconColorType,
 			shapeColorType: attributes.shapeColorType,
+			showBackgroundShape: attributes.showBackgroundShape,
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
@@ -72,11 +82,22 @@ export const Edit = props => {
 
 	const showIconControl = hideControlsIfIconIsNotSet ? !! attributes.icon : true
 
+	/*
+	 * Gradient has always generated correct CSS — `style.js` writes the two
+	 * stops and the direction into the `<linearGradient>` this feature already
+	 * renders — but it was not offered as a choice. Multi-colour is deliberately
+	 * still absent: nothing generates per-path colours, so listing it would put
+	 * ten colour pickers in front of an author and change nothing on the page.
+	 */
 	const filteredColorTypes = applyFilters( 'lumen.block-component.icon.color-types', [
 		{
 			value: '',
 			title: __( 'Single', i18n ),
 		},
+		...( hasGradient ? [ {
+			value: 'gradient',
+			title: __( 'Gradient', i18n ),
+		} ] : [] ),
 	], props )
 
 	const filteredShapeColorTypes = applyFilters( 'lumen.block-component.icon.shape-color-types', [
@@ -84,6 +105,10 @@ export const Edit = props => {
 			value: '',
 			title: __( 'Single', i18n ),
 		},
+		...( hasShapeGradient ? [ {
+			value: 'gradient',
+			title: __( 'Gradient', i18n ),
+		} ] : [] ),
 	], props )
 
 	const iconControls = (
@@ -107,8 +132,6 @@ export const Edit = props => {
 
 			{ props.children }
 
-			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton type="icon-colors" /> }
-
 			{ applyFilters( 'lumen.block-component.icon.after', null ) }
 
 			{ filteredColorTypes.length > 1 && (
@@ -129,6 +152,30 @@ export const Edit = props => {
 							attribute={ attributeName( 'iconColor1' ) }
 							hover={ hover }
 						/>
+					) }
+					{ ( attributes.iconColorType || '' ) === 'gradient' && (
+						<>
+							<ColorPaletteControl
+								label={ __( 'Icon Color #1', i18n ) }
+								attribute={ attributeName( 'iconColor1' ) }
+								hover={ hover }
+							/>
+							<ColorPaletteControl
+								label={ __( 'Icon Color #2', i18n ) }
+								attribute={ attributeName( 'iconColor2' ) }
+								hover={ hover }
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Gradient Direction (degrees)', i18n ) }
+								attribute={ attributeName( 'iconColorGradientDirection' ) }
+								min={ 0 }
+								max={ 360 }
+								step={ 10 }
+								allowReset={ true }
+								placeholder="0"
+								hover={ hover }
+							/>
+						</>
 					) }
 					{ PremiumColorControls && <PremiumColorControls { ...props } /> }
 				</>
@@ -209,6 +256,30 @@ export const Edit = props => {
 					hover="all"
 				/>
 			) }
+			{ ( attributes.shapeColorType || '' ) === 'gradient' && (
+				<>
+					<ColorPaletteControl
+						label={ __( 'Shape Color #1', i18n ) }
+						attribute="shapeColor1"
+						hover="all"
+					/>
+					<ColorPaletteControl
+						label={ __( 'Shape Color #2', i18n ) }
+						attribute="shapeColor2"
+						hover="all"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Gradient Direction (degrees)', i18n ) }
+						attribute="shapeColorGradientDirection"
+						min={ 0 }
+						max={ 360 }
+						step={ 10 }
+						allowReset={ true }
+						placeholder="0"
+						hover="all"
+					/>
+				</>
+			) }
 			{ PremiumShapeColorControls && <PremiumShapeColorControls { ...props } /> }
 
 			<AdvancedRangeControl
@@ -252,7 +323,77 @@ export const Edit = props => {
 		</>
 	)
 
-	const iconBackgroundShapeControls = <ProControl type="icon-background-shape" />
+	/*
+	 * A shape drawn behind the icon. Everything except these controls already
+	 * existed — the SVG was rendered, the stylesheet positioned it, and seven
+	 * attributes were declared for it; only the panel was an advertisement.
+	 * The shapes on offer are the three the plugin ships, shared with the image
+	 * mask control, and can be added to through `lumen.image.shape.svgs`.
+	 */
+	const iconBackgroundShapeControls = (
+		<>
+			<AdvancedToggleControl
+				label={ __( 'Show Background Shape', i18n ) }
+				attribute="showBackgroundShape"
+			/>
+
+			{ attributes.showBackgroundShape && (
+				<>
+					<AdvancedSelectControl
+						label={ __( 'Shape', i18n ) }
+						attribute="backgroundShape"
+						options={ BACKGROUND_SHAPES }
+					/>
+
+					<ColorPaletteControl
+						label={ __( 'Shape Color', i18n ) }
+						attribute="backgroundShapeColor"
+						hover="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Shape Opacity', i18n ) }
+						attribute="backgroundShapeOpacity"
+						min={ 0 }
+						max={ 1 }
+						step={ 0.1 }
+						allowReset={ true }
+						placeholder="1.0"
+						hover="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Shape Size', i18n ) }
+						attribute="backgroundShapeSize"
+						min={ 50 }
+						max={ 300 }
+						step={ 5 }
+						allowReset={ true }
+						placeholder="100"
+						help={ __( 'Per cent of the icon.', i18n ) }
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Horizontal Offset', i18n ) }
+						attribute="backgroundShapeOffsetHorizontal"
+						min={ -50 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="0"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Vertical Offset', i18n ) }
+						attribute="backgroundShapeOffsetVertical"
+						min={ -50 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="0"
+					/>
+				</>
+			) }
+		</>
+	)
 
 	const Wrapper = wrapInPanels ? InspectorStyleControls : Fragment
 
@@ -269,11 +410,18 @@ export const Edit = props => {
 
 			{ props.hasBackgroundShape &&
 				<>
-					{ showProNotice && ! isPro && (
-						wrapInPanels
-							? <PanelAdvancedSettings title={ __( 'Background Shape', i18n ) } id="icon-background-shape" isPremiumPanel> { iconBackgroundShapeControls }</PanelAdvancedSettings>
-							: iconBackgroundShapeControls
-					) }
+					{ wrapInPanels
+						? (
+							<PanelAdvancedSettings
+								title={ __( 'Background Shape', i18n ) }
+								id="icon-background-shape"
+								showModifiedIndicator={ !! attributes.showBackgroundShape }
+							>
+								{ iconBackgroundShapeControls }
+							</PanelAdvancedSettings>
+						)
+						: iconBackgroundShapeControls
+					}
 
 					{ PremiumBackgroundShapeControls && <PremiumBackgroundShapeControls { ...props } /> }
 				</>

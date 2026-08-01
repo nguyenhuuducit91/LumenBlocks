@@ -101,6 +101,10 @@ export const Controls = props => {
 	let hasTabletColumnWidths = false
 	let hasMobileColumnWidths = false
 
+	// The unit is a property of the row rather than of one column, so it is read
+	// from the first and written to all of them.
+	let columnWidthUnit = ''
+
 	innerBlocks.forEach( ( { clientId } ) => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
 		if ( attributes ) {
@@ -110,6 +114,10 @@ export const Controls = props => {
 			columnWidths.push( attributes.columnWidth )
 			columnWidthsTablet.push( attributes.columnWidthTablet )
 			columnWidthsMobile.push( attributes.columnWidthMobile )
+
+			if ( ! columnWidthUnit ) {
+				columnWidthUnit = attributes[ getAttributeName( 'columnWidthUnit', deviceType ) ] || ''
+			}
 
 			if ( attributes.columnWidthTablet ) {
 				hasTabletColumnWidths = true
@@ -183,8 +191,37 @@ export const Controls = props => {
 					hasMobileValue={ hasMobileColumnWidths }
 					placeholders={ deviceType === 'Mobile' ? Array( numInnerBlocks ).fill( '100' ) : columnWidths }
 					allowReset={ true }
+					units={ [ '%', 'px', 'rem', 'em' ] }
+					unit={ columnWidthUnit || '%' }
+					onChangeUnit={ unit => {
+						const unitName = getAttributeName( 'columnWidthUnit', deviceType )
+						const clientIds = []
+						const attributes = {}
+
+						innerBlocks.forEach( block => {
+							clientIds.push( block.clientId )
+							attributes[ block.clientId ] = {
+								// '%' is stored as empty, so a row that has never
+								// left percentages keeps writing exactly the CSS
+								// it wrote before units existed.
+								[ unitName ]: unit === '%' ? '' : unit,
+							}
+						} )
+
+						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line lumen/no-update-block-attributes
+						setColumnsUpdate( Math.random() )
+					} }
 					onChange={ columnWidths => {
-						const columnRows = getRowsFromColumns( columnWidths )
+						/*
+						 * Which columns share a row is worked out by adding
+						 * widths up until they pass 100 — arithmetic that only
+						 * means anything for percentages. With a fixed unit the
+						 * browser decides what fits, and the gap compensation
+						 * that this count drives must not happen at all, so the
+						 * count is left unset.
+						 */
+						const isPercent = ( columnWidthUnit || '%' ) === '%'
+						const columnRows = isPercent ? getRowsFromColumns( columnWidths ) : null
 
 						const clientIds = []
 						const attributes = {}
@@ -196,7 +233,9 @@ export const Controls = props => {
 									clientIds.push( block.clientId )
 									attributes[ block.clientId ] = {
 										[ columnWidthName ]: columnWidths[ i ],
-										[ columnAdjacentCount ]: columnRows.filter( n => n === columnRows[ i ] ).length,
+										[ columnAdjacentCount ]: columnRows
+											? columnRows.filter( n => n === columnRows[ i ] ).length
+											: '',
 									}
 								} )
 							} )
@@ -205,7 +244,9 @@ export const Controls = props => {
 								clientIds.push( block.clientId )
 								attributes[ block.clientId ] = {
 									[ columnWidthName ]: columnWidths[ i ],
-									[ columnAdjacentCount ]: columnRows.filter( n => n === columnRows[ i ] ).length,
+									[ columnAdjacentCount ]: columnRows
+										? columnRows.filter( n => n === columnRows[ i ] ).length
+										: '',
 								}
 							} )
 						}

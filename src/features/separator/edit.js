@@ -7,7 +7,6 @@ import {
 	PanelAdvancedSettings,
 	ColorPaletteControl,
 	AdvancedToggleControl,
-	ProControlButton,
 	ShadowControl,
 	InspectorStyleControls,
 } from '~lumen/ui'
@@ -19,7 +18,7 @@ import {
 /*
  * External dependencies
  */
-import { i18n, showProNotice } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -155,7 +154,6 @@ export const Edit = props => {
 			>
 				<SeparatorControls attrNameTemplate="top%s" />
 				{ PremiumTopSeparatorControls && <PremiumTopSeparatorControls { ...props } /> }
-				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator', i18n ) }
@@ -166,7 +164,6 @@ export const Edit = props => {
 			>
 				<SeparatorControls attrNameTemplate="bottom%s" />
 				{ PremiumBottomSeparatorControls && <PremiumBottomSeparatorControls { ...props } /> }
-				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)

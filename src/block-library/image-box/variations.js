@@ -3,11 +3,6 @@
  */
 import ImageDefault from './images/default.svg'
 import ImagePlain from './images/plain.svg'
-import ImageBox from './images/box.svg'
-import ImageCaptioned from './images/captioned.svg'
-import ImageFade from './images/fade.svg'
-import ImageLine from './images/line.svg'
-
 /**
  * WordPress dependencies
  */
@@ -19,7 +14,7 @@ import { applyFilters } from '@wordpress/hooks'
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * Template option choices for predefined columns layouts.
@@ -133,54 +128,6 @@ const variations = applyFilters(
 					} ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'box',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Box', i18n ) ),
-			attributes: {
-				className: 'is-style-box',
-			},
-			pickerTitle: __( 'Box', i18n ),
-			pickerIcon: ImageBox,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'captioned',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Captioned', i18n ) ),
-			attributes: {
-				className: 'is-style-captioned',
-			},
-			pickerTitle: __( 'Captioned', i18n ),
-			pickerIcon: ImageCaptioned,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'fade',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Fade', i18n ) ),
-			attributes: {
-				className: 'is-style-fade',
-			},
-			pickerTitle: __( 'Fade', i18n ),
-			pickerIcon: ImageFade,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'line',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Line', i18n ) ),
-			attributes: {
-				className: 'is-style-line',
-			},
-			pickerTitle: __( 'Line', i18n ),
-			pickerIcon: ImageLine,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

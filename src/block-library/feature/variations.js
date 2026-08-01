@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,17 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImageHorizontal from './images/horizontal.svg'
-import ImageOverlapShape1 from './images/overlap-shape-1.svg'
-import ImageOverlapShape2 from './images/overlap-shape-2.svg'
-import ImageOverlapShape3 from './images/overlap-shape-3.svg'
-import ImageOverlapShape4 from './images/overlap-shape-4.svg'
-import ImageOverlapShape5 from './images/overlap-shape-5.svg'
-import ImageOverlapBg1 from './images/overlap-bg-1.svg'
-import ImageOverlapBg2 from './images/overlap-bg-2.svg'
-import ImageOverlapBg3 from './images/overlap-bg-3.svg'
-import ImageOverlapBg4 from './images/overlap-bg-4.svg'
-import ImageOverlapBg5 from './images/overlap-bg-5.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -89,126 +78,6 @@ const variations = applyFilters(
 					[ 'lumen/image', {} ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-shape-1',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 1', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-shape-1',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Shape 1', i18n ),
-			pickerIcon: ImageOverlapShape1,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-shape-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 2', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-shape-2',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Shape 2', i18n ),
-			pickerIcon: ImageOverlapShape2,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-shape-3',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 3', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-shape-3',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Shape 3', i18n ),
-			pickerIcon: ImageOverlapShape3,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-shape-4',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 4', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-shape-4',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Shape 4', i18n ),
-			pickerIcon: ImageOverlapShape4,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-shape-5',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 5', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-shape-5',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Shape 5', i18n ),
-			pickerIcon: ImageOverlapShape5,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-background-1',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 1', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-background-1',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Background 1', i18n ),
-			pickerIcon: ImageOverlapBg1,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-background-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 2', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-background-2',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Background 2', i18n ),
-			pickerIcon: ImageOverlapBg2,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-background-3',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 3', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-background-3',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Background 3', i18n ),
-			pickerIcon: ImageOverlapBg3,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-background-4',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 4', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-background-4',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Background 4', i18n ),
-			pickerIcon: ImageOverlapBg4,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'overlap-background-5',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 5', i18n ) ),
-			attributes: {
-				className: 'is-style-overlap-background-5',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Overlap Background 5', i18n ),
-			pickerIcon: ImageOverlapBg5,
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

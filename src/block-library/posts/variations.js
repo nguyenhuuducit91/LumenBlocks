@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,14 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImageList from './images/list.svg'
-import ImagePortfolio from './images/portfolio.svg'
-import ImagePortfolio2 from './images/portfolio-2.svg'
-import ImageVerticalCard from './images/vertical-card.svg'
-import ImageHorizontalCard from './images/horizontal-card.svg'
-import ImageHorizontalCard2 from './images/horizontal-card-2.svg'
-import ImageVerticalCard2 from './images/vertical-card-2.svg'
-import ImageImageCard from './images/image-card.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -77,90 +69,6 @@ const variations = applyFilters(
 			pickerTitle: __( 'List', i18n ),
 			pickerIcon: ImageList,
 			isActive: [ 'className' ],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'image-card',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Image Card', i18n ) ),
-			attributes: {
-				className: 'is-style-image-card',
-			},
-			pickerTitle: __( 'Image Card', i18n ),
-			pickerIcon: ImageImageCard,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal',
-			},
-			pickerTitle: __( 'Horizontal', i18n ),
-			pickerIcon: ImageHorizontalCard,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal-2',
-			},
-			pickerTitle: __( 'Horizontal 2', i18n ),
-			pickerIcon: ImageHorizontalCard2,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'portfolio',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Portfolio', i18n ) ),
-			attributes: {
-				className: 'is-style-portfolio',
-			},
-			pickerTitle: __( 'Portfolio', i18n ),
-			pickerIcon: ImagePortfolio,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'portfolio-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Portfolio 2', i18n ) ),
-			attributes: {
-				className: 'is-style-portfolio-2',
-			},
-			pickerTitle: __( 'Portfolio 2', i18n ),
-			pickerIcon: ImagePortfolio2,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'vertical-card',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card', i18n ) ),
-			attributes: {
-				className: 'is-style-vertical-card',
-			},
-			pickerTitle: __( 'Vertical Card', i18n ),
-			pickerIcon: ImageVerticalCard,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'vertical-card-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card 2', i18n ) ),
-			attributes: {
-				className: 'is-style-vertical-card-2',
-			},
-			pickerTitle: __( 'Vertical Card 2', i18n ),
-			pickerIcon: ImageVerticalCard2,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

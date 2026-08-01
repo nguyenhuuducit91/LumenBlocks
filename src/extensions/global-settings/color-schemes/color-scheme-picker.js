@@ -7,9 +7,7 @@ import PRESET_COLOR_SCHEMES from './preset-color-schemes.json'
 /**
  * External dependencies
  */
-import {
-	i18n, isPro, showProNotice,
-} from 'lumen'
+import { i18n } from 'lumen'
 import {
 	SortablePicker,
 	InspectorSubHeader,
@@ -20,7 +18,6 @@ import {
 	DEFAULT_COLOR_SCHEME_COLORS,
 	ALTERNATE_COLOR_SCHEME_COLORS,
 	AdvancedToggleControl,
-	ProControlButton,
 	ControlSeparator,
 } from '~lumen/ui'
 import { useBlockHoverState } from '~lumen/hooks'
@@ -179,7 +176,47 @@ const ColorSchemePicker = props => {
 			return
 		}
 
-		doAction( 'lumen.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme', scheme, setItemInEdit, saveTimeout )
+		/*
+		 * Schemes past the third.
+		 *
+		 * These used to be handed to an action nobody listens to, so the button
+		 * that would have created them was disabled and the feature stopped at
+		 * three. They are appended to the same list as the others instead: the
+		 * setting takes an array of any length, and the CSS generator in PHP
+		 * walks it by key, so nothing else has to know these exist.
+		 */
+		const custom = applyFilters(
+			'lumen.global-settings.global-color-schemes.custom-color-schemes.add-color-scheme',
+			null, scheme, setItemInEdit, saveTimeout
+		)
+
+		if ( custom ) {
+			return
+		}
+
+		const takenKeys = colorSchemes.map( existing => existing.key )
+		let index = colorSchemes.length + 1
+
+		while ( takenKeys.includes( `scheme-${ index }` ) ) {
+			index++
+		}
+
+		const newScheme = scheme || {
+			name: sprintf(
+				/* translators: %d: the number of the scheme being created. */
+				__( 'Color Scheme %d', i18n ),
+				index
+			),
+			key: `scheme-${ index }`,
+			// A copy of the default, so the author edits something rather than
+			// starting from a scheme with no colours in it at all.
+			colorScheme: cloneDeep( colorSchemes[ 0 ]?.colorScheme || {} ),
+		}
+
+		const updatedColorSchemes = [ ...colorSchemes, newScheme ]
+
+		saveColorSchemeSettings( updatedColorSchemes )
+		setItemInEdit( newScheme )
 	}
 
 	// For sorting custom color schemes
@@ -343,10 +380,31 @@ const ColorSchemePicker = props => {
 		// If the color scheme to be deleted is a custom color scheme, customDelete will return true
 		const customDelete = applyFilters( 'lumen.global-settings.global-color-schemes.delete-color-scheme', false, item, setItemInEdit, saveTimeout )
 
-		if ( ! customDelete ) {
-			// Do not delete if it is not a custom color scheme, reset it to the default value instead.
-			onReset( item )
+		if ( customDelete ) {
+			return
 		}
+
+		/*
+		 * The first two schemes have fixed roles — every block falls back to one
+		 * of them — so they are reset rather than removed. Anything else was
+		 * added by the author and can go.
+		 */
+		if ( item.key !== 'scheme-default-1' && item.key !== 'scheme-default-2' ) {
+			// eslint-disable-next-line no-alert
+			const confirmDelete = window.confirm( __( 'Deleting this color scheme would remove all colors linked to it. Any blocks that use this color scheme will revert to the default scheme. Delete this color scheme?', i18n ) )
+
+			if ( ! confirmDelete ) {
+				return
+			}
+
+			const updatedColorSchemes = colorSchemes.filter( existing => existing.key !== item.key )
+
+			saveColorSchemeSettings( updatedColorSchemes )
+			setItemInEdit( null )
+			return
+		}
+
+		onReset( item )
 	}
 
 	// Duplicate the color scheme being edited
@@ -457,18 +515,19 @@ const ColorSchemePicker = props => {
 		}
 	}
 
-	const isNameReadOnly = itemInEdit?.key === 'scheme-default-1' ? true
-		: ! isPro && itemInEdit?.key === 'scheme-default-2' ? true
-			: false
+	// The two fixed schemes are referred to by name elsewhere in the settings,
+	// so only they are read-only; anything the author added is theirs to name.
+	const isNameReadOnly = itemInEdit?.key === 'scheme-default-1' ||
+		itemInEdit?.key === 'scheme-default-2'
 
 	return ( ! itemInEdit ? <SortablePicker
 		ref={ ref }
 		{ ...props }
 		className="lmn-global-color-scheme-picker"
 		items={ customColorSchemes }
-		// colorSchemes only contains the the default schemes (keys starting with scheme-default)
-		// ensure there are only a max of three free default schemes
-		nonSortableItems={ colorSchemes.slice( 0, 3 ) }
+		// Every scheme the site has. They are not sortable: the first two have
+		// fixed roles that other settings refer to by position.
+		nonSortableItems={ colorSchemes }
 		editableName={ false }
 		onDeleteItem={ onDeleteItem }
 		handleAddItem={ handleAddItem }
@@ -476,30 +535,30 @@ const ColorSchemePicker = props => {
 		ItemPreview={ ItemPreview }
 		ItemPicker={ null }
 		buttonClassName="lmn-global-color-scheme__color-scheme-item"
-		enableAddItem={ isPro || ! colorSchemes.some( scheme => scheme.key === 'scheme-default-3' ) }
+		enableAddItem={ true }
 		onItemClick={ item => setItemInEdit( item ) }
 		showResetCallback={ item => showResetButton( item ) }
 		showDeleteCallback={ item => showDeleteButton( item ) }
 	/> : <>
 		<InspectorSubHeader
-			title={ ! isPro && itemInEdit.key === 'scheme-default-1'
+			title={ itemInEdit.key === 'scheme-default-1'
 				? sprintf( __( 'Editing %s', i18n ), __( 'Default Scheme', i18n ) )
-				: ! isPro && itemInEdit.key === 'scheme-default-2'
+				: itemInEdit.key === 'scheme-default-2'
 					? sprintf( __( 'Editing %s', i18n ), __( 'Background Scheme', i18n ) )
 					: sprintf( __( 'Editing %s', i18n ), __( 'Color Scheme', i18n ) ) }
 			onBack={ () => setItemInEdit( null ) }
 			showTrash={ subHeaderControls.showTrash }
 			showReset={ subHeaderControls.showReset }
-			showDuplicate={ isPro }
+			showDuplicate={ true }
 			onTrash={ () => onDeleteItem( itemInEdit ) }
 			onReset={ () => onReset( itemInEdit ) }
 			onDuplicate={ () => onDuplicate( itemInEdit ) }
 		/>
 		<div className="lmn-global-color-scheme__edit-panel-preview">
 			{
-				! isPro && itemInEdit.key === 'scheme-default-1'
+				itemInEdit.key === 'scheme-default-1'
 					? <p> { __( 'Change the color scheme used for all blocks, and when the container option is enabled for a block.', i18n ) } </p>
-					: ! isPro && itemInEdit.key === 'scheme-default-2'
+					: itemInEdit.key === 'scheme-default-2'
 						? <p> { __( 'Change the color scheme applied when the background option is enabled for a block.', i18n ) } </p>
 						: <p> { __( 'Editing this scheme will also change all blocks that currently use this color scheme.', i18n ) } </p>
 			}
@@ -520,7 +579,6 @@ const ColorSchemePicker = props => {
 			presets={ presets }
 			onPresetClick={ onPresetClick }
 		/>
-		{ showProNotice && <ProControlButton type="color-schemes" /> }
 		<ControlSeparator />
 
 		<AdvancedToggleControl
@@ -540,11 +598,9 @@ const ColorSchemePicker = props => {
 				forceUpdateHoverState={ true }
 				onChange={ color => onChange( settings.property, color ) }
 				help={
-					! isPro && itemInEdit.key === 'scheme-default-1' && settings.property === 'backgroundColor'
+					itemInEdit.key === 'scheme-default-1' && settings.property === 'backgroundColor'
 						? __( 'Note: This background color is used when the container option of the block is enabled.', i18n )
-						: isPro && settings.property === 'backgroundColor'
-							? __( 'Note: Background color is not used for Base Color Scheme.', i18n )
-							: ''
+						: ''
 				}
 				hasGradientPicker={ hasGradientPicker( settings.property ) }
 				enableGradient={ currentHoverState === 'normal' || settings.property === 'buttonBackgroundColor' }

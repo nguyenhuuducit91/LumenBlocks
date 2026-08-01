@@ -10,8 +10,8 @@ import ImageShapeBlob1 from './images/blob1.png'
 /**
  * External dependencies
  */
-import { i18n, showProNotice } from 'lumen'
-import { DesignControl, ProControlButton } from '~lumen/ui'
+import { i18n } from 'lumen'
+import { DesignControl } from '~lumen/ui'
 import classnames from 'classnames'
 
 /**
@@ -49,7 +49,6 @@ const ImageShapeControl = props => {
 					...applyFilters( 'lumen.image.control.shapes', [] ),
 				] }
 			/>
-			{ showProNotice && <ProControlButton type="image" /> }
 		</Fragment>
 	)
 }

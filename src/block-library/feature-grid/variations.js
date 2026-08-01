@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -15,10 +15,6 @@ import { applyFilters } from '@wordpress/hooks'
  * Internal dependencies
  */
 import ImageDefault from './images/default.svg'
-import ImageHorizontal from './images/horizontal.svg'
-import ImageLargeMid from './images/large-mid.svg'
-import ImageZigZag from './images/zig-zag.svg'
-import ImageOffset from './images/offset.svg'
 import ImageFloat from './images/float.svg'
 
 /**
@@ -160,54 +156,6 @@ const variations = applyFilters(
 					] ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Horizontal', i18n ),
-			pickerIcon: ImageHorizontal,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'large-mid',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Mid', i18n ) ),
-			attributes: {
-				className: 'is-style-large-mid',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Large Mid', i18n ),
-			pickerIcon: ImageLargeMid,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'offset',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Offset', i18n ) ),
-			attributes: {
-				className: 'is-style-offset',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Offset', i18n ),
-			pickerIcon: ImageOffset,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'zigzag',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Zizag', i18n ) ),
-			attributes: {
-				className: 'is-style-zigzag',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Zigzag', i18n ),
-			pickerIcon: ImageZigZag,
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

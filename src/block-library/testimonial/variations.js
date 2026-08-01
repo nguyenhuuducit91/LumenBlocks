@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,11 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImageCompact from './images/compact.svg'
-import ImageHorizontal from './images/horizontal.svg'
-import ImageBubble from './images/bubble.svg'
-import ImageVertical from './images/vertical.svg'
-import ImageInvertedVertical from './images/inverted-vertical.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -86,54 +81,6 @@ const variations = applyFilters(
 					] ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal',
-			},
-			pickerTitle: __( 'Horizontal', i18n ),
-			pickerIcon: ImageHorizontal,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'bubble',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bubble', i18n ) ),
-			attributes: {
-				className: 'is-style-bubble',
-			},
-			pickerTitle: __( 'Bubble', i18n ),
-			pickerIcon: ImageBubble,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'vertical',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical', i18n ) ),
-			attributes: {
-				className: 'is-style-vertical',
-			},
-			pickerTitle: __( 'Vertical', i18n ),
-			pickerIcon: ImageVertical,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'inverted-vertical',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Inverted Vertical', i18n ) ),
-			attributes: {
-				className: 'is-style-inverted-vertical',
-			},
-			pickerTitle: __( 'Inverted Vertical', i18n ),
-			pickerIcon: ImageInvertedVertical,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

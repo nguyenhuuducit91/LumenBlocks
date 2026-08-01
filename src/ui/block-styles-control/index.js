@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import ProControl from '../pro-control'
 import { ResetButton } from '../base-control2/reset-button'
 import Button from '../button'
 import {
@@ -14,7 +13,7 @@ import {
 	isBlockStyleAttributesModified,
 	currentUserHasCapability,
 } from '~lumen/utils'
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 import classnames from 'classnames'
 
 /**
@@ -44,7 +43,6 @@ export const BlockStylesControl = props => {
 	const defaultBlockAttributes = useMemo( () => getFilteredAttributes( blockType.attributes, blockAttributesFilter ), [] )
 
 	const [ userCanManageOptions, setUserCanManageOptions ] = useState( false )
-	const [ openProNotice, setOpenProNotice ] = useState( false )
 	const [ openSaveModal, setOpenSaveModal ] = useState( false )
 	const [ openPopover, setOpenPopover ] = useState( false )
 	const [ focusedIndex, setFocusedIndex ] = useState( 0 )
@@ -72,12 +70,6 @@ export const BlockStylesControl = props => {
 		'lmb-block-styles-controls',
 	] )
 
-	const proControlClasses = classnames( [
-		'lmb-pro-control-button__wrapper',
-	], {
-		'lmb-pro-control-button--hidden': ! openProNotice,
-	} )
-
 	// Handle keyboard navigation for block style buttons
 	const handleKeyDown = event => {
 	// eslint-disable-next-line @wordpress/no-global-active-element
@@ -102,9 +94,8 @@ export const BlockStylesControl = props => {
 	}, [ focusedIndex ] )
 
 	useEffect( () => {
-		// Reset openProNotice, focusedIndex, and blockStyleButtonsRef when the popover is closed
+		// Reset focusedIndex and blockStyleButtonsRef when the popover is closed
 		if ( ! openPopover ) {
-			setOpenProNotice( false )
 			setFocusedIndex( -1 )
 			blockStyleButtonsRef.current = []
 
@@ -207,20 +198,34 @@ export const BlockStylesControl = props => {
 	const onSelectBlockStyle = ( option, index ) => {
 		setFocusedIndex( index )
 
-		if ( isPro ) {
-			doAction( 'lumen.global-settings.global-block-styles.select-block-style',
-				option,	blockStyle, globalBlockStyles, defaultBlockAttributes, setAttributes )
-		} else {
-			setOpenProNotice( value => ! value )
+		/*
+		 * Applying a saved style used to be handed to an action that only the
+		 * paid plugin registered, so clicking a style opened an advertisement
+		 * instead of doing anything. It is applied here now: a style is a set of
+		 * attributes, and putting them on the block is all there is to it.
+		 */
+		doAction( 'lumen.global-settings.global-block-styles.select-block-style',
+			option,	blockStyle, globalBlockStyles, defaultBlockAttributes, setAttributes )
+
+		const style = globalBlockStyles.find( item => item.slug === option )
+
+		if ( ! style ) {
+			return
 		}
+
+		// The block type's defaults go on first, so attributes belonging to the
+		// style being replaced do not survive underneath the new one.
+		setAttributes( {
+			...defaultBlockAttributes,
+			...( style.nonCssAttributes || {} ),
+			...( style.attributes || {} ),
+			blockStyle: option,
+			modifiedBlockStyle: false,
+		} )
 	}
 
 	const onAddBlockStyle = () => {
-		if ( isPro ) {
-			doAction( 'lumen.global-settings.global-block-styles.add-block-style', setOpenSaveModal )
-		} else {
-			setOpenProNotice( value => ! value )
-		}
+		doAction( 'lumen.global-settings.global-block-styles.add-block-style', setOpenSaveModal )
 
 		setOpenPopover( false )
 	}
@@ -305,7 +310,6 @@ export const BlockStylesControl = props => {
 										<span className="lmb-block-styles-controls__label">
 											{ option.name } { blockStyle === option.slug && inBlockStyleOptions && isModified ? `(${ __( 'Modified', i18n ) })` : '' }
 										</span>
-										{ ! isPro && <Dashicon icon="lock" size={ 12 } /> }
 									</Button>
 								</li>
 							} ) }
@@ -321,10 +325,6 @@ export const BlockStylesControl = props => {
 								onAddBlockStyle={ onAddBlockStyle }
 							/>
 						) }
-						<div className={ proControlClasses } >
-							<ProControl type="global-block-styles" />
-						</div>
-
 					</PanelBody>
 				</Popover>
 			) }
@@ -355,7 +355,6 @@ const SaveUpdateButtons = props => {
 					className={ props.buttonClassName }
 				>
 					{ __( 'Save New Block Style', i18n ) }
-					{ ! isPro && <span className="lmn-pulsating-circle" role="presentation" /> }
 				</Button>
 			</FlexItem>
 		</Flex>

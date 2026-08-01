@@ -60,6 +60,7 @@ const SortControl = memo( props => {
 
 	return (
 		<BaseControl
+			attribute={ props.attribute }
 			{ ...controlProps }
 			className={ classnames( [ 'lmb-sort-control', props.className, `lmb-sort-control--axis-${ props.axis }` ] ) }
 		>

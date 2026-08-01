@@ -8,13 +8,12 @@ import ColorSchemePicker from './color-scheme-picker'
 /**
  * External dependencies
  */
-import { i18n, showProNotice } from 'lumen'
+import { i18n } from 'lumen'
 import {
 	AdvancedSelectControl,
 	AdvancedToggleControl,
 	HelpTooltip,
 	PanelAdvancedSettings,
-	ProControlButton,
 	SectionSettings,
 } from '~lumen/ui'
 import { useBlockColorSchemes } from '~lumen/hooks'
@@ -95,7 +94,6 @@ addFilter( 'lumen.global-settings.inspector', 'lumen/global-color-schemes', outp
 					setItemInEdit={ setItemInEdit }
 					setDisplayHoverNotice={ setDisplayHoverNotice }
 				/>
-				{ ! itemInEdit && showProNotice && <ProControlButton type="color-schemes" /> }
 				{ ! itemInEdit && <>
 					<SectionSettings title={ __( 'Default Block Colors', i18n ) }>
 						<AdvancedSelectControl

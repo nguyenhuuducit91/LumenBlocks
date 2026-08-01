@@ -9,15 +9,14 @@ import variations from './variations'
  * External dependencies
  */
 import classnames from 'classnames'
-import {
-	version as VERSION, i18n, showProNotice,
-} from 'lumen'
+import { version as VERSION, i18n } from 'lumen'
 import { first, isEqual } from 'lodash'
 import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
+	AdvancedTextControl,
 	SortControl,
 	TaxonomyControl,
 	AdvancedToggleControl,
@@ -26,7 +25,6 @@ import {
 	InspectorLayoutControls,
 	InspectorStyleControls,
 	ControlSeparator,
-	ProControlButton,
 	useBlockCssGenerator,
 } from '~lumen/ui'
 import {
@@ -325,7 +323,36 @@ const InspectorControls = memo( props => {
 						onChangeTaxonomyTypeToDisplay={ taxonomyTypeToDisplay => props.setAttributes( { taxonomyTypeToDisplay } ) }
 						lmnVersion="3"
 					/>
-					{ showProNotice && <ProControlButton type="posts" /> }
+					<AdvancedRangeControl
+						label={ __( 'Skip the first', i18n ) }
+						attribute="postOffset"
+						min={ 0 }
+						sliderMax={ 20 }
+						allowReset={ true }
+						placeholder="0"
+						help={ __( 'Leaves out the newest few, so a second list can carry on where the first one stopped.', i18n ) }
+					/>
+
+					<AdvancedToggleControl
+						label={ __( 'Leave out the post being viewed', i18n ) }
+						attribute="excludeCurrentPost"
+						help={ __( 'Only has an effect on a single post or page — useful for a "read next" list.', i18n ) }
+					/>
+
+					<AdvancedTextControl
+						label={ __( 'Only these posts', i18n ) }
+						attribute="postInclude"
+						placeholder="12, 34, 56"
+						help={ __( 'Post IDs, separated by commas. Leave empty for all of them.', i18n ) }
+					/>
+
+					<AdvancedTextControl
+						label={ __( 'Never these posts', i18n ) }
+						attribute="postExclude"
+						placeholder="78, 90"
+						help={ __( 'Post IDs, separated by commas.', i18n ) }
+					/>
+
 					{ applyFilters( 'lumen.posts.edit.inspector.style.query', null ) }
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings

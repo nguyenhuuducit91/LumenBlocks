@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,10 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImageHorizontal from './images/horizontal.svg'
-import ImageHorizontal2 from './images/horizontal-2.svg'
-import ImageHorizontal3 from './images/horizontal-3.svg'
-import ImageSplitCentered from './images/split-centered.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -69,42 +65,6 @@ const variations = applyFilters(
 					[ 'lumen/button', { text: __( 'Button', i18n ) } ],
 				] ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal-2',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal-2',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Horizontal 2', i18n ),
-			pickerIcon: ImageHorizontal2,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal-3',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 3', i18n ) ),
-			attributes: {
-				className: 'is-style-horizontal-3',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Horizontal 3', i18n ),
-			pickerIcon: ImageHorizontal3,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'split-centered',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Split Centered', i18n ) ),
-			attributes: {
-				className: 'is-style-split-centered',
-			},
-			isActive: [ 'className' ],
-			pickerTitle: __( 'Split Centered', i18n ),
-			pickerIcon: ImageSplitCentered,
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

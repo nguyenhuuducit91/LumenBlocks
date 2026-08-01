@@ -14,7 +14,7 @@ server-side conditional display. No upsell, no licence key, no phone-home.
 ![WordPress](https://img.shields.io/badge/WordPress-6.8.2%2B-21759b)
 ![PHP](https://img.shields.io/badge/PHP-7.4%2B-777bb4)
 ![Blocks](https://img.shields.io/badge/blocks-47-f0a500)
-![License](https://img.shields.io/badge/license-GPL--3.0-blue)
+![License](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)
 ![Made in Vietnam](https://img.shields.io/badge/made%20in-Vietnam%20%F0%9F%87%BB%F0%9F%87%B3-red)
 
 <img src="docs/assets/readme/library.png" alt="The Lumen block library in the inserter" width="880" />
@@ -192,7 +192,7 @@ addFilter( 'lumen.block-component.transform-transition.control', 'my-plugin', ()
 Released under [GPL-3.0-or-later](LICENSE).
 
 Lumen Blocks is a fork of [Stackable](https://github.com/gambitph/Stackable) by
-Gambit Technologies, Inc., taken at version 3.19.10 and also GPL-3.0. Everything
+Gambit Technologies, Inc., taken at version 3.19.10 and also GPL-3.0-or-later. Everything
 that was changed, renamed or removed is listed in [NOTICE.md](NOTICE.md), as
 section 5 of the licence requires.
 

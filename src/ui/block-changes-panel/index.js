@@ -33,6 +33,7 @@ import { i18n } from 'lumen'
 import { startCase } from 'lodash'
 import { useBlockSetAttributesContext } from '~lumen/hooks'
 import { requestSearch } from '../inspector-search'
+import { goToAttribute } from '../inspector-navigation'
 
 /**
  * Attributes that are plumbing rather than design decisions.
@@ -206,14 +207,22 @@ const BlockChangesPanel = () => {
 				{ applied.map( setting => (
 					<li key={ setting.name } className="lmn-block-changes__row">
 						{ /*
-						 * Going to a setting is the search doing its job: it
-						 * already knows how to walk the tabs and open the right
-						 * panel, so the row hands it the label and stands back.
+						 * Straight to the control that owns this attribute —
+						 * right tab, right panel, right device — rather than to
+						 * a search for its name, which landed on whatever else
+						 * happened to share a word with it. The search is the
+						 * fallback for the few attributes no control edits.
 						 */ }
 						<button
 							type="button"
 							className="lmn-block-changes__jump"
-							onClick={ () => requestSearch( setting.label ) }
+							onClick={ async () => {
+								const found = await goToAttribute( setting.name )
+
+								if ( ! found ) {
+									requestSearch( setting.label )
+								}
+							} }
 							aria-label={ sprintf(
 								/* translators: %s: the name of the setting. */
 								__( 'Go to %s', i18n ),

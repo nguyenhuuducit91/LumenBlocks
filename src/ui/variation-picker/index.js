@@ -2,9 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import {
-	isPro, showProNotice, i18n,
-} from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -28,8 +26,6 @@ const VariationPicker = props => {
 		'has-many-variations': variations.length > 4,
 	} )
 
-	const hasPremium = variations.some( variation => variation.isPremium )
-
 	return (
 		<div className="lmn-variation-picker">
 			<Placeholder
@@ -51,11 +47,8 @@ const VariationPicker = props => {
 								icon={ variation.pickerIcon || variation.icon }
 								iconSize={ 48 }
 								onClick={ () => onSelect( variation ) }
-								className={ classnames( 'block-editor-block-variation-picker__variation', {
-									'is-premium': variation.isPremium,
-								} ) }
+								className="block-editor-block-variation-picker__variation"
 								label={ variation.description || variation.pickerTitle || variation.title }
-								disabled={ ! isPro && variation.isPremium }
 							/>
 							<span
 								className="block-editor-block-variation-picker__variation-label"
@@ -66,11 +59,6 @@ const VariationPicker = props => {
 						</li>
 					) ) }
 				</ul>
-				{ ! isPro && showProNotice && hasPremium && (
-					<p className="block-editor-block-variation-picker__notice">
-						{ __( 'Upgrade to Premium to get more design variations.', i18n ) }
-					</p>
-				) }
 				{ /* eslint-enable jsx-a11y/no-redundant-roles */ }
 				{ allowSkip && (
 					<div className="block-editor-block-variation-picker__skip">

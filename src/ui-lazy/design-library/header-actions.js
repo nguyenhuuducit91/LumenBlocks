@@ -1,30 +1,27 @@
 /**
  * External deprendencies
  */
-import {
-	i18n, isPro, devMode,
-} from 'lumen'
+import { i18n, devMode } from 'lumen'
 import { AdvancedToolbarControl, Button } from '~lumen/ui'
 
 /**
  * WordPress deprendencies
  */
-import {
-	Dashicon,
-	Dropdown,
-	ToggleControl,
-} from '@wordpress/components'
+import { ToggleControl } from '@wordpress/components'
 
 import { __ } from '@wordpress/i18n'
 
-export const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) }, { key: 'free', label: __( 'Free', i18n ) }, { key: 'premium', label: __( 'Premium', i18n ) } ]
+/*
+ * Kept as a single entry: the library is whatever the configured CDN serves,
+ * and there is no tier to filter it by. The shape stays so the query the list
+ * sends is unchanged.
+ */
+export const PLAN_OPTIONS = [ { key: '', label: __( 'All', i18n ) } ]
 
 export const HeaderActions = props => {
 	const {
 		selectedTab,
 		setSelectedTab,
-		selectedPlan,
-		setSelectedPlan,
 		setDoReset,
 		onClose,
 	} = props
@@ -71,37 +68,6 @@ export const HeaderActions = props => {
 				className="lmb-modal-design-library__refresh"
 				onClick={ () => setDoReset( true ) }
 			/>
-			{ ! isPro && <Dropdown
-				focusOnMount="container"
-				renderToggle={ ( { onToggle } ) => (
-					<Button
-						onClick={ onToggle }
-						style={ { height: 'auto' } }
-						icon="arrow-down-alt2"
-						iconSize={ 12 }
-						iconPosition="right"
-						variant="secondary"
-					>
-						<Dashicon icon="lock" size={ 12 } />
-						<span>{ selectedPlan.label }</span>
-					</Button>
-				) }
-				renderContent={ ( { onClose } ) => (
-					<div className="lmn-design-library__plan-dropdown">
-						{ PLAN_OPTIONS.map( ( plan, i ) => {
-							return <Button
-								key={ i }
-								onClick={ () => {
-									setSelectedPlan( plan )
-									onClose()
-								} }
-							>
-								{ plan.label }
-							</Button>
-						} ) }
-					</div>
-				) }
-			/> }
 		</div>
 	</>
 }

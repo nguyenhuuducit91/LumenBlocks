@@ -86,3 +86,29 @@
 		font-size: 12px;
 	}
 }
+
+/**
+ * The control an applied-settings row just took you to.
+ *
+ * A scroll on its own does not say which of the controls now on screen was the
+ * one asked for, so it is marked for a moment after arriving.
+ */
+.lmn-control--found {
+	position: relative;
+	animation: lmn-control-found 1.6s ease-out;
+	border-radius: 4px;
+}
+
+@keyframes lmn-control-found {
+
+	0%,
+	60% {
+		box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.55);
+		background: rgba(255, 193, 7, 0.12);
+	}
+
+	100% {
+		box-shadow: 0 0 0 3px rgba(255, 193, 7, 0);
+		background: rgba(255, 193, 7, 0);
+	}
+}

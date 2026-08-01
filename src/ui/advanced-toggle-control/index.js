@@ -47,6 +47,7 @@ const AdvancedToggleControl = memo( props => {
 
 	return (
 		<BaseControl
+			attribute={ props.attribute }
 			id={ id }
 			help={ helpLabel }
 			className={ className }

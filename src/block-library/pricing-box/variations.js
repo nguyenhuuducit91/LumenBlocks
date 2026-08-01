@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'lumen'
+import { i18n } from 'lumen'
 
 /**
  * WordPress dependencies
@@ -16,10 +16,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import ImageDefault from './images/default.svg'
 import ImageCompact from './images/compact.svg'
-import ImageBanner from './images/banner.svg'
-import ImageColored from './images/colored.svg'
-import ImageSectioned from './images/sectioned.svg'
-
 /**
  * Template option choices for predefined columns layouts.
  *
@@ -85,42 +81,6 @@ const variations = applyFilters(
 					text: sprintf( '<li>%s</li><li>%s</li><li>%s</li>', ...[ __( 'one', i18n ), __( 'two', i18n ), __( 'three', i18n ) ].map( v => sprintf( __( 'Package inclusion %s', i18n ), v ) ) ),
 				} ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'banner',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Banner Layout', i18n ) ),
-			attributes: {
-				className: 'is-style-banner',
-			},
-			pickerTitle: __( 'Banner', i18n ),
-			pickerIcon: ImageBanner,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'colored',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored Layout', i18n ) ),
-			attributes: {
-				className: 'is-style-colored',
-			},
-			pickerTitle: __( 'Colored', i18n ),
-			pickerIcon: ImageColored,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'sectioned',
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Sectioned Layout', i18n ) ),
-			attributes: {
-				className: 'is-style-sectioned',
-			},
-			pickerTitle: __( 'Sectioned', i18n ),
-			pickerIcon: ImageSectioned,
-			isActive: [ 'className' ],
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

@@ -24,8 +24,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import {
 	i18n,
-	showProNoticesOption,
-	isPro,
 	v2disabledBlocks,
 	defaultBreakpoints,
 	editorRoles,
@@ -203,7 +201,6 @@ const SEARCH_TREE = [
 			{
 				id: 'miscellaneous',
 				children: [
-					__( 'Show Go premium notices', i18n ),
 					__( 'Generate Global Colors for native blocks', i18n ),
 					__( 'Inherit Block Styles from theme.json', i18n ),
 					__( 'Use v3.16.0 Color Scheme Inheritance', i18n ),
@@ -1233,16 +1230,13 @@ const RoleManager = props => {
 							<p className="s-settings-subtitle">
 								{ __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. ', i18n ) }
 							</p>
-							{ isPro
-								? <Suspense fallback={ <Spinner /> }>
+							{ EditorModeSettings && (
+								<Suspense fallback={ <Spinner /> }>
 									<div className="s-editing-mode-settings">
 										<EditorModeSettings { ...propsToPass } />
 									</div>
 								</Suspense>
-								: <p className="s-settings-pro">
-									{ __( 'This is only available in Lumen Premium. ', i18n ) }
-								</p>
-							}
+							) }
 						</div>
 					}
 				</>
@@ -1272,27 +1266,20 @@ const CustomFields = props => {
 						<div className="s-setting-group">
 							<div className="s-custom-fields-settings-header">
 								<h2>{ __( 'Custom Fields', i18n ) }</h2>
-								{ isPro &&
-									<Suspense fallback={ <Spinner /> }>
-										<div className="s-custom-fields-enable">
-											<CustomFieldsEnableSettings { ...propsToPass } />
-										</div>
-									</Suspense>
-								}
+								<Suspense fallback={ <Spinner /> }>
+									<div className="s-custom-fields-enable">
+										<CustomFieldsEnableSettings { ...propsToPass } />
+									</div>
+								</Suspense>
 							</div>
 							<p className="s-settings-subtitle">
 								{ __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. ', i18n ) }
 							</p>
-							{ isPro
-								? <Suspense fallback={ <Spinner /> }>
-									<div className="s-custom-fields-manager">
-										<CustomFieldsManagerSettings { ...propsToPass } />
-									</div>
-								</Suspense>
-								: <p className="s-settings-pro">
-									{ __( 'This is only available in Lumen Premium. ', i18n ) }
-								</p>
-							}
+							<Suspense fallback={ <Spinner /> }>
+								<div className="s-custom-fields-manager">
+									<CustomFieldsManagerSettings { ...propsToPass } />
+								</div>
+							</Suspense>
 						</div>
 					}
 				</>
@@ -1345,23 +1332,11 @@ const Integrations = props => {
 									</>
 								}
 							/>
-							{ isPro
-								? <Suspense fallback={ <Spinner /> }>
-									<div className="lmb-admin-setting">
-										<IconSettings { ...propsToPass } />
-									</div>
-								</Suspense>
-								: <>
-									<div className="s-settings-field lmb-admin-setting">
-										<label className="s-text-field" htmlFor="s-icon-kit-field">
-											<span className="s-settings-field__title lmb-admin-setting__label">{ __( 'FontAwesome Pro Kit', i18n ) }</span>
-											<p className="s-settings-pro">
-												{ __( 'This is only available in Lumen Premium. ', i18n ) }
-											</p>
-										</label>
-									</div>
-								</>
-							}
+							<Suspense fallback={ <Spinner /> }>
+								<div className="lmb-admin-setting">
+									<IconSettings { ...propsToPass } />
+								</div>
+							</Suspense>
 							<div className="s-icon-settings-fa-version">
 								<div className="s-icon-settings-fa-pro-version">
 									<label className="lmb-admin-setting__label-wrapper" htmlFor="s-icon-settings-fa-pro-version">
@@ -1430,17 +1405,6 @@ const AdditionalOptions = props => {
 						<div className="s-setting-group">
 							<h2>{ __( 'Miscellaneous', i18n ) }</h2>
 							<p className="s-settings-subtitle">{ __( 'Below are other minor settings. Some may be useful when upgrading from older versions of Lumen.', i18n ) }</p>
-							{ showProNoticesOption &&
-								<CheckboxControl
-									label={ __( 'Show "Go premium" notices', i18n ) }
-									className={ searchClassname( __( 'Show Go premium notices', i18n ), miscellaneous ) }
-									checked={ settings.lumen_show_pro_notices === '1' }
-									onChange={ checked => {
-										handleSettingsChange( { lumen_show_pro_notices: checked ? '1' : '' } ) // eslint-disable-line camelcase
-									} }
-									__nextHasNoMarginBottom
-								/>
-							}
 							<CheckboxControl
 								label={ __( 'Generate Global Colors for native blocks', i18n ) }
 								className={ searchClassname( __( 'Generate Global Colors for native blocks', i18n ), miscellaneous ) }
