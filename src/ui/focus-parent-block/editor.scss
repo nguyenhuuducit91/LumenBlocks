@@ -5,9 +5,16 @@
  * tab strip. Deliberately quiet — it is orientation, not a control, and the
  * author's eye should pass over it on the way to the tabs unless they are
  * actually lost.
+ *
+ * The hard part is depth. A button inside a Button Group inside a Container
+ * inside a Column inside a Columns block is an ordinary Lumen layout, and five
+ * named crumbs do not fit in 280px. So the ancestors are icons — four levels in
+ * the width two names used — and anything deeper folds into a menu that takes a
+ * slot of its own (see `MAX_LEVELS`). Only the block you are on is named, since
+ * an icon cannot tell you what you are editing.
  */
 .lmn-focus-parent {
-	padding: 8px 16px;
+	padding: 6px 12px;
 	border-bottom: 1px solid #e0e0e0;
 	background: #fff;
 
@@ -19,84 +26,190 @@
 		padding: 0;
 		list-style: none;
 
-		// The trail can be longer than the sidebar is wide. Scrolling the row
-		// keeps the last crumbs — the ones nearest the selected block, and so
-		// the ones most likely to be wanted — reachable, where wrapping would
-		// cost a second line on every deeply nested block.
+		// Folding handles depth; this handles one very long title. A thin
+		// scrollbar rather than none: a row that can be scrolled and does not
+		// say so is a row nobody scrolls.
 		overflow-x: auto;
-		scrollbar-width: none;
+		scrollbar-width: thin;
+		scrollbar-color: #ccc transparent;
 
 		&::-webkit-scrollbar {
-			display: none;
+			height: 3px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 3px;
+			background: #ccc;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
 		}
 	}
 
 	&__crumb {
 		display: flex;
 		align-items: center;
+		flex: 0 1 auto;
 		margin: 0;
 		min-width: 0;
 		font-size: 11px;
 		line-height: 1;
 		color: #757575;
-
-		// The separator belongs between crumbs, so it hangs off the front of
-		// every crumb but the first rather than being an element of its own.
-		+ .lmn-focus-parent__crumb::before {
-			content: "\203A"; // ›
-			flex: none;
-			padding: 0 4px;
-			color: #949494;
-		}
 	}
 
+	// The chevron belongs between crumbs, and every crumb renders one — which
+	// of them is first depends on whether the middle is folded, so it is hidden
+	// here rather than decided in JS.
+	&__separator {
+		flex: none;
+		margin: 0 -1px;
+		fill: #c3c4c7;
+	}
+
+	&__crumb:first-child &__separator {
+		display: none;
+	}
+
+	/**
+	 * A crumb reads as text until it is pointed at, then as a button. Chips
+	 * drawn at rest would make five boxes out of what should be one sentence.
+	 */
 	&__button {
 		display: flex;
 		align-items: center;
-		gap: 4px;
+		gap: 3px;
 		min-width: 0;
-		padding: 2px 4px;
+		height: 24px;
+		padding: 0 5px;
 		border: none;
 		border-radius: 2px;
 		background: transparent;
 		font-size: inherit;
 		line-height: inherit;
+		font-family: inherit;
 		color: inherit;
 		cursor: pointer;
+		transition: background-color 0.1s ease, color 0.1s ease;
 
-		&:hover,
-		&:focus {
+		&:hover {
 			background: #f0f0f0;
 			color: #1e1e1e;
 		}
 
 		&:focus-visible {
-			outline: 1px solid var(--wp-admin-theme-color, #3858e9);
-			outline-offset: 0;
+			outline: 1.5px solid var(--wp-admin-theme-color, #3858e9);
+			outline-offset: -1.5px;
+			box-shadow: none;
+		}
+
+		// `BlockIcon` renders at 24px by default, which is a control's size, not
+		// a label's.
+		.block-editor-block-icon {
+			flex: none;
+			width: 16px;
+			height: 16px;
+			margin: 0;
+
+			svg {
+				width: 16px;
+				height: 16px;
+				fill: currentColor;
+			}
+		}
+	}
+
+	// An ancestor: its icon and nothing else. Square, so a row of them reads as
+	// a row of equal steps rather than as ragged blocks of text.
+	&__button--icon {
+		flex: none;
+		width: 24px;
+		padding: 0;
+		justify-content: center;
+	}
+
+	// The block you are already on: the one crumb that is named, because an
+	// icon cannot say what you are editing. Still part of the trail so the row
+	// reads as a path, but not a link to where you already are, and not a hover
+	// target.
+	&__button--current {
+		font-weight: 600;
+		color: #1e1e1e;
+		cursor: default;
+
+		&:hover {
+			background: transparent;
+		}
+	}
+
+	/**
+	 * The fold.
+	 *
+	 * Sized to the same 24px as a crumb so the row keeps one baseline, and
+	 * given a resting background because unlike a crumb it has no text to say
+	 * that it is there.
+	 */
+	&__button--overflow.components-button {
+		flex: none;
+		min-width: 24px;
+		width: 24px;
+		padding: 0;
+		background: #f0f0f0;
+		color: #757575;
+
+		&:hover,
+		&[aria-expanded="true"] {
+			background: #e0e0e0;
+			color: #1e1e1e;
 		}
 
 		svg {
-			flex: none;
-			width: 14px;
-			height: 14px;
+			width: 18px;
+			height: 18px;
 			fill: currentColor;
 		}
 	}
 
-	// The block you are already on: still part of the trail so the row reads as
-	// a path, but not a link to where you already are.
-	&__crumb--current .lmn-focus-parent__label {
-		padding: 2px 0;
-		font-weight: 600;
-		color: #1e1e1e;
+	/*
+	 * Only the named crumb can give ground. The icons and the fold are already
+	 * at their smallest.
+	 */
+	&__crumb--overflow {
+		flex: none;
+	}
+
+	&__crumb--current {
+		flex: 0 1 auto;
+		min-width: 0;
 	}
 
 	// Long block titles truncate rather than push the rest of the trail out of
-	// the scroll area.
+	// the scroll area. The full title stays available as a tooltip.
 	&__label {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+}
+
+/**
+ * The folded levels, listed outermost first and indented by depth so the menu
+ * shows the nesting it stands for.
+ */
+.lmn-focus-parent__overflow-item.components-menu-item__button {
+	.components-menu-item__item {
+		min-width: 0;
+		font-size: 12px;
+	}
+
+	.block-editor-block-icon {
+		width: 20px;
+		height: 20px;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
 	}
 }
 

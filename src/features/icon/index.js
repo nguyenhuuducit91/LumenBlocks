@@ -179,6 +179,7 @@ export const Icon = props => {
 
 	const {
 		getAttribute,
+		getAttrName,
 		updateAttributeHandler,
 	} = useAttributeEditHandlers( attrNameTemplate )
 
@@ -186,9 +187,55 @@ export const Icon = props => {
 
 	const iconColorType = getAttribute( 'iconColorType' )
 
+	/**
+	 * Whether this icon is recoloured by the block.
+	 *
+	 * Every colour attribute counts, in every state: the hover colour is
+	 * generated from the same selector as the normal one, so an icon that only
+	 * changes on hover has the same problem as one that is recoloured outright.
+	 */
+	const hasIconColor = useBlockAttributesContext( attributes => {
+		const bases = [
+			getAttrName( 'iconColor1' ),
+			getAttrName( 'iconColor2' ),
+			getAttrName( 'iconColorType' ),
+		]
+
+		return Object.keys( attributes ).some( attrName => (
+			!! attributes[ attrName ] && bases.some( base => attrName.startsWith( base ) )
+		) )
+	} )
+
+	/**
+	 * Whether this icon can be drawn from the shared page-icons `<defs>`.
+	 *
+	 * Icons are deduplicated by putting one copy in a hidden `<defs>` and
+	 * pointing every instance at it with `<use>`. A `<use>` renders that copy
+	 * into a shadow tree, and CSS selectors cannot cross into a shadow tree —
+	 * so the generated colour rule, which targets the icon's own `path`, `g`
+	 * and `rect` elements, matches nothing at all. What is left is the `fill`
+	 * on the outer `<svg>`, and that only *inherits* inwards, where an explicit
+	 * `fill="…"` on a path inside the referenced icon beats it: presentation
+	 * attributes outrank inherited values.
+	 *
+	 * The frontend inlines the icon instead of referencing it, so the same rule
+	 * lands on the real paths there. That asymmetry is the whole bug: recolour
+	 * an icon and the change showed up on the site but not in the editor.
+	 *
+	 * So an icon that is recoloured keeps its own markup. Multicolor was
+	 * already excluded for the same underlying reason.
+	 */
+	const canShareIcon = ! hasIconColor && iconColorType !== 'multicolor'
+
 	const _icon = value || getAttribute( 'icon' )
-	const currentIconRef = useRef( _icon )
 	const processedIconRef = useRef( null )
+	// Which shape the last run settled on, so that turning a colour on or off
+	// is not mistaken for "already processed" and left as a `<use>`.
+	const processedSharedRef = useRef( null )
+	// What this instance actually put into the shared `<defs>`, if anything.
+	// Handing back an icon it never registered would decrement someone else's
+	// count and drop a symbol other blocks are still pointing at.
+	const registeredIconRef = useRef( null )
 	const lastIconValueRef = useRef( null )
 	const [ icon, setIcon ] = useState( _icon )
 
@@ -196,22 +243,25 @@ export const Icon = props => {
 		dispatch( 'lumen/page-icons' ).addPageIcon( svg, id )
 	}
 
-	useEffect( () => {
-		currentIconRef.current = _icon
+	const releaseRegisteredIcon = () => {
+		if ( registeredIconRef.current ) {
+			dispatch( 'lumen/page-icons' ).removePageIcon( registeredIconRef.current )
+			registeredIconRef.current = null
+		}
+	}
 
-		// Skip if we've already processed this icon
-		if ( processedIconRef.current === _icon ) {
+	useEffect( () => {
+		// Skip if we've already processed this icon in this shape.
+		if ( processedIconRef.current === _icon && processedSharedRef.current === canShareIcon ) {
 			return
 		}
 
-		// Don't use page icons for multicolor icons
-		// because we target svg elements with the :nth-of-type() selector to apply the multicolor styles.
-		if ( iconColorType === 'multicolor' ) {
-			// Clean up if this icon was previously in the page-icons store
-			if ( processedIconRef.current === _icon && _icon ) {
-				dispatch( 'lumen/page-icons' ).removePageIcon( _icon )
-				processedIconRef.current = null
-			}
+		processedSharedRef.current = canShareIcon
+
+		if ( ! canShareIcon ) {
+			// Give up the shared copy if this instance had taken one out.
+			releaseRegisteredIcon()
+			processedIconRef.current = _icon
 			setIcon( _icon ) // Use the original icon directly
 			lastIconValueRef.current = _icon
 			return
@@ -223,6 +273,13 @@ export const Icon = props => {
 			const iconStr = String( _icon )
 			let originalSvg = null
 			let iconId = null
+
+			// The icon changed, so whatever this instance was holding before is
+			// no longer its own. Released before taking the new one out so the
+			// old symbol can leave the `<defs>` when nothing else wants it.
+			if ( registeredIconRef.current !== iconStr ) {
+				releaseRegisteredIcon()
+			}
 
 			// Get the current state of the store
 			const pageIcons = select( 'lumen/page-icons' ).getPageIcons()
@@ -282,6 +339,7 @@ export const Icon = props => {
 					lastIconValueRef.current = newIcon
 				}
 				processedIconRef.current = _icon
+				registeredIconRef.current = originalSvg
 			} else if ( ! _icon ) {
 				// Clear processed ref when icon is removed
 				processedIconRef.current = null
@@ -297,12 +355,15 @@ export const Icon = props => {
 				lastIconValueRef.current = null
 			}
 		}
-	}, [ _icon, iconColorType ] )
+	}, [ _icon, canShareIcon ] )
 
 	useEffect( () => {
 		return () => {
-			if ( currentIconRef.current ) {
-				dispatch( 'lumen/page-icons' ).removePageIcon( currentIconRef.current )
+			// Only what this instance took out. It used to hand back whatever
+			// icon it was displaying, registered or not, which took a symbol
+			// away from the blocks still pointing at it.
+			if ( registeredIconRef.current ) {
+				dispatch( 'lumen/page-icons' ).removePageIcon( registeredIconRef.current )
 			}
 		}
 	}, [] )

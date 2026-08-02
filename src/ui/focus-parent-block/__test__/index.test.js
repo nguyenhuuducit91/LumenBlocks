@@ -36,6 +36,12 @@ const simpleBlock = title => ( {
 
 let inner, middle, outer
 
+// A separate, deeper tree: L1 > L2 > L3 > L4 > L5 > deepest, so the breadcrumb
+// has five ancestors to fold.
+let deepest
+const DEEP_LEVELS = [ 'L1', 'L2', 'L3', 'L4', 'L5' ]
+const deepChain = [] // The L1..L5 blocks themselves, outermost first.
+
 const setCurrentBlock = ( clientId, name ) => {
 	blockEditContext.clientId = clientId
 	blockEditContext.name = name
@@ -50,7 +56,17 @@ beforeAll( () => {
 	middle = createBlock( 'test/middle', {}, [ inner ] )
 	outer = createBlock( 'test/outer', {}, [ middle ] )
 
-	dispatch( blockEditorStore ).resetBlocks( [ outer ] )
+	DEEP_LEVELS.forEach( level => registerBlockType( `test/${ level.toLowerCase() }`, simpleBlock( level ) ) )
+	registerBlockType( 'test/deepest', simpleBlock( 'Deepest' ) )
+
+	deepest = createBlock( 'test/deepest' )
+	const deepTree = DEEP_LEVELS.reduceRight( ( child, level ) => {
+		const block = createBlock( `test/${ level.toLowerCase() }`, {}, [ child ] )
+		deepChain.unshift( block )
+		return block
+	}, deepest )
+
+	dispatch( blockEditorStore ).resetBlocks( [ outer, deepTree ] )
 } )
 
 // The hook is only callable from a component.
@@ -86,15 +102,25 @@ describe( 'useBlockAncestors', () => {
 } )
 
 describe( 'FocusParentBlockBreadcrumb', () => {
-	it( 'shows the whole trail, with the current block last and not a button', () => {
+	it( 'names only the current block, and gives each ancestor an icon that says what it is', () => {
 		setCurrentBlock( inner.clientId, 'test/inner' )
 		render( <FocusParentBlockBreadcrumb /> )
 
 		const nav = screen.getByLabelText( 'Block hierarchy' )
-		expect( nav.textContent ).toBe( 'Outer ColumnsMiddle ContainerInner Heading' )
 
-		const buttons = nav.querySelectorAll( 'button' )
-		expect( Array.from( buttons ).map( b => b.textContent ) ).toEqual( [ 'Outer Columns', 'Middle Container' ] )
+		// The one crumb with a word on it is the block being edited.
+		expect( nav.textContent ).toBe( 'Inner Heading' )
+
+		const buttons = Array.from( nav.querySelectorAll( 'button' ) )
+		expect( buttons.map( b => b.getAttribute( 'title' ) ) ).toEqual( [ 'Outer Columns', 'Middle Container' ] )
+		expect( buttons.every( b => b.textContent === '' ) ).toBe( true )
+	} )
+
+	it( 'keeps every level when the trail is short enough to fit', () => {
+		setCurrentBlock( inner.clientId, 'test/inner' )
+		render( <FocusParentBlockBreadcrumb /> )
+
+		expect( screen.queryByRole( 'button', { name: /levels? in between/ } ) ).toBeNull()
 	} )
 
 	it( 'renders nothing for a top-level block', () => {
@@ -107,14 +133,14 @@ describe( 'FocusParentBlockBreadcrumb', () => {
 		setCurrentBlock( inner.clientId, 'test/inner' )
 		render( <FocusParentBlockBreadcrumb /> )
 
-		fireEvent.click( screen.getByText( 'Outer Columns' ) )
+		fireEvent.click( screen.getByRole( 'button', { name: 'Select Outer Columns' } ) )
 		expect( select( blockEditorStore ).getSelectedBlockClientId() ).toBe( outer.clientId )
 	} )
 
 	it( 'highlights the ancestor while it is hovered, and clears it on leave', () => {
 		setCurrentBlock( inner.clientId, 'test/inner' )
 		render( <FocusParentBlockBreadcrumb /> )
-		const button = screen.getByText( 'Middle Container' ).closest( 'button' )
+		const button = screen.getByRole( 'button', { name: 'Select Middle Container' } )
 
 		fireEvent.mouseEnter( button )
 		expect( select( blockEditorStore ).isBlockHighlighted( middle.clientId ) ).toBe( true )
@@ -127,11 +153,72 @@ describe( 'FocusParentBlockBreadcrumb', () => {
 		setCurrentBlock( inner.clientId, 'test/inner' )
 		const { unmount } = render( <FocusParentBlockBreadcrumb /> )
 
-		fireEvent.mouseEnter( screen.getByText( 'Middle Container' ).closest( 'button' ) )
+		fireEvent.mouseEnter( screen.getByRole( 'button', { name: 'Select Middle Container' } ) )
 		expect( select( blockEditorStore ).isBlockHighlighted( middle.clientId ) ).toBe( true )
 
 		unmount()
 		expect( select( blockEditorStore ).isBlockHighlighted( middle.clientId ) ).toBe( false )
+	} )
+} )
+
+describe( 'FocusParentBlockBreadcrumb when nested deeply', () => {
+	beforeEach( () => {
+		setCurrentBlock( deepest.clientId, 'test/deepest' )
+	} )
+
+	it( 'never grows past four crumbs, folding the outermost levels away', () => {
+		render( <FocusParentBlockBreadcrumb /> )
+
+		const nav = screen.getByLabelText( 'Block hierarchy' )
+		expect( nav.querySelectorAll( '.lmn-focus-parent__crumb' ) ).toHaveLength( 4 )
+
+		// The fold takes a slot, so the two nearest ancestors keep theirs.
+		const icons = Array.from( nav.querySelectorAll( '.lmn-focus-parent__button--icon' ) )
+		expect( icons.map( b => b.getAttribute( 'title' ) ) ).toEqual( [ 'L4', 'L5' ] )
+		expect( nav.textContent ).toBe( 'Deepest' )
+
+		// L1, L2 and L3 are the three that went into the fold.
+		expect( screen.getByRole( 'button', { name: '3 levels in between' } ) ).toBeInTheDocument()
+	} )
+
+	it( 'lists the folded levels outermost first, and selects the one that is clicked', () => {
+		render( <FocusParentBlockBreadcrumb /> )
+
+		fireEvent.click( screen.getByRole( 'button', { name: '3 levels in between' } ) )
+
+		const items = screen.getAllByRole( 'menuitem' ).map( item => item.textContent )
+		expect( items ).toEqual( [ 'L1', 'L2', 'L3' ] )
+
+		fireEvent.click( screen.getByRole( 'menuitem', { name: 'L2' } ) )
+
+		const selected = select( blockEditorStore ).getSelectedBlockClientId()
+		expect( select( blockEditorStore ).getBlockName( selected ) ).toBe( 'test/l2' )
+	} )
+
+	it( 'highlights a folded level while its menu row is hovered', () => {
+		render( <FocusParentBlockBreadcrumb /> )
+		fireEvent.click( screen.getByRole( 'button', { name: '3 levels in between' } ) )
+
+		const row = screen.getByRole( 'menuitem', { name: 'L3' } )
+		const l3ClientId = deepChain[ 2 ].clientId
+
+		fireEvent.mouseEnter( row )
+		expect( select( blockEditorStore ).isBlockHighlighted( l3ClientId ) ).toBe( true )
+
+		fireEvent.mouseLeave( row )
+		expect( select( blockEditorStore ).isBlockHighlighted( l3ClientId ) ).toBe( false )
+	} )
+
+	it( 'shows all three ancestors without a fold at exactly four levels', () => {
+		// L3 sits three levels down: L1 > L2 > L3.
+		setCurrentBlock( deepChain[ 2 ].clientId, 'test/l3' )
+		render( <FocusParentBlockBreadcrumb /> )
+
+		const nav = screen.getByLabelText( 'Block hierarchy' )
+		expect( screen.queryByRole( 'button', { name: /levels? in between/ } ) ).toBeNull()
+
+		const icons = Array.from( nav.querySelectorAll( '.lmn-focus-parent__button--icon' ) )
+		expect( icons.map( b => b.getAttribute( 'title' ) ) ).toEqual( [ 'L1', 'L2' ] )
 	} )
 } )
 
