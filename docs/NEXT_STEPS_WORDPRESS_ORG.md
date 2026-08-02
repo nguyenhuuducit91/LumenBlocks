@@ -16,10 +16,10 @@ Cập nhật: 02/08/2026 — plugin 1.0.0, gói `build/lumen-blocks.zip` (2.0 MB
 | **Plugin Check** | ✅ **0 ERROR, 0 WARNING** |
 | Gói ZIP có thư mục gốc `lumen-blocks/`, không rác | ✅ xong |
 | Ghi công GPL cho Stackable (NOTICE.txt, header, About, Credits) | ✅ xong |
-| Source công khai trên GitHub | ⬜ **cần đẩy bản mới** |
-| Ảnh screenshot / icon / banner | ⬜ **chưa có** |
-| Test lại trong editor sau đợt sửa | ⬜ **cần làm** |
-| Nộp plugin | ⬜ |
+| Source công khai trên GitHub | ✅ đã đẩy (8 commits, có `NOTICE.txt`, `lumen_is_frontend`, text domain literal) |
+| Ảnh screenshot / icon / banner | ✅ 9 file trong [docs/assets/wporg/](assets/wporg/) |
+| Test lại trong editor sau đợt sửa | ✅ chạy trên WP 7.0.2, không có notice/warning |
+| Nộp plugin | ⬜ **việc tiếp theo — Bước 4** |
 
 ---
 
@@ -68,11 +68,11 @@ Kiểm tra trên GitHub sau khi push:
 | `banner-772x250.png` | Banner đầu trang plugin |
 | `banner-1544x500.png` | Bản retina (tuỳ chọn) |
 
-Screenshot nên rộng khoảng 1200–1600px, chụp trên site sạch, giao diện tiếng Anh
-(người duyệt và người dùng quốc tế đọc trang này).
+**Đã chụp xong**, nằm ở [docs/assets/wporg/](assets/wporg/) — 5 screenshot 1600×1000 chụp
+trên WordPress 7.0.2 với theme Twenty Twenty-Five, cộng icon 256/128 và banner
+772×250 / 1544×500 dựng từ logo mặt trời của plugin.
 
-Ảnh **không nằm trong ZIP** — chúng đi vào thư mục `assets/` của SVN ở Bước 6. Cứ để
-tạm trong `docs/assets/readme/` cho tới lúc đó.
+Ảnh **không nằm trong ZIP** — chúng đi vào thư mục `assets/` của SVN ở Bước 6.
 
 ---
 
@@ -133,6 +133,21 @@ bên phải là lý do phải thử đúng chỗ đó.
 
 `wp-content/debug.log` không được có warning/notice nào của Lumen.
 
+### 3.4. Kết quả lần chạy ngày 02/08/2026
+
+Đã chạy trên WordPress 7.0.2 tại `http://localhost:8004` với `WP_DEBUG` bật:
+
+- Cài lại plugin từ ZIP qua `wp plugin install --force` → kích hoạt bình thường.
+- `wp plugin check lumen-blocks` → **0 ERROR, 0 WARNING**.
+- Design Library mở được, 70 pattern và 34 page template hiện đủ; chèn template
+  *Home — corporate* vào trang chạy đúng.
+- Lumen Design System, Settings, About đều render đúng; About hiện "NOTICE.txt".
+- Chọn block → inspector có ô tìm setting và danh sách Applied settings; chuyển sang
+  Tablet thì các control đổi sang giá trị theo thiết bị.
+- Xuất bản một trang chứa pattern FAQ với `enableFAQ` → JSON-LD ngoài front end parse
+  đúng: `FAQPage` với 4 câu hỏi (xác nhận phần `wp_json_encode` mới hoạt động).
+- **Không sinh ra `wp-content/debug.log`** — không có notice/warning nào.
+
 ---
 
 ## Bước 4 — Nộp plugin
@@ -191,10 +206,37 @@ Nếu reviewer yêu cầu sửa: sửa code → `npm run build:no-translate` →
 
 ## Bước 6 — Commit SVN sau khi được duyệt
 
-Email approval kèm URL dạng `https://plugins.svn.wordpress.org/lumen-blocks/`.
+**Chỉ chạy được sau khi plugin được duyệt** — repo SVN không tồn tại trước đó, URL nằm
+trong email approval, dạng `https://plugins.svn.wordpress.org/lumen-blocks/`.
 
-Bật 2FA cho tài khoản wordpress.org, rồi vào Account → tạo **SVN password** riêng
-(mật khẩu đăng nhập sẽ không dùng được cho SVN).
+Chuẩn bị:
+
+| Cần gì | Trạng thái |
+|---|---|
+| `svn` client | ✅ đã có (1.14.5) |
+| Nội dung `trunk/` | ✅ `build/lumen-blocks/` |
+| Nội dung `assets/` | ✅ `docs/assets/wporg/` (9 file) |
+| URL repo | ⬜ từ email approval |
+| Mật khẩu SVN | ⬜ wordpress.org → Account → *SVN password* (bắt buộc khi bật 2FA) |
+
+### Cách nhanh — dùng script
+
+```bash
+./tools/publish-to-wporg.sh --user ducnguyenhuu
+```
+
+Script [tools/publish-to-wporg.sh](../tools/publish-to-wporg.sh) sẽ: đối chiếu version ở
+3 chỗ, kiểm tra `build/` đúng version, checkout SVN về `~/lumen-blocks-svn`, rsync
+`trunk/` + `assets/`, `svn add` file mới và `svn rm` file đã xoá, in ra danh sách thay
+đổi rồi **hỏi trước khi commit**, cuối cùng tạo `tags/<version>`.
+
+SVN sẽ hỏi mật khẩu — nhập **SVN password**, không phải mật khẩu đăng nhập.
+
+Tuỳ chọn: `--version 1.0.1`, `--url <repo>`, `--checkout <thư mục>`, `--yes` (bỏ hỏi).
+
+### Cách thủ công
+
+Nếu muốn tự làm từng lệnh:
 
 ```bash
 cd ~

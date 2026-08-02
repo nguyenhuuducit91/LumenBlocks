@@ -253,6 +253,29 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 					'hidden'
 				]
 			],
+			'lumen/container' => [
+				'api_version' => '3',
+				'name' => 'lumen/container',
+				'title' => __( 'Container', 'lumen-blocks' ),
+				'description' => __( 'A styled container that you can add other blocks inside. Use this to group content and give it a background, padding or borders.', 'lumen-blocks' ),
+				'category' => 'lumen',
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'lumen/innerBlockOrientation'
+				],
+				'provides_context' => [
+					'lumen/innerBlockOrientation' => 'innerBlockOrientation'
+				],
+				'keywords' => [
+					__( 'Group', 'lumen-blocks' ),
+					__( 'Wrapper', 'lumen-blocks' ),
+					__( 'Div', 'lumen-blocks' )
+				],
+				'textdomain' => 'lumen-blocks',
+				'lmn-type' => 'essential'
+			],
 			'lumen/count-up' => [
 				'api_version' => '3',
 				'name' => 'lumen/count-up',

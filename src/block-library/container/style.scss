@@ -1,0 +1,10 @@
+.lmn-block-container__content {
+	box-sizing: border-box;
+}
+
+// The inner blocks wrapper should fill the container, so that the content
+// alignment and inner block direction options have something to align within.
+.lmn-block-container__content > .lmn-inner-blocks {
+	margin-bottom: 0;
+	width: 100%;
+}

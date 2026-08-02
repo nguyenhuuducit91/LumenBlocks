@@ -1,0 +1,11 @@
+// In the editor the inner blocks are wrapped by Gutenberg, so the width has to
+// be applied to its wrapper instead.
+.lmn-block-container__content > .block-editor-inner-blocks {
+	width: 100%;
+}
+
+// Blocks placed inside a container should not be constrained by the editor's
+// default content width.
+.editor-styles-wrapper .lmn-block-container__content [data-block] {
+	max-width: none;
+}

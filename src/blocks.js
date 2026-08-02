@@ -21,7 +21,7 @@ import {
 	registerBlockType,
 	BLOCK_STATE,
 } from '~lumen/utils'
-import { withVisualGuideContext } from '~lumen/hoc'
+import { withVisualGuideContext, withFocusParentBlock } from '~lumen/hoc'
 import { omit } from 'lodash'
 
 /**
@@ -82,7 +82,9 @@ const importAllAndRegister = r => {
 // Add some HOCs that should be applied to all our blocks.
 addFilter( 'lumen.registerBlockType.edit', 'lumen', edit => {
 	// This allows controls to show highlighted areas in the block.
-	return withVisualGuideContext( edit )
+	// The parent button gives every nested block a way back out to the block
+	// that contains it.
+	return withVisualGuideContext( withFocusParentBlock( edit ) )
 } )
 
 export const substitutionRules = fetchSubstitutionRules( require.context( './block-library', true, /substitute\.js$/ ) )

@@ -43,9 +43,9 @@ your site
 * Global spacing, borders, buttons and icons
 * Change the system and every page updates together
 
-= Forty blocks in the inserter =
+= Forty-one blocks in the inserter =
 
-**Essential** — Columns, Heading, Text, Image, Icon, Icon List, Button Group
+**Essential** — Columns, Container, Heading, Text, Image, Icon, Icon List, Button Group
 
 **Layout and content** — Accordion, Card, Carousel, Countdown, Count Up, Divider,
 Expand / Show More, Horizontal Scroller, Icon Label, Image Box, Map, Notification,
@@ -90,6 +90,9 @@ viewport or state each value belongs to, a jump to its control, and a reset for 
 value
 * **Copy and paste styling** — carries what you changed, never what you wrote; settings
 the target block does not have are dropped rather than written into your post
+* **Get back out of a nested block** — a toolbar button that names the block you are
+inside and selects it, and a trail at the top of the sidebar for jumping several levels
+at once; both outline the target in the canvas as you point at them
 
 = Motion, CSS and conditions =
 

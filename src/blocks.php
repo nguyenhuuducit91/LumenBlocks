@@ -61,6 +61,7 @@ if ( ! function_exists( 'lumen_add_excerpt_wrapper_blocks' ) ) {
 			'lumen/card',
 			'lumen/column',
 			'lumen/columns',
+			'lumen/container',
 			'lumen/expand',
 			'lumen/feature-grid',
 			'lumen/feature',

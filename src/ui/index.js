@@ -128,3 +128,8 @@ export {
 export { ColorSchemesHelp } from './color-schemes-help'
 export { default as InspectorSearch } from './inspector-search'
 export { default as BlockChangesPanel } from './block-changes-panel'
+export {
+	FocusParentBlockToolbar,
+	FocusParentBlockBreadcrumb,
+	useBlockAncestors,
+} from './focus-parent-block'

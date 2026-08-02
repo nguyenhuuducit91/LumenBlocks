@@ -1,0 +1,123 @@
+/**
+ * Where this block sits.
+ *
+ * One line at the top of the sidebar, above the applied-settings list and the
+ * tab strip. Deliberately quiet — it is orientation, not a control, and the
+ * author's eye should pass over it on the way to the tabs unless they are
+ * actually lost.
+ */
+.lmn-focus-parent {
+	padding: 8px 16px;
+	border-bottom: 1px solid #e0e0e0;
+	background: #fff;
+
+	&__list {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		// The trail can be longer than the sidebar is wide. Scrolling the row
+		// keeps the last crumbs — the ones nearest the selected block, and so
+		// the ones most likely to be wanted — reachable, where wrapping would
+		// cost a second line on every deeply nested block.
+		overflow-x: auto;
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	&__crumb {
+		display: flex;
+		align-items: center;
+		margin: 0;
+		min-width: 0;
+		font-size: 11px;
+		line-height: 1;
+		color: #757575;
+
+		// The separator belongs between crumbs, so it hangs off the front of
+		// every crumb but the first rather than being an element of its own.
+		+ .lmn-focus-parent__crumb::before {
+			content: "\203A"; // ›
+			flex: none;
+			padding: 0 4px;
+			color: #949494;
+		}
+	}
+
+	&__button {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
+		padding: 2px 4px;
+		border: none;
+		border-radius: 2px;
+		background: transparent;
+		font-size: inherit;
+		line-height: inherit;
+		color: inherit;
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			background: #f0f0f0;
+			color: #1e1e1e;
+		}
+
+		&:focus-visible {
+			outline: 1px solid var(--wp-admin-theme-color, #3858e9);
+			outline-offset: 0;
+		}
+
+		svg {
+			flex: none;
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+	}
+
+	// The block you are already on: still part of the trail so the row reads as
+	// a path, but not a link to where you already are.
+	&__crumb--current .lmn-focus-parent__label {
+		padding: 2px 0;
+		font-weight: 600;
+		color: #1e1e1e;
+	}
+
+	// Long block titles truncate rather than push the rest of the trail out of
+	// the scroll area.
+	&__label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+/**
+ * One step out, in the block toolbar.
+ *
+ * The parent's name is shown next to its icon, so the button says where it
+ * goes. Titles are capped because a toolbar that grows with the block name
+ * pushes the block's own controls off the end of the bar.
+ */
+.lmn-focus-parent__toolbar {
+	.components-button.has-text {
+		max-width: 160px;
+
+		.block-editor-block-icon {
+			margin-right: 4px;
+		}
+
+		// `has-text` buttons in the toolbar do not truncate on their own.
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}

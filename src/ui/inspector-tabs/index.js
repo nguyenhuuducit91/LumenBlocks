@@ -17,6 +17,7 @@ import { useSelect } from '@wordpress/data'
 import { BlockStylesControl } from '../block-styles-control'
 import BlockChangesPanel, { useAppliedSettings } from '../block-changes-panel'
 import InspectorSearch from '../inspector-search'
+import { FocusParentBlockBreadcrumb } from '../focus-parent-block'
 
 /**
  * The applied-settings panel, with the count in its own title.
@@ -108,6 +109,14 @@ const InspectorTabs = props => {
 	return (
 		<>
 			<InspectorControls>
+				{ /*
+				 * Where this block sits in the layout, first of everything —
+				 * it describes the block itself rather than any of its
+				 * settings, and a trail placed below the panels is one nobody
+				 * scrolls back up to read.
+				 */ }
+				<FocusParentBlockBreadcrumb />
+
 				{ /*
 				 * Only when there is something to choose. Saving a new style
 				 * still needs a naming dialog that this build does not have, so

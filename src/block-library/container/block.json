@@ -1,0 +1,18 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/container",
+	"title": "Container",
+	"description": "A styled container that you can add other blocks inside. Use this to group content and give it a background, padding or borders.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId", "lumen/innerBlockOrientation" ],
+	"providesContext": {
+		"lumen/innerBlockOrientation": "innerBlockOrientation"
+	},
+	"keywords": [
+		"Group",
+		"Wrapper",
+		"Div"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "essential"
+}
