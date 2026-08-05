@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Turn the block editor into a page builder: 40 blocks, 70 patterns, 34 page templates and one design system driving them all.
+Turn the block editor into a page builder: 41 blocks, 70 patterns, 34 page templates and one design system driving them all.
 
 == Description ==
 
-Lumen Blocks adds a page-builder toolkit to the WordPress block editor. You get forty
+Lumen Blocks adds a page-builder toolkit to the WordPress block editor. You get forty-one
 blocks that share one set of controls, a design library you can insert whole sections and
 pages from, and a global design system so a colour or spacing change lands everywhere at
 once.
@@ -43,14 +43,14 @@ your site
 * Global spacing, borders, buttons and icons
 * Change the system and every page updates together
 
-= Forty-one blocks in the inserter =
+= Forty-two blocks in the inserter =
 
 **Essential** — Columns, Container, Heading, Text, Image, Icon, Icon List, Button Group
 
 **Layout and content** — Accordion, Card, Carousel, Countdown, Count Up, Divider,
-Expand / Show More, Horizontal Scroller, Icon Label, Image Box, Map, Notification,
-Number Box, Posts, Price, Progress Bar, Progress Circle, Separator, Spacer, Subtitle,
-Table of Contents, Tabs, Timeline, Video Popup, Design Library
+Expand / Show More, Horizontal Scroller, Icon Label, Image Box, Map, Marquee,
+Notification, Number Box, Posts, Price, Progress Bar, Progress Circle, Separator,
+Spacer, Subtitle, Table of Contents, Tabs, Timeline, Video Popup, Design Library
 
 **Sections** — Hero, Call to Action, Feature, Feature Grid, Pricing Box, Icon Box,
 Testimonial, Team Member, Blockquote
@@ -261,7 +261,7 @@ GPL-3.0-or-later. The full list of changes is in NOTICE.txt inside the plugin fo
 
 = 1.0.0 =
 * Initial release.
-* 40 blocks in the inserter, plus inner blocks.
+* 41 blocks in the inserter, plus inner blocks.
 * Design Library with 70 built-in patterns and 34 full page templates, no CDN required.
 * Global design system with theme.json inheritance.
 * Setting search, applied-settings list and copy/paste styling in the block inspector.

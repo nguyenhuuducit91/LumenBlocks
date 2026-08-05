@@ -1,0 +1,15 @@
+{
+	"apiVersion": 3,
+	"name": "lumen/marquee",
+	"title": "Marquee",
+	"description": "A strip of content that scrolls past in an endless loop. Use it for logos, reviews or announcements.",
+	"category": "lumen",
+	"usesContext": [ "postId", "postType", "queryId", "lumen/innerBlockOrientation" ],
+	"keywords": [
+		"Ticker",
+		"Scrolling text",
+		"Logo slider"
+	],
+	"textdomain": "lumen-blocks",
+	"lmn-type": "special"
+}

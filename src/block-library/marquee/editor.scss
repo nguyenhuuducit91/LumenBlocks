@@ -1,0 +1,38 @@
+/**
+ * The editor shows one set of the items, standing still.
+ *
+ * The repeats that make the loop seamless are made on the frontend from the
+ * saved markup, so there is only ever one set here — and a set that slid off
+ * the screen and jumped back would misrepresent what the block does, quite
+ * apart from being impossible to edit while it moved.
+ */
+.editor-styles-wrapper .lmn-block-marquee__track {
+	animation: none;
+}
+
+/*
+ * Gutenberg puts its own two wrappers between the group and the items, so the
+ * row that needs to be a flex row is not the one the frontend stylesheet
+ * reaches. The gap is repeated here for the same reason.
+ */
+.lmn-block-marquee__group > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: var(--lmn-marquee-gap, 32px);
+}
+
+// The strip runs off the side by design; blocks inside it should not be held to
+// the editor's content width.
+.editor-styles-wrapper .lmn-block-marquee__group [data-block] {
+	max-width: none;
+}
+
+/*
+ * An empty marquee is a strip of nothing. Give the appender somewhere to sit so
+ * the block can be found and filled.
+ */
+.lmn-block-marquee__group:empty,
+.lmn-block-marquee__group > .block-editor-inner-blocks > .block-editor-block-list__layout:empty {
+	min-height: 40px;
+}

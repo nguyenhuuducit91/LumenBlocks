@@ -237,7 +237,15 @@ if ( ! class_exists( 'Lumen_Init' ) ) {
 			// Enqueue the block script once.
 			// Do not enqueue if the block content is empty (e.g. due to conditional display)
 			if ( ! isset( self::$scripts_loaded[ $block['blockName'] ] ) && $block_content !== '' ) {
-				$lumen_block = substr( $block['blockName'], 10 );
+				// Strip the namespace by its own length. This used to be a
+				// literal 10, the length of the old namespace, and after the
+				// rename it was cutting 'lumen/accordion' down to 'rdion' —
+				// firing 'lumen/rdion/enqueue_scripts', which nothing listens
+				// for, and then marking the block as done so nothing tried
+				// again. Singular posts were unaffected because they take the
+				// `..._head` path above, so what broke was every block script
+				// on an archive, a template part or a widget.
+				$lumen_block = substr( $block['blockName'], strlen( 'lumen/' ) );
 				do_action( 'lumen/' . $lumen_block . '/enqueue_scripts' );
 				self::$scripts_loaded[ $block['blockName'] ] = true;
 			}

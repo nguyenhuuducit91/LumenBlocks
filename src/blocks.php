@@ -69,6 +69,7 @@ if ( ! function_exists( 'lumen_add_excerpt_wrapper_blocks' ) ) {
 			'lumen/icon-box',
 			'lumen/icon-label',
 			'lumen/image-box',
+			'lumen/marquee',
 			'lumen/notification',
 			'lumen/posts',
 			'lumen/price',

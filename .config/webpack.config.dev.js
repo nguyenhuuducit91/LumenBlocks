@@ -176,6 +176,7 @@ module.exports = [
 		'frontend_block_progress_circle': path.resolve( __dirname, '../src/block-library/progress-circle/frontend-progress-circle.js' ),
 		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block-library/progress-bar/frontend-progress-bar.js' ),
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block-library/horizontal-scroller/frontend-horizontal-scroller.js' ),
+		'frontend_block_marquee': path.resolve( __dirname, '../src/block-library/marquee/frontend-marquee.js' ),
 		'frontend_block_tabs': path.resolve( __dirname, '../src/block-library/tabs/frontend-tabs.js' ),
 		'frontend_image_optimizer_fallback': path.resolve( __dirname, '../src/features/image/image-optimizer-fallback.js' ),
 		'frontend_motion_effects': path.resolve( __dirname, '../src/features/effects-animations/frontend.js' ),

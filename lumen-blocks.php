@@ -308,6 +308,7 @@ if ( ! is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/progress-bar/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/progress-circle/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/horizontal-scroller/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/marquee/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/tabs/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/features/alignment/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-library/columns/index.php' );

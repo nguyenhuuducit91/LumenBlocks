@@ -1,0 +1,91 @@
+/**
+ * A strip of content that scrolls past forever.
+ *
+ * The viewport is the window, the track is the row that moves, and a group is
+ * one set of the author's items. The frontend repeats the group until the track
+ * is wider than the viewport (see `frontend-marquee.js`) and reports how many
+ * there are in `--lmn-marquee-copies`; the animation steps the track forward by
+ * exactly one group and starts again, which is why the motion has no seam.
+ */
+
+.lmn-block-marquee__viewport {
+	overflow: hidden;
+	width: 100%;
+}
+
+.lmn-block-marquee__track {
+	display: flex;
+	flex-wrap: nowrap;
+	// The track has to be as wide as its contents, not as wide as its parent,
+	// or the groups would be squeezed into the viewport instead of running past
+	// the end of it.
+	width: max-content;
+	gap: var(--lmn-marquee-gap, 32px);
+	animation-name: lmn-marquee-scroll;
+	animation-duration: 20s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	will-change: transform;
+}
+
+.lmn-block-marquee__group {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	// A group keeps its size. Without this the flex row would shrink the sets
+	// to fit rather than let them overflow, which is the whole point.
+	flex: none;
+	gap: var(--lmn-marquee-gap, 32px);
+}
+
+/**
+ * One group forward, and no further.
+ *
+ * The track is `n` groups and `n - 1` gaps wide, so one group plus its gap is
+ * `(100% + gap) / n` of it — that identity is what lets the same keyframes work
+ * for any number of copies. Landing there puts an identical group where the
+ * first one started, so restarting the animation is invisible.
+ */
+@keyframes lmn-marquee-scroll {
+	to {
+		transform: translateX(calc(-1 * (100% + var(--lmn-marquee-gap, 32px)) / var(--lmn-marquee-copies, 1)));
+	}
+}
+
+// Same motion, read from the other end.
+.lmn-block-marquee--reverse .lmn-block-marquee__track {
+	animation-direction: reverse;
+}
+
+.lmn-block-marquee--pause-on-hover:hover .lmn-block-marquee__track,
+.lmn-block-marquee--pause-on-hover:focus-within .lmn-block-marquee__track {
+	animation-play-state: paused;
+}
+
+/**
+ * Fading the ends rather than cutting them.
+ *
+ * A mask, not a pair of gradient overlays, so it works over any background the
+ * block or the page happens to have — an overlay has to be told what colour to
+ * fade to, and gets it wrong the moment the section behind it changes.
+ */
+.lmn-block-marquee--fade .lmn-block-marquee__viewport {
+	$fade: var(--lmn-marquee-fade, 64px);
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+	mask-image: linear-gradient(to right, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+}
+
+/**
+ * Motion that cannot be turned off is motion that can make somebody ill, and a
+ * marquee never stops on its own. Readers who ask for less of it get the items
+ * standing still and scrollable by hand instead.
+ */
+@media (prefers-reduced-motion: reduce) {
+	.lmn-block-marquee__viewport {
+		overflow-x: auto;
+	}
+
+	.lmn-block-marquee__track {
+		animation: none;
+	}
+}

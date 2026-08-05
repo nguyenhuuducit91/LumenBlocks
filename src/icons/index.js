@@ -33,6 +33,7 @@ import SVGImageIcon from './images/image-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
 import SVGLoadMoreIcon from './images/load-more.svg'
 import SVGMapIcon from './images/map-icon.svg'
+import SVGMarqueeIcon from './images/marquee-icon.svg'
 import SVGNotificationIcon from './images/notification-icon.svg'
 import SVGNumberBoxIcon from './images/number-box-icon.svg'
 import SVGPaginationIcon from './images/pagination.svg'
@@ -189,6 +190,10 @@ export function HeadingIcon() {
 
 export function HorizontalScrollerIcon() {
 	return colorizeIcon( <SVGHorizontalScrollerIcon width="20" height="20" /> )
+}
+
+export function MarqueeIcon() {
+	return colorizeIcon( <SVGMarqueeIcon width="20" height="20" /> )
 }
 
 export function GroupContainerIcon() {

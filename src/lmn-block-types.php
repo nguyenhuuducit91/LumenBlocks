@@ -682,6 +682,26 @@ if ( ! function_exists( 'lumen_get_blocks_array') ) {
 				],
 				'lmn-type' => 'special'
 			],
+			'lumen/marquee' => [
+				'api_version' => '3',
+				'name' => 'lumen/marquee',
+				'title' => __( 'Marquee', 'lumen-blocks' ),
+				'description' => __( 'A strip of content that scrolls past in an endless loop. Use it for logos, reviews or announcements.', 'lumen-blocks' ),
+				'category' => 'lumen',
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'lumen/innerBlockOrientation'
+				],
+				'keywords' => [
+					__( 'Ticker', 'lumen-blocks' ),
+					__( 'Scrolling text', 'lumen-blocks' ),
+					__( 'Logo slider', 'lumen-blocks' )
+				],
+				'textdomain' => 'lumen-blocks',
+				'lmn-type' => 'special'
+			],
 			'lumen/notification' => [
 				'api_version' => '3',
 				'name' => 'lumen/notification',
