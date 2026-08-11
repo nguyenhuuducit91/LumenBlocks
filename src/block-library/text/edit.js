@@ -9,7 +9,6 @@ import { useOnPaste } from './util'
  */
 import {
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -134,7 +133,6 @@ const Edit = props => {
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-text" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -206,7 +204,6 @@ const InspectorControls = memo( props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-text" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

@@ -8,7 +8,6 @@ import blockStyles from './style'
  */
 import {
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -143,7 +142,6 @@ const Edit = props => {
 				blockState={ props.blockState }
 			/>
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-heading" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -202,7 +200,7 @@ const InspectorControls = memo( props => {
 
 						<AdvancedRangeControl
 							label={ __( 'Width', i18n ) }
-							units={ [ 'px', '%', 'vw' ] }
+							units={ [ 'px', '%', 'vw', 'custom' ] }
 							attribute="topLineWidth"
 							min="0"
 							sliderMax={ [ 200, 100 ] }
@@ -288,7 +286,7 @@ const InspectorControls = memo( props => {
 
 						<AdvancedRangeControl
 							label={ __( 'Width', i18n ) }
-							units={ [ 'px', '%', 'vw' ] }
+							units={ [ 'px', '%', 'vw', 'custom' ] }
 							attribute="bottomLineWidth"
 							min={ 0 }
 							sliderMax={ [ 200, 100 ] }
@@ -362,7 +360,6 @@ const InspectorControls = memo( props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-heading" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

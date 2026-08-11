@@ -33,6 +33,12 @@ if ( ! function_exists( 'lumen_ajax_dismiss_notice' ) ) {
             wp_die();
         }
 
+        // Dismissing writes a site option, so a valid nonce is not enough on
+        // its own — it has to be somebody who is allowed to change settings.
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die();
+        }
+
 		$id = sanitize_text_field( wp_unslash( $_POST['id'] ) ); // Input var: okay.
 		lumen_add_in_notification_dismissed( $id );
 

@@ -34,7 +34,12 @@ if ( ! class_exists( 'Lumen_Welcome_Screen' ) ) {
 				'lumen', // Menu slug.
 				array( $this, 'lumen_getting_started_content' ), // Callback function.
 				$icon,
-				25
+				// Below Settings (80) rather than beside Comments (25), where
+				// this used to sit. At 25 the menu pushed itself above
+				// Appearance, Plugins, Users, Tools and Settings — competing
+				// with the core items the admin's muscle memory is built on,
+				// for a plugin whose work is done in the editor, not here.
+				81
 			);
 
 			// Our getting started page.

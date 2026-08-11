@@ -41,7 +41,7 @@ const Layout = props => {
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
 				responsive="all"
-				units={ [ 'px', 'rem', 'vh' ] }
+				units={ [ 'px', 'rem', 'vh', 'custom' ] }
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 1000, 60, 100 ] }
 				step={ [ 1, 1, 1 ] }
@@ -77,7 +77,7 @@ const Layout = props => {
 				label={ labelContentWidth }
 				attribute={ getAttrName( 'width' ) }
 				responsive="all"
-				units={ [ 'px', '%', 'vw' ] }
+				units={ [ 'px', '%', 'vw', 'custom' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1500, 100 ] }
 				step={ [ 1, 1 ] }

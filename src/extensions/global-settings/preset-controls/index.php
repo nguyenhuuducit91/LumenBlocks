@@ -139,7 +139,9 @@ if ( ! class_exists( 'Lumen_Size_And_Spacing_Preset_Controls' ) ) {
 		}
 
 		public static function sanitize_array_setting( $input ) {
-			return ! is_array( $input ) ? array( array() ) : $input;
+			// Cleans every leaf of the structure rather than only checking the
+			// outer value; see src/sanitize.php.
+			return lumen_sanitize_array_setting( $input );
 		}
 
 		/**

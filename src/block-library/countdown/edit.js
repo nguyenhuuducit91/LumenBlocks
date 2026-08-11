@@ -12,7 +12,6 @@ import { timezones as TIMEZONE_OPTIONS } from './timezones'
 import {
 	BlockDiv,
 	ContainerDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	MarginBottom,
@@ -176,7 +175,6 @@ const Edit = props => {
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-countdown" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -462,7 +460,6 @@ const InspectorControls = memo( props => {
 				/> }
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-countdown" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

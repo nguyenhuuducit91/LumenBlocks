@@ -11,7 +11,6 @@ import { version as VERSION } from 'lumen'
 import classnames from 'classnames'
 import {
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
@@ -61,7 +60,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
-			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
 				<div className={ contentClassNames }>
 					<InnerBlocks.Content />

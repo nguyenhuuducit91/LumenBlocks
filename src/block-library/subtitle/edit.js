@@ -8,7 +8,6 @@ import blockStyles from './style'
 k*/
 import {
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -91,7 +90,6 @@ const Edit = props => {
 			<InspectorControls blockState={ props.blockState } />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-subtitle" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -132,7 +130,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-subtitle" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

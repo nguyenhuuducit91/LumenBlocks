@@ -9,7 +9,6 @@ import {
 	BlockDiv,
 	Style,
 	ContainerDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Alignment,
@@ -152,7 +151,6 @@ export const attributes = ( version = VERSION ) => {
 	Style.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )

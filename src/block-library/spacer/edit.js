@@ -11,7 +11,6 @@ import { i18n, version as VERSION } from 'lumen'
 import {
 	Advanced,
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -102,7 +101,6 @@ const Edit = props => {
 		<>
 			<InspectorControls defaultMinHeight={ defaultMinHeight } />
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-spacer" />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -186,7 +184,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-spacer" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

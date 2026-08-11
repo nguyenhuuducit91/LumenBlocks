@@ -22,7 +22,6 @@ import {
 	Alignment,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -125,7 +124,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-tab-content" />
 
 				{/* { ! hasInnerBlocks && <GroupPlaceholder attributes={ TEMPLATE[0][1] } /> } */}
 				<Separator>
@@ -184,7 +182,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-tab-content" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

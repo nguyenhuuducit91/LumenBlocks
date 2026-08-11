@@ -462,7 +462,10 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 				array(
 					'type' => 'array',
 					'description' => __( 'Lumen Icon Library', 'lumen-blocks' ),
-					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					// Not the shared callback: an entry here holds SVG markup,
+					// which the text sanitizer would destroy and which needs an
+					// allowlist of its own. See sanitize_icon_library().
+					'sanitize_callback' => array( $this, 'sanitize_icon_library' ),
 					'show_in_rest' => array(
 						'schema' => array(
 							'items' => array(
@@ -505,7 +508,44 @@ if ( ! class_exists( 'Lumen_Global_Settings' ) ) {
 		}
 
 		public function sanitize_array_setting( $input ) {
-			return ! is_array( $input ) ? array( array() ) : $input;
+			// Cleans every leaf of the structure rather than only checking the
+			// outer value; see src/sanitize.php.
+			return lumen_sanitize_array_setting( $input );
+		}
+
+		/**
+		 * Clean the saved icon library.
+		 *
+		 * Each entry is a name, a key and the icon's own SVG markup, and that
+		 * markup is printed into pages. Running it through the text sanitizer
+		 * would leave nothing of it, so it is held to an allowlist of the
+		 * elements and attributes that draw a shape — see lumen_sanitize_svg().
+		 *
+		 * @param mixed $input The submitted setting.
+		 * @return array
+		 */
+		public function sanitize_icon_library( $input ) {
+			if ( ! is_array( $input ) ) {
+				return array();
+			}
+
+			$sanitized = array();
+
+			foreach ( $input as $index => $icon ) {
+				if ( ! is_array( $icon ) ) {
+					continue;
+				}
+
+				$svg = isset( $icon['icon'] ) ? lumen_sanitize_svg( $icon['icon'] ) : '';
+				unset( $icon['icon'] );
+
+				$sanitized[ $index ] = array_merge(
+					lumen_sanitize_setting_value( $icon ),
+					array( 'icon' => $svg )
+				);
+			}
+
+			return $sanitized;
 		}
 
 

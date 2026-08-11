@@ -6,7 +6,6 @@ import { version as VERSION } from 'lumen'
 import {
 	BlockDiv,
 	Style,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -26,7 +25,6 @@ export const attributes = ( version = VERSION ) => {
 	Style.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )

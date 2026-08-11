@@ -8,7 +8,6 @@ import {
 	getTypographyClasses,
 	BlockDiv,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	Button,
 	Typography,
@@ -91,7 +90,6 @@ const Edit = props => {
 				blockState={ props.blockState }
 			/>
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-button" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -158,7 +156,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-button" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

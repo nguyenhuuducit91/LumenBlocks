@@ -10,7 +10,6 @@ k*/
 import {
 	BlockStyle,
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	getAlignmentClasses,
@@ -71,7 +70,6 @@ const Edit = props => {
 		<>
 			<InspectorControls />
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-divider" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -127,7 +125,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-divider" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

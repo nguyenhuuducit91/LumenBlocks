@@ -29,7 +29,6 @@ import {
 	Alignment,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -122,7 +121,6 @@ const Edit = props => {
 				 className={ blockClassNames }
 			 >
 				 { blockCss && <style key="block-css">{ blockCss }</style> }
-				 <CustomCSS mainBlockClass="lmn-block-horizontal-scroller" />
 
 				 { ! hasInnerBlocks && <GroupPlaceholder /> }
 				<div
@@ -168,7 +166,7 @@ const InspectorControls = memo( props => {
 					label={ __( 'Item Width', i18n ) }
 					attribute="horizontalScrollerColumnWidth"
 					responsive="all"
-					units={ [ 'px', 'em', '%', 'vw' ] }
+					units={ [ 'px', 'em', '%', 'vw', 'custom' ] }
 					min={ [ 0, 0, 0 ] }
 					sliderMax={ [ 500, 40, 100 ] }
 					step={ [ 1, 0.1, 1 ] }
@@ -187,7 +185,7 @@ const InspectorControls = memo( props => {
 					label={ __( 'Inner Column Spacing', i18n ) }
 					attribute="columnSpacing"
 					responsive="all"
-					units={ [ 'px', 'em', 'vw' ] }
+					units={ [ 'px', 'em', 'vw', 'custom' ] }
 					defaultLocked={ true }
 					min={ [ 0, 0 ] }
 					sliderMax={ [ 200, 30 ] }
@@ -205,7 +203,7 @@ const InspectorControls = memo( props => {
 					label={ __( 'Left Offset', i18n ) }
 					attribute="horizontalScrollerLeftOffset"
 					responsive="all"
-					units={ [ 'px', 'em', '%' ] }
+					units={ [ 'px', 'em', '%', 'custom' ] }
 					min={ [ 0, 0, 0 ] }
 					sliderMax={ [ 500, 40, 50 ] }
 					step={ [ 1, 0.1, 1 ] }
@@ -245,7 +243,7 @@ const InspectorControls = memo( props => {
 						attribute="scrollbarThumbRadius"
 						allowReset={ true }
 						min="0"
-						units={ [ 'px', '%', 'rem' ] }
+						units={ [ 'px', '%', 'rem', 'custom' ] }
 						step="1"
 						sliderMax={ Math.ceil( ( props.scrollbarHeight || 10 ) / 2 ) }
 					/>
@@ -257,7 +255,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-horizontal-scroller" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

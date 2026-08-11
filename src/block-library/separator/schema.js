@@ -5,7 +5,6 @@ import {
 	BlockLink,
 	ConditionalDisplay,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	Responsive,
 	createSeparatorAttributes,
@@ -23,7 +22,6 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )

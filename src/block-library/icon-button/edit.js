@@ -6,8 +6,7 @@ import { version as VERSION } from 'lumen'
 import { InspectorTabs, useBlockCssGenerator } from '~lumen/ui'
 import {
 	BlockDiv,
-	Advanced, CustomCSS,
-	Responsive,
+	Advanced, Responsive,
 	Button,
 	BlockStyle,
 	CustomAttributes,
@@ -62,7 +61,6 @@ const Edit = props => {
 			<InspectorControls />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-icon-button" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -109,7 +107,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-icon-button" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

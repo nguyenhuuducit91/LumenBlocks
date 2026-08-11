@@ -66,7 +66,6 @@ import {
 	Image,
 	Alignment,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	ContainerDiv,
 	CustomAttributes,
@@ -215,7 +214,6 @@ const Edit = props => {
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-posts" />
 
 			{ ( isRequesting || ! hasPosts ) ? (
 				<Placeholder
@@ -635,7 +633,7 @@ const InspectorControls = memo( props => {
 								label={ __( 'Image Width', i18n ) }
 								attribute="itemMediaWidth"
 								responsive="all"
-								units={ [ '%', 'px' ] }
+								units={ [ '%', 'px', 'custom' ] }
 								min={ [ 10, 40 ] }
 								sliderMax={ [ 80, 500 ] }
 								allowReset={ true }
@@ -1038,7 +1036,6 @@ const InspectorControls = memo( props => {
 			</Typography.InspectorControls>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-posts" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

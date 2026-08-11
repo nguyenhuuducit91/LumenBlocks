@@ -1,6 +1,5 @@
 import {
 	BlockDiv,
-	CustomCSS,
 	getResponsiveClasses,
 	getTypographyClasses,
 	getAlignmentClasses,
@@ -49,7 +48,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<div
 				className="lmn-block-tab-labels__wrapper"
 				role="tablist"

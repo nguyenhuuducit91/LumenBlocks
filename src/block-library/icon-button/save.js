@@ -6,7 +6,6 @@ import classnames from 'classnames'
 import { version as VERSION } from 'lumen'
 import {
 	BlockDiv,
-	CustomCSS,
 	Button,
 	getResponsiveClasses,
 	CustomAttributes,
@@ -40,7 +39,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ props.attributes.generatedCss && <style>{ props.attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ props.attributes } />
 			<Button.Content
 				{ ...propsToPass }
 				attributes={ props.attributes }

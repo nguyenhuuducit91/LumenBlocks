@@ -4,7 +4,6 @@ import {
 	Style,
 	ConditionalDisplay,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	MarginBottom,
 	Responsive,
@@ -27,7 +26,6 @@ export const attributes = ( version = VERSION ) => {
 	Transform.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject )

@@ -22,7 +22,6 @@ import {
 	getAlignmentClasses,
 	EffectsAnimations,
 	CustomAttributes,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	MarginBottom,
@@ -113,7 +112,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-icon-box" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks
@@ -139,7 +137,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-icon-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

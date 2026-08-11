@@ -6,7 +6,6 @@ import { withVersion } from '~lumen/hoc'
 import { version as VERSION } from 'lumen'
 import {
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 } from '~lumen/features'
@@ -44,7 +43,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }<CustomCSS.Content attributes={ attributes } />
+			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>

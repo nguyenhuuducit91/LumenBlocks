@@ -10,7 +10,6 @@ import {
 	ConditionalDisplay,
 	ContainerDiv,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	Image,
 	Responsive,
@@ -32,7 +31,6 @@ export const attributes = ( version = VERSION ) => {
 	Transform.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )

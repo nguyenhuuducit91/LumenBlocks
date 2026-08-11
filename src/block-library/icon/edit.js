@@ -23,7 +23,6 @@ import {
 	Icon,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -77,7 +76,6 @@ const Edit = props => {
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-icon" />
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -121,7 +119,6 @@ const InspectorControls = memo( props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-icon" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

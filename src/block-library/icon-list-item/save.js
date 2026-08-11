@@ -1,6 +1,5 @@
 import {
 	BlockDiv,
-	CustomCSS,
 	Typography,
 	getResponsiveClasses,
 	getTypographyClasses,
@@ -49,7 +48,6 @@ export const Save = props => {
 			renderHtmlTag={ false }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<div className="lmn-block-icon-list-item__content">
 				{ ! attributes.ordered && attributes.icon &&
 					<Icon.Content

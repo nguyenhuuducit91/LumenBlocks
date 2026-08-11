@@ -307,7 +307,7 @@ export const Controls = props => {
 						label={ __( 'Inner Column Spacing', i18n ) }
 						attribute="columnSpacing"
 						responsive="all"
-						units={ [ 'px', 'em', 'vw' ] }
+						units={ [ 'px', 'em', 'vw', 'custom' ] }
 						defaultLocked={ true }
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }

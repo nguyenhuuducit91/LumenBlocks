@@ -24,7 +24,7 @@ import { useDynamicContent } from '../dynamic-content-control'
 export { BlockCssCompiler } from './block-css-compiler'
 import { useBlockAttributesContext } from '~lumen/hooks'
 import {
-	 getAttributeName, getAttrName, getUniqueBlockClass, prependCSSClass, useQueryLoopInstanceId,
+	 getAttributeName, getAttrName, getUniqueBlockClass, isCustomUnit, prependCSSClass, useQueryLoopInstanceId,
 } from '~lumen/utils'
 
 /**
@@ -184,7 +184,10 @@ const BlockCss = props => {
 			return undefined
 		}
 
-		if ( unit ) { // Note: this will only work for non-objects.
+		// `custom` is the absence of a unit rather than one of them: the author
+		// wrote the whole value, so appending anything to it would turn
+		// `calc(100% - 200px)` into `calc(100% - 200px)custom`.
+		if ( unit && ! isCustomUnit( unit ) ) { // Note: this will only work for non-objects.
 			// If the value is `auto` or a CSS variable, don't add units.
 			if ( ! ( value === 'auto' || ( typeof value === 'string' && value.startsWith( 'var' ) ) ) ) {
 				value = `${ value }${ unit }`

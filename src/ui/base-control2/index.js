@@ -9,6 +9,7 @@ import ControlIconToggle from '../control-icon-toggle'
 import ResponsiveToggle from '../responsive-toggle'
 import HoverStateToggle from './hover-state-toggle'
 import { VisualGuideer } from './use-visual-guide'
+import { CUSTOM_UNIT } from '~lumen/utils'
 import LabelTooltip from './label-tooltip'
 import {
 	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext, useDeviceType,
@@ -60,9 +61,15 @@ export const BaseControl = props => {
 
 	const responsive = props.responsive === 'all' ? ALL_SCREENS : props.responsive
 
-	const units = ( props.units && props.units?.map( unit => {
-		return { value: unit }
-	} ) ) || []
+	/*
+	 * `custom` is not a unit but a mode: the author writes the whole value, so
+	 * a control offering it can take `calc(100% - 200px)` where a number and a
+	 * suffix could not. The toggle shows `fx` rather than the word, which would
+	 * not fit and would read as a unit standing alongside px and rem.
+	 */
+	const units = ( props.units && props.units?.map( unit => (
+		unit === CUSTOM_UNIT ? { value: unit, label: __( 'fx', i18n ) } : { value: unit }
+	) ) ) || []
 
 	const labelClassName = classnames( [
 		'lmn-control-label',

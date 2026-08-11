@@ -10,7 +10,6 @@ import {
 	ConditionalDisplay,
 	CustomAttributes,
 	ContainerDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	MarginBottom,
@@ -33,7 +32,6 @@ export const attributes = ( version = VERSION ) => {
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject )

@@ -17,6 +17,7 @@ import {
 	InspectorLayoutControls,
 	InspectorStyleControls,
 	InspectorTabs,
+	PanelAdvancedSettings,
 	useBlockCssGenerator,
 } from '~lumen/ui'
 import {
@@ -26,7 +27,6 @@ import {
 	ConditionalDisplay,
 	ContentAlign,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	MarginBottom,
 	Responsive,
@@ -103,7 +103,10 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorControls />
+			<InspectorControls
+				marqueeFade={ props.attributes.marqueeFade }
+				setAttributes={ props.setAttributes }
+			/>
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
 				clientId={ props.clientId }
@@ -111,7 +114,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-marquee" />
 
 				{ /*
 				  * The editor shows one set of the items, standing still.
@@ -144,7 +146,7 @@ const Edit = props => {
 
 // Inspector controls for the block, it's important that we only pass only the
 // props used by controls to prevent rerenders of all the inspector controls.
-const InspectorControls = memo( () => {
+const InspectorControls = memo( props => {
 	return (
 		<>
 			<InspectorTabs />
@@ -172,8 +174,9 @@ const InspectorControls = memo( () => {
 					label={ __( 'Gap', i18n ) }
 					attribute="marqueeGap"
 					responsive="all"
-					min={ 0 }
-					sliderMax={ 200 }
+					units={ [ 'px', 'rem', 'vw', 'custom' ] }
+					min={ [ 0, 0, 0 ] }
+					sliderMax={ [ 200, 12, 20 ] }
 					placeholder="32"
 					help={ __( 'Spaces the items, and spaces each repeat of them from the next.', i18n ) }
 				/>
@@ -192,25 +195,28 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-marquee" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<InspectorStyleControls>
-				<AdvancedToggleControl
-					label={ __( 'Fade Edges', i18n ) }
+				<PanelAdvancedSettings
 					attribute="marqueeFade"
-					help={ __( 'Fades the items out at both ends instead of cutting them off.', i18n ) }
-				/>
-
-				<AdvancedRangeControl
-					label={ __( 'Fade Width', i18n ) }
-					attribute="marqueeFadeWidth"
-					responsive="all"
-					min={ 0 }
-					sliderMax={ 300 }
-					placeholder="64"
-				/>
+					title={ __( 'Fade Edges', i18n ) }
+					id="marquee-fade"
+					hasToggle={ true }
+					checked={ props.marqueeFade }
+					onChange={ marqueeFade => props.setAttributes( { marqueeFade } ) }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Fade Width', i18n ) }
+						attribute="marqueeFadeWidth"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 300 }
+						placeholder="64"
+						help={ __( 'How far in from each end the items fade out instead of being cut off.', i18n ) }
+					/>
+				</PanelAdvancedSettings>
 
 				<InspectorBottomTip />
 			</InspectorStyleControls>

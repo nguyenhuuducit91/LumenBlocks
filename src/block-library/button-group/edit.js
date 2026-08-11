@@ -25,7 +25,6 @@ import {
 	getRowClasses,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -180,7 +179,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder blockName="lumen/button" /> }
 				<div className={ contentClassNames }>
@@ -256,7 +254,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-button-group" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

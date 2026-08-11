@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'lumen'
+import { TOUR_DEMO_IMAGE_URL } from '../demo-image'
 import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
 import { waitForElement } from '../utils'
@@ -12,7 +13,7 @@ export const hoverStates = {
 			'lumen/image',
 			{
 				uniqueId: 'e063798',
-				imageExternalUrl: 'https://picsum.photos/id/177/500/700.jpg',
+				imageExternalUrl: TOUR_DEMO_IMAGE_URL,
 			}
 		)
 

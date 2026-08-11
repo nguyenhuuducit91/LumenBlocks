@@ -8,7 +8,6 @@ import {
 	getResponsiveClasses,
 	getTypographyClasses,
 	Typography,
-	CustomCSS,
 } from '~lumen/features'
 import { version as VERSION } from 'lumen'
 import classnames from 'classnames'
@@ -127,7 +126,6 @@ export const Save = props => {
 			version={ props.version }
 			data-v={ props.attributes.version }
 		>
-			<CustomCSS.Content attributes={ attributes } />
 			<div className="lmn-block-countdown__container">
 				{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
 				{ attributes.dayShow &&

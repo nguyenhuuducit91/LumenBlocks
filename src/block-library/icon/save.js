@@ -4,7 +4,6 @@ import { version as VERSION } from 'lumen'
 import {
 	Icon,
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	Link,
@@ -38,7 +37,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ /** Don't add an `a` tag if linkUrl is not defined. **/ }
 			{ attributes.linkUrl ? (
 				<Link.Content attributes={ attributes }>

@@ -6,6 +6,7 @@ import { useControlHandlers } from '../base-control2/hooks'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
+import CustomValueControl from '../custom-value-control'
 /**
  * External dependencies
  */
@@ -18,7 +19,7 @@ import {
 	useDeviceType,
 } from '~lumen/hooks'
 import {
-	extractNumbersAndUnits, getCSSVarName, convertToPxIfUnsupported,
+	extractNumbersAndUnits, getCSSVarName, convertToPxIfUnsupported, isCustomUnit,
 } from '~lumen/utils'
 import { settings as lumenSettings } from 'lumen'
 
@@ -281,6 +282,34 @@ const AdvancedRangeControl = props => {
 			}
 			_onChange( _newValue )
 		}
+	}
+
+	/*
+	 * `fx` is not a unit but a mode: the author writes the value in full, so
+	 * `calc(100% - 200px)` or `clamp(1rem, 2vw, 2rem)` goes in where a slider
+	 * could only ever produce a number for something else to add a suffix to.
+	 *
+	 * The swap happens inside the same `AdvancedControl`, so the label, the unit
+	 * toggle that got us here, the responsive and hover switches and the reset
+	 * all stay exactly where they were — only the thing between them changes.
+	 */
+	if ( isCustomUnit( unit ) ) {
+		return (
+			<AdvancedControl { ...controlProps }>
+				<CustomValueControl
+					value={ derivedValue }
+					placeholder={ props.customPlaceholder }
+					onChange={ _onChange }
+				/>
+				<ResetButton
+					allowReset={ props.allowReset }
+					showReset={ props.showReset }
+					value={ derivedValue }
+					default={ props.default }
+					onChange={ props.onReset ? props.onReset : _onChange }
+				/>
+			</AdvancedControl>
+		)
 	}
 
 	return (

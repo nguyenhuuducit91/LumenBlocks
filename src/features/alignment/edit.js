@@ -99,7 +99,7 @@ export const Edit = memo( props => {
 				label={ __( 'Content Min. Height', i18n ) }
 				attribute="containerHeight"
 				responsive="all"
-				units={ [ 'px', 'vh' ] }
+				units={ [ 'px', 'vh', 'custom' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1000, 100 ] }
 				step={ [ 1, 1 ] }
@@ -113,7 +113,7 @@ export const Edit = memo( props => {
 			label={ __( 'Content Max Width', i18n ) }
 			attribute="containerWidth"
 			responsive="all"
-			units={ [ 'px', '%', 'vw' ] }
+			units={ [ 'px', '%', 'vw', 'custom' ] }
 			min={ [ 0, 0 ] }
 			sliderMax={ [ 1500, 100 ] }
 			step={ [ 1, 1 ] }

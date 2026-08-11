@@ -9,7 +9,6 @@ import {
 	ConditionalDisplay,
 	ContainerDiv,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	Image,
 	Responsive,
@@ -510,7 +509,6 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'lmn-block-posts__title', {

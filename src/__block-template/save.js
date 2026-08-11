@@ -5,7 +5,6 @@ import { TextStyles } from './style'
 
 import {
 	BlockDiv,
-	CustomCSS,
 	Typography,
 	getResponsiveClasses,
 	getTypographyClasses,
@@ -49,7 +48,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			<TextStyles.Content version={ props.version } attributes={ attributes } />
-			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				attributes={ attributes }
 				className={ textClassNames }

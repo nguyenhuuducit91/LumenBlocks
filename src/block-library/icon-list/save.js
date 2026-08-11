@@ -8,7 +8,7 @@ import { IconSvgDef } from './util'
  */
 import classnames from 'classnames'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses,
+	getResponsiveClasses, BlockDiv, getTypographyClasses, getAlignmentClasses,
 } from '~lumen/features'
 import { withVersion } from '~lumen/hoc'
 import { version as VERSION } from 'lumen'
@@ -54,7 +54,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ ! attributes.ordered && <IconSvgDef icon={ attributes.icon } uniqueId={ attributes.uniqueId } /> }
 			<ParentTagName className={ tagNameClassNames } >
 				{ wrapList &&

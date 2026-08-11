@@ -23,7 +23,6 @@ import {
 	Alignment,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -118,7 +117,6 @@ const Edit = props => {
 				enableVariationPicker={ true }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
@@ -191,7 +189,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-columns" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

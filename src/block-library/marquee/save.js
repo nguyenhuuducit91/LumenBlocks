@@ -11,7 +11,6 @@ import { withVersion } from '~lumen/hoc'
 import classnames from 'classnames/dedupe'
 import {
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getContentAlignmentClasses,
 	getResponsiveClasses,
@@ -58,7 +57,6 @@ export const Save = props => {
 			data-v={ props.attributes.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ /*
 			  * One set of the items is saved. The frontend script repeats this
 			  * group until the row is wider than the screen, which is what

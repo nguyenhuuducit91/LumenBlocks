@@ -8,7 +8,6 @@ import {
 	BlockDiv,
 	BlockLink,
 	ContainerDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	Image,
@@ -68,7 +67,6 @@ export const Save = props => {
 			data-v={ props.attributes.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ attributes.uniqueId && <ContainerDiv.Content
 				className={ contentClassNames }
 				attributes={ attributes }

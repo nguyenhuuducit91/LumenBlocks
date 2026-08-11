@@ -6,7 +6,6 @@ import { withVersion } from '~lumen/hoc'
 import { i18n, version as VERSION } from 'lumen'
 import {
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
@@ -55,7 +54,6 @@ export const Save = props => {
 			data-loop={ attributes.videoLoop ? '' : null }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ applyFilters( 'lumen.video-popup.save.div.content', (
 				<div
 					className={ contentClassNames }

@@ -6,7 +6,6 @@ import { withVersion } from '~lumen/hoc'
 import { version as VERSION } from 'lumen'
 import {
 	BlockDiv,
-	CustomCSS,
 	getResponsiveClasses,
 } from '~lumen/features'
 import { Separator2 } from '~lumen/ui'
@@ -47,7 +46,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<div className={ separatorClassNames }>
 				<Separator2.Content
 					design={ separatorDesign }

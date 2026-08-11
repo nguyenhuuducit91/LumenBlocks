@@ -26,7 +26,6 @@ import {
 	getRowClasses,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -118,7 +117,6 @@ const Edit = props => {
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-video-popup" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -290,7 +288,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-video-popup" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

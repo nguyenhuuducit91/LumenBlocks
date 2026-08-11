@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, Typography, getTypographyClasses, getAlignmentClasses,
+	getResponsiveClasses, BlockDiv, Typography, getTypographyClasses, getAlignmentClasses,
 } from '~lumen/features'
 import { withVersion } from '~lumen/hoc'
 import { version as VERSION } from 'lumen'
@@ -40,7 +40,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				tagName={ tagName }
 				attributes={ attributes }

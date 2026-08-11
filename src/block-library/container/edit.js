@@ -23,7 +23,6 @@ import {
 	ContainerDiv,
 	ContentAlign,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	MarginBottom,
 	Responsive,
@@ -102,7 +101,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-container" />
 
 				<Separator>
 					<ContainerDiv className={ contentClassNames }>
@@ -136,7 +134,6 @@ const InspectorControls = memo( () => {
 			<Separator.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-container" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

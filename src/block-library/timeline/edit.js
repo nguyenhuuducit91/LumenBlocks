@@ -26,7 +26,6 @@ import {
 	getTypographyClasses,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	ConditionalDisplay,
@@ -379,7 +378,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-timeline" />
 
 				<div
 					ref={ blockRef }
@@ -593,7 +591,6 @@ const InspectorControls = memo( props => {
 			<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
 			<Advanced.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-timeline" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

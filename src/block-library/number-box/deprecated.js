@@ -6,7 +6,7 @@ import {
 	deprecateBlockBackgroundColorOpacity, deprecateTypographyGradientColor, deprecationBackgrounColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyFontSize,
 	deprecateBlockHeight,
-	BlockDiv, CustomCSS, Typography,
+	BlockDiv, Typography,
 	getResponsiveClasses, getTypographyClasses, getAlignmentClasses,
 } from '~lumen/features'
 import classnames from 'classnames'
@@ -42,7 +42,6 @@ const depecatedSave_3_13_11 = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				tagName="div"
 				attributes={ attributes }

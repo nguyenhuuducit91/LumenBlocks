@@ -197,4 +197,22 @@ describe( 'marquee block', () => {
 		expect( css ).toContain( '--lmn-marquee-gap: 48px' )
 		expect( css ).toContain( '--lmn-marquee-fade: 80px' )
 	} )
+
+	it( 'lets the gap be written as a css expression', () => {
+		const attributes = {
+			uniqueId: 'abc1234',
+			marqueeGap: 'calc(2rem + 2vw)',
+			marqueeGapUnit: 'custom',
+		}
+
+		const names = blockStyles.getAttributesWithValues( attributes )
+		const css = blockStyles.generateBlockStylesForEditor( attributes, blockStyles.getBlockStyles( names ), {
+			version: VERSION, uniqueId: attributes.uniqueId,
+		} )
+
+		// The keyframes divide by this value, so it has to reach the CSS whole
+		// rather than with a unit stuck on the end of it.
+		expect( css ).toContain( '--lmn-marquee-gap: calc(2rem + 2vw)' )
+		expect( css ).not.toContain( 'custom' )
+	} )
 } )

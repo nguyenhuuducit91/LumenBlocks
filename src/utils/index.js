@@ -37,6 +37,26 @@ import { compare } from 'compare-versions'
 export const getUniqueBlockClass = uniqueId => uniqueId ? `lmn-${ uniqueId }` : ''
 
 /**
+ * The entry in a control's `units` list that means "no unit at all".
+ *
+ * A control offering it lets the author write the whole value — `calc(100% -
+ * 200px)`, `clamp(1rem, 2vw, 2rem)` — instead of a number the control then
+ * suffixes. It is spelled out here rather than typed as `'custom'` in each of
+ * the places that has to recognise it: the unit toggle that labels it `fx`, the
+ * controls that swap their slider for a text field, and the CSS generator that
+ * has to stop appending the unit to the end of the value.
+ */
+export const CUSTOM_UNIT = 'custom'
+
+/**
+ * Whether a control is in that mode.
+ *
+ * @param {string} unit The unit currently chosen.
+ * @return {boolean} True when the author writes the value themselves.
+ */
+export const isCustomUnit = unit => unit === CUSTOM_UNIT
+
+/**
  * Returns an array range of numbers.
  *
  * @param {number} start Starting number range.

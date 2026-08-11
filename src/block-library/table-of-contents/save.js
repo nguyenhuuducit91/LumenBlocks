@@ -4,7 +4,7 @@
 import TableOfContentsList from './table-of-contents-list'
 import { linearToNestedHeadingList } from './util'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses, Typography,
+	getResponsiveClasses, BlockDiv, getTypographyClasses, getAlignmentClasses, Typography,
 } from '~lumen/features'
 import { withVersion } from '~lumen/hoc'
 
@@ -70,7 +70,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ attributes.titleShow && <Typography.Content
 				className={ titleClassNames }
 				attrNameTemplate="title%s"

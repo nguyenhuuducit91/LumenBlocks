@@ -15,7 +15,6 @@ import SVGIconBottom from './images/icon-bottom.svg'
  */
 import {
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -346,7 +345,6 @@ const Edit = props => {
 			/>
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-tab-labels" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -759,7 +757,6 @@ const InspectorControls = memo( props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-tab-labels" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

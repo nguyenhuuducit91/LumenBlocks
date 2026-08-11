@@ -1,6 +1,5 @@
 import {
 	BlockDiv,
-	CustomCSS,
 	Typography,
 	getResponsiveClasses,
 	getTypographyClasses,
@@ -46,7 +45,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<Typography.Content
 				tagName="div"
 				attributes={ attributes }

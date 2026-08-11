@@ -9,7 +9,6 @@ import { BlockStyles } from './style'
 import {
 	BlockDiv,
 	useGeneratedCss,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -84,7 +83,6 @@ const Edit = props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-text" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
@@ -93,7 +91,6 @@ const Edit = props => {
 				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
-			<CustomCSS mainBlockClass="lmn-block-text" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

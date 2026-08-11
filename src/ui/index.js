@@ -126,6 +126,7 @@ export {
 	COLOR_SCHEME_PROPERTY_LABELS,
 } from './color-scheme-preview'
 export { ColorSchemesHelp } from './color-schemes-help'
+export { default as CustomValueControl } from './custom-value-control'
 export { default as InspectorSearch } from './inspector-search'
 export { default as BlockChangesPanel } from './block-changes-panel'
 export {

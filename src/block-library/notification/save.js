@@ -14,7 +14,6 @@ import {
 	ContainerDiv,
 	BlockLink,
 	getAlignmentClasses,
-	CustomCSS,
 	getResponsiveClasses,
 	getContentAlignmentClasses,
 } from '~lumen/features'
@@ -67,7 +66,6 @@ export const Save = props => {
 			data-v={ props.attributes.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<ContainerDiv.Content
 				className={ contentClassNames }
 				attributes={ attributes }

@@ -24,7 +24,6 @@ import {
 import {
 	BlockDiv,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -84,7 +83,6 @@ const Edit = props => {
 			<InspectorControls attributes={ attributesToPass } setAttributes={ setAttributes } />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-separator" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -148,7 +146,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-separator" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</> )

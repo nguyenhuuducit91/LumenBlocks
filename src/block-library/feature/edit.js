@@ -18,7 +18,6 @@ import {
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -94,7 +93,6 @@ const Edit = props => {
 			<InspectorControls />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-feature" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -134,7 +132,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-feature" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

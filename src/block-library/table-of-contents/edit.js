@@ -32,7 +32,6 @@ import {
 	Typography,
 	BlockDiv,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -411,7 +410,6 @@ const Edit = props => {
 			<InspectorControls blockState={ props.blockState } />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-table-of-contents" />
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }
@@ -553,7 +551,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-table-of-contents" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

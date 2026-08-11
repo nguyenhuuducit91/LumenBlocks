@@ -11,7 +11,6 @@ import classnames from 'classnames/dedupe'
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
@@ -54,7 +53,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>

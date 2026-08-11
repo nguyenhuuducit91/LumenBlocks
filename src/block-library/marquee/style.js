@@ -40,7 +40,7 @@ blockStyles.addBlockStyles( 'marqueeGap', [ {
 	attrName: 'marqueeGap',
 	key: 'marqueeGap',
 	responsive: 'all',
-	format: '%spx',
+	hasUnits: 'px',
 	versionAdded,
 } ] )
 

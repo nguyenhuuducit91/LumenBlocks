@@ -29,7 +29,6 @@ import {
 	getAlignmentClasses,
 	EffectsAnimations,
 	CustomAttributes,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	MarginBottom,
@@ -114,7 +113,6 @@ const Edit = props => {
 				enableVariationPicker={ true }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-notification" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks
@@ -208,7 +206,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-notification" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

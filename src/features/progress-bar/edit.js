@@ -76,7 +76,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 							label={ __( 'Width', i18n ) }
 							attribute="progressWidth"
 							responsive="all"
-							units={ [ '%', 'px', 'vw' ] }
+							units={ [ '%', 'px', 'vw', 'custom' ] }
 							min={ [ 0, 0, 0 ] }
 							sliderMax={ [ 100, 1000, 100 ] }
 							step="1"
@@ -100,7 +100,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 								attribute="progressBorderRadius"
 								allowReset={ true }
 								min="0"
-								units={ [ 'px', '%', 'rem' ] }
+								units={ [ 'px', '%', 'rem', 'custom' ] }
 								step="1"
 								sliderMax="25"
 								changeCallback={ v => {

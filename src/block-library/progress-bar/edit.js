@@ -18,7 +18,6 @@ import {
 	Transform,
 	EffectsAnimations,
 	CustomAttributes,
-	CustomCSS,
 	ConditionalDisplay,
 	ProgressBar,
 	Typography,
@@ -97,7 +96,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-progress-bar" />
 				<div className={ containerClassNames }>
 					<div className="lmn-progress-bar lmn-animate">
 						<div className={ barClassNames }>
@@ -151,7 +149,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-progress-bar" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

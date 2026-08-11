@@ -83,8 +83,55 @@ if ( ! class_exists( 'Lumen_Global_Block_Styles' ) ) {
 			);
 		}
 
+		/**
+		 * Clean the saved block styles.
+		 *
+		 * Every style carries two stylesheets, `saveCss` and `editCss`, and
+		 * `saveCss` is concatenated into the front end's CSS by
+		 * `add_global_block_styles()` below. Those two cannot be run through
+		 * the text sanitizer — it would collapse the stylesheet onto one line
+		 * and strip the characters CSS is written with — so they are held to
+		 * the CSS rules in `lumen_sanitize_css()` instead, while the metadata
+		 * around them (block names, slugs, attributes) is cleaned as text.
+		 *
+		 * @param mixed $input The submitted setting.
+		 * @return array
+		 */
 		public function sanitize_array_setting( $input ) {
-			return ! is_array( $input ) ? array( array() ) : $input;
+			if ( ! is_array( $input ) ) {
+				return array();
+			}
+
+			$sanitized = array();
+
+			foreach ( $input as $block => $block_styles ) {
+				if ( ! is_array( $block_styles ) ) {
+					continue;
+				}
+
+				$block = sanitize_text_field( (string) $block );
+				$sanitized[ $block ] = array();
+
+				foreach ( $block_styles as $index => $block_style ) {
+					if ( ! is_array( $block_style ) ) {
+						continue;
+					}
+
+					$css = array(
+						'saveCss' => isset( $block_style['saveCss'] ) ? lumen_sanitize_css( $block_style['saveCss'] ) : '',
+						'editCss' => isset( $block_style['editCss'] ) ? lumen_sanitize_css( $block_style['editCss'] ) : '',
+					);
+
+					unset( $block_style['saveCss'], $block_style['editCss'] );
+
+					$sanitized[ $block ][ $index ] = array_merge(
+						lumen_sanitize_setting_value( $block_style ),
+						$css
+					);
+				}
+			}
+
+			return $sanitized;
 		}
 
 
@@ -107,7 +154,12 @@ if ( ! class_exists( 'Lumen_Global_Block_Styles' ) ) {
 			foreach ( $global_block_styles as $block => $block_styles ) {
 				$block_style_css .= "\n/* Global Block Styles ($block) */\n";
 				foreach ( $block_styles as $block_style ) {
-					$block_style_css .= $block_style[ 'saveCss' ];
+					// Cleaned again on the way out. The sanitizer above only
+					// runs when a style is saved, so a style stored before it
+					// existed would otherwise reach the page as it was written.
+					$block_style_css .= isset( $block_style['saveCss'] )
+						? lumen_sanitize_css( $block_style['saveCss'] )
+						: '';
 				}
 			}
 

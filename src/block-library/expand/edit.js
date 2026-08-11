@@ -17,7 +17,6 @@ import {
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -98,7 +97,6 @@ const Edit = props => {
 			<InspectorControls />
 
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-expand" />
 
 			<style>{ `.lmn-block.lmn-block-expand .lmn-block-expand__short-text::before { content: "${ __( 'Less text', i18n ) }" !important; }` }</style>
 			<style>{ `.lmn-block.lmn-block-expand .lmn-block-expand__more-text::before { content: "${ __( 'More text', i18n ) }" !important; }` }</style>
@@ -132,7 +130,6 @@ const InspectorControls = memo( () => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-expand" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

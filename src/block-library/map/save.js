@@ -11,7 +11,6 @@ import {
 import { withVersion } from '~lumen/hoc'
 import {
 	BlockDiv,
-	CustomCSS,
 	getResponsiveClasses,
 	getAlignmentClasses,
 } from '~lumen/features'
@@ -84,7 +83,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ usesApiKey
 				? (
 					<div

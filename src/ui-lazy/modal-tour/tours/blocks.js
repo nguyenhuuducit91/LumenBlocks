@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'lumen'
+import { TOUR_DEMO_IMAGE_URL } from '../demo-image'
 import { dispatch, select } from '@wordpress/data'
 import { createInterpolateElement } from '@wordpress/element'
 
@@ -64,7 +65,7 @@ export const blocks = {
 					{
 						uniqueId: '3dcffca',
 						hasContainer: true,
-						containerBackgroundMediaExternalUrl: 'https://picsum.photos/id/177/500/700.jpg',
+						containerBackgroundMediaExternalUrl: TOUR_DEMO_IMAGE_URL,
 						containerHeight: '500',
 					},
 					[]

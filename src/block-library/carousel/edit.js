@@ -33,7 +33,6 @@ import {
 	Alignment,
 	getAlignmentClasses,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	ConditionalDisplay,
@@ -297,7 +296,6 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
-				<CustomCSS mainBlockClass="lmn-block-carousel" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
@@ -585,7 +583,7 @@ const InspectorControls = memo( props => {
 					<AdvancedRangeControl
 						label={ sprintf( __( '%s Width', i18n ), __( 'Button', i18n ) ) }
 						attribute="arrowWidth"
-						units={ [ 'px', '%' ] }
+						units={ [ 'px', '%', 'custom' ] }
 						sliderMax={ [ 200, 100 ] }
 						min={ [ 0, 0 ] }
 						responsive="all"
@@ -594,7 +592,7 @@ const InspectorControls = memo( props => {
 					<AdvancedRangeControl
 						label={ sprintf( __( '%s Height', i18n ), __( 'Button', i18n ) ) }
 						attribute="arrowHeight"
-						units={ [ 'px', '%' ] }
+						units={ [ 'px', '%', 'custom' ] }
 						sliderMax={ [ 200, 100 ] }
 						min={ [ 0, 0 ] }
 						responsive="all"
@@ -788,7 +786,6 @@ const InspectorControls = memo( props => {
 
 			<Transform.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-carousel" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

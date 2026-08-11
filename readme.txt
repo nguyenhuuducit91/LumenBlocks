@@ -1,18 +1,18 @@
 === Lumen Blocks ===
 Contributors: ducnguyenhuu
 Tags: blocks, gutenberg, page builder, block editor, patterns
-Requires at least: 6.8
-Tested up to: 7.0
+Requires at least: 6.8.3
+Tested up to: 7.0.3
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Turn the block editor into a page builder: 41 blocks, 70 patterns, 34 page templates and one design system driving them all.
+Turn the block editor into a page builder: 42 blocks, 70 patterns, 34 page templates and one design system driving them all.
 
 == Description ==
 
-Lumen Blocks adds a page-builder toolkit to the WordPress block editor. You get forty-one
+Lumen Blocks adds a page-builder toolkit to the WordPress block editor. You get forty-two
 blocks that share one set of controls, a design library you can insert whole sections and
 pages from, and a global design system so a colour or spacing change lands everywhere at
 once.
@@ -261,7 +261,7 @@ GPL-3.0-or-later. The full list of changes is in NOTICE.txt inside the plugin fo
 
 = 1.0.0 =
 * Initial release.
-* 41 blocks in the inserter, plus inner blocks.
+* 42 blocks in the inserter, plus inner blocks.
 * Design Library with 70 built-in patterns and 34 full page templates, no CDN required.
 * Global design system with theme.json inheritance.
 * Setting search, applied-settings list and copy/paste styling in the block inspector.

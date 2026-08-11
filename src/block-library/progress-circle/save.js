@@ -2,7 +2,6 @@ import { DEFAULT_PROGRESS } from './schema'
 
 import {
 	BlockDiv,
-	CustomCSS,
 	Typography,
 	getResponsiveClasses,
 	getTypographyClasses,
@@ -63,7 +62,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<div className={ containerClassNames }>
 				<div
 					className={ divClassNames }

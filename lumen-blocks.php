@@ -22,27 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'lumen_multiple_plugins_check' ) ) {
-	// Prevent multiple Lumen plugin versions from being active simultaneously.
-	function lumen_multiple_plugins_check() {
-		if ( is_plugin_active( $GLOBALS['lumen_other_plugin_file'] ) ) {
-			deactivate_plugins( $GLOBALS['lumen_other_plugin_file'] );
-		}
-	}
-}
-
-if ( defined( 'LUMEN_FILE' ) && LUMEN_FILE !== __FILE__ && ! isset( $GLOBALS['lumen_other_plugin_file'] ) &&
-	defined( 'LUMEN_BUILD' ) && defined( 'LUMEN_VERSION' ) ) {
-	// Get relative file path of the other Lumen version.
-	$GLOBALS['lumen_other_plugin_file'] = plugin_basename( LUMEN_FILE );
-
-	// Use a temporary option to store the other Lumen Plugin info needed for the admin notice. This will be deleted later.
-	// Note: We cannot use add_action in the register_activation_hook callback so we use this temporary option.
-	// See https://developer.wordpress.org/reference/functions/register_activation_hook/#process-flow for more info.
-	add_option( 'lumen_other_lumen_plugin_info', [ 'BUILD' => LUMEN_BUILD, 'VERSION' => LUMEN_VERSION ] );
-
-	register_activation_hook( __FILE__, 'lumen_multiple_plugins_check' );
-}
+/*
+ * There used to be a check here that deactivated any other active plugin
+ * declaring LUMEN_FILE, on the assumption that a free and a premium build of
+ * the same plugin were installed side by side. Turning another plugin off is
+ * the site owner's decision to make, not this plugin's, so it has been removed
+ * along with the notice that announced it. Nothing in this build depends on
+ * being the only one: the guards below all use `defined()`, so a second copy
+ * simply loses the race to define the constants and leaves them alone.
+ */
 
 defined( 'LUMEN_SHOW_PRO_NOTICES' ) || define( 'LUMEN_SHOW_PRO_NOTICES', true );
 defined( 'LUMEN_BUILD' ) || define( 'LUMEN_BUILD', 'free' );
@@ -155,61 +143,112 @@ if ( ! function_exists( 'lumen_early_version_upgrade_check' ) ) {
  *
  * @since 2.11.4
  */
-if ( ! function_exists( 'lumen_notice_gutenberg_plugin_activated' ) ) {
-	function lumen_notice_gutenberg_plugin_activated() {
-		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
-			$ignore = get_option( 'lumen_notice_gutenberg_plugin_ignore' );
-			if ( ! $ignore ) {
-				printf(
-					'<div class="notice notice-warning is-dismissible lumen_notice_gutenberg_plugin"><p>%s</p>%s</div>',
-					/* translators: 1: opening strong tag, 2: closing strong tag */
-					sprintf( esc_html__( '%1$sLumen Notice%2$s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Lumen might not be compatible with it. Click the close button on the side to dismiss this notice.', 'lumen-blocks' ), '<strong>', '</strong>' ),
-					'<script>( function() {
-						document.body.addEventListener( "click", function( event ) {
-							if( event.target.matches( ".notice.lumen_notice_gutenberg_plugin button.notice-dismiss" ) ) {
-								wp.ajax.post( "lumen_notice_gutenberg_plugin_ignore" );
-							}
-						} );
-					} )();
-					</script>'
-				);
-			}
+if ( ! function_exists( 'lumen_should_show_gutenberg_notice' ) ) {
+	/**
+	 * Whether the Gutenberg-plugin notice belongs on this request.
+	 *
+	 * Shown only to somebody who could act on it — the notice asks for a plugin
+	 * to be turned off — and only on the screens where plugins and blocks are
+	 * managed, rather than on every page of the admin.
+	 *
+	 * @since 2.11.4
+	 *
+	 * @return bool
+	 */
+	function lumen_should_show_gutenberg_notice() {
+		if ( ! defined( 'GUTENBERG_VERSION' ) || ! current_user_can( 'activate_plugins' ) ) {
+			return false;
 		}
-	}
 
-	if ( defined( 'GUTENBERG_VERSION' ) ) {
-		add_action( 'admin_notices', 'lumen_notice_gutenberg_plugin_activated' );
+		if ( get_option( 'lumen_notice_gutenberg_plugin_ignore' ) ) {
+			return false;
+		}
+
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$screens = array( 'dashboard', 'plugins', 'plugins-network', 'edit-post', 'edit-page' );
+
+		if ( ! $screen || ! in_array( $screen->id, $screens, true ) ) {
+			return false;
+		}
+
+		return is_plugin_active( 'gutenberg/gutenberg.php' );
 	}
 }
 
-if ( ! function_exists( 'lumen_notice_gutenberg_plugin_ignore' ) ) {
-	function lumen_notice_gutenberg_plugin_ignore() {
-		update_option( 'lumen_notice_gutenberg_plugin_ignore', true );
+if ( ! function_exists( 'lumen_notice_gutenberg_plugin_scripts' ) ) {
+	/**
+	 * The dismiss handler for the notice below.
+	 *
+	 * Enqueued rather than printed as a `<script>` tag beside the notice, and
+	 * hung off `wp-util` because that is what provides the `wp.ajax` it calls.
+	 * It carries a nonce, which the handler checks.
+	 *
+	 * @since 2.11.4
+	 */
+	function lumen_notice_gutenberg_plugin_scripts() {
+		if ( ! lumen_should_show_gutenberg_notice() ) {
+			return;
+		}
+
+		wp_enqueue_script( 'wp-util' );
+		wp_add_inline_script(
+			'wp-util',
+			sprintf(
+				'( function() {
+					document.body.addEventListener( "click", function( event ) {
+						if ( event.target.matches( ".notice.lumen_notice_gutenberg_plugin button.notice-dismiss" ) ) {
+							wp.ajax.post( "lumen_notice_gutenberg_plugin_ignore", { _ajax_nonce: %s } );
+						}
+					} );
+				} )();',
+				wp_json_encode( wp_create_nonce( 'lumen_notice_gutenberg_plugin_ignore' ) )
+			)
+		);
 	}
-	add_action( 'wp_ajax_lumen_notice_gutenberg_plugin_ignore', 'lumen_notice_gutenberg_plugin_ignore' );
+	add_action( 'admin_enqueue_scripts', 'lumen_notice_gutenberg_plugin_scripts' );
 }
 
 /**
- * Show notice if another Lumen plugin has been deactivated.
+ * If Gutenberg plugin is activated, add a notice to disable it since it may cause issues.
  *
- * @since 3.18.1
+ * @since 2.11.4
  */
-if ( ! function_exists( 'lumen_notice_other_lumen_plugin_deactivated' ) ) {
-    function lumen_notice_other_lumen_plugin_deactivated() {
-        $OTHER_LUMEN_INFO = get_option( 'lumen_other_lumen_plugin_info', false );
-        if ( $OTHER_LUMEN_INFO ) {
-            printf(
-                '<div class="notice notice-info is-dismissible lumen_notice_gutenberg_plugin"><p>%s</p></div>',
-                /* translators: 1: opening strong tag, 2: closing strong tag, 3: the build of the other Lumen plugin, 4: its version number */
-                sprintf( esc_html__( '%1$sLumen Notice%2$s: The Lumen plugin (%3$s version %4$s) has been deactivated. Only one active Lumen plugin is needed.', 'lumen-blocks' ), '<strong>', '</strong>', esc_html( $OTHER_LUMEN_INFO['BUILD'] ), esc_html( $OTHER_LUMEN_INFO['VERSION'] ) )
-            );
-            delete_option( 'lumen_other_lumen_plugin_info' );
-        }
+if ( ! function_exists( 'lumen_notice_gutenberg_plugin_activated' ) ) {
+	function lumen_notice_gutenberg_plugin_activated() {
+		if ( ! lumen_should_show_gutenberg_notice() ) {
+			return;
+		}
+
+		printf(
+			'<div class="notice notice-warning is-dismissible lumen_notice_gutenberg_plugin"><p>%s</p></div>',
+			/* translators: 1: opening strong tag, 2: closing strong tag */
+			sprintf( esc_html__( '%1$sLumen Notice%2$s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Lumen might not be compatible with it. Click the close button on the side to dismiss this notice.', 'lumen-blocks' ), '<strong>', '</strong>' )
+		);
 	}
 
-	if ( get_option( 'lumen_other_lumen_plugin_info', false ) ) {
-		add_action( 'admin_notices', 'lumen_notice_other_lumen_plugin_deactivated' );
+	add_action( 'admin_notices', 'lumen_notice_gutenberg_plugin_activated' );
+}
+
+if ( ! function_exists( 'lumen_notice_gutenberg_plugin_ignore' ) ) {
+	/**
+	 * Remember that the notice above was dismissed.
+	 *
+	 * Writes an option, so it verifies the nonce and the capability first: any
+	 * logged-in user could otherwise call this endpoint.
+	 *
+	 * @since 2.11.4
+	 */
+	function lumen_notice_gutenberg_plugin_ignore() {
+		check_ajax_referer( 'lumen_notice_gutenberg_plugin_ignore' );
+
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			wp_send_json_error( esc_html__( 'Insufficient permissions.', 'lumen-blocks' ), 403 );
+		}
+
+		update_option( 'lumen_notice_gutenberg_plugin_ignore', true );
+		wp_send_json_success();
 	}
+	add_action( 'wp_ajax_lumen_notice_gutenberg_plugin_ignore', 'lumen_notice_gutenberg_plugin_ignore' );
 }
 
 /********************************************************************************************
@@ -264,6 +303,8 @@ if ( ! function_exists( 'lumen_is_frontend' ) ) {
 /**
  * Block Initializer.
  */
+// First, so that every settings class below can reach the shared sanitizers.
+require_once( plugin_dir_path( __FILE__ ) . 'src/sanitize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/admin.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );

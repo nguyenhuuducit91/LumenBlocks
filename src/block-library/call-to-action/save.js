@@ -9,7 +9,6 @@ import {
 	ContainerDiv,
 	BlockLink,
 	getAlignmentClasses,
-	CustomCSS,
 	getResponsiveClasses,
 	Separator,
 	getSeparatorClasses,
@@ -62,7 +61,6 @@ export const Save = props => {
 			data-v={ props.attributes.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
 				<ContainerDiv.Content
 					className={ contentClassNames }

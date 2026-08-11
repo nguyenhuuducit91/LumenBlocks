@@ -3,7 +3,6 @@ import {
 	BlockDiv,
 	Style,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	Responsive,
 	Typography,
@@ -97,7 +96,6 @@ export const attributes = ( version = VERSION ) => {
 	BlockDiv.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )

@@ -29,7 +29,6 @@ import {
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
-	CustomCSS,
 	Responsive,
 	Linking,
 	CustomAttributes,
@@ -127,7 +126,6 @@ const Edit = props => {
 				setAttributes={ props.setAttributes }
 			/>
 			{ blockCss && <style key="block-css">{ blockCss }</style> }
-			<CustomCSS mainBlockClass="lmn-block-column" />
 
 			<Column
 				clientId={ clientId }
@@ -202,7 +200,6 @@ const InspectorControls = memo( props => {
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-column" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 

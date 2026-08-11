@@ -3,7 +3,6 @@
  */
 import {
 	BlockDiv,
-	CustomCSS,
 	Typography,
 	getResponsiveClasses,
 	getTypographyClasses,
@@ -51,7 +50,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ props.attributes.showTopLine && <div className="lmn-block-heading__top-line" /> }
 			<Typography.Content
 				attributes={ attributes }

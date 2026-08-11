@@ -8,7 +8,6 @@ import {
 	ConditionalDisplay,
 	ContentAlign,
 	CustomAttributes,
-	CustomCSS,
 	EffectsAnimations,
 	MarginBottom,
 	Responsive,
@@ -30,7 +29,6 @@ export const attributes = ( version = VERSION ) => {
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject )
 
@@ -57,10 +55,14 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 			},
+			// Carries a unit so the gap can be written as `fx` — a marquee whose
+			// spacing is `calc(2rem + 2vw)` keeps its rhythm across viewports
+			// without a value per breakpoint.
 			marqueeGap: {
 				type: 'number',
 				default: '',
 				lmnResponsive: true,
+				lmnUnits: 'px',
 			},
 			marqueePauseOnHover: {
 				type: 'boolean',

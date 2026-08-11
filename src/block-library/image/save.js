@@ -7,7 +7,6 @@ import { version as VERSION } from 'lumen'
 import {
 	BlockDiv,
 	BlockLink,
-	CustomCSS,
 	getResponsiveClasses,
 	getAlignmentClasses,
 	Image,
@@ -43,7 +42,6 @@ export const Save = props => {
 			version={ props.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			{ ( props.attributes.imageUrl || props.attributes.imageExternalUrl ) &&
 				<Image.Content
 					hasWrapper={ true }

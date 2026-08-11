@@ -6,7 +6,6 @@ import { version as VERSION } from 'lumen'
 import classnames from 'classnames'
 import {
 	BlockDiv,
-	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
@@ -72,7 +71,6 @@ export const Save = props => {
 			data-slides-to-show={ attributes.slidesToShow }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
 				<div className="lmn-block-carousel__content-wrapper">
 					<div className={ contentClassNames }>

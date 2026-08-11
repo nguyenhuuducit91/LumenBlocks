@@ -6,7 +6,6 @@ import { version as VERSION } from 'lumen'
 import classnames from 'classnames'
 import {
 	 BlockDiv,
-	 CustomCSS,
 	 getRowClasses,
 	 getAlignmentClasses,
 	 getResponsiveClasses,
@@ -53,7 +52,6 @@ export const Save = props => {
 			 version={ props.version }
 		 >
 			 { attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			 <CustomCSS.Content attributes={ attributes } />
 			<div
 				className={ contentClassNames }
 				tabIndex={ 0 }

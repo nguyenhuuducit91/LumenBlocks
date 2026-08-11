@@ -13,7 +13,6 @@ import {
  */
 import {
 	BlockDiv,
-	CustomCSS,
 	Responsive,
 	Advanced,
 	Typography,
@@ -148,7 +147,6 @@ const Edit = props => {
 			>
 				{ blockCss && <style key="block-css">{ blockCss }</style> }
 
-				<CustomCSS mainBlockClass="lmn-block-icon-list-item" />
 				<div className="lmn-block-icon-list-item__content">
 					{ ! ordered && icon &&
 						<Icon
@@ -204,7 +202,6 @@ const InspectorControls = memo( props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="lmn-block-icon-list-item" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 		</>

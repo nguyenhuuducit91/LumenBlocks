@@ -11,7 +11,6 @@ import { withVersion } from '~lumen/hoc'
 import { version as VERSION } from 'lumen'
 import {
 	BlockDiv,
-	CustomCSS,
 	getResponsiveClasses,
 	getAlignmentClasses,
 	getContentAlignmentClasses,
@@ -63,7 +62,6 @@ export const Save = props => {
 			data-v={ props.attributes.version }
 		>
 			{ attributes.generatedCss && <style>{ attributes.generatedCss }</style> }
-			<CustomCSS.Content attributes={ attributes } />
 			<div className={ wrapperClassNames }>
 				<div className={ contentClassNames }>
 					{ generateRenderPostItem.save( {

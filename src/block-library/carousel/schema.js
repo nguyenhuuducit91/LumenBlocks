@@ -5,7 +5,6 @@ import {
 	Style,
 	ConditionalDisplay,
 	CustomAttributes,
-	CustomCSS,
 	MarginBottom,
 	Responsive,
 	Row,
@@ -32,7 +31,6 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	Transform.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
-	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )

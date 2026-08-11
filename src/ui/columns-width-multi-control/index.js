@@ -10,7 +10,7 @@ import ControlIconToggle from '../control-icon-toggle'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 
 /**
  * External dependencies
@@ -71,7 +71,19 @@ const ColumnsWidthMultiControl = props => {
 											props.values[ i ] && ! isSafeWidth( props.values[ i ] ),
 									} ) }
 									value={ props.values[ i ] }
-									placeholder="calc(100% - 200px)"
+									/*
+									 * Prefixed, because the field is empty and a
+									 * lone `calc(100% - 200px)` in it reads as a
+									 * value that is already set rather than as
+									 * an illustration of what may be typed. The
+									 * expression is kept out of the translatable
+									 * string — it is CSS, not prose.
+									 */
+									placeholder={ sprintf(
+										/* translators: %s: an example CSS value. */
+										__( 'e.g. %s', i18n ),
+										'calc(100% - 200px)'
+									) }
 									onChange={ value => {
 										const newValues = [ ...props.values ]
 										newValues[ i ] = value

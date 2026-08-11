@@ -23,15 +23,37 @@ const {
 	syncPlaywrightTestMatrix,
 } = require( './playwright-test-matrix' )
 
-const getVersion = () => {
+/*
+ * The plugin header is written as aligned columns — `Version:` and then enough
+ * spaces to line its value up with `Requires at least:` below it. These used to
+ * ask for a single space after the colon, matched nothing, and took `[ 1 ]` of
+ * null, which is the whole of why the build would not start.
+ *
+ * Anchored to a docblock line as well as loosened, so that the version can only
+ * be read from the plugin header and never from a stray "Version:" elsewhere in
+ * the file.
+ */
+const HEADER_VERSION = /^\s*\*\s*Version:\s*([\d.]+)/m
+const HEADER_FULL_VERSION = /^\s*\*\s*Version:\s*([\d\w\-_.]+)/m
+
+const readHeaderVersion = pattern => {
 	const content = fs.readFileSync( 'lumen-blocks.php', 'utf8' )
-	return content.match( /Version: ([\d.]+)/ )[ 1 ]
+	const match = content.match( pattern )
+
+	if ( ! match ) {
+		throw new Error(
+			'Could not read "Version:" from the plugin header in lumen-blocks.php. ' +
+			'The build sets the LUMEN_VERSION constant, the readme stable tag and the ' +
+			'package version from it, so it cannot carry on without it.'
+		)
+	}
+
+	return match[ 1 ]
 }
 
-const getFullVersion = () => {
-	const content = fs.readFileSync( 'lumen-blocks.php', 'utf8' )
-	return content.match( /Version: ([\d\w-_.]+)/ )[ 1 ]
-}
+const getVersion = () => readHeaderVersion( HEADER_VERSION )
+
+const getFullVersion = () => readHeaderVersion( HEADER_FULL_VERSION )
 
 const getReadmeTestedUpTo = () => {
 	const content = fs.readFileSync( 'readme.txt', 'utf8' )

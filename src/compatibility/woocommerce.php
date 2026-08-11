@@ -12,14 +12,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'lumen_pre_kses_woocomerce_shop' ) ) {
 
 	function lumen_pre_kses_woocomerce_shop( $content, $allowed_html, $context ) {
-		$optimized_css = get_post_meta( wc_get_page_id( 'shop' ), 'lumen_optimized_css', true );
+		// Looked up once per request rather than on every kses call: while this
+		// filter is attached it runs for each piece of content WordPress
+		// sanitizes, and a database read on each of those adds up.
+		static $optimized_css = null;
 
-		// remove CSS before kses strips out <style> tags
-		if ( ! empty( $optimized_css ) ) {
-			$content = str_replace( '<style>' . $optimized_css . '</style>', '', $content );
+		if ( $optimized_css === null ) {
+			$optimized_css = (string) get_post_meta( wc_get_page_id( 'shop' ), 'lumen_optimized_css', true );
 		}
 
-		return $content;
+		if ( $optimized_css === '' ) {
+			return $content;
+		}
+
+		// remove CSS before kses strips out <style> tags
+		return str_replace( '<style>' . $optimized_css . '</style>', '', $content );
 	}
 
 	function lumen_is_woocommerce_shop_page() {
@@ -30,7 +37,21 @@ if ( ! function_exists( 'lumen_pre_kses_woocomerce_shop' ) ) {
 
 	}
 
+	/**
+	 * Let go of `pre_kses` once the shop loop is over.
+	 *
+	 * `pre_kses` is global: everything WordPress sanitizes goes through it. The
+	 * filter used to be attached for the rest of the request, so content that
+	 * had nothing to do with the shop — comments, widgets, whatever another
+	 * plugin sanitized later — was still being handed to it. It is only needed
+	 * between these two hooks, so that is how long it now stays.
+	 */
+	function lumen_remove_pre_kses_woocommerce_shop() {
+		remove_filter( 'pre_kses', 'lumen_pre_kses_woocomerce_shop', 10 );
+	}
+
 	add_action( 'woocommerce_before_main_content', 'lumen_is_woocommerce_shop_page' );
+	add_action( 'woocommerce_after_main_content', 'lumen_remove_pre_kses_woocommerce_shop' );
 }
 
 if ( ! function_exists( 'lumen_check_if_woocommerce_shop' ) ) {

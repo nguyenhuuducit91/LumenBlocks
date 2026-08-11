@@ -63,6 +63,12 @@ if ( ! function_exists( 'lumen_should_show_pro_notices' ) ) {
 	 * @return Boolean
 	 */
 	function lumen_should_show_pro_notices() {
-		return LUMEN_SHOW_PRO_NOTICES && lumen_show_pro_notices_option() && ! apply_filters( 'lumen_is_pro', false );
+		/*
+		 * There is no premium build of this plugin, so there is nothing for a
+		 * "Go Premium" notice to point at. The machinery around it is kept only
+		 * so that the legacy v2 modules which read this can go on calling it —
+		 * they hide their upsells when it is false, which is now always.
+		 */
+		return false;
 	}
 }

@@ -131,8 +131,59 @@ if ( ! class_exists( 'Lumen_Dynamic_Breakpoints' ) ) {
 			);
 		}
 
+		/**
+		 * A breakpoint is a number of pixels, and nothing else.
+		 *
+		 * These two values are written into the CSS of every page on the site,
+		 * so what is stored here has to be a number before it gets there — this
+		 * used to accept any array at all and pass its contents straight
+		 * through to `preg_replace`, where anything could be appended to a
+		 * media query. Held to a sane range as well: a breakpoint of 0 or of
+		 * 100000 is not a layout, it is a mistake or an attempt at one.
+		 *
+		 * @param mixed $input The submitted setting.
+		 * @return array The setting with both breakpoints as digits or empty.
+		 */
 		public function sanitize_array_setting( $input ) {
-			return ! is_array( $input ) ? array( array() ) : $input;
+			$sanitized = array(
+				'tablet' => '',
+				'mobile' => '',
+			);
+
+			if ( ! is_array( $input ) ) {
+				return $sanitized;
+			}
+
+			foreach ( array_keys( $sanitized ) as $device ) {
+				if ( ! isset( $input[ $device ] ) || $input[ $device ] === '' ) {
+					continue;
+				}
+
+				$value = absint( $input[ $device ] );
+
+				if ( $value >= 100 && $value <= 5000 ) {
+					$sanitized[ $device ] = (string) $value;
+				}
+			}
+
+			return $sanitized;
+		}
+
+		/**
+		 * A stored breakpoint as a number, or 0 when it is unusable.
+		 *
+		 * The sanitizer above only runs when the setting is saved, so a value
+		 * stored before it existed could still be anything. Everything that
+		 * builds CSS reads the breakpoints through here instead of trusting
+		 * what came out of the option.
+		 *
+		 * @param string $device 'tablet' or 'mobile'.
+		 * @return int
+		 */
+		private function get_breakpoint_px( $device ) {
+			$value = isset( $this->dynamic_breakpoints[ $device ] ) ? absint( $this->dynamic_breakpoints[ $device ] ) : 0;
+
+			return ( $value >= 100 && $value <= 5000 ) ? $value : 0;
 		}
 
 		/**
@@ -171,19 +222,24 @@ if ( ! class_exists( 'Lumen_Dynamic_Breakpoints' ) ) {
 				return $css;
 			}
 
-			$breakpoints = $this->dynamic_breakpoints;
-			$new_tablet = $breakpoints['tablet'];
-			$new_mobile = $breakpoints['mobile'];
+			/*
+			 * Read as numbers, not as whatever the option happens to hold.
+			 * These are interpolated into `preg_replace` replacements below,
+			 * where both `$` and `\` carry meaning and where anything that is
+			 * not a length closes the media query and opens a rule of its own —
+			 * on the frontend of every page.
+			 */
+			$new_tablet = $this->get_breakpoint_px( 'tablet' );
+			$new_mobile = $this->get_breakpoint_px( 'mobile' );
 
-
-			if ( $new_tablet === '1024' && $new_mobile === '768' ) {
+			if ( $new_tablet === 1024 && $new_mobile === 768 ) {
 				return $css;
 			}
 
 			// Handle CSS optimized values where there are no spaces between the
 			// colon and the value and if there is a space between the colon and
 			// the value.
-			if ( ! empty( $new_tablet ) ) {
+			if ( $new_tablet ) {
 				// Check if the style generated contains old breakpoints that we need to replace.
 				$has_old_tablet = strpos( $css, 'width: 1024px)' ) !== false ||
 				                  strpos( $css, 'width:1024px)' ) !== false;
@@ -199,7 +255,7 @@ if ( ! class_exists( 'Lumen_Dynamic_Breakpoints' ) ) {
 			}
 
 			// Mobile version
-			if ( ! empty( $new_mobile ) ) {
+			if ( $new_mobile ) {
 
 				// Check if the style generated contains old breakpoints that we need to replace.
 				$has_old_mobile = strpos( $css, 'width: 768px)' ) !== false ||
