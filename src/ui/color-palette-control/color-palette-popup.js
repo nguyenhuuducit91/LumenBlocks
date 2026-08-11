@@ -3,6 +3,7 @@
  */
 
 import { AdvancedToolbarControl } from '..'
+import { PasteValueControl } from './paste-value-control'
 import { i18n } from 'lumen'
 import { extractColor } from '~lumen/utils'
 
@@ -108,6 +109,19 @@ export const ColorPalettePopup = memo( props => {
 					__experimentalHasMultipleOrigins={ true }
 				/>
 			}
+
+			{ /*
+			  * Last, because it is the way in for a value that was decided
+			  * somewhere else — reached for when the pickers above cannot
+			  * express what the design already specifies.
+			  */ }
+			<PasteValueControl
+				value={ value }
+				isGradient={ props.hasGradientPicker ? !! tab : isGradient }
+				onChange={ newValue => {
+					onChange( preOnChange( newValue, value ) )
+				} }
+			/>
 		</>
 	)
 } )

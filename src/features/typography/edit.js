@@ -295,6 +295,18 @@ export const Controls = props => {
 						hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
 						isGradient={ getAttribute( 'textColorType' ) === 'gradient' }
 					/>
+					{ /*
+					  * Only offered once there is a gradient to animate — on a
+					  * flat colour the control would be a switch that does
+					  * nothing.
+					  */ }
+					{ getAttribute( 'textColorType' ) === 'gradient' && (
+						<AdvancedToggleControl
+							label={ __( 'Animate Gradient', i18n ) }
+							attribute={ attributeName( 'textGradientAnimation' ) }
+							help={ __( 'Slides the gradient back and forth across the text over three seconds. Held still for readers who ask for reduced motion.', i18n ) }
+						/>
+					) }
 					{ applyFilters( 'lumen.block-component.typography.color.after', null, props ) }
 				</>
 			) }

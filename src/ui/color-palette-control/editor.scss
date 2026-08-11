@@ -1,7 +1,31 @@
-// Some themes and plugins can warp our color indicator.
+/**
+ * Some themes and plugins can warp our color indicator.
+ *
+ * So can the row it sits in. The swatch and the colour's name are laid out as
+ * a flex row, and a flex item shrinks below its width unless it is told not to
+ * — `width: 20px` sets the size it starts from, not a size it keeps. A long
+ * name, and a value like a full `linear-gradient(…)` is a very long name,
+ * squeezed the circle into an ellipse.
+ */
 .lmn-color-indicator {
 	height: 20px !important;
 	width: 20px !important;
+	flex: none;
+}
+
+/**
+ * The name gives ground instead.
+ *
+ * It is the part that can lose characters and still be useful; the swatch is
+ * not. Without a `min-width` a flex item will not shrink past its content, so
+ * the text has to be allowed to become narrower than the words in it before
+ * the ellipsis can do anything.
+ */
+.lmn-color-name {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 // Style transparent circular color option.
@@ -64,6 +88,108 @@
 	// These are the side paddings of the hex input.
 	.react-colorful + * > * {
 		padding-inline: 0 !important;
+	}
+}
+
+/**
+ * The paste field.
+ *
+ * Set apart by a rule and a small caps label, because it is a different way of
+ * answering the same question as the pickers above it — not another picker.
+ */
+.lmn-color-palette-control__paste {
+	margin-top: 14px;
+	padding-top: 12px;
+	border-top: 1px solid #e0e0e0;
+
+	// The label is the quietest thing in the popover. It names the field for
+	// somebody looking for it, without competing with the pickers.
+	> .components-base-control__label,
+	.components-base-control__label {
+		margin-bottom: 6px;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		color: #757575;
+	}
+
+	.components-base-control__help {
+		margin-top: 6px;
+		margin-bottom: 0;
+		font-size: 11px;
+		font-style: normal;
+		color: #cc1818;
+	}
+}
+
+/**
+ * The field itself: input and clear button as one object.
+ *
+ * The border lives on this wrapper rather than on the input, so the clear
+ * button sits inside the box instead of beside it — a gradient string is long
+ * enough that every pixel of field width is worth having.
+ */
+.lmn-color-palette-control__paste-field {
+	display: flex;
+	align-items: center;
+	border: 1px solid #949494;
+	border-radius: 2px;
+	background: #fff;
+	transition: border-color 0.1s ease, box-shadow 0.1s ease;
+
+	&:focus-within {
+		border-color: var(--wp-admin-theme-color, #3858e9);
+		box-shadow: 0 0 0 0.5px var(--wp-admin-theme-color, #3858e9);
+	}
+
+	// Said with the border, not with a line of red text alone.
+	&--invalid {
+		border-color: #cc1818;
+
+		&:focus-within {
+			border-color: #cc1818;
+			box-shadow: 0 0 0 0.5px #cc1818;
+		}
+	}
+
+	.components-base-control {
+		flex: 1 1 auto;
+		min-width: 0;
+		margin-bottom: 0;
+	}
+
+	// The input has given its border to the wrapper.
+	.components-text-control__input {
+		width: 100%;
+		border: none;
+		background: transparent;
+		box-shadow: none;
+		padding: 6px 8px;
+
+		// Monospace, because what goes in here is code: the difference between
+		// `100.88%` and `10.88%` should be visible at a glance.
+		font-family: Menlo, Consolas, monaco, monospace;
+		font-size: 11px;
+		line-height: 1.4;
+
+		&:focus {
+			border: none;
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	&__clear,
+	.lmn-color-palette-control__paste-clear {
+		flex: none;
+		margin-right: 2px;
+		color: #757575;
+
+		&:hover:not(:disabled) {
+			color: #1e1e1e;
+			background: transparent;
+		}
 	}
 }
 

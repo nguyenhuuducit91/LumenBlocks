@@ -32,6 +32,13 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	// Only means anything while `textColorType` is 'gradient'. Kept as its own
+	// attribute rather than a third colour type so that turning the animation
+	// off does not also throw away the gradient it was animating.
+	textGradientAnimation: {
+		type: 'boolean',
+		default: '',
+	},
 	textColorClass: {
 		type: 'string',
 		default: '',

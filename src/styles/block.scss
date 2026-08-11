@@ -256,6 +256,39 @@
 	}
 }
 
+/**
+ * The travel of an animated gradient.
+ *
+ * Paired with `background-size: 200% 200%`, which the block writes alongside
+ * the animation — the background is twice the size of the box, so there is
+ * somewhere for it to move to. Both declarations come from one control; see
+ * `features/typography/style.js`.
+ *
+ * The middle stop is what makes one iteration a round trip: out to the far end
+ * and back again, rather than sliding one way and snapping home.
+ */
+@keyframes gradient_text_animation {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/**
+ * Motion nobody asked for is motion that can make somebody ill, and this one
+ * never stops on its own. The gradient stays, it just holds still.
+ */
+@media (prefers-reduced-motion: reduce) {
+	.lmn--is-gradient {
+		animation: none !important;
+	}
+}
+
 // Typography Classes.
 :is(.lmn--is-gradient, .lmn--is-gradient li, .lmn--is-gradient span, .lmn--is-gradient a) {
 	background-clip: text;

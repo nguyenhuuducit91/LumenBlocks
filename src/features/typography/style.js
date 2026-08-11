@@ -367,4 +367,49 @@ export const addStyles = ( blockStyleGenerator, props = {} ) => {
 		responsive: 'all',
 		dependencies,
 	} ] )
+
+	/*
+	 * A gradient that moves.
+	 *
+	 * The gradient is painted as the text's background and then clipped to the
+	 * glyphs, so animating it is a matter of moving that background: make it
+	 * twice the size of the box and slide it from one end to the other. At its
+	 * natural size there would be nothing to slide — the gradient would already
+	 * fill the box exactly.
+	 *
+	 * Two declarations, one attribute. `background-size` is useless without the
+	 * animation and the animation is invisible without the size, so neither is
+	 * written unless the block is both a gradient and animated.
+	 */
+	const gradientAnimationEnabled = getAttribute => (
+		!! getAttribute( 'textGradientAnimation' ) && getAttribute( 'textColorType' ) === 'gradient'
+	)
+
+	blockStyleGenerator.addBlockStyles( 'textGradientAnimation', [ {
+		...propsToPass,
+		selector: editSelector || selector,
+		selectorCallback,
+		attrNameTemplate,
+		styleRule: 'backgroundSize',
+		attrName: 'textGradientAnimation',
+		key: 'textGradientAnimation-size',
+		enabledCallback: gradientAnimationEnabled,
+		valueCallback: () => '200% 200%',
+		dependencies: [ 'textColorType', ...dependencies ],
+	}, {
+		...propsToPass,
+		selector: editSelector || selector,
+		selectorCallback,
+		attrNameTemplate,
+		styleRule: 'animation',
+		attrName: 'textGradientAnimation',
+		key: 'textGradientAnimation-animation',
+		enabledCallback: gradientAnimationEnabled,
+		// The keyframes already come back to where they started, so nothing
+		// jumps at the end of an iteration. `alternate` is kept because it
+		// costs nothing over a palindrome and mirrors the easing on the way
+		// back.
+		valueCallback: () => 'gradient_text_animation 3s infinite alternate',
+		dependencies: [ 'textColorType', ...dependencies ],
+	} ] )
 }
